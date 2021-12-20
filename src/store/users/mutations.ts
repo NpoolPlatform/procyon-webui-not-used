@@ -1,27 +1,23 @@
 import { MutationTree } from 'vuex'
 import { MutationTypes } from './mutation-types'
-import { UserState, state as emptyState } from './state'
-import { UserInfo } from './types'
+import { UserState } from './state'
+import { UserBaiscInfo, UserInfo } from './types'
 
 type UserMutations<S = UserState> = {
-  [MutationTypes.SetUserInfos] (state: S, payload: Array<UserInfo>): void
-  [MutationTypes.SetError] (state: S, payload: string): void
-  [MutationTypes.SetLoading] (state: S, payload: boolean): void
-  [MutationTypes.Reset] (state: S): void
+  [MutationTypes.SetUserInfo] (state: S, payload: UserInfo): void,
+  [MutationTypes.SetUserLogined] (state: UserState, payload: boolean): void,
+  [MutationTypes.SetUserBasicInfo] (state: UserState, payload: UserBaiscInfo): void
 }
 
 const mutations: MutationTree<UserState> & UserMutations = {
-  [MutationTypes.SetUserInfos] (state: UserState, payload: Array<UserInfo>) {
-    state.Infos = payload
+  [MutationTypes.SetUserInfo] (state: UserState, payload: UserInfo) {
+    state.info = payload
   },
-  [MutationTypes.SetError] (state: UserState, payload: string) {
-    state.error = payload
+  [MutationTypes.SetUserLogined] (state: UserState, payload: boolean) {
+    state.logined = payload
   },
-  [MutationTypes.SetLoading] (state: UserState, payload: boolean) {
-    state.loading = payload
-  },
-  [MutationTypes.Reset] (state: UserState) {
-    Object.assign(state, { ...emptyState })
+  [MutationTypes.SetUserBasicInfo] (state: UserState, payload: UserBaiscInfo) {
+    state.info.UserBasicInfo = payload
   }
 }
 
