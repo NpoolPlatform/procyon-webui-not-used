@@ -2,7 +2,9 @@ import { UserInfo } from './types'
 
 interface UserState {
   info: UserInfo,
-  logined: boolean
+  logined: boolean,
+  error: string,
+  loading: boolean
 }
 
 function state (): UserState {
@@ -60,7 +62,9 @@ function state (): UserState {
   }
   return {
     info: info,
-    logined: false
+    logined: false,
+    loading: false,
+    error: ''
   }
 }
 

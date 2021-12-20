@@ -1,9 +1,6 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component />
-  </q-page>
+  <div></div>
 </template>
 
 <script setup lang="ts">
-import ExampleComponent from 'components/CompositionComponent.vue'
 </script>

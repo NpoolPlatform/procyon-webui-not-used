@@ -4,9 +4,14 @@ import { UserState } from './state'
 import { UserBaiscInfo, UserInfo } from './types'
 
 type UserMutations<S = UserState> = {
-  [MutationTypes.SetUserInfo] (state: S, payload: UserInfo): void,
-  [MutationTypes.SetUserLogined] (state: UserState, payload: boolean): void,
-  [MutationTypes.SetUserBasicInfo] (state: UserState, payload: UserBaiscInfo): void
+  [MutationTypes.SetUserInfo](state: S, payload: UserInfo): void
+  [MutationTypes.SetUserLogined](state: S, payload: boolean): void
+  [MutationTypes.SetUserBasicInfo](
+    state: S,
+    payload: UserBaiscInfo
+  ): void
+  [MutationTypes.SetError](state: S, payload: string): void
+  [MutationTypes.SetLoading](state: S, payload: boolean): void
 }
 
 const mutations: MutationTree<UserState> & UserMutations = {
@@ -18,6 +23,12 @@ const mutations: MutationTree<UserState> & UserMutations = {
   },
   [MutationTypes.SetUserBasicInfo] (state: UserState, payload: UserBaiscInfo) {
     state.info.UserBasicInfo = payload
+  },
+  [MutationTypes.SetError] (state: UserState, payload: string) {
+    state.error = payload
+  },
+  [MutationTypes.SetLoading] (state: UserState, payload: boolean) {
+    state.loading = payload
   }
 }
 
