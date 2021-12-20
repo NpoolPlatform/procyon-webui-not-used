@@ -1,36 +1,24 @@
 import { ActionTree } from 'vuex'
 import { AugmentedActionContext, RootState } from '../index'
 import { ActionTypes } from './action-types'
-import { MutationTypes } from './mutation-types'
+// import { MutationTypes } from './mutation-types'
 import { UserMutations } from './mutations'
 import { UserState } from './state'
-import { api } from 'src/boot/axios'
-import { AxiosResponse } from 'axios'
-import { GetUserResponse } from './types'
+// import { post } from 'src/boot/axios'
+// import { AxiosResponse } from 'axios'
+// import { UserURLPath } from './types'
 
 // use public api
-const apiUrl = 'https://jsonplaceholder.typicode.com/posts'
-
 interface UserActions {
-  [ActionTypes.GetUsers] (
+  [ActionTypes.GetUser] (
     { commit }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>
   ): void,
 }
 
 const actions: ActionTree<UserState, RootState> = {
-  [ActionTypes.GetUsers] ({ commit }) {
-    commit(MutationTypes.SetLoading, true)
-    api.get<GetUserResponse>(apiUrl)
-      .then((response: AxiosResponse<GetUserResponse>) => {
-        commit(MutationTypes.SetUserInfos, response.data)
-        commit(MutationTypes.SetError, '')
-        commit(MutationTypes.SetLoading, false)
-      })
-      .catch(err => {
-        commit(MutationTypes.SetError, err)
-        commit(MutationTypes.SetLoading, false)
-      })
-  }
+  // [ActionTypes.GetUser] ({ commit }) {
+  //   post(UserURLPath.GET_USER_DETAIL, {}).then( resp => {}).catch(err => {})
+  // }
 }
 
 export { actions, UserActions }
