@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vue-example-webui
+  name: procyon-webui
   namespace: kube-system
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: vue-example-webui
+      app: procyon-webui
   template:
     metadata:
       labels:
-        app: vue-example-webui
+        app: procyon-webui
     spec:
       containers:
-        - name: vue-example-webui
-          image: uhub.service.ucloud.cn/entropypool/vue-example-webui:latest
+        - name: procyon-webui
+          image: uhub.service.ucloud.cn/entropypool/procyon-webui:latest
           imagePullPolicy: Always
           env:
             - name: ENV_ENVIRONMENT_TARGET
@@ -42,7 +42,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: vue-example-webui
+  name: procyon-webui
   namespace: kube-system
 spec:
   ports:
@@ -50,4 +50,4 @@ spec:
       port: 80
       targetPort: 80
   selector:
-    app: vue-example-webui
+    app: procyon-webui
