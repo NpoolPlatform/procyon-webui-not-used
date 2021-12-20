@@ -1,9 +1,9 @@
 {
-  "name": "vue-template",
+  "name": "procyon-webui",
   "version": "0.0.1",
-  "description": "vue template webui",
-  "productName": "vue-template",
-  "author": "linuxpizi <1360447275@qq.com>",
+  "description": "Procyon's cloud power app",
+  "productName": "Procyon",
+  "author": "crazyzpl<crazyzplzpl@gmail.com>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
