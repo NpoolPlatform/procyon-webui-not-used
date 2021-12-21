@@ -1,6 +1,6 @@
 <template>
   <q-layout class="main-body" :style="fontStyle">
-    <q-header reveal>
+    <q-header reveal class="page-header">
       <main-header></main-header>
     </q-header>
 
@@ -40,5 +40,16 @@ const fontStyle = computed(() => store.getters.getFontStyle)
   right: 0;
   height: auto;
   width: 100%;
+}
+
+.page-header {
+  background: none;
+  height: 100px;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 0;
 }
 </style>
