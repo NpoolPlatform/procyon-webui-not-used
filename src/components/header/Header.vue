@@ -1,11 +1,11 @@
 <template>
   <div>
-    <Avator></Avator>
+    <AvatarDropdown></AvatarDropdown>
   </div>
 </template>
 
 <script setup lang="ts">
-import Avator from './avator/Avator.vue'
+import AvatarDropdown from './dropdown/AvatarDropdown.vue'
 </script>
 
 <style scoped></style>

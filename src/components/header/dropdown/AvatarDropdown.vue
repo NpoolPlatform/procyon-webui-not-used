@@ -1,15 +1,16 @@
 <template>
-  <div class="avator-box" @click.stop>
-    <q-avatar class="avator-position" :size="avatorSize">
-      <img
-        :src="userIcon"
-        @click="showList = !showList"
-        style="cursor: pointer"
-        v-if="logined"
-      />
-    </q-avatar>
-
-    <div class="list-box" v-if="showList">
+  <q-btn-dropdown
+    color="cyan"
+    flat
+    rounded
+    dense
+    no-icon-animation
+    dropdown-icon="img:icons/icon-user.svg"
+    :size="avatorSize"
+    v-if="logined"
+    content-style="{width: 150px;background: linear-gradient(to bottom right,rgba(225, 238, 239, 0.2) 0,rgba(161, 208, 208, 0.2) 100%);box-shadow: 16px 16px 20px 0 #23292b;border-radius: 12px;color: #e1eeef;overflow: hidden;}"
+  >
+    <div>
       <q-list>
         <div v-for="(l, index) in list" :key="index">
           <q-item v-if="l.show" clickable v-close-popup @click="l.method">
@@ -20,21 +21,13 @@
         </div>
       </q-list>
     </div>
-  </div>
+  </q-btn-dropdown>
 </template>
 
 <script setup lang="ts">
-import {
-  ref,
-  defineProps,
-  computed,
-  toRef,
-  withDefaults,
-  onMounted,
-  onBeforeUnmount
-} from 'vue'
+import { defineProps, computed, toRef, withDefaults } from 'vue'
 import { useStore } from 'src/store/index'
-import userIcon from '../../../assets/icon-user.svg'
+// import userIcon from '../../../assets/icon-user.svg'
 import { ActionTypes } from 'src/store/users/action-types'
 import { waiting } from '../../../notify/notify'
 import { useI18n } from 'vue-i18n'
@@ -49,15 +42,13 @@ interface Props {
   avatorSize?: string
 }
 const props = withDefaults(defineProps<Props>(), {
-  avatorSize: '42px'
+  avatorSize: '28px'
 })
 
 const avatorSize = toRef(props, 'avatorSize')
 
 const logined = computed(() => store.getters.getUserLogined)
 const hasInvitationCode = computed(() => store.getters.getUserHasInvitationCode)
-
-const showList = ref(false)
 
 const logout = () => {
   const wait = waiting(t('notify.Logout.Waiting'))
@@ -82,7 +73,6 @@ const list = [
     show: true,
     method: () => {
       void router.push('/dashboard')
-      showList.value = !showList.value
     },
     label: t('menuList.Dashboard')
   },
@@ -90,7 +80,6 @@ const list = [
     show: false,
     method: () => {
       void router.push('/wallet')
-      showList.value = !showList.value
     },
     label: t('menuList.Wallet')
   },
@@ -98,7 +87,6 @@ const list = [
     show: hasInvitationCode.value,
     method: () => {
       void router.push('/affiliates')
-      showList.value = !showList.value
     },
     label: t('menuList.Affiliates')
   },
@@ -106,27 +94,11 @@ const list = [
     show: true,
     method: () => {
       void router.push('/account')
-      showList.value = !showList.value
     },
     label: t('menuList.Account')
   },
   { show: true, method: logout, label: t('menuList.Logout') }
 ]
-
-// method
-const bodyCloseSelected = () => {
-  showList.value = false
-}
-
-// mounted
-onMounted(() => {
-  document.addEventListener('click', bodyCloseSelected)
-})
-
-// beforeUnmounted
-onBeforeUnmount(() => {
-  document.removeEventListener('click', bodyCloseSelected)
-})
 </script>
 
 <style scoped>
@@ -136,21 +108,5 @@ onBeforeUnmount(() => {
 
 .avator-position {
   position: relative;
-}
-
-.list-box {
-  position: absolute;
-  top: 45px;
-  width: 150px;
-  /* left: 0px; */
-  background: linear-gradient(
-    to bottom right,
-    rgba(225, 238, 239, 0.2) 0,
-    rgba(161, 208, 208, 0.2) 100%
-  );
-  box-shadow: 16px 16px 20px 0 #23292b;
-  border-radius: 12px;
-  color: #e1eeef;
-  overflow: hidden;
 }
 </style>
