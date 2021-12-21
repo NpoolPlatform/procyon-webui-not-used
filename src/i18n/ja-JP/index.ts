@@ -15,9 +15,9 @@ export default {
 
   notify: {
     LogOut: {
-      Fail: '',
-      Success: '',
-      Waiting: ''
+      Fail: 'ログアウトに失敗する',
+      Success: 'ログアウトに成功しました',
+      Waiting: 'しばおま'
     }
   }
 }
