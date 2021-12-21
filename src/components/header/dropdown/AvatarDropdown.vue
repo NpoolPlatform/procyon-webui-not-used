@@ -9,17 +9,15 @@
     v-if="logined"
     content-style="{width: 150px;background: linear-gradient(to bottom right,rgba(225, 238, 239, 0.2) 0,rgba(161, 208, 208, 0.2) 100%);box-shadow: 16px 16px 20px 0 #23292b;border-radius: 12px;color: #e1eeef;overflow: hidden;}"
   >
-    <div>
-      <q-list>
-        <div v-for="(l, index) in list" :key="index">
-          <q-item v-if="l.show" clickable v-close-popup @click="l.method">
-            <q-item-section>
-              <q-item-label>{{ l.label }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </div>
-      </q-list>
-    </div>
+    <q-list>
+      <div v-for="(l, index) in list" :key="index">
+        <q-item v-if="l.show" clickable v-close-popup @click="l.method">
+          <q-item-section>
+            <q-item-label>{{ l.label }}</q-item-label>
+          </q-item-section>
+        </q-item>
+      </div>
+    </q-list>
   </q-btn-dropdown>
 </template>
 
