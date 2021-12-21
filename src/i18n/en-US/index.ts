@@ -12,9 +12,9 @@ export default {
 
   notify: {
     Logout: {
-      Fail: 'Fail to logout',
+      Fail: 'Fail to logout: ',
       Success: 'Logout successfully!',
-      Waiting: 'please wait'
+      Waiting: 'Please wait to logout...'
     }
   }
 }
