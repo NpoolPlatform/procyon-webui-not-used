@@ -1,12 +1,12 @@
 import { FontFamily } from './types'
 
 interface StyleState {
-  fonstStyle: FontFamily
+  fontStyle: FontFamily
 }
 
 function state (): StyleState {
   return {
-    fonstStyle: 'font-family: \'Noto Sans JP\''
+    fontStyle: `font-family: 'Noto Sans JP'`
   }
 }
 

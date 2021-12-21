@@ -8,7 +8,7 @@ type StyleGetters = {
 }
 
 const getters: GetterTree<StyleState, RootState> & StyleGetters = {
-  getFontStyle: (state: StyleState): FontFamily => state.fonstStyle
+  getFontStyle: (state: StyleState): FontFamily => state.fontStyle
 }
 
 export { StyleGetters, getters }

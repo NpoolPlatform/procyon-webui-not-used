@@ -9,7 +9,7 @@ type StyleMutations<S = StyleState> = {
 
 const mutations: MutationTree<StyleState> & StyleMutations = {
   [MutationTypes.SetFontStyle] (state: StyleState, payload: FontFamily) {
-    state.fonstStyle = payload
+    state.fontStyle = payload
   }
 }
 

@@ -1,1 +1,1 @@
-export type FontFamily = "font-family: 'Noto Sans JP'" | 'font-family: Barlow'
+export type FontFamily = `font-family: 'Noto Sans JP'` | 'font-family: Barlow'
