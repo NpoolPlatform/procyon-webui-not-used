@@ -1,10 +1,11 @@
 import { UserInfo } from './types'
 
 interface UserState {
-  info: UserInfo,
-  logined: boolean,
-  error: string,
+  info: UserInfo
+  logined: boolean
+  error: string
   loading: boolean
+  hasInvitationCode: boolean
 }
 
 function state (): UserState {
@@ -62,9 +63,10 @@ function state (): UserState {
   }
   return {
     info: info,
-    logined: false,
+    logined: true,
     loading: false,
-    error: ''
+    error: '',
+    hasInvitationCode: true
   }
 }
 
