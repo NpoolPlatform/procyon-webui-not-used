@@ -19,22 +19,30 @@ import {
   UserGetters
 } from './users'
 
+import {
+  style, StyleState,
+  StyleMutations,
+  StyleGetters
+} from './style'
+
 // 2 combine your store to root store
 export interface RootState {
-  user: UserState
+  user: UserState,
+  style: StyleState
 }
 
 // 3 combine your actions, mutations and getters to root, if have multi use & combin
 // for example a & b
 type Actions = UserActions
-type Mutations = UserMutations
-type Getters = UserGetters
+type Mutations = UserMutations & StyleMutations
+type Getters = UserGetters & StyleGetters
 
 // 4 attach your module to root
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<RootState>({
     modules: {
-      user
+      user,
+      style
     },
 
     // enable strict mode (adds overhead!)
