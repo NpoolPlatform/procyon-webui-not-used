@@ -3,5 +3,20 @@
 
 export default {
   failed: 'Action failed',
-  success: 'Action was successful'
+  success: 'Action was successful',
+  menuList: {
+    Dashboard: 'DASHBOARD',
+    Wallet: 'WALLET',
+    Account: 'ACCOUNT',
+    Logout: 'LOGOUT',
+    Affiliates: 'AFFILIATES'
+  },
+
+  notify: {
+    Logout: {
+      Fail: 'Fail to logout',
+      Success: 'Logout successfully!',
+      Waiting: 'please wait'
+    }
+  }
 }
