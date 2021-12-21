@@ -6,7 +6,7 @@ interface StyleState {
 
 function state (): StyleState {
   return {
-    fontStyle: "font-family: 'Noto Sans JP'"
+    fontStyle: 'font-family: "Noto Sans JP"'
   }
 }
 
