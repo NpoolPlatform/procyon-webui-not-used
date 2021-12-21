@@ -1,6 +1,5 @@
 <template>
   <q-btn-dropdown
-    color="cyan"
     flat
     rounded
     dense
