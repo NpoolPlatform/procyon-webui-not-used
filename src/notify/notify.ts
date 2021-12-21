@@ -1,69 +1,47 @@
 import { Notify } from 'quasar'
-import { AxiosError } from 'axios'
-import { CommonError } from '../boot/axios'
 
-export const waiting = (msg: string) => {
-  Notify.create({
+type notifyType = 'positive' | 'negative' | 'warning' | 'info'
+
+interface notifyProps {
+  type: notifyType
+  message: string
+  caption?: string
+}
+
+type notifyCallback = (props: notifyProps) => void
+
+const waiting = (msg: string): notifyCallback => {
+  return Notify.create({
     type: 'ongoing',
     message: msg
   })
 }
 
-export const success = (notify: Notify | undefined, msg: string) => {
-  if (notify === undefined) {
-    Notify.create({
-      type: 'positive',
-      message: msg
-    })
-    return
-  }
+// demo
+// const wt = waiting('xx')
+// wt({ type: 'positive', message: 'succ' })
+// wt({ type: 'negative', message: 'fail' })
 
-  notify.create({
+const success = (msg: string): void => {
+  Notify.create({
     type: 'positive',
     message: msg
   })
 }
 
-export const fail = (notif: Notify | undefined, msg: string, error: AxiosError<CommonError> | undefined) => {
-  const data = error
-
-  if (error === undefined) {
-    Notify.create({
-      type: 'negative',
-      message: msg
-    })
-    return
-  }
-
-  if (notif === undefined) {
-    Notify.create({
-      type: 'negative',
-      message: msg + ': ' + error.message,
-      caption: JSON.stringify(data)
-    })
-    return
-  }
-
-  notif.create({
+const fail = (msg: string, caption: string): void => {
+  Notify.create({
     type: 'negative',
-    message: msg + ': ' + error.message,
-    caption: JSON.stringify(data)
+    message: msg,
+    caption: caption
   })
 }
 
-export const hint = (notif: Notify | undefined, msg: string) => {
-  if (notif === undefined) {
-    Notify.create({
-      type: 'warning',
-      message: msg
-    })
-    return
-  }
-
-  notif.create({
+const hint = (msg: string): void => {
+  Notify.create({
     type: 'warning',
     message: msg
   })
 }
 
-export default { success, fail, waiting, hint }
+export { waiting, success, fail, hint }

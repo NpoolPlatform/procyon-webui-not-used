@@ -28,8 +28,6 @@ interface CommonError {
   message: string
 }
 
-export { CommonError }
-
 const post = async <T, R> (url: string, data: T) => {
   return await api.post<T, AxiosResponse<R>>(url, data)
     .then((data: AxiosResponse<R>) => data.data)
