@@ -14,8 +14,12 @@ const user: Module<UserState, RootState> = {
 }
 
 export {
-  user, UserState,
-  actions, UserActions,
-  mutations, UserMutations,
-  getters, UserGetters
+  user,
+  UserState,
+  actions,
+  UserActions,
+  mutations,
+  UserMutations,
+  getters,
+  UserGetters
 }

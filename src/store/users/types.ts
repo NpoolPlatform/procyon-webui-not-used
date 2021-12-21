@@ -74,7 +74,8 @@ interface UserInfo {
 enum UserURLPath {
   LOGIN = '/login-door/v1/login',
   GET_USER_DETAIL = '/user-management/v1/get/user/details',
-  UPDATE_USER = '/user-management/v1/update/user'
+  UPDATE_USER = '/user-management/v1/update/user',
+  LOGOUT = '/login-door/v1/logout',
 }
 
 export { UserInfo, UserBaiscInfo, UserRoleInfo, UserURLPath }
