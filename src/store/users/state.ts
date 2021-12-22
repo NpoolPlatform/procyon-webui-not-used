@@ -66,7 +66,7 @@ function state (): UserState {
     logined: false,
     loading: false,
     error: '',
-    hasInvitationCode: true
+    hasInvitationCode: false
   }
 }
 

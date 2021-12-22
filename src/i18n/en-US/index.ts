@@ -10,6 +10,14 @@ export default {
     Affiliates: 'AFFILIATES'
   },
 
+  drawer: {
+    Dashboard: 'DASHBOARD',
+    Wallet: 'WALLET',
+    Account: 'ACCOUNT',
+    Logout: 'LOGOUT',
+    Affiliates: 'AFFILIATES'
+  },
+
   notify: {
     Logout: {
       Fail: 'Fail to logout: ',
@@ -25,5 +33,29 @@ export default {
     Contact: 'Contact',
     Register: 'Register',
     Login: 'Sign In'
+  },
+
+  footer: {
+    First: {
+      Title: 'Shoot for the stars with Procyon!',
+      Content: 'YOUR GLOBAL CONSTELLATION OF CRYPTOCURRENCIES'
+    },
+    Second: {
+      Title: 'Links',
+      Home: 'Home',
+      Products: 'Products',
+      Blog: 'Blog'
+    },
+    Third: {
+      Title: 'Help',
+      Faqs: 'FAQ',
+      Support: 'Support',
+      Legal: 'Legal'
+    },
+    Forth: {
+      Title: 'LANGUAGE',
+      En: 'EN',
+      Jp: '日本語'
+    }
   }
 }
