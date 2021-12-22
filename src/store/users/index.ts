@@ -5,7 +5,7 @@ import { UserActions, actions } from './actions'
 import { UserGetters, getters } from './getters'
 import { UserMutations, mutations } from './mutations'
 
-const user: Module<UserState, RootState> = {
+const users: Module<UserState, RootState> = {
   // namespaced: true,
   actions,
   getters,
@@ -14,7 +14,7 @@ const user: Module<UserState, RootState> = {
 }
 
 export {
-  user,
+  users,
   UserState,
   actions,
   UserActions,
