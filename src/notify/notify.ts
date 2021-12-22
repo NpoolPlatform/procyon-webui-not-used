@@ -8,7 +8,7 @@ interface notifyProps {
   caption?: string
 }
 
-export type notifyCallback = (props: notifyProps) => void
+type notifyCallback = (props: notifyProps) => void
 
 const waiting = (msg: string): notifyCallback => {
   return Notify.create({
