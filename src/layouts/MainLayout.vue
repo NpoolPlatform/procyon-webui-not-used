@@ -12,17 +12,17 @@
       <router-view />
     </q-page-container>
 
-    <q-footer>
+    <q-footer class="page-footer">
       <main-footer></main-footer>
     </q-footer>
   </q-layout>
-
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useStore } from 'src/store/index'
 import MainHeader from 'src/components/header/Header.vue'
+import MainFooter from 'src/components/footer/MainFooter.vue'
 
 const store = useStore()
 
@@ -31,7 +31,7 @@ const fontStyle = computed(() => store.getters.getFontStyle)
 
 <style scoped>
 .main-body {
-  background-image: url("../assets/procyon-logo-opacity0.025.svg");
+  background-image: url('../assets/procyon-logo-opacity0.025.svg');
   background-position: 90% -360px;
   background-repeat: no-repeat;
   background-size: 800px;
@@ -51,5 +51,29 @@ const fontStyle = computed(() => store.getters.getFontStyle)
   align-items: center;
   position: absolute;
   top: 0;
+}
+
+.page-footer {
+  background: linear-gradient(to bottom right, #27424c 0, #051319 100%);
+  box-shadow: 0px 0px 60px 15px #051319;
+  padding: 16px 0;
+  width: 100%;
+  z-index: 1;
+  height: auto;
+  display: block;
+  position: absolute;
+  bottom: 0;
+}
+
+.page-footer::before {
+  background: linear-gradient(to left, #e85f1a 0, #ffe91d 50%, #1ec498 100%);
+  display: block;
+  content: '';
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
 }
 </style>
