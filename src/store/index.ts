@@ -70,7 +70,7 @@ declare module '@vue/runtime-core' {
 }
 
 export type AugmentedActionContext<S, R, M extends MutationTree<S>> = {
-  commit<k extends keyof M>(
+  commit<k extends keyof M> (
     type: k,
     payload: Parameters<M[k]>[1],
     options?: CommitOptions
@@ -82,13 +82,13 @@ export type Store = Omit<
   VuexStore<RootState>,
   'getters' | 'commit' | 'dispatch'
 > & {
-  commit<k extends keyof Mutations, P extends Parameters<Mutations[k]>[1]>(
+  commit<k extends keyof Mutations, P extends Parameters<Mutations[k]>[1]> (
     type: k,
     payload?: P,
     options?: CommitOptions
   ): ReturnType<Mutations[k]>
 } & {
-  dispatch<K extends keyof Actions>(
+  dispatch<K extends keyof Actions> (
     type: K,
     payload?: Parameters<Actions[K]>[1],
     options?: DispatchOptions

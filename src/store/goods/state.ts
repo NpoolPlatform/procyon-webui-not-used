@@ -1,7 +1,7 @@
 import { GoodDetail } from './types'
 
 interface GoodState {
-  goods: GoodDetail[]
+  goods: Array<GoodDetail>
   loading: boolean
   error: string
 }

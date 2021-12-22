@@ -94,7 +94,7 @@ export interface GoodDetail {
 }
 
 export interface GetGoodDetailsResponse {
-  Details: GoodDetail[]
+  Details: Array<GoodDetail>
   Total: number
 }
 
