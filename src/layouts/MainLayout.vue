@@ -16,7 +16,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer>
+    <q-footer class="page-footer">
       <main-footer></main-footer>
     </q-footer>
   </q-layout>
@@ -27,6 +27,7 @@ import { computed, ref } from 'vue'
 import { useStore } from 'src/store/index'
 import MainHeader from 'src/components/header/Header.vue'
 import MainDrawer from 'src/components/drawer/MainDrawer.vue'
+import MainFooter from 'src/components/footer/MainFooter.vue'
 
 const store = useStore()
 const showDrawer = ref(true)
@@ -58,7 +59,32 @@ const fontStyle = computed(() => store.getters.getFontStyle)
   top: 0;
 }
 
+<<<<<<< HEAD
 .q-drawer-container >>> .q-drawer {
   background: none;
+=======
+.page-footer {
+  background: linear-gradient(to bottom right, #27424c 0, #051319 100%);
+  box-shadow: 0px 0px 60px 15px #051319;
+  padding: 16px 0;
+  width: 100%;
+  z-index: 1;
+  height: auto;
+  display: block;
+  position: absolute;
+  bottom: 0;
+}
+
+.page-footer::before {
+  background: linear-gradient(to left, #e85f1a 0, #ffe91d 50%, #1ec498 100%);
+  display: block;
+  content: '';
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
+>>>>>>> 5e36578dcfbb7717dbc35466bc37b7b9b6ecd4da
 }
 </style>
