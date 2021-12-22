@@ -15,7 +15,7 @@ export default {
     Wallet: 'ウォレット',
     Account: 'アカウント',
     Logout: 'ログアウト',
-    Invitation: 'AFFILIATES'
+    Affiliates: 'AFFILIATES'
   },
 
   notify: {

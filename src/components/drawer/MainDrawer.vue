@@ -1,56 +1,65 @@
 <template>
   <div class="drawer-items text-white">
-    <router-link href class="drawer-item" :to="{ path: '/dashboard' }">
-      <div class="row">
-        <q-img fit="none" :src="miningImg" class="drawer-item-img"></q-img>
-        <span class="drawer-item-span">{{ $t('drawer.Dashboard') }}</span>
-      </div>
-    </router-link>
-
-    <!-- <router-link href class="drawer-item" :to="{ path: '/wallet' }">
-          <div class="row">
-            <q-img fit="none" :src="walletImg" class="drawer-item-img"></q-img>
-            <span class="drawer-item-span">{{ $t("drawer.Wallet") }}</span>
-          </div>
-        </router-link> -->
-
-    <router-link
-      href
-      class="drawer-item"
-      :to="{ path: '/affiliates' }"
-      v-if="hasInvitationCode"
-    >
-      <div class="row">
+    <div class="links" v-for="(link, index) in links" :key="index">
+      <router-link v-if="link.show" class="drawer-item" :to="link.goto">
         <q-img
           fit="none"
-          :src="affiliatesImg"
+          :src="link.img"
           class="drawer-item-img"
           style="object-fit: none !important"
-        ></q-img>
-        <span class="drawer-item-span">{{ $t('drawer.Invitation') }}</span>
-      </div>
-    </router-link>
-
-    <router-link href class="drawer-item" :to="{ path: '/account' }">
-      <div class="row">
-        <q-img fit="none" :src="accountImg" class="drawer-item-img"></q-img>
-        <p class="drawer-item-span">{{ $t('drawer.Account') }}</p>
-      </div>
-    </router-link>
+        >
+        </q-img>
+        <span class="drawer-item-span">{{ link.label }}</span>
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import miningImg from 'src/assets/icon-mining.svg'
-// import walletImg from 'src/assets/icon-wallet.svg'
+import walletImg from 'src/assets/icon-wallet.svg'
 import affiliatesImg from 'src/assets/icon-affiliates.svg'
 import accountImg from 'src/assets/icon-account.svg'
 import { useStore } from 'src/store'
 
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const store = useStore()
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const { t } = useI18n({ useScope: 'global' })
 const hasInvitationCode = computed(() => store.getters.getUserHasInvitationCode)
+
+const links = ref([
+  {
+    label: t('drawer.Dashboard'),
+    goto: { path: '/dashboard' },
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    img: miningImg,
+    show: true
+  },
+  {
+    label: t('drawer.Wallet'),
+    goto: { path: '/wallet' },
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    img: walletImg,
+    show: false
+  },
+  {
+    label: t('drawer.Affiliates'),
+    goto: { path: '/affiliates' },
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    img: affiliatesImg,
+    show: hasInvitationCode.value
+  },
+  {
+    label: t('drawer.Account'),
+    goto: { path: '/account' },
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    img: accountImg,
+    show: true
+  }
+])
 </script>
 
 <style scoped>
@@ -133,5 +142,10 @@ const hasInvitationCode = computed(() => store.getters.getUserHasInvitationCode)
 .drawer-item-span {
   line-height: 24px;
   margin: 3px 0 0 0;
+  width: 100%;
+}
+
+.links {
+  display: flex;
 }
 </style>

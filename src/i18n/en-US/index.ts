@@ -15,7 +15,7 @@ export default {
     Wallet: 'WALLET',
     Account: 'ACCOUNT',
     Logout: 'LOGOUT',
-    Invitation: 'AFFILIATES'
+    Affiliates: 'AFFILIATES'
   },
 
   notify: {
