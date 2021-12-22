@@ -30,9 +30,7 @@ export default {
     Home: 'Home',
     Blog: 'Blog',
     Support: 'Support & FAQ',
-    Contact: 'Contact',
-    Register: 'Register',
-    Login: 'Sign In'
+    Contact: 'Contact'
   },
 
   footer: {
@@ -56,6 +54,18 @@ export default {
       Title: 'LANGUAGE',
       En: 'EN',
       Jp: '日本語'
+    }
+  },
+
+  button: {
+    Register: 'Register',
+    Login: 'Sign In'
+  },
+
+  homepage: {
+    Content1: {
+      Title: 'SHOOT FOR THE STARS WITH PROCYON',
+      Subtitle: 'Your global constellation of cryptocurrencies'
     }
   },
 

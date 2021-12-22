@@ -10,6 +10,14 @@ export default {
     Affiliates: 'AFFILIATES'
   },
 
+  drawer: {
+    Dashboard: 'ダッシュボード',
+    Wallet: 'ウォレット',
+    Account: 'アカウント',
+    Logout: 'ログアウト',
+    Affiliates: 'AFFILIATES'
+  },
+
   notify: {
     Logout: {
       Fail: 'ログアウトに失敗する: ',
@@ -22,9 +30,7 @@ export default {
     Home: 'ホーム',
     Blog: 'ブログ',
     Support: 'サポート & FAQ',
-    Contact: 'お問い合わせ',
-    Register: 'アカウント登録',
-    Login: 'ログイン'
+    Contact: 'お問い合わせ'
   },
 
   footer: {
@@ -51,12 +57,16 @@ export default {
     }
   },
 
-  drawer: {
-    Dashboard: 'ダッシュボード',
-    Wallet: 'ウォレット',
-    Account: 'アカウント',
-    Logout: 'ログアウト',
-    Affiliates: 'AFFILIATES'
+  button: {
+    Register: 'アカウント登録',
+    Login: 'ログイン'
+  },
+
+  homepage: {
+    Content1: {
+      Title: 'SHOOT FOR THE STARS WITH PROCYON',
+      Subtitle: '暗号資産のグローバルマーケットプレイス'
+    }
   },
 
   faq: {
