@@ -59,10 +59,10 @@ const fontStyle = computed(() => store.getters.getFontStyle)
   top: 0;
 }
 
-<<<<<<< HEAD
 .q-drawer-container >>> .q-drawer {
   background: none;
-=======
+}
+
 .page-footer {
   background: linear-gradient(to bottom right, #27424c 0, #051319 100%);
   box-shadow: 0px 0px 60px 15px #051319;
@@ -85,6 +85,5 @@ const fontStyle = computed(() => store.getters.getFontStyle)
   left: 0;
   height: 1px;
   width: 100%;
->>>>>>> 5e36578dcfbb7717dbc35466bc37b7b9b6ecd4da
 }
 </style>
