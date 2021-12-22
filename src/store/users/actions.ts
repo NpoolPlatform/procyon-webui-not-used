@@ -13,11 +13,10 @@ import { NotifyMessage } from '../types'
 interface UserActions {
   [ActionTypes.GetUser] ({
     commit
-  }: AugmentedActionContext<
-    UserState,
+  }: AugmentedActionContext<UserState,
     RootState,
-    UserMutations<UserState>
-  >): void
+    UserMutations<UserState>>): void
+
   [ActionTypes.UserLogout] (
     {
       commit
@@ -41,7 +40,6 @@ const actions: ActionTree<UserState, RootState> = {
         })
       })
       .catch((err: Error) => {
-        console.log('er', err)
         commit(MutationTypes.SetError, err)
         commit(MutationTypes.SetLoading, false)
         wait({

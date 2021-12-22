@@ -4,14 +4,14 @@
     rounded
     dense
     no-icon-animation
-    dropdown-icon="img:icons/icon-user.svg"
-    :size="avatarSize"
-    v-if="logined"
-    content-style="{width: 150px;background: linear-gradient(to bottom right,rgba(225, 238, 239, 0.2) 0,rgba(161, 208, 208, 0.2) 100%);box-shadow: 16px 16px 20px 0 #23292b;border-radius: 12px;color: #e1eeef;overflow: hidden;}"
+    dropdown-icon='img:icons/icon-user.svg'
+    :size='avatarSize'
+    v-if='logined'
+    content-style='{width: 150px;background: linear-gradient(to bottom right,rgba(225, 238, 239, 0.2) 0,rgba(161, 208, 208, 0.2) 100%);box-shadow: 16px 16px 20px 0 #23292b;border-radius: 12px;color: #e1eeef;overflow: hidden;}'
   >
     <q-list>
-      <div v-for="(l, index) in list" :key="index">
-        <q-item v-if="l.show" clickable v-close-popup @click="l.method">
+      <div v-for='(l, index) in list' :key='index'>
+        <q-item v-if='l.show' clickable v-close-popup @click='l.method'>
           <q-item-section>
             <q-item-label>{{ l.label }}</q-item-label>
           </q-item-section>
@@ -21,7 +21,7 @@
   </q-btn-dropdown>
 </template>
 
-<script setup lang="ts">
+<script setup lang='ts'>
 import { defineProps, computed, toRef, withDefaults } from 'vue'
 import { useStore } from 'src/store'
 import { ActionTypes } from 'src/store/users/action-types'
@@ -114,7 +114,11 @@ const list = [
     },
     label: t('menuList.Account')
   },
-  { show: true, method: logout, label: t('menuList.Logout') }
+  {
+    show: true,
+    method: logout,
+    label: t('menuList.Logout')
+  }
 ]
 </script>
 
