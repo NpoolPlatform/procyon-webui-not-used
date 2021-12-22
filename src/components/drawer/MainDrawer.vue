@@ -22,7 +22,7 @@ import affiliatesImg from 'src/assets/icon-affiliates.svg'
 import accountImg from 'src/assets/icon-account.svg'
 import { useStore } from 'src/store'
 
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const store = useStore()
@@ -30,36 +30,32 @@ const store = useStore()
 const { t } = useI18n({ useScope: 'global' })
 const hasInvitationCode = computed(() => store.getters.getUserHasInvitationCode)
 
-const links = ref([
+const links = [
   {
     label: t('drawer.Dashboard'),
     goto: { path: '/dashboard' },
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     img: miningImg,
     show: true
   },
   {
     label: t('drawer.Wallet'),
     goto: { path: '/wallet' },
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     img: walletImg,
     show: false
   },
   {
     label: t('drawer.Affiliates'),
     goto: { path: '/affiliates' },
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     img: affiliatesImg,
     show: hasInvitationCode.value
   },
   {
     label: t('drawer.Account'),
     goto: { path: '/account' },
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     img: accountImg,
     show: true
   }
-])
+]
 </script>
 
 <style scoped>
