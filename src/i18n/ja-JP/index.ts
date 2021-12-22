@@ -49,5 +49,13 @@ export default {
       En: 'EN',
       Jp: '日本語'
     }
+  },
+
+  drawer: {
+    Dashboard: 'ダッシュボード',
+    Wallet: 'ウォレット',
+    Account: 'アカウント',
+    Logout: 'ログアウト',
+    Affiliates: 'AFFILIATES'
   }
 }

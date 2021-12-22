@@ -4,7 +4,11 @@
       <main-header></main-header>
     </q-header>
 
-    <q-drawer>
+    <q-drawer
+      :width="200"
+      v-model="showDrawer"
+      style="background: transparent !important"
+    >
       <main-drawer></main-drawer>
     </q-drawer>
 
@@ -19,12 +23,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from 'src/store/index'
 import MainHeader from 'src/components/header/Header.vue'
+import MainDrawer from 'src/components/drawer/MainDrawer.vue'
 import MainFooter from 'src/components/footer/MainFooter.vue'
 
 const store = useStore()
+const showDrawer = ref(true)
 
 const fontStyle = computed(() => store.getters.getFontStyle)
 </script>
@@ -51,6 +57,10 @@ const fontStyle = computed(() => store.getters.getFontStyle)
   align-items: center;
   position: absolute;
   top: 0;
+}
+
+.q-drawer-container >>> .q-drawer {
+  background: none;
 }
 
 .page-footer {

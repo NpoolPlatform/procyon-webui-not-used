@@ -10,6 +10,14 @@ export default {
     Affiliates: 'AFFILIATES'
   },
 
+  drawer: {
+    Dashboard: 'DASHBOARD',
+    Wallet: 'WALLET',
+    Account: 'ACCOUNT',
+    Logout: 'LOGOUT',
+    Affiliates: 'AFFILIATES'
+  },
+
   notify: {
     Logout: {
       Fail: 'Fail to logout: ',
