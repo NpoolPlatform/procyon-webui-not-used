@@ -24,7 +24,6 @@
 <script setup lang="ts">
 import { defineProps, computed, toRef, withDefaults } from 'vue'
 import { useStore } from 'src/store/index'
-// import userIcon from '../../../assets/icon-user.svg'
 import { ActionTypes } from 'src/store/users/action-types'
 import { waiting } from '../../../notify/notify'
 import { useI18n } from 'vue-i18n'

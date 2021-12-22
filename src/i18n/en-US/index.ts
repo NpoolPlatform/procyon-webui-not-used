@@ -16,5 +16,14 @@ export default {
       Success: 'Logout successfully!',
       Waiting: 'Please wait to logout...'
     }
+  },
+
+  header: {
+    Home: 'Home',
+    Blog: 'Blog',
+    Support: 'Support & FAQ',
+    Contact: 'Contact',
+    Register: 'Register',
+    Login: 'Sign In'
   }
 }

@@ -16,5 +16,14 @@ export default {
       Success: 'ログアウトに成功しました',
       Waiting: 'ログアウトするまでお待ちください'
     }
+  },
+
+  header: {
+    Home: 'ホーム',
+    Blog: 'ブログ',
+    Support: 'サポート & FAQ',
+    Contact: 'お問い合わせ',
+    Register: 'アカウント登録',
+    Login: 'ログイン'
   }
 }
