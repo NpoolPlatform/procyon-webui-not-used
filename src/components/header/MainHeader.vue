@@ -34,17 +34,24 @@
     >
       {{ $t('header.Login') }}
     </q-btn>
-    <AvatarDropdown></AvatarDropdown>
+    <AvatarDropdown />
   </div>
 </template>
 
 <script setup lang="ts">
-import ChangeLang from '../button/change-lang-button/ChangeLang.vue'
-import AvatarDropdown from './dropdown/AvatarDropdown.vue'
+import { computed, defineAsyncComponent } from 'vue'
+
+const ChangeLang = defineAsyncComponent(
+  () => import('../button/change-lang-button/ChangeLang.vue')
+)
+
+const AvatarDropdown = defineAsyncComponent(
+  () => import('./dropdown/AvatarDropdown.vue')
+)
+
 import logo from '../../assets/procyon-light.svg'
 
 import { useStore } from 'src/store/index'
-import { computed } from 'vue'
 
 const store = useStore()
 const logined = computed(() => store.getters.getUserLogined)

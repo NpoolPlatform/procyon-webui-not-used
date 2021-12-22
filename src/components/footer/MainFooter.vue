@@ -12,7 +12,7 @@
 
         <div class="content-items">
           <h4>{{ $t('footer.Forth.Title') }}</h4>
-          <ChangeLang></ChangeLang>
+          <ChangeLang />
         </div>
 
         <div class="content-items">
@@ -52,7 +52,11 @@
 </template>
 
 <script setup lang="ts">
-import ChangeLang from '../button/change-lang-button/ChangeLang.vue'
+import { defineAsyncComponent } from 'vue'
+const ChangeLang = defineAsyncComponent(
+  () => import('../button/change-lang-button/ChangeLang.vue')
+)
+
 import logo from 'src/assets/procyon-light.svg'
 </script>
 

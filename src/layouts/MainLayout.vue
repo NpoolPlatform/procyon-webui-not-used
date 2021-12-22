@@ -1,7 +1,7 @@
 <template>
   <q-layout class="main-body" :style="fontStyle">
     <q-header reveal class="page-header">
-      <main-header></main-header>
+      <MainHeader />
     </q-header>
 
     <q-drawer
@@ -9,7 +9,7 @@
       v-model="showDrawer"
       style="background: transparent !important"
     >
-      <main-drawer></main-drawer>
+      <MainDrawer />
     </q-drawer>
 
     <q-page-container>
@@ -17,17 +17,23 @@
     </q-page-container>
 
     <q-footer class="page-footer">
-      <main-footer></main-footer>
+      <MainFooter />
     </q-footer>
   </q-layout>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, defineAsyncComponent } from 'vue'
 import { useStore } from 'src/store/index'
-import MainHeader from 'src/components/header/Header.vue'
-import MainDrawer from 'src/components/drawer/MainDrawer.vue'
-import MainFooter from 'src/components/footer/MainFooter.vue'
+const MainHeader = defineAsyncComponent(
+  () => import('src/components/header/MainHeader.vue')
+)
+const MainDrawer = defineAsyncComponent(
+  () => import('src/components/drawer/MainDrawer.vue')
+)
+const MainFooter = defineAsyncComponent(
+  () => import('src/components/footer/MainFooter.vue')
+)
 
 const store = useStore()
 const showDrawer = ref(true)
