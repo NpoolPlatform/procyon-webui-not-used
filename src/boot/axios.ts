@@ -33,7 +33,7 @@ const post = async <T, R>(url: string, data: T) => {
     .post<T, AxiosResponse<R>>(url, data)
     .then((data: AxiosResponse<R>) => data.data)
     .catch((err: AxiosError<CommonError>) => {
-      throw new Error(err.response?.data.message || err.message)
+      throw new Error(err.response?.data.message || err.message) // err.message is uncached error
     })
 }
 
