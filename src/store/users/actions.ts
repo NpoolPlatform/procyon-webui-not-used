@@ -5,38 +5,48 @@ import { MutationTypes } from './mutation-types'
 import { UserMutations } from './mutations'
 import { UserState } from './state'
 import { post } from 'src/boot/axios'
-// import { AxiosResponse } from 'axios'
 import { UserURLPath } from './types'
+import { waiting } from 'src/notify/notify'
+import { NotifyMessage } from '../types'
 
 // use public api
 interface UserActions {
-  [ActionTypes.GetUser]({
+  [ActionTypes.GetUser] ({
     commit
-  }: AugmentedActionContext<
-    UserState,
+  }: AugmentedActionContext<UserState,
     RootState,
-    UserMutations<UserState>
-  >): void
-  [ActionTypes.UserLogout]({
-    commit
-  }: AugmentedActionContext<
-    UserState,
-    RootState,
-    UserMutations<UserState>
-  >): void
+    UserMutations<UserState>>): void
+
+  [ActionTypes.UserLogout] (
+    {
+      commit
+    }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>,
+    payload: NotifyMessage
+  ): void
 }
 
 const actions: ActionTree<UserState, RootState> = {
-  // [ActionTypes.GetUser] ({ commit }) {
-  //   post(UserURLPath.GET_USER_DETAIL, {}).then( resp => {}).catch(err => {})
-  // }
-  [ActionTypes.UserLogout] ({ commit }) {
+  [ActionTypes.UserLogout] ({ commit }, payload: NotifyMessage) {
+    const wait = waiting(payload.wait)
+    commit(MutationTypes.SetLoading, true)
     post(UserURLPath.LOGOUT, {})
       .then(() => {
         commit(MutationTypes.SetUserLogined, false)
+        commit(MutationTypes.SetError, '')
+        commit(MutationTypes.SetLoading, false)
+        wait({
+          type: 'positive',
+          message: payload.success
+        })
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         commit(MutationTypes.SetError, err)
+        commit(MutationTypes.SetLoading, false)
+        wait({
+          type: 'negative',
+          message: payload.fail,
+          caption: err.message
+        })
       })
   }
 }

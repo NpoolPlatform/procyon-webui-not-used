@@ -8,6 +8,7 @@ type UserGetters = {
   getUserLogined(state: UserState): boolean
   getUserHasInvitationCode(state: UserState): boolean
   getUserError(state: UserState): string
+  getUserLoading(state: UserState): boolean
 }
 
 const getters: GetterTree<UserState, RootState> & UserGetters = {
@@ -15,7 +16,8 @@ const getters: GetterTree<UserState, RootState> & UserGetters = {
   getUserLogined: (state: UserState): boolean => state.logined,
   getUserHasInvitationCode: (state: UserState): boolean =>
     state.hasInvitationCode,
-  getUserError: (state: UserState): string => state.error
+  getUserError: (state: UserState): string => state.error,
+  getUserLoading: (state: UserState): boolean => state.loading
 }
 
 export { UserGetters, getters }
