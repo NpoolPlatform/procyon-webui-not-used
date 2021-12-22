@@ -35,7 +35,7 @@ module.exports = configure(function (ctx) {
 
     htmlVariables: {
       title: 'Procyon',
-      description: 'Procyon\'s cloud power app',
+      description: "Procyon's cloud power app",
       favicon: '/public/favicon.ico'
     },
 

@@ -3,8 +3,8 @@ import { Notify } from 'quasar'
 
 export default boot((/* { app, router, ... } */) => {
   Notify.setDefaults({
-    position: 'top-right',
+    color: 'white',
     timeout: 3000,
-    textColor: 'white'
+    position: 'top-right'
   })
 })

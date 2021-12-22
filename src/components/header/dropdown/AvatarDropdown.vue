@@ -5,7 +5,7 @@
     dense
     no-icon-animation
     dropdown-icon="img:icons/icon-user.svg"
-    :size="avatorSize"
+    :size="avatarSize"
     v-if="logined"
     content-style="{width: 150px;background: linear-gradient(to bottom right,rgba(225, 238, 239, 0.2) 0,rgba(161, 208, 208, 0.2) 100%);box-shadow: 16px 16px 20px 0 #23292b;border-radius: 12px;color: #e1eeef;overflow: hidden;}"
   >
@@ -23,9 +23,8 @@
 
 <script setup lang="ts">
 import { defineProps, computed, toRef, withDefaults } from 'vue'
-import { useStore } from 'src/store/index'
+import { useStore } from 'src/store'
 import { ActionTypes } from 'src/store/users/action-types'
-import { waiting } from '../../../notify/notify'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
@@ -35,32 +34,54 @@ const { t } = useI18n({ useScope: 'global' })
 const router = useRouter()
 
 interface Props {
-  avatorSize?: string
+  avatarSize?: string
 }
+
 const props = withDefaults(defineProps<Props>(), {
-  avatorSize: '28px'
+  avatarSize: '28px'
 })
 
-const avatorSize = toRef(props, 'avatorSize')
+const avatarSize = toRef(props, 'avatarSize')
 
 const logined = computed(() => store.getters.getUserLogined)
 const hasInvitationCode = computed(() => store.getters.getUserHasInvitationCode)
 
+// const loading = computed(() => store.getters.getUserLoading)
+// const err = computed(() => store.getters.getUserError)
+
+// const wt = ref<notifyCallback>()
+
+// watch([loading, err], (nl, ne) => {
+//   // watch loading error
+//   // loading -> true new _waiting()
+//   if (nl[0]) {
+//     console.log('loading')
+//     wt.value = waiting('start')
+//   }
+//   // loading -> true->false & no error -> succ
+//   if (!nl[0] && nl[1] === '') {
+//     wt.value &&
+//       wt.value({
+//         type: 'positive',
+//         message: t('notify.Logout.Success'),
+//       })
+//   }
+//   // loading -> true->false & error -> fail
+//   if (!nl[0] && nl[1] !== '') {
+//     wt.value &&
+//       wt.value({
+//         type: 'negative',
+//         message: t('notify.Logout.Fail'),
+//         caption: nl[1],
+//       })
+//   }
+// })
+
 const logout = () => {
-  const wait = waiting(t('notify.Logout.Waiting'))
-  store.dispatch(ActionTypes.UserLogout)
-  const err = store.getters.getUserError
-  if (err !== '') {
-    wait({
-      type: 'negative',
-      message: t('notify.Logout.Fail'),
-      caption: err
-    })
-    return
-  }
-  wait({
-    type: 'positive',
-    message: t('notify.Logout.Success')
+  store.dispatch(ActionTypes.UserLogout, {
+    wait: t('notify.Logout.Waiting'),
+    success: t('notify.Logout.Success'),
+    fail: t('notify.Logout.Fail')
   })
 }
 
@@ -98,11 +119,4 @@ const list = [
 </script>
 
 <style scoped>
-.avator-box {
-  position: relative;
-}
-
-.avator-position {
-  position: relative;
-}
 </style>

@@ -63,7 +63,7 @@ function state (): UserState {
   }
   return {
     info: info,
-    logined: false,
+    logined: true,
     loading: false,
     error: '',
     hasInvitationCode: true

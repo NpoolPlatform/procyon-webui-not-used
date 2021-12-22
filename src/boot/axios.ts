@@ -3,7 +3,7 @@ import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $axios: AxiosInstance;
+    $axios: AxiosInstance
   }
 }
 
@@ -28,11 +28,12 @@ interface CommonError {
   message: string
 }
 
-const post = async <T, R> (url: string, data: T) => {
-  return await api.post<T, AxiosResponse<R>>(url, data)
+const post = async <T, R>(url: string, data: T) => {
+  return await api
+    .post<T, AxiosResponse<R>>(url, data)
     .then((data: AxiosResponse<R>) => data.data)
     .catch((err: AxiosError<CommonError>) => {
-      throw new Error(err.response?.data.message)
+      throw new Error(err.response?.data.message || err.message)
     })
 }
 
