@@ -13,36 +13,43 @@ import {
 // ########### define your self store #################
 // 1 import your store modules
 import {
-  user, UserState,
+  users,
+  UserState,
   UserMutations,
   UserActions,
   UserGetters
 } from './users'
 
 import {
-  style, StyleState,
-  StyleMutations,
-  StyleGetters
-} from './style'
+  goods,
+  GoodState,
+  GoodMutations,
+  GoodActions,
+  GoodGetters
+} from './goods'
+
+import { style, StyleState, StyleMutations, StyleGetters } from './style'
 
 // 2 combine your store to root store
 export interface RootState {
-  user: UserState,
+  users: UserState
   style: StyleState
+  goods: GoodState
 }
 
 // 3 combine your actions, mutations and getters to root, if have multi use & combin
 // for example a & b
-type Actions = UserActions
-type Mutations = UserMutations & StyleMutations
-type Getters = UserGetters & StyleGetters
+type Actions = UserActions & GoodActions
+type Mutations = UserMutations & StyleMutations & GoodMutations
+type Getters = UserGetters & StyleGetters & GoodGetters
 
 // 4 attach your module to root
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<RootState>({
     modules: {
-      user,
-      style
+      users,
+      style,
+      goods
     },
 
     // enable strict mode (adds overhead!)
@@ -63,7 +70,7 @@ declare module '@vue/runtime-core' {
 }
 
 export type AugmentedActionContext<S, R, M extends MutationTree<S>> = {
-  commit<k extends keyof M> (
+  commit<k extends keyof M>(
     type: k,
     payload: Parameters<M[k]>[1],
     options?: CommitOptions
@@ -75,13 +82,13 @@ export type Store = Omit<
   VuexStore<RootState>,
   'getters' | 'commit' | 'dispatch'
 > & {
-  commit<k extends keyof Mutations, P extends Parameters<Mutations[k]>[1]> (
+  commit<k extends keyof Mutations, P extends Parameters<Mutations[k]>[1]>(
     type: k,
     payload?: P,
     options?: CommitOptions
   ): ReturnType<Mutations[k]>
 } & {
-  dispatch<K extends keyof Actions> (
+  dispatch<K extends keyof Actions>(
     type: K,
     payload?: Parameters<Actions[K]>[1],
     options?: DispatchOptions
