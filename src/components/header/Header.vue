@@ -72,8 +72,6 @@ a:hover {
   position: relative;
   text-transform: uppercase;
   padding: 12px;
-  cursor: pointer;
-  text-decoration: none;
 }
 
 .nav-link::after {

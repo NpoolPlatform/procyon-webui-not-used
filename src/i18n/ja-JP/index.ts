@@ -10,6 +10,14 @@ export default {
     Affiliates: 'AFFILIATES'
   },
 
+  drawer: {
+    Dashboard: 'ダッシュボード',
+    Wallet: 'ウォレット',
+    Account: 'アカウント',
+    Logout: 'ログアウト',
+    Invitation: 'AFFILIATES'
+  },
+
   notify: {
     LogOut: {
       Fail: 'ログアウトに失敗する: ',
