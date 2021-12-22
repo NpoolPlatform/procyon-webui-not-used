@@ -17,3 +17,158 @@ a
   cursor: pointer
   text-decoration: none
   transition: all ease-in-out 0.3s
+
+a:not([class])
+  color: #1ec498
+  filter: contrast(1.5)
+  transition: all ease-in-out 0.3s
+
+a:not([class]):hover
+  color: #1ec498
+  filter: contrast(1.5)
+  text-decoration: underline 1px solid #11afaf
+
+a:hover
+  color: #11afaf
+
+h1
+  background: linear-gradient(to left, #54e280 0, #1ec498 50%)
+  background-clip: border-box
+  filter: contrast(2)
+  font-size: 40px
+  font-weight: 500
+  margin: 24px auto 24px auto
+  text-transform: uppercase
+  -webkit-background-clip: text
+  -webkit-box-decoration-break: clone
+  -webkit-text-fill-color: transparent
+
+h2:not(#hero h2)
+  background: linear-gradient(to left, #54e280 0, #1ec498 50%)
+  background-clip: border-box
+  filter: contrast(2)
+  font-size: 28px
+  font-weight: 400
+  margin: 36px auto
+  padding: 0 0 8px 0
+  position: relative
+  text-transform: uppercase
+  -webkit-background-clip: text
+  -webkit-box-decoration-break: clone
+  -webkit-text-fill-color: transparent
+
+h2:not(#hero h2):first-child
+  margin-top: 12px
+
+h2:not(#hero h2)::after
+  background: linear-gradient(to right, transparent 0, #e1eeef 10%, transparent 30%)
+  display: block
+  content: ''
+  position: absolute
+  left: -16px
+  bottom: -4px
+  height: 1px
+  width: 100%
+
+h3:not([class])
+  background: linear-gradient(to left, #54e280 0, #1ec498 100%)
+  background-clip: border-box
+  filter: contrast(2)
+  font-size: 24px
+  font-weight: 400
+  margin: 24px auto
+  position: relative
+  padding: 0 0 8px 0
+  text-transform: uppercase
+  -webkit-background-clip: text
+  -webkit-box-decoration-break: clone
+  -webkit-text-fill-color: transparent
+
+h3:not([class])::after
+  background: linear-gradient(to right, transparent 0, #e1eeef 10%, transparent 100%)
+  display: block
+  content: ''
+  position: absolute
+  left: -16px
+  bottom: -4px
+  height: 1px
+  width: 100%
+
+h4
+  font-size: 18px
+  font-weight: 600
+  margin: 12px 0
+  text-transform: uppercase
+
+#main
+  width: 100%
+
+.hr
+  background: linear-gradient(to right, transparent 10%, #e85f1a 40%, #ffe91d 50%, #1ec498 60%, transparent 90%)
+  margin: 48px 0
+  opacity: 0.7
+  height: 2px
+  width: 100%
+
+#hero
+  margin: 24px 0 48px 0
+  padding: 0 0 48px 0
+  position: relative
+
+#hero::after
+  background: linear-gradient(to right, transparent 0, #e85f1a 30%, #ffe91d 50%, #1ec498 80%, transparent 100%)
+  display: block
+  content: ''
+  position: absolute
+  left: 0
+  bottom: 0
+  height: 4px
+  width: 100%
+
+#hero h1
+  font-size: 40px
+
+#hero h2
+  color: #e4f4f0
+  font-size: 28px
+  font-weight: 300
+  margin: 12px auto 12px auto
+
+.content
+  max-width: 1280px
+  margin: 0 auto
+  padding: 0 24px
+
+.content p:not([class])
+  font-size: 18px
+  font-weight: 300
+  line-height: 36px
+
+.content p:not([class]) em
+  background: linear-gradient(to left, #ff964a 0, #ffcc4a 50%)
+  background-clip: border-box
+  font-weight: 500
+  -webkit-background-clip: text
+  -webkit-box-decoration-break: clone
+  -webkit-text-fill-color: transparent
+
+.content p:not([class]) strong
+  background: linear-gradient(to left, #ff964a 0, #ffcc4a 50%)
+  background-clip: border-box
+  font-weight: 500
+  -webkit-background-clip: text
+  -webkit-box-decoration-break: clone
+  -webkit-text-fill-color: transparent
+
+.content ul
+  font-size: 18px
+  font-weight: 300
+  line-height: 36px
+  list-style: none
+
+.content ul li::before
+  color: #1ec498
+  content: '\2727' /*hollow star*/
+  display: inline-block
+  margin-left: -32px
+  width: 32px
