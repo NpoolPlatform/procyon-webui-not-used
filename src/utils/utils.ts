@@ -6,15 +6,10 @@ export const TimeStampToDate = (
   format: string,
   lang?: string
 ): string => {
-  let date: string
   switch (lang) {
-    case 'en':
-      date = dayjs.unix(Number(timestamp)).format(format)
-      break
+    case 'en-US':
+      return dayjs.unix(Number(timestamp)).format(format)
     default:
-      date = dayjs.unix(Number(timestamp)).locale('ja').format(format)
-      break
+      return dayjs.unix(Number(timestamp)).locale('ja').format(format)
   }
-
-  return date
 }
