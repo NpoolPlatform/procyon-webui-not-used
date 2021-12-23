@@ -1,50 +1,20 @@
 import dayjs from 'dayjs'
-require('dayjs/locale/ja')
-
-type timestampDigits = 2 | 3 | 0
+import 'dayjs/locale/ja'
 
 export const TimeStampToDate = (
   timestamp: string,
-  digit?: timestampDigits,
+  format: string,
   lang?: string
 ): string => {
-  let date: dayjs.Dayjs
+  let date: string
   switch (lang) {
     case 'en':
-      date = dayjs.unix(Number(timestamp))
+      date = dayjs.unix(Number(timestamp)).format(format)
       break
     default:
-      date = dayjs.unix(Number(timestamp)).locale('ja')
+      date = dayjs.unix(Number(timestamp)).locale('ja').format(format)
       break
   }
 
-  let formatDate: string
-  switch (digit) {
-    case 2:
-      formatDate = date.get('y').toString() + '.' + date.get('month').toString()
-      break
-    case 3:
-      formatDate =
-        date.get('y').toString() +
-        '.' +
-        date.get('month').toString() +
-        date.get('date').toString()
-      break
-    default:
-      formatDate =
-        date.get('y').toString() +
-        '.' +
-        date.get('month').toString() +
-        '.' +
-        date.get('date').toString() +
-        ' ' +
-        date.get('hour').toString() +
-        ':' +
-        date.get('minute').toString() +
-        ':' +
-        date.get('second').toString()
-      break
-  }
-
-  return formatDate
+  return date
 }
