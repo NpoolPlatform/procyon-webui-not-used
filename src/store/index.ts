@@ -13,7 +13,7 @@ import {
 // ########### define your self store #################
 // 1 import your store modules
 import {
-  users,
+  user,
   UserState,
   UserMutations,
   UserActions,
@@ -32,7 +32,7 @@ import { style, StyleState, StyleMutations, StyleGetters } from './style'
 
 // 2 combine your store to root store
 export interface RootState {
-  users: UserState
+  user: UserState
   style: StyleState
   goods: GoodState
 }
@@ -47,7 +47,7 @@ type Getters = UserGetters & StyleGetters & GoodGetters
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<RootState>({
     modules: {
-      users,
+      user,
       style,
       goods
     },
@@ -70,7 +70,7 @@ declare module '@vue/runtime-core' {
 }
 
 export type AugmentedActionContext<S, R, M extends MutationTree<S>> = {
-  commit<k extends keyof M> (
+  commit<k extends keyof M>(
     type: k,
     payload: Parameters<M[k]>[1],
     options?: CommitOptions
@@ -82,13 +82,13 @@ export type Store = Omit<
   VuexStore<RootState>,
   'getters' | 'commit' | 'dispatch'
 > & {
-  commit<k extends keyof Mutations, P extends Parameters<Mutations[k]>[1]> (
+  commit<k extends keyof Mutations, P extends Parameters<Mutations[k]>[1]>(
     type: k,
     payload?: P,
     options?: CommitOptions
   ): ReturnType<Mutations[k]>
 } & {
-  dispatch<K extends keyof Actions> (
+  dispatch<K extends keyof Actions>(
     type: K,
     payload?: Parameters<Actions[K]>[1],
     options?: DispatchOptions

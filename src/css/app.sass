@@ -135,6 +135,7 @@ h4
   margin: 12px auto 12px auto
 
 .content
+  min-width: 640px
   max-width: 1280px
   margin: 0 auto
   padding: 0 24px
@@ -172,3 +173,27 @@ h4
   display: inline-block
   margin-left: -32px
   width: 32px
+
+.section-part-title 
+  background: linear-gradient(to left, #54e280 0, #1ec498 50%)
+  background-clip: border-box
+  filter: contrast(2)
+  font-size: 28px
+  font-weight: 400
+  margin: 36px auto
+  padding: 0 0 8px 0
+  position: relative
+  text-transform: uppercase
+  -webkit-background-clip: text
+  -webkit-box-decoration-break: clone
+  -webkit-text-fill-color: transparent
+
+.section-part-title::after
+  background: linear-gradient(to right, transparent 0, #e1eeef 10%, transparent 30%)
+  display: block
+  content: ''
+  position: absolute
+  left: -16px
+  bottom: -4px
+  height: 1px
+  width: 100%

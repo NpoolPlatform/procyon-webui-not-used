@@ -23,8 +23,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, defineAsyncComponent } from 'vue'
+import { computed, ref, defineAsyncComponent, onMounted } from 'vue'
 import { useStore } from 'src/store/index'
+import { useQuasar } from 'quasar'
+
+const q = useQuasar()
+onMounted(() => {
+  q.cookies.set('AppID', 'ff2c5d50-be56-413e-aba5-9c7ad888a769')
+})
+
 const MainHeader = defineAsyncComponent(
   () => import('src/components/header/MainHeader.vue')
 )
@@ -36,7 +43,7 @@ const MainFooter = defineAsyncComponent(
 )
 
 const store = useStore()
-const showDrawer = ref(true)
+const showDrawer = ref(false)
 
 const fontStyle = computed(() => store.getters.getFontStyle)
 </script>

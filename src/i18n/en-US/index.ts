@@ -59,13 +59,103 @@ export default {
 
   button: {
     Register: 'Register',
-    Login: 'Sign In'
+    Login: 'Sign In',
+    StartMining: 'Purchase'
+  },
+
+  product: {
+    DailyMiningRewardsLabel: 'Daily Mining Rewards:',
+    DailyMiningRewardsValue: 'SMH / day',
+    ServicePeriodLabel: 'Service Period:',
+    ServicePeriodValue: 'days',
+    TechnicalServiceFeeLabel: 'Technical Service Fee:',
+    MaintenanceFeeLabel: 'Maintenance Fee:',
+    MaintenanceFeeValue: 'day',
+    OrderEffectiveLabel: 'Order Effective:'
   },
 
   homepage: {
     Content1: {
-      Title: 'SHOOT FOR THE STARS WITH PROCYON',
-      Subtitle: 'Your global constellation of cryptocurrencies'
+      ContentItem1: {
+        Title: 'SHOOT FOR THE STARS WITH PROCYON',
+        Subtitle: 'Your global constellation of cryptocurrencies'
+      },
+      ContentItem2: {
+        Title: 'PREMIERE MINING PRODUCTS'
+      }
+    },
+
+    Why: {
+      Title: 'WHY CHOOSE PROCYON?',
+      Content1:
+        'Procyon is the first Japan-centric, one-stop, multidimensional asset management marketplace. We bring',
+      Content2: 'first-to-market products and IDOs ',
+      Content3:
+        'to our clients. Our unique market insights and our extensive network in the crypto space allows us to provide our clients with ',
+      Content4:
+        ' exclusive investment opportunities that cannot be found on the open market',
+      Content4Comma: '. ',
+      Content5: 'Our unique positioning is our strength and your gain!',
+      Content55H: '',
+      Content55: '',
+      Content6:
+        'Japan boasts the highest investment per capita in Asia. The endless possibilities of the',
+      Content7: ' Japanese market attract many global players',
+      Content8:
+        ', however Japan suffers from a language and cultural barrier that insulates the country from global markets. This hurdle can result in missed opportunities and a lack of diversity in investment products. At Procyon, ',
+      Content9:
+        'we lead our exclusive communities of investors to the global stage',
+      Content9Comma: '.'
+    },
+
+    Feature: {
+      VCBacking: 'MARKET LEADER',
+      VCBackingContent:
+        "Our partners include top tier global VCs as well as the world's largest PoC mining pool. Through years of experience we have managed to accurately identify market trends, conduct in depth due diligence, and target upcoming superstar projects across multiple sectors in the industry that we bring to our exclusive community of key opinion leaders and investors.",
+      TopTeam: 'DREAM TEAM',
+      TopTeamContent:
+        "Procyon's founders have over 10 years of cryptocurrency market experience with a track record that includes investment projects with average ROI of over 100x. Our tech team has over 5 years of experience managing assets totalling over 160 million USD. Our Japan-based team provides exceptional, localized, and reliable customer service within 24 hours.",
+      Technology: 'THE BIG PICTURE',
+      TechnologyContent:
+        'The market flows from R&D to VC funds to Miners to Exchanges and is finally distributed to general investors. At Procyon we aim to find opportunities that are usually only available to institutional investors and make them equally accessible to individual investors. Join our exclusive community of wealth generation!'
+    },
+
+    What: {
+      Title: 'What Is First-Batch Mining?',
+      Content1:
+        'First-batch mining begins as soon as the mainnet goes live. This is possible because the first-batch of miners has already acquired hash power through the testnet prior to the launch of the mainnet. Once mainnet goes live these miners are the first to begin the mining process, achieving ',
+      Content2:
+        ' much greater ROI while the mining difficulty is low and the mining output is high',
+      Content2Comma: '.',
+      Content22H: '',
+      Content22: '',
+      Content3: "There are two core factors that affect a miner's ROI:",
+      Content4: 'Mining output',
+      Content5: 'Token price',
+      Content6:
+        'Mining output is directly related to the mining difficulty. The more miners, the greater the total network-wide hash power, the higher the mining difficulty, and the lower the mining output per miner. The total mineable supply is fixed, so the more hash power that flows into mining, the less mining output is released per unit (TB) of hash power.',
+      Content7:
+        'The output of first-batch mining is usually much greater in comparison to regular mining',
+      Content7Comma: '. ',
+      Content8:
+        'You can think of it like sharing a pizza. The more people share, the smaller each slice gets. To use Chia mining as a case study, ',
+      Content88:
+        'the daily output during first-batch mining was equivalent to 1 year of mining at the rates just 2 months after mainnet launch',
+      Content88Comma: '.',
+      Content14: '',
+      Content15: '',
+      Content15Comma: '',
+      Content16: '',
+      Content9:
+        'Token price is affected by dynamic market conditions. Typically the mainet launch happens simultaneously as ',
+      Content10:
+        ' listing on an exchange which is when the token experiences price discovery, possibly surging exponentially',
+      Content10Comma: '. ',
+      Content11:
+        'To put it simply, the earlier you can mine, the more tokens you earn. And on top of that, you can sell your tokens at a higher price when the token is listed on exchanges, resulting in a better ROI.',
+      Content12:
+        'Participating in first-batch mining is only possible if you’re a professional miner or an experienced mining pool. Procyon is the premiere platform that aims to make first-batch mining accessible to general investors, delivering exceptional ROI.',
+      Content13: 'Shoot for the stars with Procyon!'
     }
   },
 
