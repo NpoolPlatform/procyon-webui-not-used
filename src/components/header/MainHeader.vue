@@ -24,7 +24,7 @@
       flat
       @click="$router.push('/emailregister')"
     >
-      {{ $t('header.Register') }}
+      {{ $t('button.Register') }}
     </q-btn>
     <q-btn
       v-if="!logined"
@@ -32,7 +32,7 @@
       flat
       @click="$router.push('/login')"
     >
-      {{ $t('header.Login') }}
+      {{ $t('button.Login') }}
     </q-btn>
     <AvatarDropdown />
   </div>

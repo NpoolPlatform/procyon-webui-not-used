@@ -13,7 +13,7 @@ import {
 // ########### define your self store #################
 // 1 import your store modules
 import {
-  users,
+  user,
   UserState,
   UserMutations,
   UserActions,
@@ -32,7 +32,7 @@ import { style, StyleState, StyleMutations, StyleGetters } from './style'
 
 // 2 combine your store to root store
 export interface RootState {
-  users: UserState
+  user: UserState
   style: StyleState
   goods: GoodState
 }
@@ -47,7 +47,7 @@ type Getters = UserGetters & StyleGetters & GoodGetters
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<RootState>({
     modules: {
-      users,
+      user,
       style,
       goods
     },

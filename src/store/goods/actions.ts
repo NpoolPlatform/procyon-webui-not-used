@@ -30,6 +30,7 @@ const actions: ActionTree<GoodState, RootState> = {
       .catch((err: Error) => {
         commit(MutationTypes.SetError, err)
         commit(MutationTypes.SetLoading, false)
+        commit(MutationTypes.SetGoodDetails, [])
       })
   }
 }
