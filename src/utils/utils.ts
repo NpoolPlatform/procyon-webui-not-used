@@ -2,14 +2,14 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 
 export const TimeStampToDate = (
-  timestamp: string,
+  timestamp: number,
   format: string,
   lang?: string
 ): string => {
   switch (lang) {
     case 'en-US':
-      return dayjs.unix(Number(timestamp)).format(format)
+      return dayjs.unix(timestamp).format(format)
     default:
-      return dayjs.unix(Number(timestamp)).locale('ja').format(format)
+      return dayjs.unix(timestamp).locale('ja').format(format)
   }
 }
