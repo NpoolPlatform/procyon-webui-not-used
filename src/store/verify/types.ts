@@ -1,3 +1,8 @@
+export interface googleAuthenticationInfo {
+  qrCodeURL: string
+  secret: string
+}
+
 export interface SendEmailRequest {
   AppID?: string
   Email: string

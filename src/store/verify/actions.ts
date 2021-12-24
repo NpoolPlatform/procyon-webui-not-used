@@ -43,6 +43,7 @@ interface VerifyActions {
 
 const actions: ActionTree<VerifyState, RootState> = {
   [ActionTypes.SendEmail] ({ commit }, payload: VerifyTypes.SendEmailRequest) {
+    commit(MutationTypes.SetLoading, true)
     post<VerifyTypes.SendEmailRequest, VerifyTypes.SendEmailResponse>(VerifyURLPath.SEND_EMAIL, payload)
       .then(() => {
         commit(MutationTypes.SetError, '')
@@ -54,6 +55,7 @@ const actions: ActionTree<VerifyState, RootState> = {
       })
   },
   [ActionTypes.SendSMS] ({ commit }, payload: VerifyTypes.SendSmsRequest) {
+    commit(MutationTypes.SetLoading, true)
     post<VerifyTypes.SendSmsRequest, VerifyTypes.SendSmsResponse>(VerifyURLPath.SEND_SMS, payload)
       .then(() => {
         commit(MutationTypes.SetError, '')
@@ -65,6 +67,7 @@ const actions: ActionTree<VerifyState, RootState> = {
       })
   },
   [ActionTypes.GetQRCodeURL] ({ commit }, payload: VerifyTypes.GetQRCodeURLRequest) {
+    commit(MutationTypes.SetLoading, true)
     post<VerifyTypes.GetQRCodeURLRequest, VerifyTypes.GetQRCodeURLResponse>(VerifyURLPath.GET_QRCODE_URL, payload)
       .then((resp: VerifyTypes.GetQRCodeURLResponse) => {
         commit(MutationTypes.SetGoogleAuthenticationInfo, {
@@ -80,6 +83,7 @@ const actions: ActionTree<VerifyState, RootState> = {
       })
   },
   [ActionTypes.VerifyCodeWithUserID] ({ commit }, payload: VerifyTypes.VerifyCodeWithUserIDRequest) {
+    commit(MutationTypes.SetLoading, true)
     post<VerifyTypes.VerifyCodeWithUserIDRequest, VerifyTypes.VerifyCodeWithUserIDResponse>(VerifyURLPath.VERIFY_CODE_WITH_USERID, payload)
       .then(() => {
         commit(MutationTypes.SetError, '')
@@ -91,6 +95,7 @@ const actions: ActionTree<VerifyState, RootState> = {
       })
   },
   [ActionTypes.VerifyGoogleAuthentication] ({ commit }, payload: VerifyTypes.VerifyGoogleAuthenticationCodeRequest) {
+    commit(MutationTypes.SetLoading, true)
     post<VerifyTypes.VerifyGoogleAuthenticationCodeRequest, VerifyTypes.VerifyGoogleAuthenticationCodeResponse>(VerifyURLPath.VERIFY_GOOGLE_AUTHENTICATION, payload)
       .then(() => {
         commit(MutationTypes.SetError, '')
