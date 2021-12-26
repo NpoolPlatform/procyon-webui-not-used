@@ -5,8 +5,9 @@ import { MutationTypes } from './mutation-types'
 import { VerifyMutations } from './mutations'
 import { VerifyState } from './state'
 import { post } from 'src/boot/axios'
-import * as VerifyTypes from './types'
 import {
+  GetQRCodeURLRequest,
+  GetQRCodeURLResponse,
   googleAuthenticationInfo,
   SendEmailRequest,
   SendEmailResponse,
@@ -40,7 +41,7 @@ interface VerifyActions {
     commit
   }: AugmentedActionContext<VerifyState,
     RootState,
-    VerifyMutations<VerifyState>>, payload: VerifyTypes.GetQRCodeURLRequest): void
+    VerifyMutations<VerifyState>>, payload: RequestInput<GetQRCodeURLRequest>): void
 
   [ActionTypes.VerifyCodeWithUserID] ({
     commit
@@ -78,18 +79,22 @@ const actions: ActionTree<VerifyState, RootState> = {
       commit(notifyMutation.SetLoading, false)
     })
   },
-  [ActionTypes.GetQRCodeURL] ({ commit }, payload: VerifyTypes.GetQRCodeURLRequest) {
+  [ActionTypes.GetQRCodeURL] ({ commit }, payload: RequestInput<GetQRCodeURLRequest>) {
     let info: googleAuthenticationInfo
-    post<VerifyTypes.GetQRCodeURLRequest, VerifyTypes.GetQRCodeURLResponse>(VerifyURLPath.GET_QRCODE_URL, payload)
-      .then((resp: VerifyTypes.GetQRCodeURLResponse) => {
+    commit(notifyMutation.SetInnerLoading, true)
+    post<GetQRCodeURLRequest, GetQRCodeURLResponse>(VerifyURLPath.GET_QRCODE_URL, payload.requestInput)
+      .then((resp: GetQRCodeURLResponse) => {
         info = {
           qrCodeURL: resp.Info.CodeURL,
           secret: resp.Info.Secret
         }
         commit(MutationTypes.SetGoogleAuthenticationInfo, info)
+        commit(notifyMutation.SetInnerLoading, false)
       })
-      .catch(() => {
+      .catch((err: Error) => {
         commit(MutationTypes.SetGoogleAuthenticationInfo, info)
+        commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+        commit(notifyMutation.SetInnerLoading, false)
       })
   },
   [ActionTypes.VerifyCodeWithUserID] ({ commit }, payload: RequestInput<VerifyCodeWithUserIDRequest>) {

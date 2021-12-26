@@ -6,6 +6,9 @@ import { GoodMutations } from './mutations'
 import { GoodState } from './state'
 import { post } from 'src/boot/axios'
 import { GetGoodDetailsRequest, GetGoodDetailsResponse, GoodURLPath } from './types'
+import { RequestInput } from 'src/store/types'
+import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
+import { RequestMessageToNotifyMessage } from 'src/utils/utils'
 
 // use public api
 interface GoodActions {
@@ -13,17 +16,21 @@ interface GoodActions {
     commit
   }: AugmentedActionContext<GoodState,
     RootState,
-    GoodMutations<GoodState>>, payload: GetGoodDetailsRequest): void
+    GoodMutations<GoodState>>, payload: RequestInput<GetGoodDetailsRequest>): void
 }
 
 const actions: ActionTree<GoodState, RootState> = {
-  [ActionTypes.GetGoodDetails] ({ commit }, payload: GetGoodDetailsRequest) {
-    post<GetGoodDetailsRequest, GetGoodDetailsResponse>(GoodURLPath.GET_GOOD_DETAILS, payload)
+  [ActionTypes.GetGoodDetails] ({ commit }, payload: RequestInput<GetGoodDetailsRequest>) {
+    commit(notifyMutation.SetInnerLoading, true)
+    post<GetGoodDetailsRequest, GetGoodDetailsResponse>(GoodURLPath.GET_GOOD_DETAILS, payload.requestInput)
       .then((resp: GetGoodDetailsResponse) => {
         commit(goodsMutation.SetGoodDetails, resp.Details)
+        commit(notifyMutation.SetInnerLoading, false)
       })
-      .catch(() => {
+      .catch((err: Error) => {
         commit(goodsMutation.SetGoodDetails, [])
+        commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+        commit(notifyMutation.SetInnerLoading, false)
       })
   }
 }

@@ -7,12 +7,14 @@ type NotifyGetters = {
   getLoading (state: NotifyState): boolean
   getNotifyMessages (state: NotifyState): Array<NotifyMessage>
   getLoadingContent (state: NotifyState): string
+  getInnerLoading (state: NotifyState): boolean
 }
 
 const getters: GetterTree<NotifyState, RootState> & NotifyGetters = {
   getLoading: (state: NotifyState): boolean => state.loading,
   getNotifyMessages: (state: NotifyState): Array<NotifyMessage> => state.notifyMessages,
-  getLoadingContent: (state: NotifyState): string => state.loadingContent
+  getLoadingContent: (state: NotifyState): string => state.loadingContent,
+  getInnerLoading: (state: NotifyState): boolean => state.innerLoading
 }
 
 export { NotifyGetters, getters }
