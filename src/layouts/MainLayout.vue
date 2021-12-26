@@ -31,14 +31,9 @@ import { notify } from 'src/notify/notify'
 
 const store = useStore()
 
-const loading = computed({
-  get: () => store.getters.getLoading,
-  set: (val) => {
-    store.commit(MutationTypes.SetLoading, val)
-  }
-})
+const loading = computed(() => store.getters.getLoading)
 const messages = computed(() => store.getters.getNotifyMessages)
-const waitingMessage = computed(() => store.getters.getLoadingContent)
+const loadingContent = computed(() => store.getters.getLoadingContent)
 
 const q = useQuasar()
 const $q = useQuasar()
@@ -46,7 +41,7 @@ const $q = useQuasar()
 watch(loading, (newLoding, oldLoading) => {
   if (newLoding && !oldLoading) {
     $q.loading.show({
-      message: waitingMessage.value
+      message: loadingContent.value
     })
   } else if (!newLoding && oldLoading) {
     $q.loading.hide()
