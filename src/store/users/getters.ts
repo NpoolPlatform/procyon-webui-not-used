@@ -1,23 +1,18 @@
 import { GetterTree } from 'vuex'
 import { RootState } from '../index'
 import { UserState } from './state'
-import { UserBaiscInfo } from './types'
+import { UserInfo } from './types'
 
 type UserGetters = {
-  getUserInfo(state: UserState): UserBaiscInfo
+  getUserInfo(state: UserState): UserInfo
   getUserLogined(state: UserState): boolean
-  getUserHasInvitationCode(state: UserState): boolean
-  getUserError(state: UserState): string
-  getUserLoading(state: UserState): boolean
+  getUserInvitationCode(state: UserState): string
 }
 
 const getters: GetterTree<UserState, RootState> & UserGetters = {
-  getUserInfo: (state: UserState): UserBaiscInfo => state.info.UserBasicInfo,
+  getUserInfo: (state: UserState): UserInfo => state.info,
   getUserLogined: (state: UserState): boolean => state.logined,
-  getUserHasInvitationCode: (state: UserState): boolean =>
-    state.hasInvitationCode,
-  getUserError: (state: UserState): string => state.error,
-  getUserLoading: (state: UserState): boolean => state.loading
+  getUserInvitationCode: (state: UserState): string => state.invitationCode
 }
 
 export { UserGetters, getters }
