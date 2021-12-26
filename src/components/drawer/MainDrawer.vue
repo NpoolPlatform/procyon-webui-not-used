@@ -28,7 +28,7 @@ import { useI18n } from 'vue-i18n'
 const store = useStore()
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
-const hasInvitationCode = computed(() => store.getters.getUserHasInvitationCode)
+const invitationCode = computed(() => store.getters.getUserInvitationCode)
 
 const links = [
   {
@@ -47,7 +47,7 @@ const links = [
     label: t('drawer.Affiliates'),
     goto: { path: '/affiliates' },
     img: affiliatesImg,
-    show: hasInvitationCode.value
+    show: invitationCode.value !== ''
   },
   {
     label: t('drawer.Account'),

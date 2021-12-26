@@ -100,7 +100,11 @@ module.exports = configure(function (ctx) {
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
       config: {
-        notify: {}
+        notify: {},
+        loading: {
+          delay: 400,
+          message: ''
+        }
       },
 
       // iconSet: 'material-icons', // Quasar icon set
@@ -114,7 +118,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Notify', 'Cookies']
+      plugins: ['Notify', 'Cookies', 'Loading']
     },
 
     // animations: 'all', // --- includes all animations

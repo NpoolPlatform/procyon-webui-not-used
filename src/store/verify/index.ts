@@ -5,7 +5,7 @@ import { VerifyActions, actions } from './actions'
 import { VerifyGetters, getters } from './getters'
 import { VerifyMutations, mutations } from './mutations'
 
-const goods: Module<VerifyState, RootState> = {
+const verify: Module<VerifyState, RootState> = {
   // namespaced: true,
   actions,
   getters,
@@ -14,7 +14,7 @@ const goods: Module<VerifyState, RootState> = {
 }
 
 export {
-  goods,
+  verify,
   VerifyState,
   actions,
   VerifyActions,

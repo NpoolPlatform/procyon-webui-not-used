@@ -1,68 +1,73 @@
 <template>
-  <div class="product-card" v-for="(good, index) in myGoods" :key="index">
-    <div class="card-header">
-      <q-img :src="spacemeshImg" class="header-img"></q-img>
-      <h3 class="header-title">{{ good.CoinInfo.Name }}</h3>
+  <div class='product-card' v-for='(good, index) in myGoods' :key='index'>
+    <div class='card-header'>
+      <q-img :src='spacemeshImg' class='header-img'></q-img>
+      <h3 class='header-title'>{{ good.CoinInfo.Name }}</h3>
     </div>
 
-    <div class="product-price">
+    <div class='product-price'>
       <span>{{ good.Price }}</span
       >USDT / TB
     </div>
 
-    <div class="product-line">
-      <span class="line-label">{{
-        $t('product.DailyMiningRewardsLabel')
-      }}</span>
-      <span class="line-value"
-        >*{{ $t('product.DailyMiningRewardsValue') }}</span
+    <div class='product-line'>
+      <span class='line-label'>{{
+          $t('product.DailyMiningRewardsLabel')
+        }}</span>
+      <span class='line-value'
+      >*{{ $t('product.DailyMiningRewardsValue') }}</span
       >
     </div>
 
-    <div class="product-line">
-      <span class="line-label">{{ $t('product.ServicePeriodLabel') }}</span>
-      <span class="line-value"
-        >{{ good.DurationDays }} {{ $t('product.ServicePeriodValue') }}</span
+    <div class='product-line'>
+      <span class='line-label'>{{ $t('product.ServicePeriodLabel') }}</span>
+      <span class='line-value'
+      >{{ good.DurationDays }} {{ $t('product.ServicePeriodValue') }}</span
       >
     </div>
 
-    <div class="product-line">
-      <span class="line-label">{{
-        $t('product.TechnicalServiceFeeLabel')
-      }}</span>
-      <span class="line-value">20%</span>
+    <div class='product-line'>
+      <span class='line-label'>{{
+          $t('product.TechnicalServiceFeeLabel')
+        }}</span>
+      <span class='line-value'>20%</span>
     </div>
 
-    <div class="product-line">
-      <span class="line-label">{{ $t('product.MaintenanceFeeLabel') }}</span>
-      <span class="line-value"
-        >* / {{ $t('product.MaintenanceFeeValue') }}</span
+    <div class='product-line'>
+      <span class='line-label'>{{ $t('product.MaintenanceFeeLabel') }}</span>
+      <span class='line-value'
+      >* / {{ $t('product.MaintenanceFeeValue') }}</span
       >
     </div>
 
-    <div class="product-line">
-      <span class="line-label">{{ $t('product.OrderEffectiveLabel') }}</span>
-      <span class="line-value">*</span>
+    <div class='product-line'>
+      <span class='line-label'>{{ $t('product.OrderEffectiveLabel') }}</span>
+      <span class='line-value'>*</span>
     </div>
 
     <div>
-      <q-btn disable class="common-button product-btn">{{
-        $t('button.StartMining')
-      }}</q-btn>
+      <q-btn disable class='common-button product-btn'>{{
+          $t('button.StartMining')
+        }}
+      </q-btn>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang='ts'>
 import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import { computed, onMounted } from 'vue'
 import { useStore } from 'src/store'
 import { ActionTypes as GoodActionTypes } from 'src/store/goods/action-types'
+import { GetGoodDetailsRequest } from 'src/store/goods/types'
 
 const store = useStore()
 
 onMounted(() => {
-  store.dispatch(GoodActionTypes.GetGoodDetails)
+  const request: GetGoodDetailsRequest = {
+    AppID: ''
+  }
+  store.dispatch(GoodActionTypes.GetGoodDetails, request)
 })
 
 const myGoods = computed(() => store.getters.getGoodDetails)

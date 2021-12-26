@@ -27,6 +27,8 @@ import { useStore } from 'src/store'
 import { ActionTypes } from 'src/store/users/action-types'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import { RequestInput } from 'src/store/types'
+import { UserLogoutRequest } from 'src/store/users/types'
 
 const store = useStore()
 // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -44,45 +46,19 @@ const props = withDefaults(defineProps<Props>(), {
 const avatarSize = toRef(props, 'avatarSize')
 
 const logined = computed(() => store.getters.getUserLogined)
-const hasInvitationCode = computed(() => store.getters.getUserHasInvitationCode)
-
-// const loading = computed(() => store.getters.getUserLoading)
-// const err = computed(() => store.getters.getUserError)
-
-// const wt = ref<notifyCallback>()
-
-// watch([loading, err], (nl, ne) => {
-//   // watch loading error
-//   // loading -> true new _waiting()
-//   if (nl[0]) {
-//     console.log('loading')
-//     wt.value = waiting('start')
-//   }
-//   // loading -> true->false & no error -> succ
-//   if (!nl[0] && nl[1] === '') {
-//     wt.value &&
-//       wt.value({
-//         type: 'positive',
-//         message: t('notify.Logout.Success'),
-//       })
-//   }
-//   // loading -> true->false & error -> fail
-//   if (!nl[0] && nl[1] !== '') {
-//     wt.value &&
-//       wt.value({
-//         type: 'negative',
-//         message: t('notify.Logout.Fail'),
-//         caption: nl[1],
-//       })
-//   }
-// })
+const invitationCode = computed(() => store.getters.getUserInvitationCode)
 
 const logout = () => {
-  store.dispatch(ActionTypes.UserLogout, {
-    wait: t('notify.Logout.Waiting'),
-    success: t('notify.Logout.Success'),
-    fail: t('notify.Logout.Fail')
-  })
+  const request: UserLogoutRequest = {}
+  const userLogoutRequest: RequestInput<UserLogoutRequest> = {
+    requestInput: request,
+    messages: {
+      successMessage: t('notify.Logout.Success'),
+      failMessage: t('notify.Logout.Fail')
+    },
+    loadingContent: t('notify.Logout.Load')
+  }
+  store.dispatch(ActionTypes.UserLogout, userLogoutRequest)
 }
 
 const list = [
@@ -101,7 +77,7 @@ const list = [
     label: t('menuList.Wallet')
   },
   {
-    show: hasInvitationCode.value,
+    show: invitationCode.value !== '',
     method: () => {
       void router.push('/affiliates')
     },

@@ -5,19 +5,11 @@ import { GoodDetail } from './types'
 
 type GoodMutations<S = GoodState> = {
   [MutationTypes.SetGoodDetails] (state: S, payload: Array<GoodDetail>): void
-  [MutationTypes.SetError] (state: S, payload: string): void
-  [MutationTypes.SetLoading] (state: S, payload: boolean): void
 }
 
 const mutations: MutationTree<GoodState> & GoodMutations = {
   [MutationTypes.SetGoodDetails] (state: GoodState, payload: Array<GoodDetail>) {
     state.goods = payload
-  },
-  [MutationTypes.SetError] (state: GoodState, payload: string) {
-    state.error = payload
-  },
-  [MutationTypes.SetLoading] (state: GoodState, payload: boolean) {
-    state.loading = payload
   }
 }
 
