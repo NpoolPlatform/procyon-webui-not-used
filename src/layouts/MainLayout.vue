@@ -27,7 +27,6 @@ import { computed, defineAsyncComponent, onBeforeMount, ref, watch } from 'vue'
 import { useStore } from 'src/store'
 import { useQuasar } from 'quasar'
 import { MutationTypes } from 'src/store/notify/mutation-types'
-// import cloneDeep from 'lodash/cloneDeep'
 import { notify } from 'src/notify/notify'
 
 const store = useStore()
@@ -54,7 +53,6 @@ watch(loading, (newLoding, oldLoading) => {
   }
 })
 
-// let stopSubscribe = (): void => void
 onBeforeMount(() => {
   const appid = 'ff2c5d50-be56-413e-aba5-9c7ad888a769'
   q.cookies.set('AppID', appid)
@@ -71,19 +69,6 @@ onBeforeMount(() => {
     }
   })
 })
-
-// onUnmounted(() => {
-//   stopSubscribe()
-// })
-
-// watch(() => cloneDeep(messages.value), (newMessages, oldMessages) => {
-//   if (newMessages.length > 0 && oldMessages.length === 0) {
-//     newMessages.forEach(message => {
-//       notify(message)
-//     })
-//     store.commit(MutationTypes.CleanMessages)
-//   }
-// }, { deep: true })
 
 const MainHeader = defineAsyncComponent(
   () => import('src/components/header/MainHeader.vue')
