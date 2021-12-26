@@ -4,13 +4,15 @@ interface NotifyState {
   loadingContent: string
   notifyMessages: Array<NotifyMessage>
   loading: boolean
+  innerLoading: boolean
 }
 
 function state (): NotifyState {
   return {
     loadingContent: '',
     notifyMessages: [],
-    loading: false
+    loading: false,
+    innerLoading: false
   }
 }
 

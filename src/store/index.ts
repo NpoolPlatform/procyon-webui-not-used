@@ -30,18 +30,23 @@ import {
 
 import { style, StyleState, StyleMutations, StyleGetters } from './style'
 
+import { notify, NotifyState, NotifyMutations, NotifyGetters } from './notify'
+import { verify, VerifyActions, VerifyGetters, VerifyMutations, VerifyState } from 'src/store/verify'
+
 // 2 combine your store to root store
 export interface RootState {
   user: UserState
   style: StyleState
   goods: GoodState
+  notify: NotifyState
+  verify: VerifyState
 }
 
 // 3 combine your actions, mutations and getters to root, if have multi use & combin
 // for example a & b
-type Actions = UserActions & GoodActions
-type Mutations = UserMutations & StyleMutations & GoodMutations
-type Getters = UserGetters & StyleGetters & GoodGetters
+type Actions = UserActions & GoodActions & VerifyActions
+type Mutations = UserMutations & StyleMutations & GoodMutations & NotifyMutations & VerifyMutations
+type Getters = UserGetters & StyleGetters & GoodGetters & NotifyGetters & VerifyGetters
 
 // 4 attach your module to root
 export default store(function (/* { ssrContext } */) {
@@ -49,7 +54,9 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       user,
       style,
-      goods
+      goods,
+      notify,
+      verify
     },
 
     // enable strict mode (adds overhead!)
@@ -78,10 +85,8 @@ export type AugmentedActionContext<S, R, M extends MutationTree<S>> = {
 } & Omit<ActionContext<S, R>, 'commit'>
 
 // define your store actions, dispatch and getter type
-export type Store = Omit<
-  VuexStore<RootState>,
-  'getters' | 'commit' | 'dispatch'
-> & {
+export type Store = Omit<VuexStore<RootState>,
+  'getters' | 'commit' | 'dispatch'> & {
   commit<k extends keyof Mutations, P extends Parameters<Mutations[k]>[1]> (
     type: k,
     payload?: P,

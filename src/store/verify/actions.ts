@@ -5,8 +5,23 @@ import { MutationTypes } from './mutation-types'
 import { VerifyMutations } from './mutations'
 import { VerifyState } from './state'
 import { post } from 'src/boot/axios'
-import * as VerifyTypes from './types'
-import { VerifyURLPath } from './types'
+import {
+  GetQRCodeURLRequest,
+  GetQRCodeURLResponse,
+  googleAuthenticationInfo,
+  SendEmailRequest,
+  SendEmailResponse,
+  SendSmsRequest,
+  SendSmsResponse,
+  VerifyCodeWithUserIDRequest,
+  VerifyCodeWithUserIDResponse,
+  VerifyGoogleAuthenticationCodeRequest,
+  VerifyGoogleAuthenticationCodeResponse,
+  VerifyURLPath
+} from './types'
+import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
+import { RequestInput } from 'src/store/types'
+import { RequestMessageToNotifyMessage } from 'src/utils/utils'
 
 // use public api
 interface VerifyActions {
@@ -14,97 +29,95 @@ interface VerifyActions {
     commit
   }: AugmentedActionContext<VerifyState,
     RootState,
-    VerifyMutations<VerifyState>>, payload: VerifyTypes.SendEmailRequest): void
+    VerifyMutations<VerifyState>>, payload: RequestInput<SendEmailRequest>): void
 
   [ActionTypes.SendSMS] ({
     commit
   }: AugmentedActionContext<VerifyState,
     RootState,
-    VerifyMutations<VerifyState>>, payload: VerifyTypes.SendSmsRequest): void
+    VerifyMutations<VerifyState>>, payload: RequestInput<SendSmsRequest>): void
 
   [ActionTypes.GetQRCodeURL] ({
     commit
   }: AugmentedActionContext<VerifyState,
     RootState,
-    VerifyMutations<VerifyState>>, payload: VerifyTypes.GetQRCodeURLRequest): void
+    VerifyMutations<VerifyState>>, payload: RequestInput<GetQRCodeURLRequest>): void
 
   [ActionTypes.VerifyCodeWithUserID] ({
     commit
   }: AugmentedActionContext<VerifyState,
     RootState,
-    VerifyMutations<VerifyState>>, payload: VerifyTypes.VerifyCodeWithUserIDRequest): void
+    VerifyMutations<VerifyState>>, payload: RequestInput<VerifyCodeWithUserIDRequest>): void
 
   [ActionTypes.VerifyGoogleAuthentication] ({
     commit
   }: AugmentedActionContext<VerifyState,
     RootState,
-    VerifyMutations<VerifyState>>, payload: VerifyTypes.VerifyGoogleAuthenticationCodeRequest): void
+    VerifyMutations<VerifyState>>, payload: RequestInput<VerifyGoogleAuthenticationCodeRequest>): void
 }
 
 const actions: ActionTree<VerifyState, RootState> = {
-  [ActionTypes.SendEmail] ({ commit }, payload: VerifyTypes.SendEmailRequest) {
-    commit(MutationTypes.SetLoading, true)
-    post<VerifyTypes.SendEmailRequest, VerifyTypes.SendEmailResponse>(VerifyURLPath.SEND_EMAIL, payload)
-      .then(() => {
-        commit(MutationTypes.SetError, '')
-        commit(MutationTypes.SetLoading, false)
+  [ActionTypes.SendEmail] ({ commit }, payload: RequestInput<SendEmailRequest>) {
+    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
+    post<SendEmailRequest, SendEmailResponse>(VerifyURLPath.SEND_EMAIL, payload.requestInput).then(() => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      commit(notifyMutation.SetLoading, false)
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetLoading, false)
+    })
+  },
+  [ActionTypes.SendSMS] ({ commit }, payload: RequestInput<SendSmsRequest>) {
+    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
+    post<SendSmsRequest, SendSmsResponse>(VerifyURLPath.SEND_SMS, payload.requestInput).then(() => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      commit(notifyMutation.SetLoading, false)
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetLoading, false)
+    })
+  },
+  [ActionTypes.GetQRCodeURL] ({ commit }, payload: RequestInput<GetQRCodeURLRequest>) {
+    let info: googleAuthenticationInfo
+    commit(notifyMutation.SetInnerLoading, true)
+    post<GetQRCodeURLRequest, GetQRCodeURLResponse>(VerifyURLPath.GET_QRCODE_URL, payload.requestInput)
+      .then((resp: GetQRCodeURLResponse) => {
+        info = {
+          qrCodeURL: resp.Info.CodeURL,
+          secret: resp.Info.Secret
+        }
+        commit(MutationTypes.SetGoogleAuthenticationInfo, info)
+        commit(notifyMutation.SetInnerLoading, false)
       })
       .catch((err: Error) => {
-        commit(MutationTypes.SetError, err)
-        commit(MutationTypes.SetLoading, false)
+        commit(MutationTypes.SetGoogleAuthenticationInfo, info)
+        commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+        commit(notifyMutation.SetInnerLoading, false)
       })
   },
-  [ActionTypes.SendSMS] ({ commit }, payload: VerifyTypes.SendSmsRequest) {
-    commit(MutationTypes.SetLoading, true)
-    post<VerifyTypes.SendSmsRequest, VerifyTypes.SendSmsResponse>(VerifyURLPath.SEND_SMS, payload)
-      .then(() => {
-        commit(MutationTypes.SetError, '')
-        commit(MutationTypes.SetLoading, false)
-      })
-      .catch((err: Error) => {
-        commit(MutationTypes.SetError, err)
-        commit(MutationTypes.SetLoading, false)
-      })
+  [ActionTypes.VerifyCodeWithUserID] ({ commit }, payload: RequestInput<VerifyCodeWithUserIDRequest>) {
+    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
+    post<VerifyCodeWithUserIDRequest, VerifyCodeWithUserIDResponse>(VerifyURLPath.VERIFY_CODE_WITH_USERID, payload.requestInput).then(() => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      commit(notifyMutation.SetLoading, false)
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetLoading, false)
+    })
   },
-  [ActionTypes.GetQRCodeURL] ({ commit }, payload: VerifyTypes.GetQRCodeURLRequest) {
-    commit(MutationTypes.SetLoading, true)
-    post<VerifyTypes.GetQRCodeURLRequest, VerifyTypes.GetQRCodeURLResponse>(VerifyURLPath.GET_QRCODE_URL, payload)
-      .then((resp: VerifyTypes.GetQRCodeURLResponse) => {
-        commit(MutationTypes.SetGoogleAuthenticationInfo, {
-          secret: resp.Info.Secret,
-          qrcodeURL: resp.Info.CodeURL
-        })
-        commit(MutationTypes.SetError, '')
-        commit(MutationTypes.SetLoading, false)
-      })
-      .catch((err: Error) => {
-        commit(MutationTypes.SetError, err)
-        commit(MutationTypes.SetLoading, false)
-      })
-  },
-  [ActionTypes.VerifyCodeWithUserID] ({ commit }, payload: VerifyTypes.VerifyCodeWithUserIDRequest) {
-    commit(MutationTypes.SetLoading, true)
-    post<VerifyTypes.VerifyCodeWithUserIDRequest, VerifyTypes.VerifyCodeWithUserIDResponse>(VerifyURLPath.VERIFY_CODE_WITH_USERID, payload)
-      .then(() => {
-        commit(MutationTypes.SetError, '')
-        commit(MutationTypes.SetLoading, false)
-      })
-      .catch((err: Error) => {
-        commit(MutationTypes.SetError, err)
-        commit(MutationTypes.SetLoading, false)
-      })
-  },
-  [ActionTypes.VerifyGoogleAuthentication] ({ commit }, payload: VerifyTypes.VerifyGoogleAuthenticationCodeRequest) {
-    commit(MutationTypes.SetLoading, true)
-    post<VerifyTypes.VerifyGoogleAuthenticationCodeRequest, VerifyTypes.VerifyGoogleAuthenticationCodeResponse>(VerifyURLPath.VERIFY_GOOGLE_AUTHENTICATION, payload)
-      .then(() => {
-        commit(MutationTypes.SetError, '')
-        commit(MutationTypes.SetLoading, false)
-      })
-      .catch((err: Error) => {
-        commit(MutationTypes.SetError, err)
-        commit(MutationTypes.SetLoading, false)
-      })
+  [ActionTypes.VerifyGoogleAuthentication] ({ commit }, payload: RequestInput<VerifyGoogleAuthenticationCodeRequest>) {
+    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
+    post<VerifyGoogleAuthenticationCodeRequest, VerifyGoogleAuthenticationCodeResponse>(VerifyURLPath.VERIFY_GOOGLE_AUTHENTICATION, payload.requestInput).then(() => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      commit(notifyMutation.SetLoading, false)
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetLoading, false)
+    })
   }
 }
 

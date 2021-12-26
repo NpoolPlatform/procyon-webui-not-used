@@ -4,15 +4,11 @@ import { GoodState } from './state'
 import { GoodDetail } from './types'
 
 type GoodGetters = {
-  getGoodDetails(state: GoodState): Array<GoodDetail>
-  getGoodError(state: GoodState): string
-  getGoodLoading(state: GoodState): boolean
+  getGoodDetails (state: GoodState): Array<GoodDetail>
 }
 
 const getters: GetterTree<GoodState, RootState> & GoodGetters = {
-  getGoodDetails: (state: GoodState): Array<GoodDetail> => state.goods,
-  getGoodError: (state: GoodState): string => state.error,
-  getGoodLoading: (state: GoodState): boolean => state.loading
+  getGoodDetails: (state: GoodState): Array<GoodDetail> => state.goods
 }
 
 export { GoodGetters, getters }

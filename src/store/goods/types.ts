@@ -93,6 +93,10 @@ export interface GoodDetail {
   ]
 }
 
+export interface GetGoodDetailsRequest {
+  AppID?: string
+}
+
 export interface GetGoodDetailsResponse {
   Details: Array<GoodDetail>
   Total: number

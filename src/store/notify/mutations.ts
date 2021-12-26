@@ -8,6 +8,7 @@ type NotifyMutations<S = NotifyState> = {
   [MutationTypes.PushMessage] (state: S, payload: NotifyMessage): void
   [MutationTypes.SetLoadingContent] (state: S, payload: string): void
   [MutationTypes.CleanMessages] (state: S): void
+  [MutationTypes.SetInnerLoading] (state: S, payload: boolean): void
 }
 
 const mutations: MutationTree<NotifyState> & NotifyMutations = {
@@ -22,6 +23,9 @@ const mutations: MutationTree<NotifyState> & NotifyMutations = {
   },
   [MutationTypes.CleanMessages] (state: NotifyState) {
     state.notifyMessages = []
+  },
+  [MutationTypes.SetInnerLoading] (state: NotifyState, payload: boolean) {
+    state.innerLoading = payload
   }
 }
 

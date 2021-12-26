@@ -20,9 +20,23 @@ export default {
 
   notify: {
     Logout: {
-      Fail: 'ログアウトに失敗する: ',
+      Load: 'ログアウトするまでお待ちください',
       Success: 'ログアウトに成功しました',
-      Waiting: 'ログアウトするまでお待ちください'
+      Fail: 'ログアウトに失敗する: '
+    },
+    Login: {
+      Load: '今すぐログイン入力を確認してください、お待ちください',
+      Success: 'ログイン成功',
+      Fail: 'ログインに失敗する'
+    },
+    SendEmail: {
+      Load: 'メール送信中です、しばらくお待ちください',
+      Success: {
+        Words1: '認証コードが、',
+        Words2: 'へ送信されました。受信のご確認をお願い申し上げます。',
+        Check: 'メールをご確認ください'
+      },
+      Fail: '検証コードの送信失敗'
     }
   },
 
@@ -60,7 +74,37 @@ export default {
   button: {
     Register: 'アカウント登録',
     Login: 'ログイン',
-    StartMining: '購入'
+    StartMining: '購入',
+    SendCode: ''
+  },
+
+  input: {
+    Password: 'パスワード',
+    PhoneNumber: '電話番号',
+    ConfirmPassword: 'パスワードを再入力',
+    EmailAddress: 'メールアドレス',
+    VerifyCode: '認証コード',
+    PasswordWarning: '8〜20文字で、数字も含めてください',
+    ConfirmPasswordWarning: 'パスワードとパスワードの確認が一致していません',
+    PhoneNumberWarning: '正しい電話番号を入力してください',
+    EmailAddressWarning: '正しいメールアドレスを記入ください',
+    VerifyCodeWarning: '認証コードが違います',
+    Login: {
+      Username: 'ユーザー名 / メールアドレス',
+      UsernameWarning: '正しいユーザー名／メールアドレスを入力してください'
+    }
+  },
+
+  box: {
+    PhoneLink: '電話番号の使用',
+    EmailLink: 'メールアドレスの使用'
+  },
+
+  login: {
+    Title: 'ユーザーログイン',
+    Forget: 'パスワードを忘れた場合',
+    NoAccount: 'アカウントがない場合',
+    Register: '今すぐ登録'
   },
 
   product: {
