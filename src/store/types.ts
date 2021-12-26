@@ -1,5 +1,10 @@
-export interface NotifyMessage {
-  wait: string
-  success: string
-  fail: string
+export interface RequestMessages {
+  successMessage: string
+  failMessage: string
+}
+
+export interface RequestInput<T> {
+  requestInput: T,
+  messages: RequestMessages,
+  loadingContent: string
 }

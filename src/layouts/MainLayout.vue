@@ -1,13 +1,13 @@
 <template>
-  <q-layout class="main-body" :style="fontStyle">
-    <q-header reveal class="page-header">
+  <q-layout class='main-body' :style='fontStyle'>
+    <q-header reveal class='page-header'>
       <MainHeader />
     </q-header>
 
     <q-drawer
-      :width="200"
-      v-model="showDrawer"
-      style="background: transparent !important"
+      :width='200'
+      v-model='showDrawer'
+      style='background: transparent !important'
     >
       <MainDrawer />
     </q-drawer>
@@ -16,20 +16,53 @@
       <router-view />
     </q-page-container>
 
-    <q-footer class="page-footer">
+    <q-footer class='page-footer'>
       <MainFooter />
     </q-footer>
   </q-layout>
 </template>
 
-<script setup lang="ts">
-import { computed, ref, defineAsyncComponent, onMounted } from 'vue'
-import { useStore } from 'src/store/index'
+<script setup lang='ts'>
+import { computed, defineAsyncComponent, onBeforeMount, ref, watch } from 'vue'
+import { useStore } from 'src/store'
 import { useQuasar } from 'quasar'
+import { MutationTypes } from 'src/store/notify/mutation-types'
+import { notify } from 'src/notify/notify'
+
+const store = useStore()
+
+const loading = computed(() => store.getters.getLoading)
+const messages = computed(() => store.getters.getNotifyMessages)
+const loadingContent = computed(() => store.getters.getLoadingContent)
 
 const q = useQuasar()
-onMounted(() => {
-  q.cookies.set('AppID', 'ff2c5d50-be56-413e-aba5-9c7ad888a769')
+const $q = useQuasar()
+
+watch(loading, (newLoding, oldLoading) => {
+  if (newLoding && !oldLoading) {
+    $q.loading.show({
+      message: loadingContent.value
+    })
+  } else if (!newLoding && oldLoading) {
+    $q.loading.hide()
+  }
+})
+
+onBeforeMount(() => {
+  const appid = 'ff2c5d50-be56-413e-aba5-9c7ad888a769'
+  q.cookies.set('AppID', appid)
+
+  store.subscribe(mutation => {
+    if (mutation.type === MutationTypes.PushMessage) {
+      console.log('pushing message')
+      if (messages.value.length !== 0) {
+        messages.value.forEach((message) => {
+          notify(message)
+        })
+        store.commit(MutationTypes.CleanMessages)
+      }
+    }
+  })
 })
 
 const MainHeader = defineAsyncComponent(
@@ -42,7 +75,6 @@ const MainFooter = defineAsyncComponent(
   () => import('src/components/footer/MainFooter.vue')
 )
 
-const store = useStore()
 const showDrawer = ref(false)
 
 const fontStyle = computed(() => store.getters.getFontStyle)
@@ -55,10 +87,11 @@ const fontStyle = computed(() => store.getters.getFontStyle)
   background-repeat: no-repeat;
   background-size: 800px;
   display: block;
-  top: 100;
+  top: 0;
   right: 0;
   height: auto;
   width: 100%;
+  font-family: Barlow sans-serif;
 }
 
 .page-header {
