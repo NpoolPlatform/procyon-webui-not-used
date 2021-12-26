@@ -1,18 +1,18 @@
 import { GetterTree } from 'vuex'
 import { RootState } from '../index'
 import { NotifyState } from './state'
-import { allMessages } from 'src/store/types'
+import { NotifyMessage } from 'src/store/notify/types'
 
 type NotifyGetters = {
-  getNotifyLoading (state: NotifyState): boolean
-  getNotifyMessages (state: NotifyState): Array<allMessages>
-  getNotifyLoadingMessage (state: NotifyState): string
+  getLoading (state: NotifyState): boolean
+  getNotifyMessages (state: NotifyState): Array<NotifyMessage>
+  getLoadingContent (state: NotifyState): string
 }
 
 const getters: GetterTree<NotifyState, RootState> & NotifyGetters = {
-  getNotifyLoading: (state: NotifyState): boolean => state.loading,
-  getNotifyMessages: (state: NotifyState): Array<allMessages> => state.notifyMessages,
-  getNotifyLoadingMessage: (state: NotifyState): string => state.loadingMessage
+  getLoading: (state: NotifyState): boolean => state.loading,
+  getNotifyMessages: (state: NotifyState): Array<NotifyMessage> => state.notifyMessages,
+  getLoadingContent: (state: NotifyState): string => state.loadingContent
 }
 
 export { NotifyGetters, getters }

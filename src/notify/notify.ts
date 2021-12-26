@@ -1,6 +1,7 @@
 import { Notify } from 'quasar'
+import { NotifyMessage } from 'src/store/notify/types'
 
-type notifyType = 'positive' | 'negative' | 'warning' | 'info'
+export type notifyType = 'positive' | 'negative' | 'warning' | 'info' | ''
 
 interface notifyProps {
   type: notifyType
@@ -8,7 +9,7 @@ interface notifyProps {
   caption?: string
 }
 
-type notifyCallback = (props: notifyProps) => void
+export type notifyCallback = (props: notifyProps) => void
 
 const waiting = (msg: string): notifyCallback => {
   return Notify.create({
@@ -44,4 +45,22 @@ const hint = (msg: string): void => {
   })
 }
 
-export { waiting, success, fail, hint }
+const notify = (message: NotifyMessage): void => {
+  switch (message.type) {
+    case 'positive':
+    case 'warning':
+    case 'info':
+      Notify.create({
+        type: message.type,
+        message: message.message
+      })
+      break
+    case 'negative':
+      fail(message.message, message.caption)
+      break
+    default:
+      break
+  }
+}
+
+export { waiting, success, fail, hint, notify }

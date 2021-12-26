@@ -1,14 +1,14 @@
-import { allMessages } from 'src/store/types'
+import { NotifyMessage } from 'src/store/notify/types'
 
 interface NotifyState {
-  loadingMessage: string
-  notifyMessages: Array<allMessages>
+  loadingContent: string
+  notifyMessages: Array<NotifyMessage>
   loading: boolean
 }
 
 function state (): NotifyState {
   return {
-    loadingMessage: '',
+    loadingContent: '',
     notifyMessages: [],
     loading: false
   }
