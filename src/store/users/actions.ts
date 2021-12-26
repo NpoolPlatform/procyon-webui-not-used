@@ -5,49 +5,68 @@ import { MutationTypes } from './mutation-types'
 import { UserMutations } from './mutations'
 import { UserState } from './state'
 import { post } from 'src/boot/axios'
-import { UserURLPath } from './types'
-import { waiting } from 'src/notify/notify'
-import { NotifyMessage } from '../types'
+import {
+  UserLoginRequest,
+  UserLoginResponse,
+  UserURLPath,
+  UserLogoutRequest,
+  UserLogoutResponse,
+  GetUserInvitationCodeRequest, GetUserInvitationCodeResponse
+} from './types'
+import { RequestInput } from 'src/store/types'
+import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
+import { RequestMessageToNotifyMessage } from 'src/utils/utils'
 
 // use public api
 interface UserActions {
-  [ActionTypes.GetUser] ({
-    commit
-  }: AugmentedActionContext<UserState,
-    RootState,
-    UserMutations<UserState>>): void
-
   [ActionTypes.UserLogout] (
     {
       commit
-    }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>,
-    payload: NotifyMessage
+    }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: RequestInput<UserLogoutRequest>
   ): void
+
+  [ActionTypes.UserLogin] ({
+    commit
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: RequestInput<UserLoginRequest>): void
+
+  [ActionTypes.GetUserInvitationCode] ({
+    commit
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: GetUserInvitationCodeRequest): void
 }
 
 const actions: ActionTree<UserState, RootState> = {
-  [ActionTypes.UserLogout] ({ commit }, payload: NotifyMessage) {
-    const wait = waiting(payload.wait)
-    commit(MutationTypes.SetLoading, true)
-    post(UserURLPath.LOGOUT, {})
+  [ActionTypes.UserLogout] ({ commit }, payload: RequestInput<UserLogoutRequest>) {
+    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
+    post<UserLogoutRequest, UserLogoutResponse>(UserURLPath.LOGOUT, payload.requestInput)
       .then(() => {
+        commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
         commit(MutationTypes.SetUserLogined, false)
-        commit(MutationTypes.SetError, '')
-        commit(MutationTypes.SetLoading, false)
-        wait({
-          type: 'positive',
-          message: payload.success
-        })
       })
       .catch((err: Error) => {
-        commit(MutationTypes.SetError, err)
-        commit(MutationTypes.SetLoading, false)
-        wait({
-          type: 'negative',
-          message: payload.fail,
-          caption: err.message
-        })
+        commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+        commit(notifyMutation.SetLoading, false)
       })
+  },
+  [ActionTypes.UserLogin] ({ commit }, payload: RequestInput<UserLoginRequest>) {
+    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
+    post<UserLoginRequest, UserLoginResponse>(UserURLPath.LOGIN, payload.requestInput).then(() => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      commit(notifyMutation.SetLoading, false)
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetLoading, false)
+    })
+  },
+  [ActionTypes.GetUserInvitationCode] ({ commit }, payload: GetUserInvitationCodeRequest) {
+    post<GetUserInvitationCodeRequest, GetUserInvitationCodeResponse>(UserURLPath.GET_USER_INVITATION_CODE, payload).then((resp: GetUserInvitationCodeResponse) => {
+      if (resp.Info !== null) {
+        commit(MutationTypes.SetInvitationCode, resp.Info.InvitationCode)
+      }
+    }).catch(() => {
+      commit(MutationTypes.SetInvitationCode, '')
+    })
   }
 }
 

@@ -10,10 +10,10 @@
   font-size: 14px
   text-transform: capitalize
 
-.common-button:hover 
+.common-button:hover
   border-radius: 2px
 
-a 
+a
   cursor: pointer
   text-decoration: none
   transition: all ease-in-out 0.3s
@@ -169,12 +169,13 @@ h4
 
 .content ul li::before
   color: #1ec498
-  content: '\2727' /*hollow star*/
+  content: '\2727'
+  /*hollow star*/
   display: inline-block
   margin-left: -32px
   width: 32px
 
-.section-part-title 
+.section-part-title
   background: linear-gradient(to left, #54e280 0, #1ec498 50%)
   background-clip: border-box
   filter: contrast(2)
@@ -197,3 +198,52 @@ h4
   bottom: -4px
   height: 1px
   width: 100%
+
+.common-card-container
+  background: linear-gradient(to bottom right, rgba(225, 238, 239, 0.2) 0, rgba(161, 208, 208, 0.2) 100%)
+  box-shadow: 16px 16px 20px 0 #23292b
+  border-radius: 12px
+  color: #e1eeef
+  padding: 48px
+  margin: 48px auto
+  min-width: 360px
+  max-width: 480px
+
+.common-card-title
+  color: #e1eeef
+  font-size: 24px
+  font-weight: 200
+  position: relative
+  margin: 0
+  padding: 0 0 16px
+  display: flex
+  justify-content: space-between
+  align-items: baseline
+
+.common-card-title::after
+  background: linear-gradient(to right, transparent 0, #e1eeef 10%, transparent 100%)
+  display: block
+  content: ""
+  position: absolute
+  left: 0
+  bottom: 0
+  height: 1px
+  width: 100%
+
+.common-input
+  border-radius: 12px
+  /* box-shadow: 2px 2px 4px 0 #27424c */
+  color: #27424c
+  font-size: 14px
+  width: 100%
+  margin: 10px 0
+
+.q-menu
+  max-height: 300px
+  color: black !important
+
+.q-virtual-scroll__content
+  color: black
+
+.q-body--prevent-scroll
+  position: static !important
