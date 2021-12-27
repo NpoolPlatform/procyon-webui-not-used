@@ -15,7 +15,7 @@ import {
 } from './types'
 import { RequestInput } from 'src/store/types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
-import { RequestMessageToNotifyMessage } from 'src/utils/utils'
+import { RequestMessageToNotifyMessage, sha256Password } from 'src/utils/utils'
 
 // use public api
 interface UserActions {
@@ -31,7 +31,7 @@ interface UserActions {
 
   [ActionTypes.GetUserInvitationCode] ({
     commit
-  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: GetUserInvitationCodeRequest): void
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: RequestInput<GetUserInvitationCodeRequest>): void
 }
 
 const actions: ActionTree<UserState, RootState> = {
@@ -51,6 +51,7 @@ const actions: ActionTree<UserState, RootState> = {
   [ActionTypes.UserLogin] ({ commit }, payload: RequestInput<UserLoginRequest>) {
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
+    payload.requestInput.Password = sha256Password(payload.requestInput.Password)
     post<UserLoginRequest, UserLoginResponse>(UserURLPath.LOGIN, payload.requestInput).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
       commit(notifyMutation.SetLoading, false)
@@ -59,13 +60,17 @@ const actions: ActionTree<UserState, RootState> = {
       commit(notifyMutation.SetLoading, false)
     })
   },
-  [ActionTypes.GetUserInvitationCode] ({ commit }, payload: GetUserInvitationCodeRequest) {
-    post<GetUserInvitationCodeRequest, GetUserInvitationCodeResponse>(UserURLPath.GET_USER_INVITATION_CODE, payload).then((resp: GetUserInvitationCodeResponse) => {
+  [ActionTypes.GetUserInvitationCode] ({ commit }, payload: RequestInput<GetUserInvitationCodeRequest>) {
+    commit(notifyMutation.SetInnerLoading, true)
+    post<GetUserInvitationCodeRequest, GetUserInvitationCodeResponse>(UserURLPath.GET_USER_INVITATION_CODE, payload.requestInput).then((resp: GetUserInvitationCodeResponse) => {
       if (resp.Info !== null) {
         commit(MutationTypes.SetInvitationCode, resp.Info.InvitationCode)
       }
-    }).catch(() => {
+      commit(notifyMutation.SetInnerLoading, false)
+    }).catch((err: Error) => {
       commit(MutationTypes.SetInvitationCode, '')
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetInnerLoading, false)
     })
   }
 }

@@ -37,6 +37,16 @@ export default {
         Check: 'メールをご確認ください'
       },
       Fail: '検証コードの送信失敗'
+    },
+    VerifyWithUserID: {
+      Load: '検証をお待ちください',
+      Success: '',
+      Fail: '入力コードエラー'
+    },
+    VerifyGoogleAuthentication: {
+      Load: '検証をお待ちください',
+      Success: 'google認証の確認に成功',
+      Fail: 'google認証の確認に失敗する'
     }
   },
 
@@ -75,7 +85,8 @@ export default {
     Register: 'アカウント登録',
     Login: 'ログイン',
     StartMining: '購入',
-    SendCode: ''
+    SendCode: '送信コード',
+    Verify: 'ベリファイ'
   },
 
   input: {
@@ -92,6 +103,18 @@ export default {
     Login: {
       Username: 'ユーザー名 / メールアドレス',
       UsernameWarning: '正しいユーザー名／メールアドレスを入力してください'
+    }
+  },
+
+  dialog: {
+    EmailVerify: {
+      Title: 'メール認証',
+      Content1: '認証コードが、',
+      Content3: 'へ送信されました。認証コードのご確認をお願い申し上げます。'
+    },
+    GoogleVerify: {
+      Title: 'Google認証コード',
+      Content: 'お客様は、Google認証によるログイン認証を選択しています。Google認証アプリに表示されている認証コードを記入ください。'
     }
   },
 

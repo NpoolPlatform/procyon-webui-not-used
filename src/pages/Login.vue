@@ -2,6 +2,9 @@
   <LoginBox :title="$t('login.Title')">
     <LoginForm></LoginForm>
   </LoginBox>
+
+  <EmailVerifyDialog v-model:show-email='showEmailVerifyDialog'></EmailVerifyDialog>
+  <GoogleVerifyDialog v-model:show-google='showGoogleAuthenticationVerifyDialog'></GoogleVerifyDialog>
 </template>
 
 <script setup lang='ts'>
@@ -9,12 +12,11 @@ import { defineAsyncComponent, computed, watch, ref } from 'vue'
 import { useStore } from 'src/store'
 import { MutationTypes } from 'src/store/users/mutation-types'
 import { useRouter } from 'vue-router'
-import { ActionTypes } from 'src/store/users/action-types'
-import { GetUserInvitationCodeRequest } from 'src/store/users/types'
 import { ActionTypes as verifyAction } from 'src/store/verify/action-types'
 import { SendEmailRequest } from 'src/store/verify/types'
 import { useI18n } from 'vue-i18n'
 import { RequestInput } from 'src/store/types'
+import { GenerateSendEmailRequest } from 'src/utils/utils'
 
 const store = useStore()
 const router = useRouter()
@@ -26,6 +28,8 @@ const {
 
 const LoginBox = defineAsyncComponent(() => import('src/components/box/Box.vue'))
 const LoginForm = defineAsyncComponent(() => import('src/components/form/LoginForm.vue'))
+const EmailVerifyDialog = defineAsyncComponent(() => import('src/components/dialog/login-verify/EmailVerify.vue'))
+const GoogleVerifyDialog = defineAsyncComponent(() => import('src/components/dialog/login-verify/GoogleVerify.vue'))
 
 const showGoogleAuthenticationVerifyDialog = ref(false)
 const showEmailVerifyDialog = ref(false)
@@ -41,42 +45,23 @@ watch(logined, (newLogined) => {
     if (userInfo.value.UserAppInfo.UserApplicationInfo.GALogin) {
       showGoogleAuthenticationVerifyDialog.value = true
     } else if (userInfo.value.UserBasicInfo.EmailAddress !== '') {
-      // todo: send email verify code
-      let username = ''
-      if (locale.value === 'en-US') {
-        if (userInfo.value.UserBasicInfo.FirstName !== '') {
-          username = userInfo.value.UserBasicInfo.FirstName
-        }
-      } else {
-        if (userInfo.value.UserBasicInfo.LastName !== '') {
-          username = userInfo.value.UserBasicInfo.LastName
-        }
-      }
       const request: SendEmailRequest = {
-        AppID: '',
-        Email: userInfo.value.UserBasicInfo.EmailAddress,
-        Intention: '',
-        Lang: locale.value,
-        Username: username
+        Email: userInfo.value.UserBasicInfo.EmailAddress
       }
-
-      const sendEmailRequest: RequestInput<SendEmailRequest> = {
+      let sendEmailRequest: RequestInput<SendEmailRequest> = {
         requestInput: request,
         messages: {
-          loadingMessage: t('notify.SendEmail.Load'),
           successMessage: t('notify.SendEmail.Success.Word1') + '<' + userInfo.value.UserBasicInfo.EmailAddress + '>' + t('notify.SendEmail.Success.Word2') + t('notify.SendEmail.Success.Check'),
           failMessage: t('notify.SendEmail.Fail')
-        }
+        },
+        loadingContent: t('notify.SendEmail.Load')
       }
+      sendEmailRequest = GenerateSendEmailRequest(locale.value, userInfo.value.UserBasicInfo, sendEmailRequest)
       store.dispatch(verifyAction.SendEmail, sendEmailRequest)
       showEmailVerifyDialog.value = true
     } else {
-      const request: GetUserInvitationCodeRequest = {
-        AppID: '',
-        UserID: ''
-      }
-      store.dispatch(ActionTypes.GetUserInvitationCode, request)
       logined.value = true
+      store.commit(MutationTypes.SetLoginVerify, true)
       void router.push({ path: '/account' })
     }
   }

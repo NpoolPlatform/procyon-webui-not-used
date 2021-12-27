@@ -37,6 +37,16 @@ export default {
         Check: 'please check your email'
       },
       Fail: 'Fail to send code to your email'
+    },
+    VerifyWithUserID: {
+      Load: 'Please wait for verify...',
+      Success: '',
+      Fail: 'Input Code Error'
+    },
+    VerifyGoogleAuthentication: {
+      Load: 'Please wait for verify...',
+      Success: 'Successful to verify google authentication',
+      Fail: 'Fail to verify google authentication'
     }
   },
 
@@ -75,7 +85,8 @@ export default {
     Register: 'Register',
     Login: 'Sign In',
     StartMining: 'Purchase',
-    SendCode: 'Send Code'
+    SendCode: 'Send Code',
+    Verify: 'Verify'
   },
 
   input: {
@@ -92,6 +103,18 @@ export default {
     Login: {
       Username: 'Username / Email',
       UsernameWarning: 'Please enter a legal username or email address'
+    }
+  },
+
+  dialog: {
+    EmailVerify: {
+      Title: 'Email Verification',
+      Content1: 'An E-mail just sent to ',
+      Content3: 'Please enter the verification code we sent to your email.'
+    },
+    GoogleVerify: {
+      Title: 'Google Verification Code',
+      Content: 'You have choose to verify login by google authenticate. Please enter your verification code in your google authenticator.'
     }
   },
 

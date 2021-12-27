@@ -54,7 +54,6 @@ onBeforeMount(() => {
 
   store.subscribe(mutation => {
     if (mutation.type === MutationTypes.PushMessage) {
-      console.log('pushing message')
       if (messages.value.length !== 0) {
         messages.value.forEach((message) => {
           notify(message)
