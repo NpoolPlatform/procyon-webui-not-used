@@ -1,5 +1,5 @@
 <template>
-  <q-form class='register-form' @submit='login'>
+  <q-form @submit='login'>
     <Vue3QTelInput v-if='showPhone' v-model:tel='loginInput.Phone' bg-color='blue-grey-2' outlined
                    lazy-rules
                    :rules='phoneNumberRule'></Vue3QTelInput>

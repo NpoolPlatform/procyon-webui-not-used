@@ -6,7 +6,6 @@ import { notifyType } from 'src/notify/notify'
 import { UserBasicInfo } from 'src/store/users/types'
 import { RequestInput } from 'src/store/types'
 import { SendEmailRequest } from 'src/store/verify/types'
-import { throttle } from 'quasar'
 
 export const TimeStampToDate = (
   timestamp: number,
