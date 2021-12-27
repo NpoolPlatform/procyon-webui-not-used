@@ -6,6 +6,7 @@ interface UserState {
   error: string
   loading: boolean
   invitationCode: string
+  loginVerify: boolean
 }
 
 function state (): UserState {
@@ -66,7 +67,8 @@ function state (): UserState {
     logined: false,
     loading: false,
     error: '',
-    invitationCode: ''
+    invitationCode: '',
+    loginVerify: false
   }
 }
 

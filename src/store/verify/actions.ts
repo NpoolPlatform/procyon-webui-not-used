@@ -22,6 +22,7 @@ import {
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { RequestInput } from 'src/store/types'
 import { RequestMessageToNotifyMessage } from 'src/utils/utils'
+import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
 
 // use public api
 interface VerifyActions {
@@ -102,6 +103,7 @@ const actions: ActionTree<VerifyState, RootState> = {
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<VerifyCodeWithUserIDRequest, VerifyCodeWithUserIDResponse>(VerifyURLPath.VERIFY_CODE_WITH_USERID, payload.requestInput).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      commit(userMutation.SetLoginVerify, true)
       commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
@@ -113,6 +115,7 @@ const actions: ActionTree<VerifyState, RootState> = {
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<VerifyGoogleAuthenticationCodeRequest, VerifyGoogleAuthenticationCodeResponse>(VerifyURLPath.VERIFY_GOOGLE_AUTHENTICATION, payload.requestInput).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      commit(userMutation.SetLoginVerify, true)
       commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))

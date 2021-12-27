@@ -1,7 +1,31 @@
 <template>
   <LoginBox :title="$t('login.Title')">
-    <LoginForm></LoginForm>
+    <LoginForm />
   </LoginBox>
+
+  <VerifyDialog :dialog-title="$t('dialog.EmailVerify.Title')" v-model:show-dialog='showEmailVerifyDialog'
+                @verify='verifyEmailCode'>
+    <template v-slot:content>
+      <q-card-section>
+        {{ $t('dialog.EmailVerify.Content1')
+        }}<span style='font-weight: bolder'>{{ userInfo.UserBasicInfo.EmailAddress }}</span>,{{ $t('dialog.EmailVerify.Content3')
+        }}
+      </q-card-section>
+    </template>
+
+    <template v-slot:email-input>
+      <q-input
+        disable
+        bg-color='blue-grey-2'
+        class='common-input'
+        outlined
+        :label='$t("input.EmailAddress")'
+        v-model='userInfo.UserBasicInfo.EmailAddress'>
+      </q-input>
+    </template>
+  </VerifyDialog>
+  <VerifyDialog :dialog-title="$t('dialog.GoogleVerify.Title')"
+                v-model:show-dialog='showGoogleAuthenticationVerifyDialog' @verify='verifyGoogleCode' />
 </template>
 
 <script setup lang='ts'>
@@ -9,12 +33,16 @@ import { defineAsyncComponent, computed, watch, ref } from 'vue'
 import { useStore } from 'src/store'
 import { MutationTypes } from 'src/store/users/mutation-types'
 import { useRouter } from 'vue-router'
-import { ActionTypes } from 'src/store/users/action-types'
-import { GetUserInvitationCodeRequest } from 'src/store/users/types'
-import { ActionTypes as verifyAction } from 'src/store/verify/action-types'
-import { SendEmailRequest } from 'src/store/verify/types'
+import { ActionTypes, ActionTypes as verifyAction } from 'src/store/verify/action-types'
+import {
+  SendEmailRequest,
+  VerifyCodeWithUserIDRequest,
+  VerifyGoogleAuthenticationCodeRequest
+} from 'src/store/verify/types'
 import { useI18n } from 'vue-i18n'
 import { RequestInput } from 'src/store/types'
+import { GenerateSendEmailRequest, ThrottleDelay } from 'src/utils/utils'
+import { throttle } from 'quasar'
 
 const store = useStore()
 const router = useRouter()
@@ -26,9 +54,10 @@ const {
 
 const LoginBox = defineAsyncComponent(() => import('src/components/box/Box.vue'))
 const LoginForm = defineAsyncComponent(() => import('src/components/form/LoginForm.vue'))
+const VerifyDialog = defineAsyncComponent(() => import('src/components/dialog/login-verify/VerifyDialog.vue'))
 
 const showGoogleAuthenticationVerifyDialog = ref(false)
-const showEmailVerifyDialog = ref(false)
+const showEmailVerifyDialog = ref(true)
 
 const logined = computed({
   get: () => store.getters.getUserLogined,
@@ -41,44 +70,59 @@ watch(logined, (newLogined) => {
     if (userInfo.value.UserAppInfo.UserApplicationInfo.GALogin) {
       showGoogleAuthenticationVerifyDialog.value = true
     } else if (userInfo.value.UserBasicInfo.EmailAddress !== '') {
-      // todo: send email verify code
-      let username = ''
-      if (locale.value === 'en-US') {
-        if (userInfo.value.UserBasicInfo.FirstName !== '') {
-          username = userInfo.value.UserBasicInfo.FirstName
-        }
-      } else {
-        if (userInfo.value.UserBasicInfo.LastName !== '') {
-          username = userInfo.value.UserBasicInfo.LastName
-        }
-      }
       const request: SendEmailRequest = {
-        AppID: '',
-        Email: userInfo.value.UserBasicInfo.EmailAddress,
-        Intention: '',
-        Lang: locale.value,
-        Username: username
+        Email: userInfo.value.UserBasicInfo.EmailAddress
       }
-
-      const sendEmailRequest: RequestInput<SendEmailRequest> = {
+      let sendEmailRequest: RequestInput<SendEmailRequest> = {
         requestInput: request,
         messages: {
-          loadingMessage: t('notify.SendEmail.Load'),
           successMessage: t('notify.SendEmail.Success.Word1') + '<' + userInfo.value.UserBasicInfo.EmailAddress + '>' + t('notify.SendEmail.Success.Word2') + t('notify.SendEmail.Success.Check'),
           failMessage: t('notify.SendEmail.Fail')
-        }
+        },
+        loadingContent: t('notify.SendEmail.Load')
       }
+      sendEmailRequest = GenerateSendEmailRequest(locale.value, userInfo.value.UserBasicInfo, sendEmailRequest)
       store.dispatch(verifyAction.SendEmail, sendEmailRequest)
       showEmailVerifyDialog.value = true
     } else {
-      const request: GetUserInvitationCodeRequest = {
-        AppID: '',
-        UserID: ''
-      }
-      store.dispatch(ActionTypes.GetUserInvitationCode, request)
       logined.value = true
+      store.commit(MutationTypes.SetLoginVerify, true)
       void router.push({ path: '/account' })
     }
   }
 })
+
+const verifyEmailCode = throttle((verifyCode: string): void => {
+  console.log('verify code is', verifyCode)
+  const request: VerifyCodeWithUserIDRequest = {
+    UserID: '',
+    Param: userInfo.value.UserBasicInfo.EmailAddress,
+    Code: verifyCode
+  }
+  const verifyCodeWithUserIDRequest: RequestInput<VerifyCodeWithUserIDRequest> = {
+    requestInput: request,
+    messages: {
+      successMessage: t('notify.VerifyWithUserID.Success'),
+      failMessage: t('notify.VerifyWithUserID.Fail')
+    },
+    loadingContent: t('notify.VerifyWithUserID.Load')
+  }
+  store.dispatch(ActionTypes.VerifyCodeWithUserID, verifyCodeWithUserIDRequest)
+}, ThrottleDelay)
+
+const verifyGoogleCode = throttle((verifyCode: string): void => {
+  const request: VerifyGoogleAuthenticationCodeRequest = {
+    UserID: '',
+    Code: verifyCode
+  }
+  const verifyGoogleAuthenticationCodeRequest: RequestInput<VerifyGoogleAuthenticationCodeRequest> = {
+    requestInput: request,
+    messages: {
+      successMessage: t('notify.VerifyGoogleAuthentication.Success'),
+      failMessage: t('notify.VerifyGoogleAuthentication.Fail')
+    },
+    loadingContent: t('notify.VerifyGoogleAuthentication.Load')
+  }
+  store.dispatch(ActionTypes.VerifyGoogleAuthentication, verifyGoogleAuthenticationCodeRequest)
+}, ThrottleDelay)
 </script>

@@ -10,6 +10,7 @@ type UserMutations<S = UserState> = {
   [MutationTypes.SetError](state: S, payload: string): void
   [MutationTypes.SetLoading](state: S, payload: boolean): void
   [MutationTypes.SetInvitationCode](state: S, payload: string): void
+  [MutationTypes.SetLoginVerify](state: S, payload: boolean): void
 }
 
 const mutations: MutationTree<UserState> & UserMutations = {
@@ -30,6 +31,9 @@ const mutations: MutationTree<UserState> & UserMutations = {
   },
   [MutationTypes.SetInvitationCode] (state: UserState, payload: string) {
     state.invitationCode = payload
+  },
+  [MutationTypes.SetLoginVerify] (state: UserState, payload: boolean) {
+    state.loginVerify = payload
   }
 }
 

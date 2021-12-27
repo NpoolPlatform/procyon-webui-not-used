@@ -59,7 +59,7 @@
 <script setup lang='ts'>
 import { ref, computed, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { isValidEmail, isValidLoginUsername, isValidUsername } from 'src/utils/utils'
+import { isValidEmail, isValidLoginUsername, isValidUsername, ThrottleDelay } from 'src/utils/utils'
 import Vue3QTelInput from 'vue3-q-tel-input'
 import { useStore } from 'src/store'
 import { UserLoginRequest } from 'src/store/users/types'
@@ -106,7 +106,7 @@ const login = throttle((): void => {
     loadingContent: t('notify.Login.Load')
   }
   store.dispatch(ActionTypes.UserLogin, request)
-}, 1000)
+}, ThrottleDelay)
 
 </script>
 
