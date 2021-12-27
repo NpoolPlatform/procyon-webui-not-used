@@ -122,6 +122,4 @@ export const GenerateSendEmailRequest = (locale: string, userBasicInfo: UserBasi
   return requestInput
 }
 
-export const ThrottleFunction = (func: (param: string) => void): (param: string) => void => {
-  return throttle(func, 1000)
-}
+export const ThrottleDelay = 1000

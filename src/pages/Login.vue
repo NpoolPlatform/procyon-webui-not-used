@@ -41,7 +41,8 @@ import {
 } from 'src/store/verify/types'
 import { useI18n } from 'vue-i18n'
 import { RequestInput } from 'src/store/types'
-import { GenerateSendEmailRequest, ThrottleFunction } from 'src/utils/utils'
+import { GenerateSendEmailRequest, ThrottleDelay } from 'src/utils/utils'
+import { throttle } from 'quasar'
 
 const store = useStore()
 const router = useRouter()
@@ -56,7 +57,7 @@ const LoginForm = defineAsyncComponent(() => import('src/components/form/LoginFo
 const VerifyDialog = defineAsyncComponent(() => import('src/components/dialog/login-verify/VerifyDialog.vue'))
 
 const showGoogleAuthenticationVerifyDialog = ref(false)
-const showEmailVerifyDialog = ref(false)
+const showEmailVerifyDialog = ref(true)
 
 const logined = computed({
   get: () => store.getters.getUserLogined,
@@ -91,7 +92,7 @@ watch(logined, (newLogined) => {
   }
 })
 
-const verifyEmailCode = ThrottleFunction((verifyCode: string): void => {
+const verifyEmailCode = throttle((verifyCode: string): void => {
   console.log('verify code is', verifyCode)
   const request: VerifyCodeWithUserIDRequest = {
     UserID: '',
@@ -107,9 +108,9 @@ const verifyEmailCode = ThrottleFunction((verifyCode: string): void => {
     loadingContent: t('notify.VerifyWithUserID.Load')
   }
   store.dispatch(ActionTypes.VerifyCodeWithUserID, verifyCodeWithUserIDRequest)
-})
+}, ThrottleDelay)
 
-const verifyGoogleCode = ThrottleFunction((verifyCode): void => {
+const verifyGoogleCode = throttle((verifyCode: string): void => {
   const request: VerifyGoogleAuthenticationCodeRequest = {
     UserID: '',
     Code: verifyCode
@@ -123,5 +124,5 @@ const verifyGoogleCode = ThrottleFunction((verifyCode): void => {
     loadingContent: t('notify.VerifyGoogleAuthentication.Load')
   }
   store.dispatch(ActionTypes.VerifyGoogleAuthentication, verifyGoogleAuthenticationCodeRequest)
-})
+}, ThrottleDelay)
 </script>
