@@ -14,14 +14,6 @@
       <q-card-section>
         <q-form @submit='verifyEmailCode'>
           <q-input
-            disable
-            bg-color='blue-grey-2'
-            class='common-input'
-            outlined
-            :label='$t("input.EmailAddress")'
-            v-model='userBasicInfo.EmailAddress'>
-          </q-input>
-          <q-input
             :rules='verifyCodeRules'
             lazy-rules
             bg-color='blue-grey-2'

@@ -1,10 +1,31 @@
 <template>
   <LoginBox :title="$t('login.Title')">
-    <LoginForm></LoginForm>
+    <LoginForm />
   </LoginBox>
 
-  <EmailVerifyDialog v-model:show-email='showEmailVerifyDialog'></EmailVerifyDialog>
-  <GoogleVerifyDialog v-model:show-google='showGoogleAuthenticationVerifyDialog'></GoogleVerifyDialog>
+  <VerifyDialog :dialog-title="$t('dialog.EmailVerify.Title')" v-model:show-dialog='showEmailVerifyDialog'
+                @verify='verifyEmailCode'>
+    <template v-slot:content>
+      <q-card-section>
+        {{ $t('dialog.EmailVerify.Content1')
+        }}<span style='font-weight: bolder'>{{ userInfo.UserBasicInfo.EmailAddress }}</span>,{{ $t('dialog.EmailVerify.Content3')
+        }}
+      </q-card-section>
+    </template>
+
+    <template v-slot:email-input>
+      <q-input
+        disable
+        bg-color='blue-grey-2'
+        class='common-input'
+        outlined
+        :label='$t("input.EmailAddress")'
+        v-model='userInfo.UserBasicInfo.EmailAddress'>
+      </q-input>
+    </template>
+  </VerifyDialog>
+  <VerifyDialog :dialog-title="$t('dialog.GoogleVerify.Title')"
+                v-model:show-dialog='showGoogleAuthenticationVerifyDialog' @verify='verifyGoogleCode' />
 </template>
 
 <script setup lang='ts'>
@@ -12,11 +33,15 @@ import { defineAsyncComponent, computed, watch, ref } from 'vue'
 import { useStore } from 'src/store'
 import { MutationTypes } from 'src/store/users/mutation-types'
 import { useRouter } from 'vue-router'
-import { ActionTypes as verifyAction } from 'src/store/verify/action-types'
-import { SendEmailRequest } from 'src/store/verify/types'
+import { ActionTypes, ActionTypes as verifyAction } from 'src/store/verify/action-types'
+import {
+  SendEmailRequest,
+  VerifyCodeWithUserIDRequest,
+  VerifyGoogleAuthenticationCodeRequest
+} from 'src/store/verify/types'
 import { useI18n } from 'vue-i18n'
 import { RequestInput } from 'src/store/types'
-import { GenerateSendEmailRequest } from 'src/utils/utils'
+import { GenerateSendEmailRequest, ThrottleFunction } from 'src/utils/utils'
 
 const store = useStore()
 const router = useRouter()
@@ -28,8 +53,7 @@ const {
 
 const LoginBox = defineAsyncComponent(() => import('src/components/box/Box.vue'))
 const LoginForm = defineAsyncComponent(() => import('src/components/form/LoginForm.vue'))
-const EmailVerifyDialog = defineAsyncComponent(() => import('src/components/dialog/login-verify/EmailVerify.vue'))
-const GoogleVerifyDialog = defineAsyncComponent(() => import('src/components/dialog/login-verify/GoogleVerify.vue'))
+const VerifyDialog = defineAsyncComponent(() => import('src/components/dialog/login-verify/VerifyDialog.vue'))
 
 const showGoogleAuthenticationVerifyDialog = ref(false)
 const showEmailVerifyDialog = ref(false)
@@ -65,5 +89,39 @@ watch(logined, (newLogined) => {
       void router.push({ path: '/account' })
     }
   }
+})
+
+const verifyEmailCode = ThrottleFunction((verifyCode: string): void => {
+  console.log('verify code is', verifyCode)
+  const request: VerifyCodeWithUserIDRequest = {
+    UserID: '',
+    Param: userInfo.value.UserBasicInfo.EmailAddress,
+    Code: verifyCode
+  }
+  const verifyCodeWithUserIDRequest: RequestInput<VerifyCodeWithUserIDRequest> = {
+    requestInput: request,
+    messages: {
+      successMessage: t('notify.VerifyWithUserID.Success'),
+      failMessage: t('notify.VerifyWithUserID.Fail')
+    },
+    loadingContent: t('notify.VerifyWithUserID.Load')
+  }
+  store.dispatch(ActionTypes.VerifyCodeWithUserID, verifyCodeWithUserIDRequest)
+})
+
+const verifyGoogleCode = ThrottleFunction((verifyCode): void => {
+  const request: VerifyGoogleAuthenticationCodeRequest = {
+    UserID: '',
+    Code: verifyCode
+  }
+  const verifyGoogleAuthenticationCodeRequest: RequestInput<VerifyGoogleAuthenticationCodeRequest> = {
+    requestInput: request,
+    messages: {
+      successMessage: t('notify.VerifyGoogleAuthentication.Success'),
+      failMessage: t('notify.VerifyGoogleAuthentication.Fail')
+    },
+    loadingContent: t('notify.VerifyGoogleAuthentication.Load')
+  }
+  store.dispatch(ActionTypes.VerifyGoogleAuthentication, verifyGoogleAuthenticationCodeRequest)
 })
 </script>

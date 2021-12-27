@@ -6,6 +6,7 @@ import { notifyType } from 'src/notify/notify'
 import { UserBasicInfo } from 'src/store/users/types'
 import { RequestInput } from 'src/store/types'
 import { SendEmailRequest } from 'src/store/verify/types'
+import { throttle } from 'quasar'
 
 export const TimeStampToDate = (
   timestamp: number,
@@ -24,11 +25,12 @@ export const sha256Password = (password: string): string => {
   return SHA256(password).toString()
 }
 
-export const isValidPassword = (password: string): boolean => {
-  if (password === '' || password === ' ') {
-    return false
-  }
+const numberRegex = /^[0-9]+.?[0-9]*$/
+const wordRegex = /^[a-zA-Z]+$/
+const phoneRegex = /^\d+$/
+const emailRegex = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
 
+export const isValidPassword = (password: string): boolean => {
   if (password.length >= 21 || password.length < 8) {
     return false
   }
@@ -37,13 +39,11 @@ export const isValidPassword = (password: string): boolean => {
     return false
   }
 
-  let reg = /^[0-9]+.?[0-9]*$/
-  if (reg.test(password)) {
+  if (numberRegex.test(password)) {
     return false
   }
 
-  reg = /^[a-zA-Z]+$/
-  if (reg.test(password)) {
+  if (wordRegex.test(password)) {
     return false
   }
 
@@ -51,10 +51,6 @@ export const isValidPassword = (password: string): boolean => {
 }
 
 export const isValidUsername = (username: string): boolean => {
-  if (username === '' || username === ' ') {
-    return false
-  }
-
   if (username.length > 32 || username.length < 4) {
     return false
   }
@@ -63,19 +59,14 @@ export const isValidUsername = (username: string): boolean => {
     return false
   }
 
-  const reg = /^[0-9]+.?[0-9]*$/
-  if (reg.test(username)) {
+  if (numberRegex.test(username)) {
     return false
   }
   return true
 }
 
 export const isValidEmail = (email: string): boolean => {
-  if (email == null || email === '') {
-    return false
-  }
-  const regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
-  if (!regExp.test(email)) {
+  if (!emailRegex.test(email)) {
     return false
   }
 
@@ -95,16 +86,11 @@ export const isValidLoginUsername = (username: string): boolean => {
 }
 
 export const isValidPhone = (phone: string): boolean => {
-  if (phone == null || phone === '') {
+  if (phone.length > 11 || phone === '') {
     return false
   }
 
-  if (phone.length > 11) {
-    return false
-  }
-
-  const regExp = /^\d+$/
-  if (!regExp.test(phone)) {
+  if (!phoneRegex.test(phone)) {
     return false
   }
 
@@ -134,4 +120,8 @@ export const GenerateSendEmailRequest = (locale: string, userBasicInfo: UserBasi
 
   requestInput.requestInput.Username = username
   return requestInput
+}
+
+export const ThrottleFunction = (func: (param: string) => void): (param: string) => void => {
+  return throttle(func, 1000)
 }
