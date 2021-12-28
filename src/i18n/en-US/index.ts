@@ -33,10 +33,19 @@ export default {
       Load: 'Sending email, please wait...',
       Success: {
         Words1: 'A verification code has been sent to ',
-        Words2: ', ',
+        Words2: '',
         Check: 'please check your email'
       },
       Fail: 'Fail to send code to your email'
+    },
+    SendPhone: {
+      Load: 'Sending phone message, please wait...',
+      Success: {
+        Words1: 'A verification code has been sent to ',
+        Words2: '',
+        Check: 'please check your phone messages'
+      },
+      Fail: 'Fail to send code to your phone'
     },
     VerifyWithUserID: {
       Load: 'Please wait for verify...',
@@ -47,6 +56,20 @@ export default {
       Load: 'Please wait for verify...',
       Success: 'Successful to verify google authentication',
       Fail: 'Fail to verify google authentication'
+    },
+    Signup: {
+      Load: 'Please wait',
+      Success: 'Successfully register!',
+      Fail: 'Fail to register'
+    },
+    Forget: {
+      Load: 'Please wait',
+      Success: 'Set new password successfully',
+      Fail: 'Fail to set new password'
+    },
+    GetGoodDetails: {
+      Success: 'Get promotion goods successfully',
+      Fail: 'Fail to get promotion goods'
     }
   },
 
@@ -86,7 +109,9 @@ export default {
     Login: 'Sign In',
     StartMining: 'Purchase',
     SendCode: 'Send Code',
-    Verify: 'Verify'
+    Verify: 'Verify',
+    Confirm: 'Confirm',
+    Cancel: 'Cancel'
   },
 
   input: {
@@ -97,9 +122,14 @@ export default {
     VerifyCode: 'Verification Code',
     PasswordWarning: 'Please enter a password 8-20 alphanumeric characters',
     ConfirmPasswordWarning: 'Password and confirm password not equal',
+    OldPassword: 'Old Password',
+    OldPasswordWarning: 'Please enter your old password',
     PhoneNumberWarning: 'Please enter your correct phone number',
     EmailAddressWarning: 'Please enter your correct email address',
     VerifyCodeWarning: 'Please enter a verification code',
+    InvitationCode: 'Invitation Code',
+    InvitationCodeWarning: 'Invitation code is required',
+    CheckWarning: 'Please choose agree and then click "Register"',
     Login: {
       Username: 'Username / Email',
       UsernameWarning: 'Please enter a legal username or email address'
@@ -128,6 +158,23 @@ export default {
     Forget: 'Forgot password?',
     NoAccount: 'No account? ',
     Register: 'Register now.'
+  },
+
+  forget: {
+    Title: 'Reset Password'
+  },
+
+  register: {
+    Title: 'User Register',
+    Agree1: 'I have read and agree to the',
+    Policy: ' Privacy Policy',
+    And: ' and',
+    User: ' User Agreements',
+    Behind: ''
+  },
+
+  changePassword: {
+    Title: 'Change Password'
   },
 
   product: {

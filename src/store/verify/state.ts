@@ -6,6 +6,8 @@ interface VerifyState {
   loading: boolean
   error: string
   googleAuthenticationInfo: googleAuthenticationInfo
+  sendCodeButtonDisable: boolean
+  sendCodeButtonText: string
 }
 
 function state (): VerifyState {
@@ -18,7 +20,9 @@ function state (): VerifyState {
     loginGoogleAuthenticationVerifyDialog: false,
     loading: false,
     error: '',
-    googleAuthenticationInfo: info
+    googleAuthenticationInfo: info,
+    sendCodeButtonDisable: false,
+    sendCodeButtonText: ''
   }
 }
 

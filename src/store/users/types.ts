@@ -121,12 +121,55 @@ interface GetUserInvitationCodeResponse {
   }
 }
 
+interface UserSignUpRequest {
+  Username?: string,
+  Password: string
+  EmailAddress?: string
+  PhoneNumber?: string
+  VerificationCode: string
+  AppID?: string
+  InvitationCode: string
+}
+
+interface UserSignUpResponse {
+  Info: UserBasicInfo
+}
+
+interface UserChangePasswordRequest {
+  UserID?: string
+  AppID?: string
+  VerifyParam: string
+  VerifyType: string
+  OldPassword: string
+  Password: string
+  Code: string
+}
+
+interface UserChangePasswordResponse {
+  Info: string
+}
+
+interface UserForgetPasswordRequest {
+  VerifyParam: string
+  VerifyType: string
+  Password: string
+  Code: string
+  AppID?: string
+}
+
+interface UserForgetPasswordResponse {
+  Info: string
+}
+
 enum UserURLPath {
   LOGIN = '/login-door/v1/login',
   GET_USER_DETAIL = '/user-management/v1/get/user/details',
   UPDATE_USER = '/user-management/v1/update/user',
   LOGOUT = '/login-door/v1/logout',
-  GET_USER_INVITATION_CODE = '/cloud-hashing-inspire/v1/get/user/invitation/code/by/app/user'
+  GET_USER_INVITATION_CODE = '/cloud-hashing-inspire/v1/get/user/invitation/code/by/app/user',
+  SIGN_UP = '/cloud-hashing-apis/v1/signup',
+  CHANGE_PASSWORD = '/user-management/v1/change/password',
+  FORGET_PASSWORD = '/user-management/v1/forget/password'
 }
 
 export {
@@ -139,5 +182,11 @@ export {
   UserLogoutRequest,
   UserLogoutResponse,
   GetUserInvitationCodeRequest,
-  GetUserInvitationCodeResponse
+  GetUserInvitationCodeResponse,
+  UserSignUpRequest,
+  UserSignUpResponse,
+  UserChangePasswordRequest,
+  UserChangePasswordResponse,
+  UserForgetPasswordRequest,
+  UserForgetPasswordResponse
 }

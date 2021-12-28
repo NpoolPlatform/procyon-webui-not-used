@@ -59,14 +59,22 @@ interface VerifyActions {
 
 const actions: ActionTree<VerifyState, RootState> = {
   [ActionTypes.SendEmail] ({ commit }, payload: RequestInput<SendEmailRequest>) {
-    commit(notifyMutation.SetLoading, true)
-    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<SendEmailRequest, SendEmailResponse>(VerifyURLPath.SEND_EMAIL, payload.requestInput).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
-      commit(notifyMutation.SetLoading, false)
+      let count = 60
+      const countDown = setInterval(() => {
+        if (count < 1) {
+          commit(MutationTypes.SetSendCodeButtonDisable, false)
+          count = 60
+          clearInterval(countDown)
+        } else {
+          commit(MutationTypes.SetSendCodeButtonDisable, true)
+          commit(MutationTypes.SetSendCodeButtonText, count.toString() + 's')
+          count--
+        }
+      }, 1000)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
-      commit(notifyMutation.SetLoading, false)
     })
   },
   [ActionTypes.SendSMS] ({ commit }, payload: RequestInput<SendSmsRequest>) {
@@ -74,10 +82,20 @@ const actions: ActionTree<VerifyState, RootState> = {
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<SendSmsRequest, SendSmsResponse>(VerifyURLPath.SEND_SMS, payload.requestInput).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
-      commit(notifyMutation.SetLoading, false)
+      let count = 60
+      const countDown = setInterval(() => {
+        if (count < 1) {
+          commit(MutationTypes.SetSendCodeButtonDisable, false)
+          count = 60
+          clearInterval(countDown)
+        } else {
+          commit(MutationTypes.SetSendCodeButtonDisable, true)
+          commit(MutationTypes.SetSendCodeButtonText, count.toString() + 's')
+          count--
+        }
+      }, 1000)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
-      commit(notifyMutation.SetLoading, false)
     })
   },
   [ActionTypes.GetQRCodeURL] ({ commit }, payload: RequestInput<GetQRCodeURLRequest>) {

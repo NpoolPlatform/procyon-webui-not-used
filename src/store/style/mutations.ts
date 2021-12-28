@@ -7,6 +7,7 @@ type StyleMutations<S = StyleState> = {
   [MutationTypes.SetFontStyle] (state: S, payload: FontFamily): void
   [MutationTypes.SetShowEmail] (state: S, payload: boolean): void
   [MutationTypes.SetShowPhone] (state: S, payload: boolean): void
+  [MutationTypes.SetUserDialogShow] (state: S, payload: boolean): void
 }
 
 const mutations: MutationTree<StyleState> & StyleMutations = {
@@ -18,6 +19,9 @@ const mutations: MutationTree<StyleState> & StyleMutations = {
   },
   [MutationTypes.SetShowPhone] (state: StyleState, payload: boolean) {
     state.showPhone = payload
+  },
+  [MutationTypes.SetUserDialogShow] (state: StyleState, payload: boolean) {
+    state.userDialogShow = payload
   }
 }
 

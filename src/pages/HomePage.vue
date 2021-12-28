@@ -11,7 +11,7 @@
           </div>
           <q-btn
             v-if="!logined"
-            @click="$router.push('/emailregister')"
+            @click="$router.push('/register')"
             class="common-button register-btn"
             >{{ $t('button.Register') }}</q-btn
           >
@@ -29,7 +29,7 @@
       </div>
 
       <div class="content">
-        <h2 id="why-procyon" class="section-part-title">
+        <h2 class="section-part-title">
           {{ $t('homepage.Why.Title') }}
         </h2>
 
@@ -99,7 +99,7 @@
 
       <div class="content">
         <div class="columns-1">
-          <h2 id="why-procyon" class="section-part-title">
+          <h2 class="section-part-title">
             {{ $t('homepage.What.Title') }}
           </h2>
           <p>

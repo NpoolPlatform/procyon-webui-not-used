@@ -21,6 +21,7 @@
     "dayjs": "^1.10.7",
     "pre-commit": "^1.2.2",
     "quasar": "^2.0.0",
+    "recaptcha-v3": "^1.10.0",
     "rxjs": "^7.4.0",
     "vue-i18n": "^9.0.0",
     "vue3-q-tel-input": "^1.0.20",

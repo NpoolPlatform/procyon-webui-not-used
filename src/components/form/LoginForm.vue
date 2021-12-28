@@ -1,8 +1,8 @@
 <template>
-  <q-form class='register-form' @submit='login'>
+  <q-form @submit='login'>
     <Vue3QTelInput v-if='showPhone' v-model:tel='loginInput.Phone' bg-color='blue-grey-2' outlined
                    lazy-rules
-                   :rules='phoneNumberRule'></Vue3QTelInput>
+                   :rules='phoneNumberRule' :label="$t('input.PhoneNumber')"></Vue3QTelInput>
     <q-input
       v-if='showEmail'
       bg-color='blue-grey-2'
@@ -41,7 +41,7 @@
     <div class='bottom-style'>
       <router-link
         class='link-style'
-        :to="{ path: '/forgetpassword' }"
+        :to="{ path: '/forget' }"
       >{{ $t('login.Forget') }}
       </router-link
       >
@@ -57,15 +57,31 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, computed, reactive } from 'vue'
+import { ref, computed, reactive, onBeforeMount, defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { isValidEmail, isValidLoginUsername, isValidUsername, ThrottleDelay } from 'src/utils/utils'
-import Vue3QTelInput from 'vue3-q-tel-input'
+import { isValidLoginUsername, sha256Password, ThrottleDelay } from 'src/utils/utils'
+const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
 import { useStore } from 'src/store'
 import { UserLoginRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { RequestInput } from 'src/store/types'
 import { throttle } from 'quasar'
+import { load } from 'recaptcha-v3'
+
+const siteKey = '6LclwaIdAAAAAKVQTwz8FYinU0rP43_m6EedDv2S'
+const googleRecaptchaResponse = ref('')
+
+const initGoogleRecaptcha = () => {
+  void load(siteKey).then((recaptcha) => {
+    void recaptcha.execute('login').then((token) => {
+      googleRecaptchaResponse.value = token
+    })
+  })
+}
+
+onBeforeMount(() => {
+  initGoogleRecaptcha()
+})
 
 const store = useStore()
 
@@ -80,8 +96,7 @@ const isPwd = ref(true)
 const loginInput: UserLoginRequest = reactive({
   Username: '',
   Phone: '',
-  Password: '',
-  GoogleRecaptchaResponse: ''
+  Password: ''
 })
 
 const usernameRule = ref([
@@ -93,21 +108,26 @@ const passwordRule = ref([
 ])
 
 const phoneNumberRule = ref([
-  (val: string) => (!isValidUsername(val) || !isValidEmail(val)) || t('input.PhoneNumberWarning')
+  (val: string) => (val && val.length > 0) || t('input.PhoneNumberWarning')
 ])
 
 const login = throttle((): void => {
-  const request: RequestInput<UserLoginRequest> = {
-    requestInput: loginInput,
+  const request: UserLoginRequest = {
+    Username: loginInput.Username,
+    Password: sha256Password(loginInput.Password),
+    GoogleRecaptchaResponse: googleRecaptchaResponse.value,
+    Phone: loginInput.Phone
+  }
+  const userLoginRequest: RequestInput<UserLoginRequest> = {
+    requestInput: request,
     messages: {
       successMessage: t('notify.Login.Success'),
       failMessage: t('notify.Login.Fail')
     },
     loadingContent: t('notify.Login.Load')
   }
-  store.dispatch(ActionTypes.UserLogin, request)
+  store.dispatch(ActionTypes.UserLogin, userLoginRequest)
 }, ThrottleDelay)
-
 </script>
 
 <style scoped>

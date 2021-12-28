@@ -22,7 +22,7 @@
       v-if="!logined"
       class="common-button register"
       flat
-      @click="$router.push('/emailregister')"
+      @click="$router.push('/register')"
     >
       {{ $t('button.Register') }}
     </q-btn>

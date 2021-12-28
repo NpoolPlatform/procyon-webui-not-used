@@ -57,7 +57,7 @@ const LoginForm = defineAsyncComponent(() => import('src/components/form/LoginFo
 const VerifyDialog = defineAsyncComponent(() => import('src/components/dialog/login-verify/VerifyDialog.vue'))
 
 const showGoogleAuthenticationVerifyDialog = ref(false)
-const showEmailVerifyDialog = ref(true)
+const showEmailVerifyDialog = ref(false)
 
 const logined = computed({
   get: () => store.getters.getUserLogined,
