@@ -1,34 +1,111 @@
 <template>
   <q-form @submit='forget'>
-    <Vue3QTelInput v-if='showPhone' v-model:tel='forgetInput.Phone' bg-color='blue-grey-2' outlined
+    <Vue3QTelInput v-if='showPhone' v-model:tel='forgetInput.phoneNumber' bg-color='blue-grey-2' outlined
                    lazy-rules
-                   :rules='phoneNumberRule'></Vue3QTelInput>
+                   :rules='phoneNumberRule' :label="$t('input.PhoneNumber')"></Vue3QTelInput>
     <q-input
       v-if='showEmail'
       bg-color='blue-grey-2'
       class='common-input'
       outlined
-      v-model='loginInput.Username'
-      :label="$t('input.Login.Username')"
+      v-model='forgetInput.emailAddress'
+      :label="$t('input.EmailAddress')"
       lazy-rules
-      :rules='usernameRule'
+      :rules='emailRule'
     ></q-input>
+
+    <SendCodeInput v-if='showEmail' verify-type='email' v-model:verify-code='verifyCode'
+                   :verify-param='forgetInput.emailAddress' />
+    <SendCodeInput v-if='showPhone' verify-type='phone' v-model:verify-code='verifyCode'
+                   :verify-param='forgetInput.phoneNumber' />
+    <q-input v-model='forgetInput.password' :label="$t('input.Password')" bg-color='blue-grey-2'
+             class='common-input'
+             outlined lazy-rules
+             :rules='passwordRules'></q-input>
+    <q-input v-model='forgetInput.confirmPassword' :label="$t('input.ConfirmPassword')" bg-color='blue-grey-2'
+             class='common-input'
+             outlined lazy-rules
+             :rules='confirmPasswordRules'></q-input>
+    <q-btn type='submit' class='common-button forget-button' :label="$t('button.Confirm')"></q-btn>
   </q-form>
 </template>
 
 <script setup lang='ts'>
-import { reactive, ref } from 'vue'
+import { reactive, ref, defineAsyncComponent, computed } from 'vue'
+import { isValidEmail, isValidPassword, sha256Password } from 'src/utils/utils'
+import { useI18n } from 'vue-i18n'
+import { throttle } from 'quasar'
+import Vue3QTelInput from 'vue3-q-tel-input'
+import { useStore } from 'src/store'
+import { UserForgetPasswordRequest } from 'src/store/users/types'
+import { RequestInput } from 'src/store/types'
+import { ActionTypes } from 'src/store/users/action-types'
+
+const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
+
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const { t } = useI18n({ useScope: 'global' })
+
+const store = useStore()
+const showEmail = computed(() => store.getters.getShowEmail)
+const showPhone = computed(() => store.getters.getShowPhone)
+
+const verifyCode = ref('')
 
 const forgetInput = reactive({
-  phone: '',
-  username: '',
+  phoneNumber: '',
+  emailAddress: '',
   password: '',
   confirmPassword: ''
 })
 
-const phoneNumberRule = ref([])
-const usernameRule = ref([])
+const phoneNumberRule = ref([
+  (val: string) => (val && val.length > 0) || t('input.PhoneNumberWarning')
+])
+const emailRule = ref([
+  (val: string) => isValidEmail(val) || t('input.EmailAddressWarning')
+])
+const passwordRules = ref([
+  (val: string) => isValidPassword(val) || t('input.PasswordWarning')
+])
+const confirmPasswordRules = ref([
+  (val: string) => isValidPassword(val) || t('input.PasswordWarning'),
+  (val: string) => (val && val === forgetInput.password) || t('input.ConfirmPasswordWarning')
+])
+
+const forget = throttle(() => {
+  let type = ''
+  let verifyParam = ''
+  if (forgetInput.phoneNumber === '' && forgetInput.emailAddress !== '') {
+    type = 'email'
+    verifyParam = forgetInput.emailAddress
+  } else if (forgetInput.emailAddress === '' && forgetInput.emailAddress !== '') {
+    type = 'phone'
+    verifyParam = forgetInput.phoneNumber
+  }
+  const request: UserForgetPasswordRequest = {
+    VerifyParam: verifyParam,
+    VerifyType: type,
+    Password: sha256Password(forgetInput.password),
+    Code: verifyCode.value
+  }
+  const userForgetPasswordRequest: RequestInput<UserForgetPasswordRequest> = {
+    requestInput: request,
+    messages: {
+      successMessage: t('notify.Forget.Success'),
+      failMessage: t('notify.Forget.Fail')
+    },
+    loadingContent: t('notify.Forget.Load')
+  }
+  store.dispatch(ActionTypes.UserForgetPassword, userForgetPasswordRequest)
+}, 1000)
 </script>
 
 <style scoped>
+.forget-button {
+  background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
+  border: 1px solid #ff964a;
+  margin: 0 0 10px 0;
+  width: 100%;
+}
 </style>

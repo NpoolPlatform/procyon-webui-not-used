@@ -2,7 +2,7 @@
   <q-form @submit='login'>
     <Vue3QTelInput v-if='showPhone' v-model:tel='loginInput.Phone' bg-color='blue-grey-2' outlined
                    lazy-rules
-                   :rules='phoneNumberRule'></Vue3QTelInput>
+                   :rules='phoneNumberRule' :label="$t('input.PhoneNumber')"></Vue3QTelInput>
     <q-input
       v-if='showEmail'
       bg-color='blue-grey-2'
@@ -41,7 +41,7 @@
     <div class='bottom-style'>
       <router-link
         class='link-style'
-        :to="{ path: '/forgetpassword' }"
+        :to="{ path: '/forget' }"
       >{{ $t('login.Forget') }}
       </router-link
       >
@@ -59,7 +59,7 @@
 <script setup lang='ts'>
 import { ref, computed, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { isValidEmail, isValidLoginUsername, isValidUsername, ThrottleDelay } from 'src/utils/utils'
+import { isValidLoginUsername, sha256Password, ThrottleDelay } from 'src/utils/utils'
 import Vue3QTelInput from 'vue3-q-tel-input'
 import { useStore } from 'src/store'
 import { UserLoginRequest } from 'src/store/users/types'
@@ -93,19 +93,25 @@ const passwordRule = ref([
 ])
 
 const phoneNumberRule = ref([
-  (val: string) => (!isValidUsername(val) || !isValidEmail(val)) || t('input.PhoneNumberWarning')
+  (val: string) => (val && val.length > 0) || t('input.PhoneNumberWarning')
 ])
 
 const login = throttle((): void => {
-  const request: RequestInput<UserLoginRequest> = {
-    requestInput: loginInput,
+  const request: UserLoginRequest = {
+    Username: loginInput.Username,
+    Password: sha256Password(loginInput.Password),
+    GoogleRecaptchaResponse: loginInput.GoogleRecaptchaResponse,
+    Phone: loginInput.Phone
+  }
+  const userLoginRequest: RequestInput<UserLoginRequest> = {
+    requestInput: request,
     messages: {
       successMessage: t('notify.Login.Success'),
       failMessage: t('notify.Login.Fail')
     },
     loadingContent: t('notify.Login.Load')
   }
-  store.dispatch(ActionTypes.UserLogin, request)
+  store.dispatch(ActionTypes.UserLogin, userLoginRequest)
 }, ThrottleDelay)
 
 </script>

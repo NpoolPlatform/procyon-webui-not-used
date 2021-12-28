@@ -38,6 +38,15 @@ export default {
       },
       Fail: '検証コードの送信失敗'
     },
+    SendPhone: {
+      Load: '電話メッセージ送信中、お待ちください',
+      Success: {
+        Words1: '認証コードが、',
+        Words2: 'へ送信されました。受信のご確認をお願い申し上げます。',
+        Check: '携帯電話のメッセージをご確認ください'
+      },
+      Fail: '携帯電話へのコード送信に失敗する'
+    },
     VerifyWithUserID: {
       Load: '検証をお待ちください',
       Success: '',
@@ -47,6 +56,20 @@ export default {
       Load: '検証をお待ちください',
       Success: 'google認証の確認に成功',
       Fail: 'google認証の確認に失敗する'
+    },
+    Signup: {
+      Load: 'お待ちください',
+      Success: 'アカウントの登録が完了しました!',
+      Fail: 'アカウント登録の失敗'
+    },
+    Forget: {
+      Load: 'お待ちください',
+      Success: '新しいパスワードの設定に成功',
+      Fail: '新しいパスワードの設定に失敗する'
+    },
+    GetGoodsDetail: {
+      Success: 'プロモーショングッズを無事ゲット',
+      Fail: 'プロモーショングッズの入手に失敗した'
     }
   },
 
@@ -86,7 +109,9 @@ export default {
     Login: 'ログイン',
     StartMining: '購入',
     SendCode: '送信コード',
-    Verify: 'ベリファイ'
+    Verify: 'ベリファイ',
+    Confirm: '確認',
+    Cancel: '取消'
   },
 
   input: {
@@ -97,9 +122,14 @@ export default {
     VerifyCode: '認証コード',
     PasswordWarning: '8〜20文字で、数字も含めてください',
     ConfirmPasswordWarning: 'パスワードとパスワードの確認が一致していません',
+    OldPassword: '旧パスワード',
+    OldPasswordWarning: '旧パスワードを入力してください。',
     PhoneNumberWarning: '正しい電話番号を入力してください',
     EmailAddressWarning: '正しいメールアドレスを記入ください',
     VerifyCodeWarning: '認証コードが違います',
+    InvitationCode: '招待コード',
+    InvitationCodeWarning: '招待コードが必要です',
+    CheckWarning: '同意の上、"アカウント登録"をクリックしてください。',
     Login: {
       Username: 'ユーザー名 / メールアドレス',
       UsernameWarning: '正しいユーザー名／メールアドレスを入力してください'
@@ -128,6 +158,23 @@ export default {
     Forget: 'パスワードを忘れた場合',
     NoAccount: 'アカウントがない場合',
     Register: '今すぐ登録'
+  },
+
+  forget: {
+    Title: 'パスワードをリセット'
+  },
+
+  register: {
+    Title: 'アカウント登録',
+    Agree1: '',
+    Policy: 'プライバシー・ポリシー',
+    And: 'そして',
+    User: 'ユーザー同意書',
+    Behind: 'を読み、同意しました。'
+  },
+
+  changePassword: {
+    Title: 'パスワードの変更'
   },
 
   product: {

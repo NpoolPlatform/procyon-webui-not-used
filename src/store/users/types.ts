@@ -122,12 +122,12 @@ interface GetUserInvitationCodeResponse {
 }
 
 interface UserSignUpRequest {
-  Username: string,
+  Username?: string,
   Password: string
-  EmailAddress: string
-  PhoneNumber: string
+  EmailAddress?: string
+  PhoneNumber?: string
   VerificationCode: string
-  AppID: string
+  AppID?: string
   InvitationCode: string
 }
 
@@ -136,8 +136,8 @@ interface UserSignUpResponse {
 }
 
 interface UserChangePasswordRequest {
-  UserID: string
-  AppID: string
+  UserID?: string
+  AppID?: string
   VerifyParam: string
   VerifyType: string
   OldPassword: string
@@ -154,7 +154,7 @@ interface UserForgetPasswordRequest {
   VerifyType: string
   Password: string
   Code: string
-  AppID: string
+  AppID?: string
 }
 
 interface UserForgetPasswordResponse {

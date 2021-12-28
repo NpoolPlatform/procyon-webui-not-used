@@ -59,9 +59,9 @@ interface VerifyActions {
 
 const actions: ActionTree<VerifyState, RootState> = {
   [ActionTypes.SendEmail] ({ commit }, payload: RequestInput<SendEmailRequest>) {
-    let count = 60
     post<SendEmailRequest, SendEmailResponse>(VerifyURLPath.SEND_EMAIL, payload.requestInput).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      let count = 60
       const countDown = setInterval(() => {
         if (count < 1) {
           commit(MutationTypes.SetSendCodeButtonDisable, false)
@@ -72,17 +72,17 @@ const actions: ActionTree<VerifyState, RootState> = {
           commit(MutationTypes.SetSendCodeButtonText, count.toString() + 's')
           count--
         }
-      })
+      }, 1000)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
     })
   },
   [ActionTypes.SendSMS] ({ commit }, payload: RequestInput<SendSmsRequest>) {
-    let count = 60
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<SendSmsRequest, SendSmsResponse>(VerifyURLPath.SEND_SMS, payload.requestInput).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      let count = 60
       const countDown = setInterval(() => {
         if (count < 1) {
           commit(MutationTypes.SetSendCodeButtonDisable, false)
@@ -93,7 +93,7 @@ const actions: ActionTree<VerifyState, RootState> = {
           commit(MutationTypes.SetSendCodeButtonText, count.toString() + 's')
           count--
         }
-      })
+      }, 1000)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
     })
