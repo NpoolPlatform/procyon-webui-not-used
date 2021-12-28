@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, computed, reactive } from 'vue'
+import { ref, computed, reactive, onBeforeMount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { isValidLoginUsername, sha256Password, ThrottleDelay } from 'src/utils/utils'
 import Vue3QTelInput from 'vue3-q-tel-input'
@@ -66,6 +66,22 @@ import { UserLoginRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { RequestInput } from 'src/store/types'
 import { throttle } from 'quasar'
+import { load } from 'recaptcha-v3'
+
+const siteKey = '6LclwaIdAAAAAKVQTwz8FYinU0rP43_m6EedDv2S'
+const googleRecaptchaResponse = ref('')
+
+const initGoogleRecaptcha = () => {
+  void load(siteKey).then((recaptcha) => {
+    void recaptcha.execute('login').then((token) => {
+      googleRecaptchaResponse.value = token
+    })
+  })
+}
+
+onBeforeMount(() => {
+  initGoogleRecaptcha()
+})
 
 const store = useStore()
 
@@ -80,8 +96,7 @@ const isPwd = ref(true)
 const loginInput: UserLoginRequest = reactive({
   Username: '',
   Phone: '',
-  Password: '',
-  GoogleRecaptchaResponse: ''
+  Password: ''
 })
 
 const usernameRule = ref([
@@ -100,7 +115,7 @@ const login = throttle((): void => {
   const request: UserLoginRequest = {
     Username: loginInput.Username,
     Password: sha256Password(loginInput.Password),
-    GoogleRecaptchaResponse: loginInput.GoogleRecaptchaResponse,
+    GoogleRecaptchaResponse: googleRecaptchaResponse.value,
     Phone: loginInput.Phone
   }
   const userLoginRequest: RequestInput<UserLoginRequest> = {
@@ -113,7 +128,6 @@ const login = throttle((): void => {
   }
   store.dispatch(ActionTypes.UserLogin, userLoginRequest)
 }, ThrottleDelay)
-
 </script>
 
 <style scoped>
