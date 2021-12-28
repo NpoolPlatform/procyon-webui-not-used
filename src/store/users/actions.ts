@@ -19,7 +19,7 @@ import {
 } from './types'
 import { RequestInput } from 'src/store/types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
-import { RequestMessageToNotifyMessage, sha256Password } from 'src/utils/utils'
+import { RequestMessageToNotifyMessage } from 'src/utils/utils'
 import { useRouter } from 'vue-router'
 import { MutationTypes as styleMutation } from 'src/store/style/mutation-types'
 
@@ -69,7 +69,6 @@ const actions: ActionTree<UserState, RootState> = {
   [ActionTypes.UserLogin] ({ commit }, payload: RequestInput<UserLoginRequest>) {
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
-    payload.requestInput.Password = sha256Password(payload.requestInput.Password)
     post<UserLoginRequest, UserLoginResponse>(UserURLPath.LOGIN, payload.requestInput).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
       commit(notifyMutation.SetLoading, false)

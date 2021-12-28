@@ -67,7 +67,7 @@ export default {
       Success: 'Set new password successfully',
       Fail: 'Fail to set new password'
     },
-    GetGoodsDetail: {
+    GetGoodDetails: {
       Success: 'Get promotion goods successfully',
       Fail: 'Fail to get promotion goods'
     }

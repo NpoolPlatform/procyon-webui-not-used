@@ -67,7 +67,7 @@ export default {
       Success: '新しいパスワードの設定に成功',
       Fail: '新しいパスワードの設定に失敗する'
     },
-    GetGoodsDetail: {
+    GetGoodDetails: {
       Success: 'プロモーショングッズを無事ゲット',
       Fail: 'プロモーショングッズの入手に失敗した'
     }
