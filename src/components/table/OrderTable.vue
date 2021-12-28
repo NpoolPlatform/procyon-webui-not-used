@@ -21,72 +21,71 @@
 </template>
 
 <script setup lang='ts'>
-import { defineProps, toRef, withDefaults } from 'vue'
+import { defineProps, toRef } from 'vue'
 import { UserOrderDetail } from 'src/store/order/types'
 import { useI18n } from 'vue-i18n'
+
+interface Props {
+  orders: Array<UserOrderDetail>
+}
+
+const props = defineProps<Props>()
+
+const orders = toRef(props, 'orders')
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
 
 const orderTableColumns = [
   {
-    name: 'date',
+    name: 'Date',
     label: t('dashboard.Column3.Date'),
     align: 'left',
-    field: (row: UserOrderDetail) => row.Date
+    field: 'Date'
   },
   {
-    name: 'product',
+    name: 'Product',
     label: t('dashboard.Column3.Product'),
     align: 'center',
-    field: (row: UserOrderDetail) => row.Product
+    field: 'Product'
   },
   {
-    name: 'amount',
+    name: 'Amount',
     label: t('dashboard.Column3.Amount'),
     align: 'center',
-    field: (row: UserOrderDetail) => row.Amount
+    field: 'Amount'
   },
   {
-    name: 'price',
+    name: 'Price',
     label: t('dashboard.Column3.Price'),
     align: 'center',
-    field: (row: UserOrderDetail) => row.Price
+    field: 'Price'
   },
   {
-    name: 'discount',
+    name: 'Discount',
     label: t('dashboard.Column3.Discount'),
     align: 'center',
-    field: (row: UserOrderDetail) => row.Discount
+    field: 'Discount'
   },
   {
-    name: 'techFee',
+    name: 'TechFee',
     label: t('dashboard.Column3.Techfee'),
     align: 'center',
-    field: (row: UserOrderDetail) => row.TechFee
+    field: 'TechFee'
   },
   {
-    name: 'period',
+    name: 'Period',
     label: t('dashboard.Column3.Period'),
     align: 'center',
     field: (row: UserOrderDetail) => row.Period + t('dashboard.Day')
   },
   {
-    name: 'total',
+    name: 'Total',
     label: t('dashboard.Column3.Total'),
     align: 'center',
     field: (row: UserOrderDetail) => row.Total + 'USDT'
   }
 ]
-
-interface Props {
-  orders: Array<UserOrderDetail>
-}
-
-const props = withDefaults(defineProps<Props>(), {
-})
-
-const orders = toRef(props, 'orders')
 </script>
 
 <style scoped>

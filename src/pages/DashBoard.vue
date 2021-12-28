@@ -28,7 +28,7 @@ import { ActionTypes } from 'src/store/order/action-types'
 
 const EarnBox = defineAsyncComponent(() => import('src/components/dashboard/EarnBox.vue'))
 const MiningSummary = defineAsyncComponent(() => import('src/components/dashboard/MiningSummary.vue'))
-const OrderTable = defineAsyncComponent(() => import('src/components/table/Table.vue'))
+const OrderTable = defineAsyncComponent(() => import('components/table/OrderTable.vue'))
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
