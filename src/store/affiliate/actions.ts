@@ -33,14 +33,10 @@ const actions: ActionTree<AffiliateState, RootState> = {
           Children: []
         }
         father.UserID = userid
-        const lists = resp.Infos.get(userid).Invitees
-        father.Label = '01(' + lists.length.toString() + ')'
+        const lists = resp.Infos.get(userid)?.Invitees
+        father.Label = lists ? '01(' + lists?.length.toString() + ')' : '01(0)'
         let index = 1
-        lists.forEach(list => {
-          if (list.UserID === userid) {
-            return
-          }
-
+        lists?.forEach(list => {
           const childrenInvitation: Invitation = {
             EmailAddress: list.EmailAddress,
             Username: list.Username,
