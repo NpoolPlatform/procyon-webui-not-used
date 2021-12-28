@@ -74,8 +74,13 @@ export default {
     GetDirectAffiliate: {
       Success: 'アフィリエイトリストの取得に成功',
       Fail: 'アフィリエイトリストの取得に失敗する'
+    },
+    GetUserOrders: {
+      Fail: 'ユーザー注文履歴の取得に失敗する'
     }
   },
+
+  NoData: '該当データなし',
 
   header: {
     Home: 'ホーム',
@@ -115,7 +120,9 @@ export default {
     SendCode: '送信コード',
     Verify: 'ベリファイ',
     Confirm: '確認',
-    Cancel: '取消'
+    Cancel: '取消',
+    Export: '履歴のエクスポート(CSV)',
+    Purchase: 'ストレージ容量を追加購入'
   },
 
   input: {
@@ -194,6 +201,43 @@ export default {
     MaintenanceFeeLabel: 'メンテナンス費用:',
     MaintenanceFeeValue: '日',
     OrderEffectiveLabel: '注文受け付け日:'
+  },
+
+  dashboard: {
+    Day: '日',
+    Column1: {
+      Title: 'マイニング報酬',
+      Total: 'マイニング報酬合計',
+      Yesterday: '昨日のマイニング報酬',
+      Current: '残高'
+    },
+
+    Column2: {
+      Title: 'マイニングダッシュボード',
+      Earning: 'マイニング報酬合計',
+      Last: '24時間以内に発生した報酬',
+      Capacity: 'ストレージ容量',
+      DailyOutput: '総マイニング量 (30日間の平均値)',
+      TechnicalServiceFee: '技術サービス料',
+      NetDailyOutput: '純マイニング量 (30日間の平均値)',
+      TotalDaysMining: 'マイニング日数',
+      Hashrate: 'ハッシュレート (30日間の平均値)',
+      NetworkDailyOutput: 'ネットワークのマイニング量 (30日間の平均値)',
+      Export: 'マイニング量のデータを書き出す (CSVデータ)',
+      Purchase: 'ストレージ容量を追加購入'
+    },
+
+    Column3: {
+      Title: '注文履歴',
+      Date: '日付',
+      Product: '製品',
+      Amount: 'TB数',
+      Price: '価格',
+      Discount: 'ディスカウント',
+      Techfee: '技術サービス料',
+      Period: 'マイニング期間',
+      Total: '合計'
+    }
   },
 
   homepage: {

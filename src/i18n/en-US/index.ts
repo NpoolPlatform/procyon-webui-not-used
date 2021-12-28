@@ -74,8 +74,13 @@ export default {
     GetDirectAffiliate: {
       Success: 'Get affiliate list successfully',
       Fail: 'Fail to get affiliate list'
+    },
+    GetUserOrders: {
+      Fail: 'Fail to get user order history'
     }
   },
+
+  NoData: 'No data available',
 
   header: {
     Home: 'Home',
@@ -115,7 +120,9 @@ export default {
     SendCode: 'Send Code',
     Verify: 'Verify',
     Confirm: 'Confirm',
-    Cancel: 'Cancel'
+    Cancel: 'Cancel',
+    Export: 'Export History(CSV)',
+    Purchase: 'Purchase Capacity'
   },
 
   input: {
@@ -194,6 +201,43 @@ export default {
     MaintenanceFeeLabel: 'Maintenance Fee:',
     MaintenanceFeeValue: 'day',
     OrderEffectiveLabel: 'Order Effective:'
+  },
+
+  dashboard: {
+    Day: 'days',
+    Column1: {
+      Title: 'Total Earnings',
+      Total: 'Total Earnings',
+      Yesterday: 'Yesterday\'s Earnings',
+      Current: 'CURRENT BALANCE'
+    },
+
+    Column2: {
+      Title: 'MINING DASHBOARD',
+      Earning: 'Earnings: ',
+      Capacity: 'Capacity: ',
+      Last: 'Last 24 hours: ',
+      DailyOutput: 'Daily Output (30 day avg.)',
+      TechnicalServiceFee: 'Technical Service Fee:',
+      NetDailyOutput: 'Net Daily Output (30 day avg.):',
+      TotalDaysMining: 'Total Days Mining:',
+      Hashrate: 'Hashrate (30 day avg.):',
+      NetworkDailyOutput: 'Network Daily Ouput:',
+      Export: 'Export Daily Output(CSV)',
+      Purchase: 'Purchase Capacity'
+    },
+
+    Column3: {
+      Title: 'ORDER HISTORY',
+      Date: 'Date',
+      Product: 'Product',
+      Amount: 'Amount',
+      Price: 'Price',
+      Discount: 'Discount',
+      Techfee: 'Tech Fee',
+      Period: 'Mining Period',
+      Total: 'Total'
+    }
   },
 
   homepage: {

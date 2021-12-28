@@ -102,6 +102,15 @@ export interface GetGoodDetailsResponse {
   Total: number
 }
 
+export interface GetGoodDetailRequest {
+  ID: string
+}
+
+export interface GetGoodDetailResponse {
+  Detail: GoodDetail
+}
+
 export enum GoodURLPath {
-  GET_GOOD_DETAILS = '/cloud-hashing-apis/v1/get/goods/detail'
+  GET_GOOD_DETAILS = '/cloud-hashing-apis/v1/get/goods/detail',
+  GET_GOOD_DETAIL = '/cloud-hashing-apis/v1/get/good/detail'
 }
