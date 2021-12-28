@@ -1,4 +1,4 @@
-import { UserInfo } from './types'
+import { LoginRecord, UserInfo } from './types'
 
 interface UserState {
   info: UserInfo
@@ -7,6 +7,7 @@ interface UserState {
   loading: boolean
   invitationCode: string
   loginVerify: boolean
+  loginHistory: Array<LoginRecord>
 }
 
 function state (): UserState {
@@ -68,7 +69,8 @@ function state (): UserState {
     loading: false,
     error: '',
     invitationCode: '',
-    loginVerify: false
+    loginVerify: false,
+    loginHistory: []
   }
 }
 

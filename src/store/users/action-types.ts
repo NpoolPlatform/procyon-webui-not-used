@@ -1,5 +1,5 @@
 export enum ActionTypes {
-  GetUser = 'USER_GET_USER',
+  GetUserDetail = 'USER_GET_USER_DETAIL',
   UpdateUser = 'USER_UPDATE_USER',
   UserLogin = 'USER_LOGIN',
   UserLogout = 'USER_LOGOUT',
@@ -7,4 +7,11 @@ export enum ActionTypes {
   UserSignUp = 'USER_SIGN_UP',
   UserChangePassword = 'USER_CHANGE_PASSWORD',
   UserForgetPassword = 'USER_FORGET_PASSWORD',
+  GetUserLoginHistory = 'USER_GET_USER_LOGIN_HISTORY',
+  SetGALoginVerify = 'USER_SET_GA_LOGIN_VERIFY',
+  UpdateUserGAStatus = 'USER_UPDATE_USER_GA_STATUS',
+  EnableEmail = 'USER_ENABLE_EMAIL',
+  EnablePhone = 'USER_ENABLE_PHONE',
+  UpdateEmail = 'USER_UPDATE_EMAIL',
+  UpdatePhone = 'USER_UPDATE_PHONE',
 }
