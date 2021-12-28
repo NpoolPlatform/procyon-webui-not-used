@@ -5,5 +5,20 @@ export enum MutationTypes {
   SetError = 'USER_SET_ERROR',
   SetLoading = 'USER_SET_LOADING',
   SetInvitationCode = 'USER_SET_INVITATION_CODE',
-  SetLoginVerify = 'USER_SET_LOGIN_VERIFY'
+  SetLoginVerify = 'USER_SET_LOGIN_VERIFY',
+  SetUsername = 'USER_SET_USERNAME',
+  SetGender = 'USER_SET_GENDER',
+  SetFirstName = 'USER_SET_FIRST_NAME',
+  SetLastName = 'USER_SET_LAST_NAME',
+  SetPostalCode = 'USER_SET_POSTAL_CODE',
+  SetProvince = 'USER_SET_PROVINCE',
+  SetStreetAddress1 = 'USER_SET_STREET_ADDRESS1',
+  SetStreetAddress2 = 'USER_SET_STREET_ADDRESS2',
+  SetCity = 'USER_SET_CITY',
+  SetCountry = 'USER_SET_COUNTRY',
+  SetEmailAddress = 'USER_SET_EMAIL_ADDRESS',
+  SetPhoneNumber = 'USER_SET_PHONE_NUMBER',
+  SetGoogleAuthenticator = 'USER_SET_GOOGLE_AUTHENTICATOR',
+  SetGoogleLoginVerify = 'USER_SET_GOOGLE_LOGIN_VERIFY',
+  SetLoginHistory = 'USER_SET_LOGIN_HISTORY'
 }

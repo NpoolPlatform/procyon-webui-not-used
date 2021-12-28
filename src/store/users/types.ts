@@ -161,15 +161,130 @@ interface UserForgetPasswordResponse {
   Info: string
 }
 
+interface GetUserDetailRequest {
+  AppID?: string
+  UserID?: string
+}
+
+interface GetUserDetailResponse {
+  Info: UserInfo
+}
+
+interface UpdateUserRequest {
+  Info: UserBasicInfo
+  UserID?: string
+  AppID?: string
+}
+
+interface UpdateUserResponse {
+  Info: UserBasicInfo
+}
+
+interface LoginRecord {
+  ID: string
+  UserID: string
+  AppID: string
+  LoginTime: number
+  IP: string
+  Location: string
+  Lat: number
+  Lon: number
+  Timezone: string
+}
+
+interface GetUserLoginHistoryRequest {
+  UserID?: string
+  AppID?: string
+}
+
+interface GetUserLoginHistoryResponse {
+  Infos: Array<LoginRecord>
+}
+
+interface SetGALoginVerifyRequest {
+  AppID?: string
+  UserID?: string
+  Set: boolean
+}
+
+interface SetGaLoginVerifyResponse {
+  Info: string
+}
+
+interface UpdateUserGAStatusRequest {
+  UserID?: string
+  AppID?: string
+  Status: boolean
+}
+
+interface UpdateUserGAStatusResponse {
+  Info: string
+}
+
+interface EnableEmailRequest {
+  UserID?: string
+  EmailAddress: string
+  Code: string
+  AppID?: string
+}
+
+interface EnableEmailResponse {
+  Info: string
+}
+
+interface EnablePhoneRequest {
+  UserID?: string
+  AppID?: string
+  PhoneNumber: string
+  Code: string
+}
+
+interface EnablePhoneResponse {
+  Info: string
+}
+
+interface UpdateEmailRequest {
+  OldEmail: string
+  OldCode: string
+  NewEmail: string
+  NewCode: string
+  AppID?: string
+  UserID?: string
+}
+
+interface UpdateEmailResponse {
+  Info: string
+}
+
+interface UpdatePhoneRequest {
+  OldPhone: string
+  OldCode: string
+  NewPhone: string
+  NewCode: string
+  UserID?: string
+  AppID?: string
+}
+
+interface UpdatePhoneResponse {
+  Info: string
+}
+
 enum UserURLPath {
   LOGIN = '/login-door/v1/login',
-  GET_USER_DETAIL = '/user-management/v1/get/user/details',
-  UPDATE_USER = '/user-management/v1/update/user',
   LOGOUT = '/login-door/v1/logout',
   GET_USER_INVITATION_CODE = '/cloud-hashing-inspire/v1/get/user/invitation/code/by/app/user',
   SIGN_UP = '/cloud-hashing-apis/v1/signup',
   CHANGE_PASSWORD = '/user-management/v1/change/password',
-  FORGET_PASSWORD = '/user-management/v1/forget/password'
+  FORGET_PASSWORD = '/user-management/v1/forget/password',
+  GET_USER_DETAIL = '/user-management/v1/get/user/details',
+  UPDATE_USER = '/user-management/v1/update/user',
+  GET_USER_LOGIN_HISTORY = '/login-door/v1/get/user/login/records',
+  SET_GA_LOGIN_VERIFY = '/application-management/v1/set/ga/login',
+  UPDATE_USER_GA_STATUS = '/application-management/v1/update/user/ga/status',
+  ENABLE_EMAIL = '/user-management/v1/bind/email',
+  ENABLE_PHONE = '/user-management/v1/bind/phone',
+  UPDATE_EMAIL = '/user-management/v1/update/user/email',
+  UPDATE_PHONE = '/user-management/v1/update/user/phone'
 }
 
 export {
@@ -188,5 +303,24 @@ export {
   UserChangePasswordRequest,
   UserChangePasswordResponse,
   UserForgetPasswordRequest,
-  UserForgetPasswordResponse
+  UserForgetPasswordResponse,
+  GetUserDetailRequest,
+  GetUserDetailResponse,
+  UpdateUserRequest,
+  UpdateUserResponse,
+  GetUserLoginHistoryRequest,
+  GetUserLoginHistoryResponse,
+  SetGALoginVerifyRequest,
+  SetGaLoginVerifyResponse,
+  UpdateUserGAStatusRequest,
+  UpdateUserGAStatusResponse,
+  EnableEmailRequest,
+  EnableEmailResponse,
+  EnablePhoneRequest,
+  EnablePhoneResponse,
+  UpdateEmailRequest,
+  UpdateEmailResponse,
+  UpdatePhoneRequest,
+  UpdatePhoneResponse,
+  LoginRecord
 }

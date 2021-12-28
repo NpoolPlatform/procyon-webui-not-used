@@ -15,7 +15,25 @@ import {
   GetUserInvitationCodeResponse,
   UserSignUpRequest,
   UserSignUpResponse,
-  UserForgetPasswordRequest, UserChangePasswordRequest, UserForgetPasswordResponse, UserChangePasswordResponse
+  UserForgetPasswordRequest,
+  UserChangePasswordRequest,
+  UserForgetPasswordResponse,
+  UserChangePasswordResponse,
+  GetUserDetailRequest,
+  GetUserDetailResponse,
+  UpdateUserRequest,
+  UpdateUserResponse,
+  GetUserLoginHistoryRequest,
+  GetUserLoginHistoryResponse,
+  SetGALoginVerifyRequest,
+  SetGaLoginVerifyResponse,
+  UpdateUserGAStatusRequest,
+  UpdateUserGAStatusResponse,
+  UpdatePhoneRequest,
+  UpdatePhoneResponse,
+  UpdateEmailResponse,
+  UpdateEmailRequest,
+  EnablePhoneRequest, EnablePhoneResponse, EnableEmailRequest, EnableEmailResponse
 } from './types'
 import { RequestInput } from 'src/store/types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
@@ -50,6 +68,42 @@ interface UserActions {
   [ActionTypes.UserChangePassword] ({
     commit
   }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: RequestInput<UserChangePasswordRequest>): void
+
+  [ActionTypes.GetUserDetail] ({
+    commit
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: RequestInput<GetUserDetailRequest>): void
+
+  [ActionTypes.UpdateUser] ({
+    commit
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: RequestInput<UpdateUserRequest>): void
+
+  [ActionTypes.GetUserLoginHistory] ({
+    commit
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: RequestInput<GetUserLoginHistoryRequest>): void
+
+  [ActionTypes.SetGALoginVerify] ({
+    commit
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: RequestInput<SetGALoginVerifyRequest>): void
+
+  [ActionTypes.UpdateUserGAStatus] ({
+    commit
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: RequestInput<UpdateUserGAStatusRequest>): void
+
+  [ActionTypes.EnableEmail] ({
+    commit
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: RequestInput<EnableEmailRequest>): void
+
+  [ActionTypes.EnablePhone] ({
+    commit
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: RequestInput<EnablePhoneRequest>): void
+
+  [ActionTypes.UpdateEmail] ({
+    commit
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: RequestInput<UpdateEmailRequest>): void
+
+  [ActionTypes.UpdatePhone] ({
+    commit
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: RequestInput<UpdatePhoneRequest>): void
 }
 
 const actions: ActionTree<UserState, RootState> = {
@@ -125,6 +179,104 @@ const actions: ActionTree<UserState, RootState> = {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
       commit(notifyMutation.SetLoading, false)
       void router.push('/login')
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetLoading, false)
+    })
+  },
+  [ActionTypes.GetUserDetail] ({ commit }, payload: RequestInput<GetUserDetailRequest>) {
+    post<GetUserDetailRequest, GetUserDetailResponse>(UserURLPath.GET_USER_DETAIL, payload.requestInput).then((resp: GetUserDetailResponse) => {
+      commit(MutationTypes.SetUserInfo, resp.Info)
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetLoading, false)
+    })
+  },
+  [ActionTypes.UpdateUser] ({ commit }, payload: RequestInput<UpdateUserRequest>) {
+    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
+    post<UpdateUserRequest, UpdateUserResponse>(UserURLPath.UPDATE_USER, payload.requestInput).then(() => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      commit(notifyMutation.SetLoading, false)
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetLoading, false)
+    })
+  },
+  [ActionTypes.GetUserLoginHistory] ({ commit }, payload: RequestInput<GetUserLoginHistoryRequest>) {
+    post<GetUserLoginHistoryRequest, GetUserLoginHistoryResponse>(UserURLPath.GET_USER_LOGIN_HISTORY, payload.requestInput).then((resp: GetUserLoginHistoryResponse) => {
+      commit(MutationTypes.SetLoginHistory, resp.Infos)
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+    })
+  },
+  [ActionTypes.SetGALoginVerify] ({ commit }, payload: RequestInput<SetGALoginVerifyRequest>) {
+    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
+    post<SetGALoginVerifyRequest, SetGaLoginVerifyResponse>(UserURLPath.SET_GA_LOGIN_VERIFY, payload.requestInput).then(() => {
+      commit(MutationTypes.SetGoogleLoginVerify, payload.requestInput.Set)
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      commit(notifyMutation.SetLoading, false)
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetLoading, false)
+    })
+  },
+  [ActionTypes.UpdateUserGAStatus] ({ commit }, payload: RequestInput<UpdateUserGAStatusRequest>) {
+    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
+    post<UpdateUserGAStatusRequest, UpdateUserGAStatusResponse>(UserURLPath.UPDATE_USER_GA_STATUS, payload.requestInput).then(() => {
+      commit(MutationTypes.SetGoogleAuthenticator, payload.requestInput.Status)
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      commit(notifyMutation.SetLoading, false)
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetLoading, false)
+    })
+  },
+  [ActionTypes.EnableEmail] ({ commit }, payload: RequestInput<EnableEmailRequest>) {
+    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
+    post<EnableEmailRequest, EnableEmailResponse>(UserURLPath.ENABLE_EMAIL, payload.requestInput).then(() => {
+      commit(MutationTypes.SetEmailAddress, payload.requestInput.EmailAddress)
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      commit(notifyMutation.SetLoading, false)
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetLoading, false)
+    })
+  },
+  [ActionTypes.EnablePhone] ({ commit }, payload: RequestInput<EnablePhoneRequest>) {
+    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
+    post<EnablePhoneRequest, EnablePhoneResponse>(UserURLPath.ENABLE_PHONE, payload.requestInput).then(() => {
+      commit(MutationTypes.SetPhoneNumber, payload.requestInput.PhoneNumber)
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      commit(notifyMutation.SetLoading, false)
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetLoading, false)
+    })
+  },
+  [ActionTypes.UpdateEmail] ({ commit }, payload: RequestInput<UpdateEmailRequest>) {
+    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
+    post<UpdateEmailRequest, UpdateEmailResponse>(UserURLPath.UPDATE_EMAIL, payload.requestInput).then(() => {
+      commit(MutationTypes.SetEmailAddress, payload.requestInput.NewEmail)
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      commit(notifyMutation.SetLoading, false)
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetLoading, false)
+    })
+  },
+  [ActionTypes.UpdatePhone] ({ commit }, payload: RequestInput<UpdatePhoneRequest>) {
+    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
+    post<UpdatePhoneRequest, UpdatePhoneResponse>(UserURLPath.UPDATE_PHONE, payload.requestInput).then(() => {
+      commit(MutationTypes.SetPhoneNumber, payload.requestInput.NewPhone)
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
+      commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)
