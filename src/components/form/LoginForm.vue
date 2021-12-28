@@ -57,10 +57,10 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, computed, reactive, onBeforeMount } from 'vue'
+import { ref, computed, reactive, onBeforeMount, defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { isValidLoginUsername, sha256Password, ThrottleDelay } from 'src/utils/utils'
-import Vue3QTelInput from 'vue3-q-tel-input'
+const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
 import { useStore } from 'src/store'
 import { UserLoginRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'

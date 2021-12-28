@@ -78,10 +78,10 @@
 
 <script setup lang='ts'>
 import { reactive, ref, defineAsyncComponent, computed } from 'vue'
-import { isValidEmail, isValidPassword, sha256Password } from 'src/utils/utils'
+import { isValidEmail, isValidPassword, sha256Password, ThrottleDelay } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
 import { throttle } from 'quasar'
-import Vue3QTelInput from 'vue3-q-tel-input'
+const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
 import { useStore } from 'src/store'
 import { UserSignUpRequest } from 'src/store/users/types'
 import { RequestInput } from 'src/store/types'
@@ -149,7 +149,7 @@ const register = throttle(() => {
   }
 
   store.dispatch(ActionTypes.UserSignUp, userSignupRequest)
-}, 1000)
+}, ThrottleDelay)
 </script>
 
 <style scoped>

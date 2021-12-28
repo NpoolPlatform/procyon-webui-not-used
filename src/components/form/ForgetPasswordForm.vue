@@ -32,10 +32,10 @@
 
 <script setup lang='ts'>
 import { reactive, ref, defineAsyncComponent, computed } from 'vue'
-import { isValidEmail, isValidPassword, sha256Password } from 'src/utils/utils'
+import { isValidEmail, isValidPassword, sha256Password, ThrottleDelay } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
 import { throttle } from 'quasar'
-import Vue3QTelInput from 'vue3-q-tel-input'
+const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
 import { useStore } from 'src/store'
 import { UserForgetPasswordRequest } from 'src/store/users/types'
 import { RequestInput } from 'src/store/types'
@@ -76,13 +76,14 @@ const confirmPasswordRules = ref([
 const forget = throttle(() => {
   let type = ''
   let verifyParam = ''
-  if (forgetInput.phoneNumber === '' && forgetInput.emailAddress !== '') {
+  if (showEmail.value) {
     type = 'email'
     verifyParam = forgetInput.emailAddress
-  } else if (forgetInput.emailAddress === '' && forgetInput.emailAddress !== '') {
+  } else if (showPhone.value) {
     type = 'phone'
     verifyParam = forgetInput.phoneNumber
   }
+
   const request: UserForgetPasswordRequest = {
     VerifyParam: verifyParam,
     VerifyType: type,
@@ -98,7 +99,7 @@ const forget = throttle(() => {
     loadingContent: t('notify.Forget.Load')
   }
   store.dispatch(ActionTypes.UserForgetPassword, userForgetPasswordRequest)
-}, 1000)
+}, ThrottleDelay)
 </script>
 
 <style scoped>

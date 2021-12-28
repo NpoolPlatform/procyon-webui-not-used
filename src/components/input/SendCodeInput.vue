@@ -40,13 +40,11 @@ const store = useStore()
 
 interface Props {
   verifyParam: string
-  verifyCode: string
   verifyType: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  email: '',
-  verifyCode: '',
+  verifyParam: '',
   verifyType: 'email'
 })
 const verifyParam = toRef(props, 'verifyParam')
@@ -124,8 +122,8 @@ const sendSmsCode = () => {
   store.dispatch(ActionTypes.SendSMS, sendSmsRequest)
 }
 
-watch(sendDisable, (n) => {
-  if (!n) {
+watch(sendDisable, (n, o) => {
+  if (!n && o) {
     sendCodeText.value = t('button.SendCode')
   }
 })

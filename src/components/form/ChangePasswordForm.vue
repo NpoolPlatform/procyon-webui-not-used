@@ -67,16 +67,16 @@
 
 <script setup lang='ts'>
 import { reactive, ref, defineAsyncComponent, computed } from 'vue'
-import { isValidEmail, isValidPassword, sha256Password } from 'src/utils/utils'
+import { isValidEmail, isValidPassword, sha256Password, ThrottleDelay } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
 import { throttle } from 'quasar'
-import Vue3QTelInput from 'vue3-q-tel-input'
 import { useStore } from 'src/store'
 import { UserChangePasswordRequest } from 'src/store/users/types'
 import { RequestInput } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
+const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
@@ -119,13 +119,14 @@ const oldPasswordRules = ref([
 const changePassword = throttle(() => {
   let type = ''
   let verifyParam = ''
-  if (changePasswordInput.phoneNumber === '' && changePasswordInput.emailAddress !== '') {
+  if (showEmail.value) {
     type = 'email'
     verifyParam = userBasicInfo.value.EmailAddress
-  } else if (changePasswordInput.emailAddress === '' && changePasswordInput.emailAddress !== '') {
+  } else if (showPhone.value) {
     type = 'phone'
     verifyParam = changePasswordInput.phoneNumber
   }
+
   const request: UserChangePasswordRequest = {
     VerifyParam: verifyParam,
     VerifyType: type,
@@ -143,7 +144,7 @@ const changePassword = throttle(() => {
   }
 
   store.dispatch(ActionTypes.UserChangePassword, userChangePasswordRequest)
-}, 1000)
+}, ThrottleDelay)
 </script>
 
 <style scoped>
