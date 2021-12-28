@@ -1,7 +1,7 @@
 import { ActionTree } from 'vuex'
 import { AugmentedActionContext, RootState } from '../index'
 import { ActionTypes } from './action-types'
-import { MutationTypes, MutationTypes as goodsMutation } from './mutation-types'
+import { MutationTypes } from './mutation-types'
 import { AffiliateMutations } from './mutations'
 import { AffiliateState } from './state'
 import { post } from 'src/boot/axios'
@@ -53,7 +53,7 @@ const actions: ActionTree<AffiliateState, RootState> = {
         commit(notifyMutation.SetInnerLoading, false)
       })
       .catch((err: Error) => {
-        commit(goodsMutation.SetInvitationList, [])
+        commit(MutationTypes.SetInvitationList, [])
         commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
         commit(notifyMutation.SetInnerLoading, false)
       })
