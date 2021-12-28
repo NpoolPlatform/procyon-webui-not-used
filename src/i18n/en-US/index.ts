@@ -70,6 +70,10 @@ export default {
     GetGoodDetails: {
       Success: 'Get promotion goods successfully',
       Fail: 'Fail to get promotion goods'
+    },
+    GetDirectAffiliate: {
+      Success: 'Get affiliate list successfully',
+      Fail: 'Fail to get affiliate list'
     }
   },
 
@@ -175,6 +179,10 @@ export default {
 
   changePassword: {
     Title: 'Change Password'
+  },
+
+  affiliate: {
+    Title: 'Affiliate'
   },
 
   product: {

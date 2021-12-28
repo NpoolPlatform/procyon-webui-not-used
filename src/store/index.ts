@@ -33,6 +33,14 @@ import { style, StyleState, StyleMutations, StyleGetters } from './style'
 import { notify, NotifyState, NotifyMutations, NotifyGetters } from './notify'
 import { verify, VerifyActions, VerifyGetters, VerifyMutations, VerifyState } from 'src/store/verify'
 
+import {
+  affiliate,
+  AffiliateState,
+  AffiliateMutations,
+  AffiliateActions,
+  AffiliateGetters
+} from './affiliate'
+
 // 2 combine your store to root store
 export interface RootState {
   user: UserState
@@ -40,13 +48,14 @@ export interface RootState {
   goods: GoodState
   notify: NotifyState
   verify: VerifyState
+  affiliate: AffiliateState
 }
 
 // 3 combine your actions, mutations and getters to root, if have multi use & combin
 // for example a & b
-type Actions = UserActions & GoodActions & VerifyActions
-type Mutations = UserMutations & StyleMutations & GoodMutations & NotifyMutations & VerifyMutations
-type Getters = UserGetters & StyleGetters & GoodGetters & NotifyGetters & VerifyGetters
+type Actions = UserActions & GoodActions & VerifyActions & AffiliateActions
+type Mutations = UserMutations & StyleMutations & GoodMutations & NotifyMutations & VerifyMutations & AffiliateMutations
+type Getters = UserGetters & StyleGetters & GoodGetters & NotifyGetters & VerifyGetters & AffiliateGetters
 
 // 4 attach your module to root
 export default store(function (/* { ssrContext } */) {
@@ -56,7 +65,8 @@ export default store(function (/* { ssrContext } */) {
       style,
       goods,
       notify,
-      verify
+      verify,
+      affiliate
     },
 
     // enable strict mode (adds overhead!)
