@@ -80,6 +80,8 @@ export default {
     }
   },
 
+  NoData: '該当データなし',
+
   header: {
     Home: 'ホーム',
     Blog: 'ブログ',

@@ -80,6 +80,8 @@ export default {
     }
   },
 
+  NoData: 'No data available',
+
   header: {
     Home: 'Home',
     Blog: 'Blog',

@@ -2,8 +2,8 @@
   <q-table
     flat
     class='table-box'
-    :rows='tableRows'
-    :columns='tableColumns'
+    :rows='orders'
+    :columns='orderTableColumns'
     row-key='name'
     color='#e1eeef'
     :no-data-label="$t('NoData')"
@@ -22,17 +22,71 @@
 
 <script setup lang='ts'>
 import { defineProps, toRef, withDefaults } from 'vue'
-import { TableColum } from 'src/utils/type'
+import { UserOrderDetail } from 'src/store/order/types'
+import { useI18n } from 'vue-i18n'
+
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const { t } = useI18n({ useScope: 'global' })
+
+const orderTableColumns = [
+  {
+    name: 'date',
+    label: t('dashboard.Column3.Date'),
+    align: 'left',
+    field: (row: UserOrderDetail) => row.Date
+  },
+  {
+    name: 'product',
+    label: t('dashboard.Column3.Product'),
+    align: 'center',
+    field: (row: UserOrderDetail) => row.Product
+  },
+  {
+    name: 'amount',
+    label: t('dashboard.Column3.Amount'),
+    align: 'center',
+    field: (row: UserOrderDetail) => row.Amount
+  },
+  {
+    name: 'price',
+    label: t('dashboard.Column3.Price'),
+    align: 'center',
+    field: (row: UserOrderDetail) => row.Price
+  },
+  {
+    name: 'discount',
+    label: t('dashboard.Column3.Discount'),
+    align: 'center',
+    field: (row: UserOrderDetail) => row.Discount
+  },
+  {
+    name: 'techFee',
+    label: t('dashboard.Column3.Techfee'),
+    align: 'center',
+    field: (row: UserOrderDetail) => row.TechFee
+  },
+  {
+    name: 'period',
+    label: t('dashboard.Column3.Period'),
+    align: 'center',
+    field: (row: UserOrderDetail) => row.Period + t('dashboard.Day')
+  },
+  {
+    name: 'total',
+    label: t('dashboard.Column3.Total'),
+    align: 'center',
+    field: (row: UserOrderDetail) => row.Total + 'USDT'
+  }
+]
 
 interface Props {
-  tableColumns: Array<TableColum<any>>
-  tableRows: Array<any>
+  orders: Array<UserOrderDetail>
 }
 
-const props = withDefaults(defineProps<Props>(), {})
+const props = withDefaults(defineProps<Props>(), {
+})
 
-const tableColumns = toRef(props, 'tableColumns')
-const tableRows = toRef(props, 'tableRows')
+const orders = toRef(props, 'orders')
 </script>
 
 <style scoped>

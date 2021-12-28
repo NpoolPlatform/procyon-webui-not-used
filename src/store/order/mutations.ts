@@ -4,15 +4,15 @@ import { OrderState } from './state'
 import { UserOrderDetail } from './types'
 
 type OrderMutations<S = OrderState> = {
-  [MutationTypes.SetUserOrderDetails] (state: S, payload: UserOrderDetail): void
+  [MutationTypes.SetUserOrderDetails] (state: S, payload: Array<UserOrderDetail>): void
   [MutationTypes.SetTotalAmount] (state: S, payload: number): void
   [MutationTypes.SetDurationDays] (state: S, payload: number): void
   [MutationTypes.SetTotalCapacity] (state: S, payload: number): void
 }
 
 const mutations: MutationTree<OrderState> & OrderMutations = {
-  [MutationTypes.SetUserOrderDetails] (state: OrderState, payload: UserOrderDetail) {
-    state.userOrderDetails.push(payload)
+  [MutationTypes.SetUserOrderDetails] (state: OrderState, payload: Array<UserOrderDetail>) {
+    state.userOrderDetails = payload
   },
   [MutationTypes.SetTotalAmount] (state: OrderState, payload: number) {
     state.totalAmount += payload

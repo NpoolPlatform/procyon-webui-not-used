@@ -30,6 +30,7 @@ const actions: ActionTree<OrderState, RootState> = {
     commit(notifyMutation.SetInnerLoading, true)
     post<GetOrdersDetailByAppUserRequest, GetOrdersDetailByAppUserResponse>(OrderURLPath.GET_ORDERS_DETAIL_BY_APP_USER, payload.requestInput)
       .then((resp: GetOrdersDetailByAppUserResponse) => {
+        const myOrders: Array<UserOrderDetail> = []
         resp.Details.forEach(order => {
           const request: GetGoodDetailRequest = {
             ID: order.Good.ID
@@ -41,12 +42,11 @@ const actions: ActionTree<OrderState, RootState> = {
               Product: good.CoinInfo.Name,
               Amount: order.Units.toString() + good.Unit,
               Price: good.Price.toString() + good.PriceCurrency.Unit + '/' + good.Unit,
-              Discount: (
-                Number(order.Discount) +
-                (Number(order.SpecialReductionAmount) /
-                  (Number(order.Units) * Number(good.Price))) *
-                100
-              ).toString() + '%',
+              Discount: ((
+                order.Discount +
+                order.SpecialReductionAmount /
+                  order.Units * good.Price) *
+                100).toString() + '%',
               TechFee: '20%',
               Period: good.DurationDays.toString(),
               Total: order.Payment.Amount.toString()
@@ -54,12 +54,13 @@ const actions: ActionTree<OrderState, RootState> = {
             commit(MutationTypes.SetTotalCapacity, order.Units)
             commit(MutationTypes.SetTotalAmount, order.Payment.Amount)
             commit(MutationTypes.SetDurationDays, good.DurationDays)
-            commit(MutationTypes.SetUserOrderDetails, myOrder)
+            myOrders.push(myOrder)
           }).catch((err: Error) => {
             commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
             commit(notifyMutation.SetInnerLoading, false)
           })
         })
+        commit(MutationTypes.SetUserOrderDetails, myOrders)
         commit(notifyMutation.SetInnerLoading, false)
       })
       .catch((err: Error) => {
