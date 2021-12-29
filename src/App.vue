@@ -12,10 +12,10 @@ const q = useQuasar()
 const $q = useQuasar()
 
 const { locale } = useI18n({ useScope: 'global' })
+const router = useRouter()
 
 onMounted(() => {
-  const router = useRouter()
-  if ($q.platform.is.mobile && router.currentRoute.value.path !== 'faq' && router.currentRoute.value.path !== 'legal') {
+  if ($q.platform.is.mobile && router.currentRoute.value.path !== '/faq' && router.currentRoute.value.path !== '/legal') {
     void router.push('/notice')
     return
   }
