@@ -14,7 +14,6 @@ import {
   GetUserInvitationCodeRequest,
   GetUserInvitationCodeResponse,
   UserSignUpRequest,
-  UserSignUpResponse,
   UserForgetPasswordRequest,
   UserChangePasswordRequest,
   UserForgetPasswordResponse,
@@ -33,13 +32,13 @@ import {
   UpdatePhoneResponse,
   UpdateEmailResponse,
   UpdateEmailRequest,
-  EnablePhoneRequest, EnablePhoneResponse, EnableEmailRequest, EnableEmailResponse
+  EnablePhoneRequest, EnablePhoneResponse, EnableEmailRequest, EnableEmailResponse, UserSignUpResponse
 } from './types'
 import { RequestInput } from 'src/store/types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { RequestMessageToNotifyMessage } from 'src/utils/utils'
-import { useRouter } from 'vue-router'
 import { MutationTypes as styleMutation } from 'src/store/style/mutation-types'
+import { useRouter } from 'src/router/index'
 
 // use public api
 interface UserActions {
@@ -149,7 +148,7 @@ const actions: ActionTree<UserState, RootState> = {
   },
   [ActionTypes.UserSignUp] ({ commit }, payload: RequestInput<UserSignUpRequest>) {
     const router = useRouter()
-    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoading, false)
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<UserSignUpRequest, UserSignUpResponse>(UserURLPath.SIGN_UP, payload.requestInput).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
@@ -190,6 +189,8 @@ const actions: ActionTree<UserState, RootState> = {
   [ActionTypes.GetUserDetail] ({ commit }, payload: RequestInput<GetUserDetailRequest>) {
     post<GetUserDetailRequest, GetUserDetailResponse>(UserURLPath.GET_USER_DETAIL, payload.requestInput).then((resp: GetUserDetailResponse) => {
       commit(MutationTypes.SetUserInfo, resp.Info)
+      commit(MutationTypes.SetLoginVerify, true)
+      commit(MutationTypes.SetUserLogined, true)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)

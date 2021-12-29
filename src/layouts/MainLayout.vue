@@ -30,7 +30,6 @@ import { MutationTypes } from 'src/store/notify/mutation-types'
 import { notify } from 'src/notify/notify'
 import { useRouter } from 'vue-router'
 import { MutationTypes as styleMutation } from 'src/store/style/mutation-types'
-import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { GetUserDetailRequest } from 'src/store/users/types'
 import { RequestInput } from 'src/store/types'
@@ -86,24 +85,8 @@ onBeforeMount(() => {
   })
 })
 
-const loginVerify = computed({
-  get: () => store.getters.getLoginVerify,
-  set: (val: boolean) => {
-    store.commit(userMutation.SetLoginVerify, val)
-  }
-})
-
-const logined = computed({
-  get: () => store.getters.getUserLogined,
-  set: (val: boolean) => {
-    store.commit(userMutation.SetUserLogined, val)
-  }
-})
-
 onMounted(() => {
   if (q.cookies.has('UserID') && q.cookies.has('AppSession')) {
-    loginVerify.value = true
-    logined.value = true
     const request: GetUserDetailRequest = {}
     const getUserDetailRequest: RequestInput<GetUserDetailRequest> = {
       requestInput: request,
