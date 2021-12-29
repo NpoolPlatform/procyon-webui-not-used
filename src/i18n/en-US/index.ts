@@ -18,6 +18,13 @@ export default {
     Affiliates: 'AFFILIATES'
   },
 
+  notice: {
+    Title: 'Notice',
+    Content: 'Thank you for visiting Procyon!',
+    P1: ' Our site is currently optimized for desktop browser viewing.',
+    P2: 'However, please feel free to use Procyon on your phone or desktop browser.'
+  },
+
   notify: {
     Logout: {
       Load: 'Please wait to logout...',

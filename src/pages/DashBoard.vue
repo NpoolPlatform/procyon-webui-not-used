@@ -25,6 +25,7 @@ import { GetOrdersDetailByAppUserRequest } from 'src/store/order/types'
 import { useI18n } from 'vue-i18n'
 import { RequestInput } from 'src/store/types'
 import { ActionTypes } from 'src/store/order/action-types'
+import { CheckLogined } from 'src/utils/utils'
 
 const EarnBox = defineAsyncComponent(() => import('src/components/dashboard/EarnBox.vue'))
 const MiningSummary = defineAsyncComponent(() => import('src/components/dashboard/MiningSummary.vue'))
@@ -50,7 +51,9 @@ const getUserOrders = () => {
 }
 
 onMounted(() => {
-  getUserOrders()
+  if (CheckLogined()) {
+    getUserOrders()
+  }
 })
 </script>
 

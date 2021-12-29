@@ -111,6 +111,8 @@ const actions: ActionTree<UserState, RootState> = {
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<UserLogoutRequest, UserLogoutResponse>(UserURLPath.LOGOUT, payload.requestInput)
       .then(() => {
+        commit(MutationTypes.SetLoginVerify, false)
+        commit(MutationTypes.SetUserLogined, false)
         commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
         commit(notifyMutation.SetLoading, false)
       })

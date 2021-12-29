@@ -40,6 +40,14 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'account',
         component: () => import('pages/Account.vue')
+      },
+      {
+        path: 'affiliate',
+        component: () => import('pages/Affiliate.vue')
+      },
+      {
+        path: 'notice',
+        component: () => import('pages/Notice.vue')
       }
     ]
   },

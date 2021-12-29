@@ -6,6 +6,8 @@ import { notifyType } from 'src/notify/notify'
 import { UserBasicInfo } from 'src/store/users/types'
 import { RequestInput } from 'src/store/types'
 import { SendEmailRequest } from 'src/store/verify/types'
+import { useQuasar } from 'quasar'
+import { useRouter } from 'src/router'
 
 export const TimeStampToDate = (
   timestamp: number,
@@ -122,3 +124,17 @@ export const GenerateSendEmailRequest = (locale: string, userBasicInfo: UserBasi
 }
 
 export const ThrottleDelay = 1000
+
+export const CheckLogined = (): boolean => {
+  const q = useQuasar()
+  const router = useRouter()
+  if (!q.cookies.has('UserID') && !q.cookies.has('AppSession')) {
+    q.notify({
+      type: 'negative',
+      message: 'Please login firstly!'
+    })
+    void router.push('/')
+    return false
+  }
+  return true
+}
