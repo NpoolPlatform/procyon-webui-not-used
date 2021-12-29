@@ -6,17 +6,16 @@
 import { useQuasar } from 'quasar'
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { IsMobile } from 'src/utils/utils'
 import { useRouter } from 'vue-router'
 
 const q = useQuasar()
+const $q = useQuasar()
 
 const { locale } = useI18n({ useScope: 'global' })
 
 onMounted(() => {
   const router = useRouter()
-  const isMobile = IsMobile()
-  if (isMobile) {
+  if ($q.platform.is.mobile && router.currentRoute.value.path !== 'faq' && router.currentRoute.value.path !== 'legal') {
     void router.push('/notice')
     return
   }

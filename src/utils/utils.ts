@@ -125,10 +125,6 @@ export const GenerateSendEmailRequest = (locale: string, userBasicInfo: UserBasi
 
 export const ThrottleDelay = 1000
 
-export const IsMobile = () => {
-  return /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i.exec(navigator.userAgent)
-}
-
 export const CheckLogined = (): boolean => {
   const q = useQuasar()
   const $q = useQuasar()
