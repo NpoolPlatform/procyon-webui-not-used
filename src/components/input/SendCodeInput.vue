@@ -16,10 +16,9 @@
         v-if="verifyType === 'phone'"
         flat
         rounded
-        :disable='sendDisable'
         @click='sendSmsCode'
       >
-        {{ sendCodeText }}
+        {{ $t('button.SendCode') }}
       </q-btn
       >
     </template>

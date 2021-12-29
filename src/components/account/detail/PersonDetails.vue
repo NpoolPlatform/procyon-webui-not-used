@@ -9,7 +9,7 @@
             }}
           </q-item-label>
           <q-input
-            style="width: 90%; margin: 10px 20px 0 0"
+            style='width: 90%; margin: 10px 20px 0 0'
             class='common-input'
             outlined
             v-model='username'
@@ -27,12 +27,13 @@
           </q-item-label>
           <q-select
             popup-content-style='background: #e1eeef; color: black;'
-            style="width: 90%; margin: 10px 20px 0 0"
+            style='width: 90%; margin: 10px 20px 0 0'
             bg-color='blue-grey-1'
             outlined
             v-model='gender'
             :options='genderOptions'
             lazy-rules
+            emit-value
           />
         </div>
       </div>
@@ -44,7 +45,7 @@
             }}
           </q-item-label>
           <q-input
-            style="width: 90%; margin: 10px 20px 0 0"
+            style='width: 90%; margin: 10px 20px 0 0'
             outlined
             v-model='firstname'
             bg-color='blue-grey-1'
@@ -57,7 +58,7 @@
             }}
           </q-item-label>
           <q-input
-            style="width: 90%; margin: 10px 20px 0 0"
+            style='width: 90%; margin: 10px 20px 0 0'
             outlined
             v-model='lastname'
             bg-color='blue-grey-1'
@@ -76,7 +77,7 @@
             }}
           </q-item-label>
           <q-input
-            style="width: 90%; margin: 10px 20px 0 0"
+            style='width: 90%; margin: 10px 20px 0 0'
             outlined
             v-model='postalCode'
             bg-color='blue-grey-1'
@@ -89,7 +90,7 @@
             }}
           </q-item-label>
           <q-input
-            style="width: 90%; margin: 10px 20px 0 0"
+            style='width: 90%; margin: 10px 20px 0 0'
             outlined
             v-model='province'
             bg-color='blue-grey-1'
@@ -104,7 +105,7 @@
             }}
           </q-item-label>
           <q-input
-            style="width: 90%; margin: 10px 20px 0 0"
+            style='width: 90%; margin: 10px 20px 0 0'
             outlined
             v-model='street1'
             bg-color='blue-grey-1'
@@ -117,7 +118,7 @@
             }}
           </q-item-label>
           <q-input
-            style="width: 90%; margin: 10px 20px 0 0"
+            style='width: 90%; margin: 10px 20px 0 0'
             outlined
             v-model='street2'
             bg-color='blue-grey-1'
@@ -132,7 +133,7 @@
             }}
           </q-item-label>
           <q-input
-            style="width: 90%; margin: 10px 20px 0 0"
+            style='width: 90%; margin: 10px 20px 0 0'
             outlined
             v-model='city'
             bg-color='blue-grey-1'
@@ -145,7 +146,7 @@
             }}
           </q-item-label>
           <q-input
-            style="width: 90%; margin: 10px 20px 0 0"
+            style='width: 90%; margin: 10px 20px 0 0'
             outlined
             v-model='country'
             bg-color='blue-grey-1'
@@ -178,10 +179,16 @@ import { RequestInput } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { useI18n } from 'vue-i18n'
 import { isValidUsername } from 'src/utils/utils'
+import { useQuasar } from 'quasar'
+
+interface option {
+  label: string
+  value: string
+}
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
-const genderOptions = [
+const genderOptions: Array<option> = [
   {
     label: t('select.Gender.Male'),
     value: 'male'
@@ -263,7 +270,11 @@ const usernameRules = ref([
   (val: string) => isValidUsername(val) || t('input.UsernameWarning')
 ])
 
+const q = useQuasar()
+
 const updateUser = () => {
+  const userid = q.cookies.get('UserID')
+  const appid = q.cookies.get('AppID')
   const request: UpdateUserRequest = {
     Info: {
       Username: username.value,
@@ -279,7 +290,9 @@ const updateUser = () => {
       EmailAddress: '',
       PhoneNumber: '',
       Password: ''
-    }
+    },
+    UserID: userid,
+    AppID: appid
   }
   const updateUserRequest: RequestInput<UpdateUserRequest> = {
     requestInput: request,
