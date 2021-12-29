@@ -33,6 +33,7 @@ import { MutationTypes as styleMutation } from 'src/store/style/mutation-types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { GetUserDetailRequest } from 'src/store/users/types'
 import { RequestInput } from 'src/store/types'
+import { useI18n } from 'vue-i18n'
 
 const store = useStore()
 
@@ -63,6 +64,13 @@ const showDrawer = computed({
   }
 })
 
+const fontStyle = computed({
+  get: () => store.getters.getFontStyle,
+  set: (val) => {
+    store.commit(styleMutation.SetFontStyle, val)
+  }
+})
+
 onBeforeMount(() => {
   const appid = 'ff2c5d50-be56-413e-aba5-9c7ad888a769'
   q.cookies.set('AppID', appid)
@@ -71,6 +79,13 @@ onBeforeMount(() => {
     showDrawer.value = true
   } else {
     showDrawer.value = false
+  }
+
+  const { locale } = useI18n({ useScope: 'global' })
+  if (locale.value === 'en-US') {
+    fontStyle.value = 'font-family: Barlow'
+  } else {
+    fontStyle.value = 'font-family: "Noto Sans JP"'
   }
 
   store.subscribe(mutation => {
@@ -117,8 +132,6 @@ const MainDrawer = defineAsyncComponent(
 const MainFooter = defineAsyncComponent(
   () => import('src/components/footer/MainFooter.vue')
 )
-
-const fontStyle = computed(() => store.getters.getFontStyle)
 </script>
 
 <style scoped>
