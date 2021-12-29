@@ -79,9 +79,7 @@ const loginVerify = computed({
 const userInfo = computed(() => store.getters.getUserInfo)
 
 watch(logined, (newLogined, oldLogined) => {
-  console.log('logined is', newLogined, oldLogined)
   if (newLogined && !oldLogined) {
-    console.log('user info is: ', userInfo, userInfo.value.UserAppInfo.UserApplicationInfo.GALogin, userInfo.value.UserBasicInfo.EmailAddress)
     if (userInfo.value.UserAppInfo.UserApplicationInfo.GALogin) {
       showGoogleAuthenticationVerifyDialog.value = true
     } else if (userInfo.value.UserBasicInfo.EmailAddress !== '') {
@@ -108,7 +106,6 @@ watch(logined, (newLogined, oldLogined) => {
 })
 
 const verifyEmailCode = throttle((verifyCode: string): void => {
-  console.log('verify code is', verifyCode)
   const request: VerifyCodeWithUserIDRequest = {
     UserID: '',
     Param: userInfo.value.UserBasicInfo.EmailAddress,

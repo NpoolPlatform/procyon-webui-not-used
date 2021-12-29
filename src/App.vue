@@ -26,14 +26,12 @@ onMounted(() => {
     locale.value = q.cookies.get('lang')
   } else {
     const lang = q.lang.getLocale()
-    console.log('lang is', lang)
     if (lang?.indexOf('en')) {
       locale.value = 'en-US'
     } else {
       locale.value = 'ja-JP'
     }
   }
-  console.log(locale.value)
   if (locale.value.indexOf('en')) {
     fontStyle.value = 'font-family: Barlow'
   } else {
