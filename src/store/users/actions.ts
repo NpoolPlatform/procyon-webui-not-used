@@ -107,6 +107,7 @@ interface UserActions {
 
 const actions: ActionTree<UserState, RootState> = {
   [ActionTypes.UserLogout] ({ commit }, payload: RequestInput<UserLogoutRequest>) {
+    const router = useRouter()
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<UserLogoutRequest, UserLogoutResponse>(UserURLPath.LOGOUT, payload.requestInput)
@@ -115,6 +116,7 @@ const actions: ActionTree<UserState, RootState> = {
         commit(MutationTypes.SetUserLogined, false)
         commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
         commit(notifyMutation.SetLoading, false)
+        void router.push('/')
       })
       .catch((err: Error) => {
         commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
