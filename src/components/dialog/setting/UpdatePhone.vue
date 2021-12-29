@@ -9,15 +9,9 @@
       </q-card-section>
       <q-card-section>
         <q-form @submit='update'>
-          <q-input
-            outlined
-            bg-color='blue-grey-2'
-            class='common-input'
-            :label="$t('input.OldPhoneNumber')"
-            v-model='oldPhone'
-            disable
-            lazy-rules
-            :rules='phoneRules' />
+          <Vue3QTelInput v-model:tel='oldPhone' bg-color='blue-grey-2' outlined
+                         lazy-rules
+                         :rules='phoneRules' :label="$t('input.OldPhoneNumber')"></Vue3QTelInput>
 
           <send-code-input
             :verifyParam='oldPhone'
@@ -25,14 +19,9 @@
             v-model:verify-code='oldVerifyCode'
           ></send-code-input>
 
-          <q-input
-            outlined
-            bg-color='blue-grey-2'
-            class='common-input'
-            :label="$t('input.PhoneNumber')"
-            v-model='newPhone'
-            lazy-rules
-            :rules='phoneRules' />
+          <Vue3QTelInput v-model:tel='newPhone' bg-color='blue-grey-2' outlined
+                         lazy-rules
+                         :rules='phoneRules' :label="$t('input.PhoneNumber')"></Vue3QTelInput>
 
           <send-code-input
             :verifyParam='newPhone'
@@ -59,6 +48,7 @@ import { RequestInput } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
+const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
@@ -119,6 +109,7 @@ const whenHide = () => {
 </script>
 
 <style scoped>
+@import "~vue3-q-tel-input/dist/vue3-q-tel-input.esm.css";
 .dialog-box {
   background-color: white;
   box-shadow: 16px 16px 20px 0 #23292b;

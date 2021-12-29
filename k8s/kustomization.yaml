@@ -4,3 +4,4 @@ commonLabels:
 resources:
   - 01-procyon-webui.yaml
   - 02-ingress.yaml
+  - 03-middlewares.yaml

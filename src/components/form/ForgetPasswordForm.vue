@@ -103,6 +103,7 @@ const forget = throttle(() => {
 </script>
 
 <style scoped>
+@import "~vue3-q-tel-input/dist/vue3-q-tel-input.esm.css";
 .forget-button {
   background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
   border: 1px solid #ff964a;

@@ -7,29 +7,23 @@
           }}</span>
         <q-btn icon='close' flat round dense @click='emit("update:showEnablePhone", false)' />
       </q-card-section>
-      <q-card-section>
-        <q-form @submit='enable'>
-          <q-input
-            outlined
-            bg-color='blue-grey-2'
-            class='common-input'
-            :label="$t('input.PhoneNumber')"
-            v-model='phoneNumber'
-            lazy-rules
-            :rules='phoneRules' />
+      <q-form @submit='enable'>
+        <Vue3QTelInput v-model:tel='phoneNumber' bg-color='blue-grey-2' outlined
+                       lazy-rules
+                       :rules='phoneRules' :label="$t('input.PhoneNumber')"></Vue3QTelInput>
+        <send-code-input
+          :verifyParam='phoneNumber'
+          verifyType='phone'
+          v-model:verify-code='verifyCode'
+        ></send-code-input>
 
-          <send-code-input
-            :verifyParam='phoneNumber'
-            verifyType='phone'
-            v-model:verify-code='verifyCode'
-          ></send-code-input>
+        <q-btn class='common-button dialog-button' type='submit'>{{
+            $t('account.Setting.Phone.EnableButton')
+          }}
+        </q-btn>
+      </q-form>
 
-          <q-btn class='common-button dialog-button' type='submit'>{{
-              $t('account.Setting.Phone.EnableButton')
-            }}
-          </q-btn>
-        </q-form>
-      </q-card-section>
+      <q-card-section></q-card-section>
     </q-card>
   </q-dialog>
 </template>
@@ -43,6 +37,7 @@ import { RequestInput } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
+const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
@@ -95,6 +90,7 @@ const whenHide = () => {
 </script>
 
 <style scoped>
+@import "~vue3-q-tel-input/dist/vue3-q-tel-input.esm.css";
 .dialog-box {
   background-color: white;
   box-shadow: 16px 16px 20px 0 #23292b;
