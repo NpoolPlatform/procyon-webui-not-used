@@ -49,7 +49,7 @@ export default {
     },
     VerifyWithUserID: {
       Load: '検証をお待ちください',
-      Success: '',
+      Success: 'ベリファイコード正常終了',
       Fail: '入力コードエラー'
     },
     VerifyGoogleAuthentication: {
@@ -77,10 +77,147 @@ export default {
     },
     GetUserOrders: {
       Fail: 'ユーザー注文履歴の取得に失敗する'
+    },
+    Update: {
+      Success: '個人情報の更新に成功',
+      Fail: 'ユーザー情報の更新に失敗する',
+      Load: 'ユーザー情報の保存'
+    },
+    GetUserDetail: {
+      Fail: 'ユーザー詳細情報の取得に失敗した'
+    },
+    GetUserInvitationCode: {
+      Fail: 'ユーザー招待コードの取得に失敗する'
+    },
+    EnableEmail: {
+      Success: 'を正常に有効にするメールアドレス',
+      Fail: 'メールアドレスを有効にするのに失敗しました。',
+      Load: ''
+    },
+    EnablePhone: {
+      Success: '電話番号の有効化に成功',
+      Fail: '電話番号の有効化に失敗します',
+      Load: ''
+    },
+    UpdateEmail: {
+      Success: 'ユーザーのメールアドレスの更新に成功',
+      Fail: 'メールアドレスの更新に失敗しました',
+      Load: ''
+    },
+    UpdatePhone: {
+      Success: 'ユーザーフォンのアップデートに成功',
+      Fail: '電話番号の更新に失敗した',
+      Load: ''
+    },
+    UpdateGoogleStatus: {
+      Success: 'google verify の設定に成功しました。',
+      Fail: 'google verifyの設定に失敗しました。',
+      Load: ''
+    },
+    SetLoginVerify: {
+      Success: 'ユーザーログインベリファイメソッドの送信に成功',
+      Fail: 'ユーザーログイン検証の送信失敗',
+      Load: ''
     }
   },
 
   NoData: '該当データなし',
+
+  account: {
+    Title: 'アカウント情報',
+    Account: {
+      PersonDetail: {
+        Title: '個人情報（本人確認用）',
+        Username: 'ユーザー名',
+        Gender: '性別',
+        FirstName: '名前',
+        LastName: '姓名'
+      },
+      Address: {
+        Title: '住所',
+        StreetAddress1: '都道府県',
+        StreetAddress2: '建物名・部屋番号',
+        City: '市区町村',
+        Province: '丁目・番地・号',
+        Country: '国名',
+        PostalCode: '郵便番号'
+      }
+    },
+    InvitationCode: {
+      Title: '招待コード'
+    },
+    Setting: {
+      Title: 'セキュリティ設定',
+      Verify: '設定済み',
+      NotVerify: '設定を行う',
+      ChangePassword: {
+        Title: 'パスワードの変更',
+        ChangePasswordContent: 'パスワードは、最低8文字で数字も含める必要があります。',
+        Button: 'パスワードを変更'
+      },
+      Email: {
+        Title: 'メールアドレス',
+        EmailContent: 'メールアドレスが設定されていることを確認ください。',
+        EnableButton: 'メールアドレスを有効にする',
+        UpdateButton: 'メールアドレスの変更'
+      },
+      Phone: {
+        Title: '携帯電話の認証',
+        PhoneContent: '携帯電話の認証で、ログイン、入出金、その他セキュリティ設定の変更を行うことができます。',
+        EnableButton: '携帯電話を登録',
+        UpdateButton: '電話番号の更新'
+      },
+      Google: {
+        Title: 'Google認証',
+        GoogleContent: '2段階認証を設定する事で、アカウントから入出金する際のセキュリティを強化する事ができます。',
+        Button: '2段階認証を設定',
+        VerifyContent: 'Google認証アプリに表示されている認証コードを記入ください。'
+      },
+      KYC: {
+        Title: '身分証明の設定',
+        KYCContent: '身分を証明する画像付きの証明書をアップロードしてください。',
+        Button: '身分証明書を設定'
+      },
+      LoginVerify: {
+        Title: 'ログイン認証',
+        Content: 'ログイン時のセキュリティを強化するため、認証方法を有効にすることができます。',
+        GALogin: 'Googleログイン認証',
+        EmailLogin: 'メールログイン認証',
+        Button: '設定'
+      }
+    },
+    History: {
+      Title: 'ログイン履歴',
+      Date: '日付/時刻',
+      IP: 'IPアドレス',
+      Location: '所在地',
+      Private: 'プライベートアドレス'
+    }
+  },
+
+  select: {
+    Gender: {
+      Male: '男性',
+      Female: '女性',
+      Other: 'その他'
+    }
+  },
+
+  GoogleAuthentication: {
+    Title1: 'Google Authenticate',
+    Content1:
+      '上のQRコードをGoogle Authenticatorというアプリでスキャンしてください。',
+    Content2:
+      'その後、Google AuthenticatorにProcyonの項目が追加されたことを確認。確認がとれましたら、本画面の「次の段階」ボタンをクリック。Google Authenticatorに表示される検証コードを入力して、Google認証を完了してください。',
+    Content3: '上記のQRコードを読み取れない場合は、下記手順をお試しください。',
+    L1: '①『Authenticator』アプリを起動',
+    L2: '②右下の 『セットアップキーを入力』を選択',
+    L3: '③『アカウント』を"Procyon:example{\'@\'}example.com"と設定',
+    L4: '④上記のGoogle Gecretをコピーして "追加"をクリック',
+    NextStepBtn: '次の段階',
+    CloseBtn: '閉じる',
+    Hint: '上記のQRコードを読み取れない場合は、"Authenticator"アプリに入り、右下の "セットアップキーを入力"を選択し、"アカウント"を"(Procyon:example{\'@\'}example.com)"のように設定し、上記のgoogle secretをコピーして "追加"をクリックしてください。'
+  },
 
   header: {
     Home: 'ホーム',
@@ -122,7 +259,8 @@ export default {
     Confirm: '確認',
     Cancel: '取消',
     Export: '履歴のエクスポート(CSV)',
-    Purchase: 'ストレージ容量を追加購入'
+    Purchase: 'ストレージ容量を追加購入',
+    Save: '保存'
   },
 
   input: {
@@ -130,6 +268,10 @@ export default {
     PhoneNumber: '電話番号',
     ConfirmPassword: 'パスワードを再入力',
     EmailAddress: 'メールアドレス',
+    OldEmailAddress: '旧メールアドレス',
+    OldPhoneNumber: '旧電話番号',
+    OldEmailWarning: '別のメールアドレスを入力してください',
+    OldPhoneWarning: '別の電話番号を入力してください',
     VerifyCode: '認証コード',
     PasswordWarning: '8〜20文字で、数字も含めてください',
     ConfirmPasswordWarning: 'パスワードとパスワードの確認が一致していません',
@@ -141,6 +283,7 @@ export default {
     InvitationCode: '招待コード',
     InvitationCodeWarning: '招待コードが必要です',
     CheckWarning: '同意の上、"アカウント登録"をクリックしてください。',
+    UsernameWarning: 'ユーザー名は4～32文字で、純粋な数字やスペースを含むことはできません',
     Login: {
       Username: 'ユーザー名 / メールアドレス',
       UsernameWarning: '正しいユーザー名／メールアドレスを入力してください'
@@ -168,7 +311,8 @@ export default {
     Title: 'ユーザーログイン',
     Forget: 'パスワードを忘れた場合',
     NoAccount: 'アカウントがない場合',
-    Register: '今すぐ登録'
+    Register: '今すぐ登録',
+    GoogleVerifyContent: 'お客様は、Google認証によるログイン認証を選択しています。Google認証アプリに表示されている認証コードを記入ください。'
   },
 
   forget: {

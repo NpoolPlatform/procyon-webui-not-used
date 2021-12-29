@@ -154,7 +154,6 @@
 import imgVCBacking from 'src/assets/icon-vc-backing.svg'
 import imgTopTeam from 'src/assets/icon-team.svg'
 import imgTechnology from 'src/assets/icon-technology.svg'
-
 import { computed, defineAsyncComponent } from 'vue'
 import { useStore } from 'src/store'
 

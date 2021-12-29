@@ -49,7 +49,7 @@ export default {
     },
     VerifyWithUserID: {
       Load: 'Please wait for verify...',
-      Success: '',
+      Success: 'Verify code successfully',
       Fail: 'Input Code Error'
     },
     VerifyGoogleAuthentication: {
@@ -77,10 +77,148 @@ export default {
     },
     GetUserOrders: {
       Fail: 'Fail to get user order history'
+    },
+    Update: {
+      Success: 'Successful to update personal details',
+      Fail: 'Saving user details',
+      Load: 'Fail to update user info'
+    },
+    GetUserDetail: {
+      Fail: 'Fail to get user detail'
+    },
+    GetUserInvitationCode: {
+      Fail: 'Fail to get user invitation code'
+    },
+    EnableEmail: {
+      Success: 'Successful to enable email address',
+      Fail: 'Fail to enable email address',
+      Load: ''
+    },
+    EnablePhone: {
+      Success: 'Successful to enable phone number',
+      Fail: 'Fail to enable phone number',
+      Load: ''
+    },
+    UpdateEmail: {
+      Success: 'Successful to update user email address',
+      Fail: 'Fail to update email address',
+      Load: ''
+    },
+    UpdatePhone: {
+      Success: 'Successful to update user phone',
+      Fail: 'Fail to update phone number',
+      Load: ''
+    },
+    UpdateGoogleStatus: {
+      Success: 'Successful to set user google verify',
+      Fail: 'Fail to set user google verify',
+      Load: ''
+    },
+    SetLoginVerify: {
+      Success: 'Submit user login verify method successfully',
+      Fail: 'Fail to submit user login verify',
+      Load: ''
     }
   },
 
   NoData: 'No data available',
+
+  account: {
+    Title: 'Account',
+    Account: {
+      PersonDetail: {
+        Title: 'Personal Details (for KYC process)',
+        Username: 'Username',
+        Gender: 'Gender',
+        FirstName: 'First Name',
+        LastName: 'Last Name'
+      },
+      Address: {
+        Title: 'Address',
+        StreetAddress1: 'Street Address 1',
+        StreetAddress2: 'Street Address 2',
+        City: 'City',
+        Province: 'Province / Prefecture',
+        Country: 'Country',
+        PostalCode: 'Postal Code'
+      }
+    },
+    InvitationCode: {
+      Title: 'Invitation Code'
+    },
+    Setting: {
+      Title: 'Security Settings',
+      Verify: 'Verified',
+      NotVerify: 'Not verified',
+      ChangePassword: {
+        Title: 'Change Password',
+        ChangePasswordContent: 'Your password must be at least 8 characters in length and must include numbers and letters.',
+        Button: 'Change Password'
+      },
+      Email: {
+        Title: 'E-mail Address',
+        EmailContent: 'Make sure your e-mail address is up to date.',
+        EnableButton: 'Enable Email Address',
+        UpdateButton: 'Update Email Address'
+      },
+      Phone: {
+        Title: 'Mobile Authentication',
+        PhoneContent: 'Enable mobile authentication to confirm logins, transfers, and changes to security settings.',
+        EnableButton: 'Register Phone Number',
+        UpdateButton: 'Update Phone Number'
+      },
+      Google: {
+        Title: 'Google Authenticator',
+        GoogleContent: 'Two-factor Authentication (2FA) secures your account by adding a second security check when logging in and making transfers.',
+        Button: 'Enable Two-factor Auth',
+        VerifyContent: 'Please enter your verification code in your google authenticator.'
+      },
+      KYC: {
+        Title: 'ID Verification',
+        KYCContent: 'Upload a photo ID to verify your identity.',
+        Button: 'Verify ID'
+      },
+      LoginVerify: {
+        Title: 'Login Verification',
+        Content: 'Select an additional verification method when logging in. Two-factor authentication must be enabled prior to selecting as a login verification method.',
+        GALogin: 'Google Login Authentication',
+        EmailLogin: 'E-mail Login Verification',
+        Button: 'Submit Change'
+      }
+    },
+    History: {
+      Title: 'RECENT LOGIN HISTORY',
+      Date: 'Date',
+      IP: 'IP Address',
+      Location: 'Location',
+      Private: 'Private Location'
+    }
+  },
+
+  select: {
+    Gender: {
+      Male: 'Male',
+      Female: 'Female',
+      Other: 'Other'
+    }
+  },
+
+  GoogleAuthentication: {
+    Title1: 'Google Authenticate',
+    Content1:
+      'Please can the QR code above through the Google Authenticator app on your smartphone.',
+    Content2:
+      'After scanning and connecting the app to your Procyon account, click the "next step" button below on this page to enter the verification code shown in your Google Authenticator app to finish verifying your Google Authenticator app.',
+    Content3:
+      'If you are unable to scan the QR code above on your Google Authenticator app, please follow the steps below:',
+    L1: '1. Open your Google Authenticator app on your smartphone',
+    L2: '2. Choose "Enter a setup key" at the bottom right of the screen ',
+    L3: '3. Set the "Account Name" as, for example, [Procyon: example{\'@\'}gmail.com]',
+    L4: '4. Copy the Google Secret above and click "Add."',
+    NextStepBtn: 'Next Step',
+    CloseBtn: 'Close',
+    Hint: 'If you fail to scan the QR code above, please enter your "Authenticator" app and choose "Enter a setup key" at the right bottom and then set your "Account name" like "(Procyon:example{\'@\'}example.com)" and copy the google secret above and click "Add"'
+  },
 
   header: {
     Home: 'Home',
@@ -122,7 +260,8 @@ export default {
     Confirm: 'Confirm',
     Cancel: 'Cancel',
     Export: 'Export History(CSV)',
-    Purchase: 'Purchase Capacity'
+    Purchase: 'Purchase Capacity',
+    Save: 'Save Changes'
   },
 
   input: {
@@ -130,6 +269,10 @@ export default {
     PhoneNumber: 'Phone Number',
     ConfirmPassword: 'Confirm Password',
     EmailAddress: 'Email Address',
+    OldEmailAddress: 'Old Email',
+    OldPhoneNumber: 'Old Phone Number',
+    OldEmailWarning: 'Please enter a different email address',
+    OldPhoneWarning: 'Please enter a different phone number',
     VerifyCode: 'Verification Code',
     PasswordWarning: 'Please enter a password 8-20 alphanumeric characters',
     ConfirmPasswordWarning: 'Password and confirm password not equal',
@@ -141,6 +284,7 @@ export default {
     InvitationCode: 'Invitation Code',
     InvitationCodeWarning: 'Invitation code is required',
     CheckWarning: 'Please choose agree and then click "Register"',
+    UsernameWarning: 'User name needs to be between 4 and 32 characters and cannot be a pure number, cannot contain spaces',
     Login: {
       Username: 'Username / Email',
       UsernameWarning: 'Please enter a legal username or email address'
@@ -168,7 +312,8 @@ export default {
     Title: 'User Login',
     Forget: 'Forgot password?',
     NoAccount: 'No account? ',
-    Register: 'Register now.'
+    Register: 'Register now.',
+    GoogleVerifyContent: 'You have choose to verify login by google authenticate. Please enter your verification code in your google authenticator.'
   },
 
   forget: {

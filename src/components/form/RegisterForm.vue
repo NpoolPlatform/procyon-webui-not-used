@@ -147,7 +147,6 @@ const register = throttle(() => {
     },
     loadingContent: t('notify.Signup.Load')
   }
-
   store.dispatch(ActionTypes.UserSignUp, userSignupRequest)
 }, ThrottleDelay)
 </script>

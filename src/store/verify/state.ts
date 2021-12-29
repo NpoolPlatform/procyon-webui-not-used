@@ -1,17 +1,17 @@
-import { googleAuthenticationInfo } from 'src/store/verify/types'
+import { GoogleAuthenticationInfo } from 'src/store/verify/types'
 
 interface VerifyState {
   loginEmailVerifyDialog: boolean
   loginGoogleAuthenticationVerifyDialog: boolean
   loading: boolean
   error: string
-  googleAuthenticationInfo: googleAuthenticationInfo
+  googleAuthenticationInfo: GoogleAuthenticationInfo
   sendCodeButtonDisable: boolean
   sendCodeButtonText: string
 }
 
 function state (): VerifyState {
-  const info: googleAuthenticationInfo = {
+  const info: GoogleAuthenticationInfo = {
     qrCodeURL: '',
     secret: ''
   }

@@ -1,4 +1,4 @@
-export interface googleAuthenticationInfo {
+export interface GoogleAuthenticationInfo {
   qrCodeURL: string
   secret: string
 }
