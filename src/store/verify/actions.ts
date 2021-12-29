@@ -8,7 +8,7 @@ import { post } from 'src/boot/axios'
 import {
   GetQRCodeURLRequest,
   GetQRCodeURLResponse,
-  googleAuthenticationInfo,
+  GoogleAuthenticationInfo,
   SendEmailRequest,
   SendEmailResponse,
   SendSmsRequest,
@@ -99,7 +99,10 @@ const actions: ActionTree<VerifyState, RootState> = {
     })
   },
   [ActionTypes.GetQRCodeURL] ({ commit }, payload: RequestInput<GetQRCodeURLRequest>) {
-    let info: googleAuthenticationInfo
+    let info: GoogleAuthenticationInfo = {
+      qrCodeURL: '',
+      secret: ''
+    }
     commit(notifyMutation.SetInnerLoading, true)
     post<GetQRCodeURLRequest, GetQRCodeURLResponse>(VerifyURLPath.GET_QRCODE_URL, payload.requestInput)
       .then((resp: GetQRCodeURLResponse) => {

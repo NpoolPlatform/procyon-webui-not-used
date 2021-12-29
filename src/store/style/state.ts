@@ -4,7 +4,8 @@ interface StyleState {
   fontStyle: FontFamily,
   showEmail: boolean,
   showPhone: boolean,
-  userDialogShow: boolean
+  userDialogShow: boolean,
+  showDrawer: boolean
 }
 
 function state (): StyleState {
@@ -12,7 +13,8 @@ function state (): StyleState {
     fontStyle: 'font-family: "Noto Sans JP"',
     showEmail: true,
     showPhone: false,
-    userDialogShow: false
+    userDialogShow: false,
+    showDrawer: false
   }
 }
 

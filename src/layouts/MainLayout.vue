@@ -23,13 +23,22 @@
 </template>
 
 <script setup lang='ts'>
-import { computed, defineAsyncComponent, onBeforeMount, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, onBeforeMount, watch, onUpdated, onMounted } from 'vue'
 import { useStore } from 'src/store'
 import { useQuasar } from 'quasar'
 import { MutationTypes } from 'src/store/notify/mutation-types'
 import { notify } from 'src/notify/notify'
+import { useRouter } from 'vue-router'
+import { MutationTypes as styleMutation } from 'src/store/style/mutation-types'
+import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
+import { ActionTypes } from 'src/store/users/action-types'
+import { GetUserDetailRequest } from 'src/store/users/types'
+import { RequestInput } from 'src/store/types'
 
 const store = useStore()
+
+const router = useRouter()
+const nowPath = computed(() => router.currentRoute.value.path)
 
 const loading = computed(() => store.getters.getLoading)
 const messages = computed(() => store.getters.getNotifyMessages)
@@ -48,9 +57,22 @@ watch(loading, (newLoding, oldLoading) => {
   }
 })
 
+const showDrawer = computed({
+  get: () => store.getters.getShowDrawer,
+  set: (val: boolean) => {
+    store.commit(styleMutation.SetShowDrawer, val)
+  }
+})
+
 onBeforeMount(() => {
   const appid = 'ff2c5d50-be56-413e-aba5-9c7ad888a769'
   q.cookies.set('AppID', appid)
+
+  if (nowPath.value === '/account' || nowPath.value === '/dashboard' || nowPath.value === '/affiliate') {
+    showDrawer.value = true
+  } else {
+    showDrawer.value = false
+  }
 
   store.subscribe(mutation => {
     if (mutation.type === MutationTypes.PushMessage) {
@@ -64,6 +86,45 @@ onBeforeMount(() => {
   })
 })
 
+const loginVerify = computed({
+  get: () => store.getters.getLoginVerify,
+  set: (val: boolean) => {
+    store.commit(userMutation.SetLoginVerify, val)
+  }
+})
+
+const logined = computed({
+  get: () => store.getters.getUserLogined,
+  set: (val: boolean) => {
+    store.commit(userMutation.SetUserLogined, val)
+  }
+})
+
+onMounted(() => {
+  if (q.cookies.has('UserID') && q.cookies.has('AppSession')) {
+    loginVerify.value = true
+    logined.value = true
+    const request: GetUserDetailRequest = {}
+    const getUserDetailRequest: RequestInput<GetUserDetailRequest> = {
+      requestInput: request,
+      messages: {
+        successMessage: '',
+        failMessage: ''
+      },
+      loadingContent: ''
+    }
+    store.dispatch(ActionTypes.GetUserDetail, getUserDetailRequest)
+  }
+})
+
+onUpdated(() => {
+  if (nowPath.value === '/account' || nowPath.value === '/dashboard' || nowPath.value === '/affiliate') {
+    showDrawer.value = true
+  } else {
+    showDrawer.value = false
+  }
+})
+
 const MainHeader = defineAsyncComponent(
   () => import('src/components/header/MainHeader.vue')
 )
@@ -73,8 +134,6 @@ const MainDrawer = defineAsyncComponent(
 const MainFooter = defineAsyncComponent(
   () => import('src/components/footer/MainFooter.vue')
 )
-
-const showDrawer = ref(false)
 
 const fontStyle = computed(() => store.getters.getFontStyle)
 </script>

@@ -8,6 +8,7 @@ type StyleMutations<S = StyleState> = {
   [MutationTypes.SetShowEmail] (state: S, payload: boolean): void
   [MutationTypes.SetShowPhone] (state: S, payload: boolean): void
   [MutationTypes.SetUserDialogShow] (state: S, payload: boolean): void
+  [MutationTypes.SetShowDrawer] (state: S, payload: boolean): void
 }
 
 const mutations: MutationTree<StyleState> & StyleMutations = {
@@ -22,6 +23,9 @@ const mutations: MutationTree<StyleState> & StyleMutations = {
   },
   [MutationTypes.SetUserDialogShow] (state: StyleState, payload: boolean) {
     state.userDialogShow = payload
+  },
+  [MutationTypes.SetShowDrawer] (state: StyleState, payload: boolean) {
+    state.showDrawer = payload
   }
 }
 

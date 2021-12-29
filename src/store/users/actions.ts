@@ -113,7 +113,7 @@ const actions: ActionTree<UserState, RootState> = {
     post<UserLogoutRequest, UserLogoutResponse>(UserURLPath.LOGOUT, payload.requestInput)
       .then(() => {
         commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
-        commit(MutationTypes.SetUserLogined, false)
+        commit(notifyMutation.SetLoading, false)
       })
       .catch((err: Error) => {
         commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
@@ -123,10 +123,13 @@ const actions: ActionTree<UserState, RootState> = {
   [ActionTypes.UserLogin] ({ commit }, payload: RequestInput<UserLoginRequest>) {
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
-    post<UserLoginRequest, UserLoginResponse>(UserURLPath.LOGIN, payload.requestInput).then(() => {
+    post<UserLoginRequest, UserLoginResponse>(UserURLPath.LOGIN, payload.requestInput).then((resp: UserLoginResponse) => {
+      commit(MutationTypes.SetUserInfo, resp.Info)
+      commit(MutationTypes.SetUserLogined, true)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
       commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {
+      commit(MutationTypes.SetUserLogined, false)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)
     })
@@ -224,11 +227,13 @@ const actions: ActionTree<UserState, RootState> = {
   },
   [ActionTypes.UpdateUserGAStatus] ({ commit }, payload: RequestInput<UpdateUserGAStatusRequest>) {
     commit(notifyMutation.SetLoading, true)
+    commit(styleMutation.SetUserDialogShow, true)
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<UpdateUserGAStatusRequest, UpdateUserGAStatusResponse>(UserURLPath.UPDATE_USER_GA_STATUS, payload.requestInput).then(() => {
       commit(MutationTypes.SetGoogleAuthenticator, payload.requestInput.Status)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
       commit(notifyMutation.SetLoading, false)
+      commit(styleMutation.SetUserDialogShow, false)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)
@@ -236,11 +241,13 @@ const actions: ActionTree<UserState, RootState> = {
   },
   [ActionTypes.EnableEmail] ({ commit }, payload: RequestInput<EnableEmailRequest>) {
     commit(notifyMutation.SetLoading, true)
+    commit(styleMutation.SetUserDialogShow, true)
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<EnableEmailRequest, EnableEmailResponse>(UserURLPath.ENABLE_EMAIL, payload.requestInput).then(() => {
       commit(MutationTypes.SetEmailAddress, payload.requestInput.EmailAddress)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
       commit(notifyMutation.SetLoading, false)
+      commit(styleMutation.SetUserDialogShow, false)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)
@@ -248,11 +255,13 @@ const actions: ActionTree<UserState, RootState> = {
   },
   [ActionTypes.EnablePhone] ({ commit }, payload: RequestInput<EnablePhoneRequest>) {
     commit(notifyMutation.SetLoading, true)
+    commit(styleMutation.SetUserDialogShow, true)
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<EnablePhoneRequest, EnablePhoneResponse>(UserURLPath.ENABLE_PHONE, payload.requestInput).then(() => {
       commit(MutationTypes.SetPhoneNumber, payload.requestInput.PhoneNumber)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
       commit(notifyMutation.SetLoading, false)
+      commit(styleMutation.SetUserDialogShow, false)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)
@@ -260,11 +269,13 @@ const actions: ActionTree<UserState, RootState> = {
   },
   [ActionTypes.UpdateEmail] ({ commit }, payload: RequestInput<UpdateEmailRequest>) {
     commit(notifyMutation.SetLoading, true)
+    commit(styleMutation.SetUserDialogShow, true)
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<UpdateEmailRequest, UpdateEmailResponse>(UserURLPath.UPDATE_EMAIL, payload.requestInput).then(() => {
       commit(MutationTypes.SetEmailAddress, payload.requestInput.NewEmail)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
       commit(notifyMutation.SetLoading, false)
+      commit(styleMutation.SetUserDialogShow, false)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)
@@ -272,11 +283,13 @@ const actions: ActionTree<UserState, RootState> = {
   },
   [ActionTypes.UpdatePhone] ({ commit }, payload: RequestInput<UpdatePhoneRequest>) {
     commit(notifyMutation.SetLoading, true)
+    commit(styleMutation.SetUserDialogShow, true)
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<UpdatePhoneRequest, UpdatePhoneResponse>(UserURLPath.UPDATE_PHONE, payload.requestInput).then(() => {
       commit(MutationTypes.SetPhoneNumber, payload.requestInput.NewPhone)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
       commit(notifyMutation.SetLoading, false)
+      commit(styleMutation.SetUserDialogShow, false)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)

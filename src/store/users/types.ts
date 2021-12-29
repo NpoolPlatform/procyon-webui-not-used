@@ -1,21 +1,21 @@
 interface UserBasicInfo {
-  UserID: string
+  UserID?: string
   Username: string
   Password: string
-  Avatar: string
-  Age: number
+  Avatar?: string
+  Age?: number
   Gender: string
-  Region: string
-  Birthday: string
+  Region?: string
+  Birthday?: string
   Country: string
   Province: string
   City: string
   PhoneNumber: string
-  Compony: string
+  Compony?: string
   EmailAddress: string
-  SignupMethod: string
-  Career: string
-  DisplayName: string
+  SignupMethod?: string
+  Career?: string
+  DisplayName?: string
   FirstName: string
   LastName: string
   StreetAddress1: string

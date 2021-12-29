@@ -25,11 +25,15 @@
     </template>
   </VerifyDialog>
   <VerifyDialog :dialog-title="$t('dialog.GoogleVerify.Title')"
-                v-model:show-dialog='showGoogleAuthenticationVerifyDialog' @verify='verifyGoogleCode' />
+                v-model:show-dialog='showGoogleAuthenticationVerifyDialog' @verify='verifyGoogleCode'>
+    <template v-slot:content>
+      <div>{{$t('login.GoogleVerifyContent')}}</div>
+    </template>
+  </VerifyDialog>
 </template>
 
 <script setup lang='ts'>
-import { defineAsyncComponent, computed, watch, ref } from 'vue'
+import { computed, defineAsyncComponent, ref, watch } from 'vue'
 import { useStore } from 'src/store'
 import { MutationTypes } from 'src/store/users/mutation-types'
 import { useRouter } from 'vue-router'
@@ -61,12 +65,23 @@ const showEmailVerifyDialog = ref(false)
 
 const logined = computed({
   get: () => store.getters.getUserLogined,
-  set: (val) => store.commit(MutationTypes.SetUserLogined, val)
+  set: (val) => {
+    store.commit(MutationTypes.SetUserLogined, val)
+  }
+})
+
+const loginVerify = computed({
+  get: () => store.getters.getLoginVerify,
+  set: (val) => {
+    store.commit(MutationTypes.SetLoginVerify, val)
+  }
 })
 const userInfo = computed(() => store.getters.getUserInfo)
 
-watch(logined, (newLogined) => {
-  if (newLogined) {
+watch(logined, (newLogined, oldLogined) => {
+  console.log('logined is', newLogined, oldLogined)
+  if (newLogined && !oldLogined) {
+    console.log('user info is: ', userInfo, userInfo.value.UserAppInfo.UserApplicationInfo.GALogin, userInfo.value.UserBasicInfo.EmailAddress)
     if (userInfo.value.UserAppInfo.UserApplicationInfo.GALogin) {
       showGoogleAuthenticationVerifyDialog.value = true
     } else if (userInfo.value.UserBasicInfo.EmailAddress !== '') {
@@ -76,7 +91,7 @@ watch(logined, (newLogined) => {
       let sendEmailRequest: RequestInput<SendEmailRequest> = {
         requestInput: request,
         messages: {
-          successMessage: t('notify.SendEmail.Success.Word1') + '<' + userInfo.value.UserBasicInfo.EmailAddress + '>' + t('notify.SendEmail.Success.Word2') + t('notify.SendEmail.Success.Check'),
+          successMessage: t('notify.SendEmail.Success.Words1') + '<' + userInfo.value.UserBasicInfo.EmailAddress + '>' + t('notify.SendEmail.Success.Words2') + t('notify.SendEmail.Success.Check'),
           failMessage: t('notify.SendEmail.Fail')
         },
         loadingContent: t('notify.SendEmail.Load')
@@ -86,7 +101,7 @@ watch(logined, (newLogined) => {
       showEmailVerifyDialog.value = true
     } else {
       logined.value = true
-      store.commit(MutationTypes.SetLoginVerify, true)
+      loginVerify.value = true
       void router.push({ path: '/account' })
     }
   }
