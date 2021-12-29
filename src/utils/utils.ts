@@ -127,10 +127,9 @@ export const ThrottleDelay = 1000
 
 export const CheckLogined = (): boolean => {
   const q = useQuasar()
-  const $q = useQuasar()
   const router = useRouter()
   if (!q.cookies.has('UserID') && !q.cookies.has('AppSession')) {
-    $q.notify({
+    q.notify({
       type: 'negative',
       message: 'Please login firstly!'
     })
