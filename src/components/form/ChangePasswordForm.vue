@@ -148,6 +148,7 @@ const changePassword = throttle(() => {
 </script>
 
 <style scoped>
+@import "~vue3-q-tel-input/dist/vue3-q-tel-input.esm.css";
 .change-password-button {
   background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
   border: 1px solid #ff964a;
