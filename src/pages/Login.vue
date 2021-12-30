@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang='ts'>
-import { computed, defineAsyncComponent, ref, watch, onMounted, onUnmounted } from 'vue'
+import { computed, defineAsyncComponent, ref, watch } from 'vue'
 import { useStore } from 'src/store'
 import { MutationTypes } from 'src/store/users/mutation-types'
 import { useRouter } from 'vue-router'
@@ -47,9 +47,7 @@ import {
 import { useI18n } from 'vue-i18n'
 import { RequestInput } from 'src/store/types'
 import { GenerateSendEmailRequest, ThrottleDelay } from 'src/utils/utils'
-import { throttle, useQuasar } from 'quasar'
-import { UserLogoutRequest } from 'src/store/users/types'
-import { ActionTypes as userAction } from 'src/store/users/action-types'
+import { throttle } from 'quasar'
 
 const store = useStore()
 const router = useRouter()
@@ -141,37 +139,4 @@ const verifyGoogleCode = throttle((verifyCode: string): void => {
   }
   store.dispatch(ActionTypes.VerifyGoogleAuthentication, verifyGoogleAuthenticationCodeRequest)
 }, ThrottleDelay)
-
-const q = useQuasar()
-
-const logoutUser = () => {
-  if (!loginVerify.value && !logined.value && q.cookies.has('UserID') && q.cookies.has('AppSession')) {
-    const request: UserLogoutRequest = {}
-    const userLogoutRequest: RequestInput<UserLogoutRequest> = {
-      requestInput: request,
-      messages: {
-        successMessage: '',
-        failMessage: ''
-      },
-      loadingContent: ''
-    }
-    store.dispatch(userAction.UserLogout, userLogoutRequest)
-  }
-}
-
-onMounted(() => {
-  window.addEventListener('beforeunload', e => {
-    console.log('leave', e)
-    logoutUser()
-  })
-})
-
-onUnmounted(() => {
-  console.log('leave')
-  logoutUser()
-  window.removeEventListener('beforeunload', (e) => {
-    console.log(e)
-    logoutUser()
-  })
-})
 </script>
