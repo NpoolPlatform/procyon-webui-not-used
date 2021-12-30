@@ -1,62 +1,70 @@
 <template>
-  <div class="drawer-items text-white">
-    <div class="links" v-for="(link, index) in links" :key="index">
-      <router-link v-if="link.show" class="drawer-item" :to="link.goto">
+  <div class='drawer-items text-white'>
+    <div class='links'>
+      <router-link class='drawer-item' :to="{ path: '/dashboard' }">
         <q-img
-          fit="none"
-          :src="link.img"
-          class="drawer-item-img"
-          style="object-fit: none !important"
+          fit='none'
+          :src='dashboardImg'
+          class='drawer-item-img'
+          style='object-fit: none !important'
         >
         </q-img>
-        <span class="drawer-item-span">{{ link.label }}</span>
+        <span class='drawer-item-span'>{{ $t('drawer.Dashboard') }}</span>
+      </router-link>
+
+      <router-link v-show='false' class='drawer-item' :to="{ path: '/wallet' }">
+        <q-img
+          fit='none'
+          :src='walletImg'
+          class='drawer-item-img'
+          style='object-fit: none !important'
+        >
+        </q-img>
+        <span class='drawer-item-span'>{{ $t('drawer.Wallet') }}</span>
+      </router-link>
+
+      <router-link v-if='showAffiliate' class='drawer-item' :to="{ path: '/affiliate' }">
+        <q-img
+          fit='none'
+          :src='affiliatesImg'
+          class='drawer-item-img'
+          style='object-fit: none !important'
+        >
+        </q-img>
+        <span class='drawer-item-span'>{{ $t('drawer.Affiliates') }}</span>
+      </router-link>
+
+      <router-link class='drawer-item' :to="{ path: '/account' }">
+        <q-img
+          fit='none'
+          :src='accountImg'
+          class='drawer-item-img'
+          style='object-fit: none !important'
+        >
+        </q-img>
+        <span class='drawer-item-span'>{{ $t('drawer.Account') }}</span>
       </router-link>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import miningImg from 'src/assets/icon-mining.svg'
+<script setup lang='ts'>
+import dashboardImg from 'src/assets/icon-mining.svg'
 import walletImg from 'src/assets/icon-wallet.svg'
 import affiliatesImg from 'src/assets/icon-affiliates.svg'
 import accountImg from 'src/assets/icon-account.svg'
-import { useStore } from 'src/store'
 
-import { computed, reactive } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { defineProps, withDefaults, toRef } from 'vue'
 
-const store = useStore()
-// eslint-disable-next-line @typescript-eslint/unbound-method
-const { t } = useI18n({ useScope: 'global' })
+interface Props {
+  hasInvitationCode: boolean
+}
 
-const invitationCode = computed(() => store.getters.getUserInvitationCode !== '')
+const props = withDefaults(defineProps<Props>(), {
+  hasInvitationCode: false
+})
 
-const links = reactive([
-  {
-    label: t('drawer.Dashboard'),
-    goto: { path: '/dashboard' },
-    img: miningImg,
-    show: true
-  },
-  {
-    label: t('drawer.Wallet'),
-    goto: { path: '/wallet' },
-    img: walletImg,
-    show: false
-  },
-  {
-    label: t('drawer.Affiliates'),
-    goto: { path: '/affiliate' },
-    img: affiliatesImg,
-    show: invitationCode
-  },
-  {
-    label: t('drawer.Account'),
-    goto: { path: '/account' },
-    img: accountImg,
-    show: true
-  }
-])
+const showAffiliate = toRef(props, 'hasInvitationCode')
 </script>
 
 <style scoped>
@@ -144,5 +152,6 @@ const links = reactive([
 
 .links {
   display: flex;
+  flex-direction: column;
 }
 </style>
