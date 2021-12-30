@@ -9,7 +9,7 @@ export interface SendEmailRequest {
   Intention?: string
   Lang: string
   Username?: string
-  ItemTarget?: string
+  ItemTarget: string
 }
 
 export interface SendEmailResponse {
@@ -21,7 +21,7 @@ export interface SendSmsRequest {
   Phone: string
   Lang?: string
   Intention?: string
-  ItemTarget?: string
+  ItemTarget: string
 }
 
 export interface SendSmsResponse {

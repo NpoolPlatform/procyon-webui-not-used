@@ -86,7 +86,8 @@ watch(logined, (newLogined, oldLogined) => {
     } else if (userInfo.value.UserBasicInfo.EmailAddress !== '') {
       const request: SendEmailRequest = {
         Email: userInfo.value.UserBasicInfo.EmailAddress,
-        Lang: locale.value
+        Lang: locale.value,
+        ItemTarget: ''
       }
       let sendEmailRequest: RequestInput<SendEmailRequest> = {
         requestInput: request,
