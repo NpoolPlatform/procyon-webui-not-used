@@ -9,7 +9,7 @@
       v-model='showDrawer'
       style='background: transparent !important'
     >
-      <MainDrawer />
+      <MainDrawer :hasInvitationCode='hasInvitationCode' />
     </q-drawer>
 
     <q-page-container>
@@ -152,6 +152,8 @@ const MainDrawer = defineAsyncComponent(
 const MainFooter = defineAsyncComponent(
   () => import('src/components/footer/MainFooter.vue')
 )
+
+const hasInvitationCode = computed(() => store.getters.getUserInvitationCode !== '')
 </script>
 
 <style scoped>

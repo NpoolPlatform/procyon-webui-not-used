@@ -34,12 +34,14 @@
     >
       {{ $t('button.Login') }}
     </q-btn>
-    <AvatarDropdown />
+    <AvatarDropdown :hasInvitationCode='hasInvitationCode' />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from 'vue'
+import logo from '../../assets/procyon-light.svg'
+import { useStore } from 'src/store/index'
 
 const ChangeLang = defineAsyncComponent(
   () => import('../button/change-lang-button/ChangeLang.vue')
@@ -49,9 +51,7 @@ const AvatarDropdown = defineAsyncComponent(
   () => import('./dropdown/AvatarDropdown.vue')
 )
 
-import logo from '../../assets/procyon-light.svg'
-
-import { useStore } from 'src/store/index'
+const hasInvitationCode = computed(() => store.getters.getUserInvitationCode !== '')
 
 const store = useStore()
 const logined = computed(() => store.getters.getUserLogined)
