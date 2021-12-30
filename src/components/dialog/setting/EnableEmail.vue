@@ -21,6 +21,7 @@
           <send-code-input
             :verifyParam='emailAddress'
             verifyType='email'
+            :item-target='ItemStateTarget.EnableEmailSendCodeButton'
             v-model:verify-code='verifyCode'
           ></send-code-input>
 
@@ -40,7 +41,7 @@ import { useStore } from 'src/store'
 import { isValidEmail } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
 import { EnableEmailRequest } from 'src/store/users/types'
-import { RequestInput } from 'src/store/types'
+import { RequestInput, ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))

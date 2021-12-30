@@ -5,7 +5,7 @@ interface StyleState {
   showEmail: boolean,
   showPhone: boolean,
   userDialogShow: boolean,
-  showDrawer: boolean
+  showDrawer: boolean,
 }
 
 function state (): StyleState {

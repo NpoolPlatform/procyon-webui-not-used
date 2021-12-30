@@ -7,8 +7,9 @@ export interface SendEmailRequest {
   AppID?: string
   Email: string
   Intention?: string
-  Lang?: string
+  Lang: string
   Username?: string
+  ItemTarget?: string
 }
 
 export interface SendEmailResponse {
@@ -20,6 +21,7 @@ export interface SendSmsRequest {
   Phone: string
   Lang?: string
   Intention?: string
+  ItemTarget?: string
 }
 
 export interface SendSmsResponse {
@@ -59,6 +61,16 @@ export interface VerifyGoogleAuthenticationCodeRequest {
 
 export interface VerifyGoogleAuthenticationCodeResponse {
   Info: string
+}
+
+export interface DisableState {
+  key: string,
+  value: boolean
+}
+
+export interface TextState {
+  key: string
+  value: string
 }
 
 export enum VerifyURLPath {

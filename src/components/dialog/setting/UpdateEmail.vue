@@ -22,6 +22,7 @@
           <send-code-input
             :verifyParam='oldEmail'
             verifyType='email'
+            :item-target='ItemStateTarget.UpdateEmailSendCodeOldButton'
             v-model:verify-code='oldVerifyCode'
           ></send-code-input>
 
@@ -37,6 +38,7 @@
           <send-code-input
             :verifyParam='email'
             verifyType='email'
+            :item-target='ItemStateTarget.UpdateEmailSendCodeButton'
             v-model:verify-code='verifyCode'
           ></send-code-input>
 
@@ -56,7 +58,7 @@ import { useStore } from 'src/store'
 import { isValidEmail } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
 import { UpdateEmailRequest } from 'src/store/users/types'
-import { RequestInput } from 'src/store/types'
+import { RequestInput, ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))

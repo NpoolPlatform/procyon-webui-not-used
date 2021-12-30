@@ -16,6 +16,7 @@
           <send-code-input
             :verifyParam='oldPhone'
             verifyType='phone'
+            :item-target='ItemStateTarget.UpdatePhoneSendCodeOldButton'
             v-model:verify-code='oldVerifyCode'
           ></send-code-input>
 
@@ -26,6 +27,7 @@
           <send-code-input
             :verifyParam='newPhone'
             verifyType='phone'
+            :item-target='ItemStateTarget.UpdatePhoneSendCodeButton'
             v-model:verify-code='verifyCode'
           ></send-code-input>
 
@@ -44,7 +46,7 @@ import { defineEmits, ref, defineProps, withDefaults, toRef, computed, watch, de
 import { useStore } from 'src/store'
 import { useI18n } from 'vue-i18n'
 import { UpdatePhoneRequest } from 'src/store/users/types'
-import { RequestInput } from 'src/store/types'
+import { RequestInput, ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))

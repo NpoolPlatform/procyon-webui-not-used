@@ -46,7 +46,7 @@ const props = withDefaults(defineProps<Props>(), {
 const avatarSize = toRef(props, 'avatarSize')
 
 const logined = computed(() => store.getters.getUserLogined)
-const invitationCode = computed(() => store.getters.getUserInvitationCode)
+const invitationCode = computed(() => store.getters.getUserInvitationCode !== '')
 
 const logout = () => {
   const request: UserLogoutRequest = {}
@@ -77,9 +77,9 @@ const list = [
     label: t('menuList.Wallet')
   },
   {
-    show: invitationCode.value !== '',
+    show: invitationCode.value,
     method: () => {
-      void router.push('/affiliates')
+      void router.push('/affiliate')
     },
     label: t('menuList.Affiliates')
   },

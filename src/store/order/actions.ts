@@ -11,7 +11,7 @@ import {
   OrderURLPath,
   UserOrderDetail
 } from './types'
-import { RequestInput } from 'src/store/types'
+import { ItemStateTarget, RequestInput } from 'src/store/types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { RequestMessageToNotifyMessage, TimeStampToDate } from 'src/utils/utils'
 import { GoodURLPath, GetGoodDetailRequest, GetGoodDetailResponse } from 'src/store/goods/types'
@@ -27,7 +27,10 @@ interface OrderActions {
 
 const actions: ActionTree<OrderState, RootState> = {
   [ActionTypes.GetUserOrderDetails] ({ commit }, payload: RequestInput<GetOrdersDetailByAppUserRequest>) {
-    commit(notifyMutation.SetInnerLoading, true)
+    commit(notifyMutation.SetInnerLoading, {
+      Key: ItemStateTarget.GetUserOrderDetail,
+      value: true
+    })
     post<GetOrdersDetailByAppUserRequest, GetOrdersDetailByAppUserResponse>(OrderURLPath.GET_ORDERS_DETAIL_BY_APP_USER, payload.requestInput)
       .then((resp: GetOrdersDetailByAppUserResponse) => {
         const myOrders: Array<UserOrderDetail> = []
@@ -54,16 +57,25 @@ const actions: ActionTree<OrderState, RootState> = {
             myOrders.push(myOrder)
           }).catch((err: Error) => {
             commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
-            commit(notifyMutation.SetInnerLoading, false)
+            commit(notifyMutation.SetInnerLoading, {
+              Key: ItemStateTarget.GetUserOrderDetail,
+              value: false
+            })
           })
         })
         commit(MutationTypes.SetUserOrderDetails, myOrders)
-        commit(notifyMutation.SetInnerLoading, false)
+        commit(notifyMutation.SetInnerLoading, {
+          Key: ItemStateTarget.GetUserOrderDetail,
+          value: false
+        })
       })
       .catch((err: Error) => {
         commit(MutationTypes.SetUserOrderDetails, [])
         commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
-        commit(notifyMutation.SetInnerLoading, false)
+        commit(notifyMutation.SetInnerLoading, {
+          Key: ItemStateTarget.GetUserOrderDetail,
+          value: false
+        })
       })
   }
 }

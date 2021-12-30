@@ -1,5 +1,5 @@
 interface UserBasicInfo {
-  UserID?: string
+  UserID: string
   Username: string
   Password: string
   Avatar?: string
@@ -172,8 +172,8 @@ interface GetUserDetailResponse {
 
 interface UpdateUserRequest {
   Info: UserBasicInfo
-  UserID: string
-  AppID: string
+  UserID?: string
+  AppID?: string
 }
 
 interface UpdateUserResponse {

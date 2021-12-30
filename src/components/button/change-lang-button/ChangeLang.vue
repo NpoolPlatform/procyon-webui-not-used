@@ -38,5 +38,6 @@ const changeLang = () => {
   } else {
     store.commit(MutationTypes.SetFontStyle, 'font-family: "Noto Sans JP"')
   }
+  location.reload()
 }
 </script>

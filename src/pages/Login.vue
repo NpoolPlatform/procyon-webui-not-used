@@ -8,7 +8,8 @@
     <template v-slot:content>
       <q-card-section>
         {{ $t('dialog.EmailVerify.Content1')
-        }}<span style='font-weight: bolder'>{{ userInfo.UserBasicInfo.EmailAddress }}</span>,{{ $t('dialog.EmailVerify.Content3')
+        }}<span style='font-weight: bolder'>{{ userInfo.UserBasicInfo.EmailAddress
+        }}</span>,{{ $t('dialog.EmailVerify.Content3')
         }}
       </q-card-section>
     </template>
@@ -27,13 +28,13 @@
   <VerifyDialog :dialog-title="$t('dialog.GoogleVerify.Title')"
                 v-model:show-dialog='showGoogleAuthenticationVerifyDialog' @verify='verifyGoogleCode'>
     <template v-slot:content>
-      <div>{{$t('login.GoogleVerifyContent')}}</div>
+      <div>{{ $t('login.GoogleVerifyContent') }}</div>
     </template>
   </VerifyDialog>
 </template>
 
 <script setup lang='ts'>
-import { computed, defineAsyncComponent, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, ref, watch, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'src/store'
 import { MutationTypes } from 'src/store/users/mutation-types'
 import { useRouter } from 'vue-router'
@@ -46,7 +47,9 @@ import {
 import { useI18n } from 'vue-i18n'
 import { RequestInput } from 'src/store/types'
 import { GenerateSendEmailRequest, ThrottleDelay } from 'src/utils/utils'
-import { throttle } from 'quasar'
+import { throttle, useQuasar } from 'quasar'
+import { UserLogoutRequest } from 'src/store/users/types'
+import { ActionTypes as userAction } from 'src/store/users/action-types'
 
 const store = useStore()
 const router = useRouter()
@@ -84,7 +87,8 @@ watch(logined, (newLogined, oldLogined) => {
       showGoogleAuthenticationVerifyDialog.value = true
     } else if (userInfo.value.UserBasicInfo.EmailAddress !== '') {
       const request: SendEmailRequest = {
-        Email: userInfo.value.UserBasicInfo.EmailAddress
+        Email: userInfo.value.UserBasicInfo.EmailAddress,
+        Lang: locale.value
       }
       let sendEmailRequest: RequestInput<SendEmailRequest> = {
         requestInput: request,
@@ -137,4 +141,37 @@ const verifyGoogleCode = throttle((verifyCode: string): void => {
   }
   store.dispatch(ActionTypes.VerifyGoogleAuthentication, verifyGoogleAuthenticationCodeRequest)
 }, ThrottleDelay)
+
+const q = useQuasar()
+
+const logoutUser = () => {
+  if (!loginVerify.value && !logined.value && q.cookies.has('UserID') && q.cookies.has('AppSession')) {
+    const request: UserLogoutRequest = {}
+    const userLogoutRequest: RequestInput<UserLogoutRequest> = {
+      requestInput: request,
+      messages: {
+        successMessage: '',
+        failMessage: ''
+      },
+      loadingContent: ''
+    }
+    store.dispatch(userAction.UserLogout, userLogoutRequest)
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('beforeunload', e => {
+    console.log('leave', e)
+    logoutUser()
+  })
+})
+
+onUnmounted(() => {
+  console.log('leave')
+  logoutUser()
+  window.removeEventListener('beforeunload', (e) => {
+    console.log(e)
+    logoutUser()
+  })
+})
 </script>

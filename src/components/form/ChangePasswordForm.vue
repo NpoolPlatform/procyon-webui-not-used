@@ -16,7 +16,7 @@
     ></q-input>
 
     <SendCodeInput v-if='showEmail' verify-type='email' v-model:verify-code='verifyCode'
-                   :verify-param='changePasswordInput.emailAddress' />
+                   :verify-param='userBasicInfo.EmailAddress' />
     <SendCodeInput v-if='showPhone' verify-type='phone' v-model:verify-code='verifyCode'
                    :verify-param='changePasswordInput.phoneNumber' />
     <q-input v-model='changePasswordInput.oldPassword' :label="$t('input.OldPassword')" bg-color='blue-grey-2'

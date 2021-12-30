@@ -8,7 +8,7 @@
         <q-btn icon='close' flat round dense @click='emit("update:showGoogle", false)' />
       </q-card-section>
 
-      <q-card-section>
+      <q-card-section style='text-align: center;'>
         <q-img class='img-style' :src='userGoogleInfo.qrCodeURL'></q-img>
       </q-card-section>
 
@@ -58,7 +58,7 @@
           <q-input :label="$t('input.VerifyCode')" outlined lazy-rules :rules='verifyCodeRules' class='common-input'
                    bg-color='blue-grey-2'
                    v-model='googleVerifyCode'></q-input>
-          <q-btn class='common-button dialog-button' :label="$t('button')" type='submit' />
+          <q-btn class='common-button dialog-button' :label="$t('button.Verify')" type='submit' />
         </q-form>
       </q-card-section>
     </q-card>
@@ -113,8 +113,8 @@ const bindGoogleAuthenticator = () => {
   const updateUserGAStatusRequest: RequestInput<UpdateUserGAStatusRequest> = {
     requestInput: request,
     messages: {
-      successMessage: '',
-      failMessage: ''
+      successMessage: t('notify.UpdateGoogleStatus.Success'),
+      failMessage: t('notify.UpdateGoogleStatus.Fail')
     },
     loadingContent: ''
   }
@@ -133,6 +133,7 @@ const bindGoogleAuthenticator = () => {
   position: relative;
   overflow-x: hidden;
   min-width: 420px;
+  max-height: 750px;
 }
 
 .dialog-header {
@@ -157,5 +158,11 @@ const bindGoogleAuthenticator = () => {
   color: black;
   font-weight: 600;
   font-size: 18px;
+}
+
+.img-style {
+  width: 200px;
+  height: 200px;
+  text-align: center;
 }
 </style>

@@ -4,6 +4,6 @@ export enum MutationTypes {
   SetLoading = 'VERIFY_SET_LOADING',
   SetError = 'VERIFY_SET_ERROR',
   SetGoogleAuthenticationInfo = 'VERIFY_SET_GOOGLE_AUTHENTICATION_INFO',
-  SetSendCodeButtonDisable = 'VERIFY_SET_SEND_CODE_BUTTON_DISABLE',
+  SetDisable = 'VERIFY_SET_DISABLE',
   SetSendCodeButtonText = 'VERIFY_SET_SEND_CODE_BUTTON_TEXT',
 }
