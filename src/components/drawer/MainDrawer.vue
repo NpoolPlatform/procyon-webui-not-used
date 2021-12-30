@@ -22,15 +22,16 @@ import affiliatesImg from 'src/assets/icon-affiliates.svg'
 import accountImg from 'src/assets/icon-account.svg'
 import { useStore } from 'src/store'
 
-import { computed, ref } from 'vue'
+import { computed, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const store = useStore()
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
+
 const invitationCode = computed(() => store.getters.getUserInvitationCode !== '')
 
-const links = ref([
+const links = reactive([
   {
     label: t('drawer.Dashboard'),
     goto: { path: '/dashboard' },
@@ -47,7 +48,7 @@ const links = ref([
     label: t('drawer.Affiliates'),
     goto: { path: '/affiliate' },
     img: affiliatesImg,
-    show: invitationCode.value
+    show: invitationCode
   },
   {
     label: t('drawer.Account'),

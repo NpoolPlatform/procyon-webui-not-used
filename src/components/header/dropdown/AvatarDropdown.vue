@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang='ts'>
-import { defineProps, computed, toRef, withDefaults } from 'vue'
+import { defineProps, computed, toRef, withDefaults, reactive } from 'vue'
 import { useStore } from 'src/store'
 import { ActionTypes } from 'src/store/users/action-types'
 import { useI18n } from 'vue-i18n'
@@ -61,7 +61,7 @@ const logout = () => {
   store.dispatch(ActionTypes.UserLogout, userLogoutRequest)
 }
 
-const list = [
+const list = reactive([
   {
     show: true,
     method: () => {
@@ -77,7 +77,7 @@ const list = [
     label: t('menuList.Wallet')
   },
   {
-    show: invitationCode.value,
+    show: invitationCode,
     method: () => {
       void router.push('/affiliate')
     },
@@ -95,7 +95,7 @@ const list = [
     method: logout,
     label: t('menuList.Logout')
   }
-]
+])
 </script>
 
 <style scoped>
