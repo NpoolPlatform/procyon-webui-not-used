@@ -21,11 +21,31 @@
     <q-input v-model='forgetInput.password' :label="$t('input.Password')" bg-color='blue-grey-2'
              class='common-input'
              outlined lazy-rules
-             :rules='passwordRules'></q-input>
+             :rules='passwordRules'
+             :type="isPwd ? 'password' : 'text'"
+    >
+      <template v-slot:append>
+        <q-icon
+          :name="isPwd ? 'visibility_off' : 'visibility'"
+          class='cursor-pointer'
+          @click='isPwd = !isPwd'
+        />
+      </template>
+    </q-input>
     <q-input v-model='forgetInput.confirmPassword' :label="$t('input.ConfirmPassword')" bg-color='blue-grey-2'
              class='common-input'
              outlined lazy-rules
-             :rules='confirmPasswordRules'></q-input>
+             :rules='confirmPasswordRules'
+             :type="isCPwd ? 'password' : 'text'"
+    >
+      <template v-slot:append>
+        <q-icon
+          :name="isCPwd ? 'visibility_off' : 'visibility'"
+          class='cursor-pointer'
+          @click='isCPwd = !isCPwd'
+        />
+      </template>
+    </q-input>
     <q-btn type='submit' class='common-button forget-button' :label="$t('button.Confirm')"></q-btn>
   </q-form>
 </template>
@@ -58,6 +78,9 @@ const forgetInput = reactive({
   password: '',
   confirmPassword: ''
 })
+
+const isPwd = ref(true)
+const isCPwd = ref(true)
 
 const phoneNumberRule = ref([
   (val: string) => (val && val.length > 0) || t('input.PhoneNumberWarning')
