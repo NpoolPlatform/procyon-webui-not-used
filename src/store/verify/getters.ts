@@ -8,8 +8,8 @@ type VerifyGetters = {
   getLoginGoogleAuthenticationVerifyDialog (state: VerifyState): boolean
   getVerifyLoading (state: VerifyState): boolean
   getVerifyError (state: VerifyState): string
-  getVerifySendCodeButtonDisable (state: VerifyState): boolean
-  getVerifySendCodeButtonText (state: VerifyState): string
+  getVerifyDisable (state: VerifyState): Map<string, boolean>
+  getVerifySendCodeButtonText (state: VerifyState): Map<string, string>
   getGoogleAuthenticationInfo (state: VerifyState): GoogleAuthenticationInfo
 }
 
@@ -18,8 +18,8 @@ const getters: GetterTree<VerifyState, RootState> & VerifyGetters = {
   getLoginGoogleAuthenticationVerifyDialog: (state: VerifyState): boolean => state.loginGoogleAuthenticationVerifyDialog,
   getVerifyLoading: (state: VerifyState): boolean => state.loading,
   getVerifyError: (state: VerifyState): string => state.error,
-  getVerifySendCodeButtonDisable: (state: VerifyState): boolean => state.sendCodeButtonDisable,
-  getVerifySendCodeButtonText: (state: VerifyState): string => state.sendCodeButtonText,
+  getVerifyDisable: (state: VerifyState): Map<string, boolean> => state.sendCodeButtonDisable,
+  getVerifySendCodeButtonText: (state: VerifyState): Map<string, string> => state.sendCodeButtonText,
   getGoogleAuthenticationInfo: (state: VerifyState): GoogleAuthenticationInfo => state.googleAuthenticationInfo
 }
 

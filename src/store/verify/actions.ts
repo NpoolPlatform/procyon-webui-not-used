@@ -1,4 +1,4 @@
-import { ActionTree } from 'vuex'
+import { ActionTree, Commit } from 'vuex'
 import { AugmentedActionContext, RootState } from '../index'
 import { ActionTypes } from './action-types'
 import { MutationTypes } from './mutation-types'
@@ -57,44 +57,62 @@ interface VerifyActions {
     VerifyMutations<VerifyState>>, payload: RequestInput<VerifyGoogleAuthenticationCodeRequest>): void
 }
 
+const countInternal = (commit: Commit, target: string) => {
+  let count = 60
+  const countDown = setInterval(() => {
+    if (count < 1) {
+      commit(MutationTypes.SetDisable, {
+        key: target,
+        value: false
+      })
+      count = 60
+      clearInterval(countDown)
+    } else {
+      commit(MutationTypes.SetDisable, {
+        key: target,
+        value: true
+      })
+      commit(MutationTypes.SetSendCodeButtonText, {
+        key: target,
+        value: count.toString() + 's'
+      })
+      count--
+    }
+  }, 1000)
+}
+
 const actions: ActionTree<VerifyState, RootState> = {
   [ActionTypes.SendEmail] ({ commit }, payload: RequestInput<SendEmailRequest>) {
     post<SendEmailRequest, SendEmailResponse>(VerifyURLPath.SEND_EMAIL, payload.requestInput).then(() => {
+      commit(notifyMutation.SetInnerLoading, {
+        key: payload.requestInput.ItemTarget,
+        value: false
+      })
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
-      let count = 60
-      const countDown = setInterval(() => {
-        if (count < 1) {
-          commit(MutationTypes.SetSendCodeButtonDisable, false)
-          count = 60
-          clearInterval(countDown)
-        } else {
-          commit(MutationTypes.SetSendCodeButtonDisable, true)
-          commit(MutationTypes.SetSendCodeButtonText, count.toString() + 's')
-          count--
-        }
-      }, 1000)
+      countInternal(commit, payload.requestInput.ItemTarget)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(notifyMutation.SetInnerLoading, {
+        key: payload.requestInput.ItemTarget,
+        value: false
+      })
+      countInternal(commit, payload.requestInput.ItemTarget)
     })
   },
   [ActionTypes.SendSMS] ({ commit }, payload: RequestInput<SendSmsRequest>) {
-    commit(notifyMutation.SetLoading, true)
-    commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<SendSmsRequest, SendSmsResponse>(VerifyURLPath.SEND_SMS, payload.requestInput).then(() => {
+      commit(notifyMutation.SetInnerLoading, {
+        key: payload.requestInput.ItemTarget,
+        value: false
+      })
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
-      let count = 60
-      const countDown = setInterval(() => {
-        if (count < 1) {
-          commit(MutationTypes.SetSendCodeButtonDisable, false)
-          count = 60
-          clearInterval(countDown)
-        } else {
-          commit(MutationTypes.SetSendCodeButtonDisable, true)
-          commit(MutationTypes.SetSendCodeButtonText, count.toString() + 's')
-          count--
-        }
-      }, 1000)
+      countInternal(commit, payload.requestInput.ItemTarget)
     }).catch((err: Error) => {
+      commit(notifyMutation.SetInnerLoading, {
+        key: payload.requestInput.ItemTarget,
+        value: false
+      })
+      countInternal(commit, payload.requestInput.ItemTarget)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
     })
   },
@@ -103,7 +121,6 @@ const actions: ActionTree<VerifyState, RootState> = {
       qrCodeURL: '',
       secret: ''
     }
-    commit(notifyMutation.SetInnerLoading, true)
     post<GetQRCodeURLRequest, GetQRCodeURLResponse>(VerifyURLPath.GET_QRCODE_URL, payload.requestInput)
       .then((resp: GetQRCodeURLResponse) => {
         info = {
@@ -111,12 +128,10 @@ const actions: ActionTree<VerifyState, RootState> = {
           secret: resp.Info.Secret
         }
         commit(MutationTypes.SetGoogleAuthenticationInfo, info)
-        commit(notifyMutation.SetInnerLoading, false)
       })
       .catch((err: Error) => {
         commit(MutationTypes.SetGoogleAuthenticationInfo, info)
         commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
-        commit(notifyMutation.SetInnerLoading, false)
       })
   },
   [ActionTypes.VerifyCodeWithUserID] ({ commit }, payload: RequestInput<VerifyCodeWithUserIDRequest>) {

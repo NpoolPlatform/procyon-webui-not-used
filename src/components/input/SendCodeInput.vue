@@ -6,6 +6,7 @@
         v-if="verifyType === 'email'"
         flat
         rounded
+        :loading='innerLoading'
         :disable='sendDisable'
         @click='sendEmailCode'
       >
@@ -16,6 +17,8 @@
         v-if="verifyType === 'phone'"
         flat
         rounded
+        :loading='innerLoading'
+        :disable='sendDisable'
         @click='sendSmsCode'
       >
         {{ $t('button.SendCode') }}
@@ -29,25 +32,29 @@
 import { computed, defineEmits, defineProps, onMounted, ref, toRef, watch, withDefaults } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'src/store'
-import { MutationTypes } from 'src/store/verify/mutation-types'
 import { SendEmailRequest, SendSmsRequest } from 'src/store/verify/types'
 import { RequestInput } from 'src/store/types'
 import { GenerateSendEmailRequest } from 'src/utils/utils'
 import { ActionTypes } from 'src/store/verify/action-types'
+import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
+import { MutationTypes as verifyMutation } from 'src/store/verify/mutation-types'
 
 const store = useStore()
 
 interface Props {
   verifyParam: string
   verifyType: string
+  itemTarget: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   verifyParam: '',
-  verifyType: 'email'
+  verifyType: 'email',
+  itemTarget: ''
 })
 const verifyParam = toRef(props, 'verifyParam')
 const verifyType = toRef(props, 'verifyType')
+const itemTarget = toRef(props, 'itemTarget')
 const code = ref('')
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -66,16 +73,16 @@ const codeRules = ref([
   (val: string) => (val && val.length > 0) || t('input.VerifyCodeWarning')
 ])
 
-const sendDisable = computed(() => store.getters.getVerifySendCodeButtonDisable)
-const sendCodeText = computed({
-  get: () => store.getters.getVerifySendCodeButtonText,
-  set: (val) => {
-    store.commit(MutationTypes.SetSendCodeButtonText, val)
-  }
-})
+const sendDisable = computed(() => store.getters.getVerifyDisable.get(itemTarget.value))
+const innerLoading = computed(() => store.getters.getInnerLoading.get(itemTarget.value))
+const sendCodeText = computed(() => store.getters.getVerifySendCodeButtonText.get(itemTarget.value))
 const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
 
 const sendEmailCode = () => {
+  store.commit(notifyMutation.SetInnerLoading, {
+    key: itemTarget.value,
+    value: true
+  })
   const successMessage = t('notify.SendEmail.Success.Words1') +
     ' <' +
     verifyParam.value +
@@ -85,7 +92,8 @@ const sendEmailCode = () => {
 
   const request: SendEmailRequest = {
     Email: verifyParam.value,
-    Lang: locale.value
+    Lang: locale.value,
+    ItemTarget: itemTarget.value
   }
   let sendEmailRequest: RequestInput<SendEmailRequest> = {
     requestInput: request,
@@ -100,6 +108,10 @@ const sendEmailCode = () => {
 }
 
 const sendSmsCode = () => {
+  store.commit(notifyMutation.SetInnerLoading, {
+    key: itemTarget.value,
+    value: true
+  })
   const successMessage = t('notify.SendPhone.Success.Words1') +
     ' <' +
     verifyParam.value +
@@ -108,7 +120,8 @@ const sendSmsCode = () => {
     t('notify.SendPhone.Success.Check')
   const request: SendSmsRequest = {
     Lang: locale.value,
-    Phone: verifyParam.value
+    Phone: verifyParam.value,
+    ItemTarget: itemTarget.value
   }
   const sendSmsRequest: RequestInput<SendSmsRequest> = {
     requestInput: request,
@@ -123,12 +136,18 @@ const sendSmsCode = () => {
 
 watch(sendDisable, (n, o) => {
   if (!n && o) {
-    sendCodeText.value = t('button.SendCode')
+    store.commit(verifyMutation.SetSendCodeButtonText, {
+      key: itemTarget.value,
+      value: t('button.SendCode')
+    })
   }
 })
 
 onMounted(() => {
-  sendCodeText.value = t('button.SendCode')
+  store.commit(verifyMutation.SetSendCodeButtonText, {
+    key: itemTarget.value,
+    value: t('button.SendCode')
+  })
 })
 </script>
 

@@ -8,7 +8,8 @@
     <template v-slot:content>
       <q-card-section>
         {{ $t('dialog.EmailVerify.Content1')
-        }}<span style='font-weight: bolder'>{{ userInfo.UserBasicInfo.EmailAddress }}</span>,{{ $t('dialog.EmailVerify.Content3')
+        }}<span style='font-weight: bolder'>{{ userInfo.UserBasicInfo.EmailAddress
+        }}</span>,{{ $t('dialog.EmailVerify.Content3')
         }}
       </q-card-section>
     </template>
@@ -27,7 +28,7 @@
   <VerifyDialog :dialog-title="$t('dialog.GoogleVerify.Title')"
                 v-model:show-dialog='showGoogleAuthenticationVerifyDialog' @verify='verifyGoogleCode'>
     <template v-slot:content>
-      <div>{{$t('login.GoogleVerifyContent')}}</div>
+      <div>{{ $t('login.GoogleVerifyContent') }}</div>
     </template>
   </VerifyDialog>
 </template>
@@ -84,7 +85,9 @@ watch(logined, (newLogined, oldLogined) => {
       showGoogleAuthenticationVerifyDialog.value = true
     } else if (userInfo.value.UserBasicInfo.EmailAddress !== '') {
       const request: SendEmailRequest = {
-        Email: userInfo.value.UserBasicInfo.EmailAddress
+        Email: userInfo.value.UserBasicInfo.EmailAddress,
+        Lang: locale.value,
+        ItemTarget: ''
       }
       let sendEmailRequest: RequestInput<SendEmailRequest> = {
         requestInput: request,

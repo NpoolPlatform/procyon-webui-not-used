@@ -22,15 +22,15 @@ import affiliatesImg from 'src/assets/icon-affiliates.svg'
 import accountImg from 'src/assets/icon-account.svg'
 import { useStore } from 'src/store'
 
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const store = useStore()
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
-const invitationCode = computed(() => store.getters.getUserInvitationCode)
+const invitationCode = computed(() => store.getters.getUserInvitationCode !== '')
 
-const links = [
+const links = ref([
   {
     label: t('drawer.Dashboard'),
     goto: { path: '/dashboard' },
@@ -45,9 +45,9 @@ const links = [
   },
   {
     label: t('drawer.Affiliates'),
-    goto: { path: '/affiliates' },
+    goto: { path: '/affiliate' },
     img: affiliatesImg,
-    show: invitationCode.value !== ''
+    show: invitationCode.value
   },
   {
     label: t('drawer.Account'),
@@ -55,7 +55,7 @@ const links = [
     img: accountImg,
     show: true
   }
-]
+])
 </script>
 
 <style scoped>

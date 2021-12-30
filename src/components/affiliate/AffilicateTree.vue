@@ -36,12 +36,14 @@ import { computed, onMounted } from 'vue'
 import { useStore } from 'src/store'
 import { GetDirectInvitationsRequest } from 'src/store/affiliate/types'
 import { useQuasar } from 'quasar'
-import { RequestInput } from 'src/store/types'
+import { ItemStateTarget, RequestInput } from 'src/store/types'
 import { ActionTypes } from 'src/store/affiliate/action-types'
 import { useI18n } from 'vue-i18n'
+import { MutationTypes } from 'src/store/notify/mutation-types'
 
 const q = useQuasar()
 const UserID = q.cookies.get('UserID')
+const target = ItemStateTarget.GetDirectInvitationList
 
 const store = useStore()
 const invitationList = computed(() => store.getters.getInvitationList)
@@ -51,11 +53,16 @@ const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
 const { t } = useI18n({ useScope: 'global' })
 
 const getInvitationList = () => {
+  store.commit(MutationTypes.SetInnerLoading, {
+    key: target,
+    value: true
+  })
   const request: GetDirectInvitationsRequest = {
     AppID: q.cookies.get('AppID'),
     InviterID: q.cookies.get('UserID'),
     Username: userBasicInfo.value.Username,
-    EmailAddress: userBasicInfo.value.EmailAddress
+    EmailAddress: userBasicInfo.value.EmailAddress,
+    Target: target
   }
   const getDirectInvitationsRequest: RequestInput<GetDirectInvitationsRequest> = {
     requestInput: request,
@@ -68,7 +75,7 @@ const getInvitationList = () => {
   store.dispatch(ActionTypes.GetDirectInvitationList, getDirectInvitationsRequest)
 }
 
-const innerLoading = computed(() => store.getters.getInnerLoading)
+const innerLoading = computed(() => store.getters.getInnerLoading.get(target))
 
 onMounted(() => {
   getInvitationList()

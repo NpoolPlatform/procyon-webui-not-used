@@ -6,8 +6,8 @@ interface VerifyState {
   loading: boolean
   error: string
   googleAuthenticationInfo: GoogleAuthenticationInfo
-  sendCodeButtonDisable: boolean
-  sendCodeButtonText: string
+  sendCodeButtonDisable: Map<string, boolean>
+  sendCodeButtonText: Map<string, string>
 }
 
 function state (): VerifyState {
@@ -21,8 +21,8 @@ function state (): VerifyState {
     loading: false,
     error: '',
     googleAuthenticationInfo: info,
-    sendCodeButtonDisable: false,
-    sendCodeButtonText: ''
+    sendCodeButtonDisable: new Map<string, boolean>(),
+    sendCodeButtonText: new Map<string, string>()
   }
 }
 

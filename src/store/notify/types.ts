@@ -5,3 +5,8 @@ export interface NotifyMessage {
   message: string
   caption: string
 }
+
+export interface InnerLoadingSate {
+  key: string
+  value: boolean
+}

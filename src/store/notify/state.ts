@@ -4,7 +4,7 @@ interface NotifyState {
   loadingContent: string
   notifyMessages: Array<NotifyMessage>
   loading: boolean
-  innerLoading: boolean
+  innerLoading: Map<string, boolean>
 }
 
 function state (): NotifyState {
@@ -12,7 +12,7 @@ function state (): NotifyState {
     loadingContent: '',
     notifyMessages: [],
     loading: false,
-    innerLoading: false
+    innerLoading: new Map<string, boolean>()
   }
 }
 

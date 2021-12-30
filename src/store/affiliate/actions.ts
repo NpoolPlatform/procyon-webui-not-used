@@ -5,7 +5,12 @@ import { MutationTypes } from './mutation-types'
 import { AffiliateMutations } from './mutations'
 import { AffiliateState } from './state'
 import { post } from 'src/boot/axios'
-import { GetDirectInvitationsRequest, GetDirectInvitationsResponse, AffiliateURLPath, Invitation } from './types'
+import {
+  GetDirectInvitationsRequest,
+  GetDirectInvitationsResponse,
+  AffiliateURLPath,
+  Invitation, Invitees
+} from './types'
 import { RequestInput } from 'src/store/types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { RequestMessageToNotifyMessage } from 'src/utils/utils'
@@ -21,7 +26,6 @@ interface AffiliateActions {
 
 const actions: ActionTree<AffiliateState, RootState> = {
   [ActionTypes.GetDirectInvitationList] ({ commit }, payload: RequestInput<GetDirectInvitationsRequest>) {
-    commit(notifyMutation.SetInnerLoading, true)
     post<GetDirectInvitationsRequest, GetDirectInvitationsResponse>(AffiliateURLPath.GET_DIRECT_INVITATIONS, payload.requestInput)
       .then((resp: GetDirectInvitationsResponse) => {
         const userid = payload.requestInput.InviterID
@@ -33,7 +37,8 @@ const actions: ActionTree<AffiliateState, RootState> = {
           Children: []
         }
         father.UserID = userid
-        const lists = resp.Infos.get(userid)?.Invitees
+        const infos = new Map<string, Invitees>(Object.entries(resp.Infos))
+        const lists = infos?.get(userid)?.Invitees
         father.Label = lists ? '01(' + lists?.length.toString() + ')' : '01(0)'
         let index = 1
         lists?.forEach(list => {
@@ -50,12 +55,18 @@ const actions: ActionTree<AffiliateState, RootState> = {
         const invitationList: Array<Invitation> = []
         invitationList.push(father)
         commit(MutationTypes.SetInvitationList, invitationList)
-        commit(notifyMutation.SetInnerLoading, false)
+        commit(notifyMutation.SetInnerLoading, {
+          key: payload.requestInput.Target,
+          value: false
+        })
       })
       .catch((err: Error) => {
         commit(MutationTypes.SetInvitationList, [])
         commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
-        commit(notifyMutation.SetInnerLoading, false)
+        commit(notifyMutation.SetInnerLoading, {
+          key: payload.requestInput.Target,
+          value: false
+        })
       })
   }
 }

@@ -138,16 +138,13 @@ const actions: ActionTree<UserState, RootState> = {
     })
   },
   [ActionTypes.GetUserInvitationCode] ({ commit }, payload: RequestInput<GetUserInvitationCodeRequest>) {
-    commit(notifyMutation.SetInnerLoading, true)
     post<GetUserInvitationCodeRequest, GetUserInvitationCodeResponse>(UserURLPath.GET_USER_INVITATION_CODE, payload.requestInput).then((resp: GetUserInvitationCodeResponse) => {
       if (resp.Info !== null) {
         commit(MutationTypes.SetInvitationCode, resp.Info.InvitationCode)
       }
-      commit(notifyMutation.SetInnerLoading, false)
     }).catch((err: Error) => {
       commit(MutationTypes.SetInvitationCode, '')
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
-      commit(notifyMutation.SetInnerLoading, false)
     })
   },
   [ActionTypes.UserSignUp] ({ commit }, payload: RequestInput<UserSignUpRequest>) {

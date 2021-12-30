@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang='ts'>
-import { computed, defineAsyncComponent, onBeforeMount, watch, onUpdated, onMounted } from 'vue'
+import { computed, defineAsyncComponent, onBeforeMount, onMounted, onUpdated, watch } from 'vue'
 import { useStore } from 'src/store'
 import { useQuasar } from 'quasar'
 import { MutationTypes } from 'src/store/notify/mutation-types'
@@ -31,11 +31,13 @@ import { notify } from 'src/notify/notify'
 import { useRouter } from 'vue-router'
 import { MutationTypes as styleMutation } from 'src/store/style/mutation-types'
 import { ActionTypes } from 'src/store/users/action-types'
-import { GetUserDetailRequest } from 'src/store/users/types'
+import { GetUserDetailRequest, GetUserInvitationCodeRequest } from 'src/store/users/types'
 import { RequestInput } from 'src/store/types'
 import { useI18n } from 'vue-i18n'
 
 const store = useStore()
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const { t } = useI18n({ useScope: 'global' })
 
 const router = useRouter()
 const nowPath = computed(() => router.currentRoute.value.path)
@@ -100,18 +102,36 @@ onBeforeMount(() => {
   })
 })
 
+const getUserDetails = () => {
+  const request: GetUserDetailRequest = {}
+  const getUserDetailRequest: RequestInput<GetUserDetailRequest> = {
+    requestInput: request,
+    messages: {
+      successMessage: '',
+      failMessage: t('notify.GetUserDetail.Fail')
+    },
+    loadingContent: ''
+  }
+  store.dispatch(ActionTypes.GetUserDetail, getUserDetailRequest)
+}
+
+const getUserInvitationCode = () => {
+  const request: GetUserInvitationCodeRequest = {}
+  const getUserInvitationCodeRequest: RequestInput<GetUserInvitationCodeRequest> = {
+    requestInput: request,
+    messages: {
+      successMessage: '',
+      failMessage: ''
+    },
+    loadingContent: ''
+  }
+  store.dispatch(ActionTypes.GetUserInvitationCode, getUserInvitationCodeRequest)
+}
+
 onMounted(() => {
   if (q.cookies.has('UserID') && q.cookies.has('AppSession')) {
-    const request: GetUserDetailRequest = {}
-    const getUserDetailRequest: RequestInput<GetUserDetailRequest> = {
-      requestInput: request,
-      messages: {
-        successMessage: '',
-        failMessage: ''
-      },
-      loadingContent: ''
-    }
-    store.dispatch(ActionTypes.GetUserDetail, getUserDetailRequest)
+    getUserDetails()
+    getUserInvitationCode()
   }
 })
 

@@ -59,7 +59,7 @@
 
         <template v-slot:button>
           <div>
-            <q-btn class='common-button card-button'
+            <q-btn class='common-button card-button' :disable='googleVerify'
                    :label="$t('account.Setting.Google.Button')" @click='showEnableGoogle = true' />
           </div>
         </template>
@@ -92,7 +92,7 @@
             :options='loginOptions'
             color='teal'
             inline
-            :disable="!googleVerify && emailAddress === ''"
+            :disable="!googleVerify || emailAddress === ''"
           >
           </q-option-group>
         </template>
@@ -125,6 +125,7 @@ import { useI18n } from 'vue-i18n'
 import { SetGALoginVerifyRequest } from 'src/store/users/types'
 import { RequestInput } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
+import { MutationTypes } from 'src/store/users/mutation-types'
 
 const SettingBox = defineAsyncComponent(() => import('src/components/box/SettingBox.vue'))
 const EnableEmailDialog = defineAsyncComponent(() => import('src/components/dialog/setting/EnableEmail.vue'))
@@ -139,7 +140,12 @@ const emailAddress = computed(() => store.getters.getUserEmailAddress)
 const phoneNumber = computed(() => store.getters.getUserPhoneNumber)
 const googleVerify = computed(() => store.getters.getUserGoogleAuthenticator)
 const kycVerify = computed(() => store.state.user.info.UserAppInfo.UserApplicationInfo.KycVerify)
-const userGALogin = computed(() => store.getters.getUserGoogleLoginVerify)
+const userGALogin = computed({
+  get: () => store.getters.getUserGoogleLoginVerify,
+  set: (val) => {
+    store.commit(MutationTypes.SetGoogleLoginVerify, val)
+  }
+})
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })

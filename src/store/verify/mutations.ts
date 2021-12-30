@@ -1,7 +1,7 @@
 import { MutationTree } from 'vuex'
 import { MutationTypes } from './mutation-types'
 import { VerifyState } from './state'
-import { GoogleAuthenticationInfo } from 'src/store/verify/types'
+import { DisableState, GoogleAuthenticationInfo, TextState } from 'src/store/verify/types'
 
 type VerifyMutations<S = VerifyState> = {
   [MutationTypes.SetLoginEmailVerifyDialog] (state: S, payload: boolean): void
@@ -9,8 +9,8 @@ type VerifyMutations<S = VerifyState> = {
   [MutationTypes.SetLoading] (state: S, payload: boolean): void
   [MutationTypes.SetError] (state: S, payload: string): void
   [MutationTypes.SetGoogleAuthenticationInfo] (state: S, payload: GoogleAuthenticationInfo): void
-  [MutationTypes.SetSendCodeButtonDisable] (state: S, payload: boolean): void
-  [MutationTypes.SetSendCodeButtonText] (state: S, payload: string): void
+  [MutationTypes.SetDisable] (state: S, payload: DisableState): void
+  [MutationTypes.SetSendCodeButtonText] (state: S, payload: TextState): void
 }
 
 const mutations: MutationTree<VerifyState> & VerifyMutations = {
@@ -29,11 +29,11 @@ const mutations: MutationTree<VerifyState> & VerifyMutations = {
   [MutationTypes.SetGoogleAuthenticationInfo] (state: VerifyState, payload: GoogleAuthenticationInfo) {
     state.googleAuthenticationInfo = payload
   },
-  [MutationTypes.SetSendCodeButtonDisable] (state: VerifyState, payload: boolean) {
-    state.sendCodeButtonDisable = payload
+  [MutationTypes.SetDisable] (state: VerifyState, payload: DisableState) {
+    state.sendCodeButtonDisable.set(payload.key, payload.value)
   },
-  [MutationTypes.SetSendCodeButtonText] (state: VerifyState, payload: string) {
-    state.sendCodeButtonText = payload
+  [MutationTypes.SetSendCodeButtonText] (state: VerifyState, payload: TextState) {
+    state.sendCodeButtonText.set(payload.key, payload.value)
   }
 }
 

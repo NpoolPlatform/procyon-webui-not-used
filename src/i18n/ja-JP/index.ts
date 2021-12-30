@@ -125,6 +125,11 @@ export default {
       Success: 'ユーザーログインベリファイメソッドの送信に成功',
       Fail: 'ユーザーログイン検証の送信失敗',
       Load: ''
+    },
+    ChangePassword: {
+      Success: 'パスワードが変更されました',
+      Fail: 'パスワードの変更に失敗しました',
+      Load: ''
     }
   },
 

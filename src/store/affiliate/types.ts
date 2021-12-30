@@ -3,6 +3,7 @@ export interface GetDirectInvitationsRequest {
   InviterID: string
   Username: string
   EmailAddress: string
+  Target?: string
 }
 
 export interface Invitee {

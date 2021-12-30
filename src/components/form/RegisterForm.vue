@@ -15,9 +15,9 @@
     ></q-input>
 
     <SendCodeInput v-if='showEmail' verify-type='email' v-model:verify-code='verifyCode'
-                   :verify-param='registerInput.emailAddress' />
+                   :verify-param='registerInput.emailAddress' :item-target='ItemStateTarget.RegisterEmailSendCodeButton' />
     <SendCodeInput v-if='showPhone' verify-type='phone' v-model:verify-code='verifyCode'
-                   :verify-param='registerInput.phoneNumber' />
+                   :verify-param='registerInput.phoneNumber' :item-target='ItemStateTarget.RegisterPhoneSendCodeButton' />
     <q-input v-model='registerInput.password' :label="$t('input.Password')" bg-color='blue-grey-2'
              class='common-input'
              outlined lazy-rules
@@ -81,14 +81,14 @@ import { reactive, ref, defineAsyncComponent, computed } from 'vue'
 import { isValidEmail, isValidPassword, sha256Password, ThrottleDelay } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
 import { throttle } from 'quasar'
-const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
 import { useStore } from 'src/store'
 import { UserSignUpRequest } from 'src/store/users/types'
-import { RequestInput } from 'src/store/types'
+import { RequestInput, ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
 const PolicyDialog = defineAsyncComponent(() => import('src/components/dialog/policy/Policy.vue'))
+const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })

@@ -34,6 +34,7 @@
             :options='genderOptions'
             lazy-rules
             emit-value
+            map-options
           />
         </div>
       </div>
@@ -179,7 +180,6 @@ import { RequestInput } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { useI18n } from 'vue-i18n'
 import { isValidUsername } from 'src/utils/utils'
-import { useQuasar } from 'quasar'
 
 interface option {
   label: string
@@ -270,11 +270,9 @@ const usernameRules = ref([
   (val: string) => isValidUsername(val) || t('input.UsernameWarning')
 ])
 
-const q = useQuasar()
+const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
 
 const updateUser = () => {
-  const userid = q.cookies.get('UserID')
-  const appid = q.cookies.get('AppID')
   const request: UpdateUserRequest = {
     Info: {
       Username: username.value,
@@ -289,10 +287,9 @@ const updateUser = () => {
       PostalCode: postalCode.value,
       EmailAddress: '',
       PhoneNumber: '',
-      Password: ''
-    },
-    UserID: userid,
-    AppID: appid
+      Password: '',
+      UserID: userBasicInfo.value.UserID
+    }
   }
   const updateUserRequest: RequestInput<UpdateUserRequest> = {
     requestInput: request,

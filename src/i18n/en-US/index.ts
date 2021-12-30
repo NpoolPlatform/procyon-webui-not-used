@@ -125,6 +125,11 @@ export default {
       Success: 'Submit user login verify method successfully',
       Fail: 'Fail to submit user login verify',
       Load: ''
+    },
+    ChangePassword: {
+      Success: 'Your password has been reset',
+      Fail: 'Fail to change password',
+      Load: ''
     }
   },
 
