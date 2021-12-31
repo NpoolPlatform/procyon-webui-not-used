@@ -73,7 +73,6 @@
 <script setup lang='ts'>
 import { defineEmits, defineProps, toRef, withDefaults, watch, computed, ref } from 'vue'
 import { useStore } from 'src/store'
-import { RequestInput } from 'src/store/types'
 import { ActionTypes } from 'src/store/verify/action-types'
 import { useI18n } from 'vue-i18n'
 import { VerifyGoogleAuthenticationCodeRequest } from 'src/store/verify/types'
@@ -116,15 +115,7 @@ const bindGoogleAuthenticator = () => {
     Code: googleVerifyCode.value,
     Bind: true
   }
-  const verifyGoogleAuthenticationCodeRequest: RequestInput<VerifyGoogleAuthenticationCodeRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.VerifyGoogleAuthentication.Success'),
-      failMessage: t('notify.VerifyGoogleAuthentication.Fail')
-    },
-    loadingContent: ''
-  }
-  store.dispatch(ActionTypes.VerifyGoogleAuthentication, verifyGoogleAuthenticationCodeRequest)
+  store.dispatch(ActionTypes.VerifyGoogleAuthentication, request)
 }
 </script>
 

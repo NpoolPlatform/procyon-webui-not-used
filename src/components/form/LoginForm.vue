@@ -60,13 +60,13 @@
 import { ref, computed, reactive, onBeforeMount, defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { isValidLoginUsername, sha256Password, ThrottleDelay } from 'src/utils/utils'
-const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
 import { useStore } from 'src/store'
 import { UserLoginRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
-import { RequestInput } from 'src/store/types'
 import { throttle } from 'quasar'
 import { load } from 'recaptcha-v3'
+
+const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
 
 const siteKey = '6LclwaIdAAAAAKVQTwz8FYinU0rP43_m6EedDv2S'
 const googleRecaptchaResponse = ref('')
@@ -118,15 +118,7 @@ const login = throttle((): void => {
     GoogleRecaptchaResponse: googleRecaptchaResponse.value,
     Phone: loginInput.Phone
   }
-  const userLoginRequest: RequestInput<UserLoginRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.Login.Success'),
-      failMessage: t('notify.Login.Fail')
-    },
-    loadingContent: t('notify.Login.Load')
-  }
-  store.dispatch(ActionTypes.UserLogin, userLoginRequest)
+  store.dispatch(ActionTypes.UserLogin, request)
 }, ThrottleDelay)
 </script>
 

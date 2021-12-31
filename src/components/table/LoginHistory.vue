@@ -24,7 +24,6 @@
 <script setup lang='ts'>
 import { computed, onMounted, ref } from 'vue'
 import { GetUserLoginHistoryRequest, LoginRecord } from 'src/store/users/types'
-import { RequestInput } from 'src/store/types'
 import { useStore } from 'src/store'
 import { ActionTypes } from 'src/store/users/action-types'
 import { useI18n } from 'vue-i18n'
@@ -36,15 +35,7 @@ const { t, locale } = useI18n({ useScope: 'global' })
 
 const getUserLoginHistory = () => {
   const request: GetUserLoginHistoryRequest = {}
-  const getUserLoginHistoryRequest: RequestInput<GetUserLoginHistoryRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: '',
-      failMessage: ''
-    },
-    loadingContent: ''
-  }
-  store.dispatch(ActionTypes.GetUserLoginHistory, getUserLoginHistoryRequest)
+  store.dispatch(ActionTypes.GetUserLoginHistory, request)
 }
 
 onMounted(() => {

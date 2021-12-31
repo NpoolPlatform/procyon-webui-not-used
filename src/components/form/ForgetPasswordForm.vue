@@ -57,7 +57,7 @@ import { useI18n } from 'vue-i18n'
 import { throttle } from 'quasar'
 import { useStore } from 'src/store'
 import { UserForgetPasswordRequest } from 'src/store/users/types'
-import { RequestInput, ItemStateTarget } from 'src/store/types'
+import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
@@ -113,15 +113,7 @@ const forget = throttle(() => {
     Password: sha256Password(forgetInput.password),
     Code: verifyCode.value
   }
-  const userForgetPasswordRequest: RequestInput<UserForgetPasswordRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.Forget.Success'),
-      failMessage: t('notify.Forget.Fail')
-    },
-    loadingContent: t('notify.Forget.Load')
-  }
-  store.dispatch(ActionTypes.UserForgetPassword, userForgetPasswordRequest)
+  store.dispatch(ActionTypes.UserForgetPassword, request)
 }, ThrottleDelay)
 </script>
 

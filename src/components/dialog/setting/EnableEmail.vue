@@ -41,7 +41,7 @@ import { useStore } from 'src/store'
 import { isValidEmail } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
 import { EnableEmailRequest } from 'src/store/users/types'
-import { RequestInput, ItemStateTarget } from 'src/store/types'
+import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
@@ -79,15 +79,7 @@ const enable = () => {
     EmailAddress: emailAddress.value,
     Code: verifyCode.value
   }
-  const enableEmailRequest: RequestInput<EnableEmailRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.EnableEmail.Success'),
-      failMessage: t('notify.EnableEmail.Fail')
-    },
-    loadingContent: ''
-  }
-  store.dispatch(ActionTypes.EnableEmail, enableEmailRequest)
+  store.dispatch(ActionTypes.EnableEmail, request)
 }
 
 const whenHide = () => {

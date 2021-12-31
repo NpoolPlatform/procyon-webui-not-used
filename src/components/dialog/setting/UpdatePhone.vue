@@ -46,7 +46,7 @@ import { defineEmits, ref, defineProps, withDefaults, toRef, computed, watch, de
 import { useStore } from 'src/store'
 import { useI18n } from 'vue-i18n'
 import { UpdatePhoneRequest } from 'src/store/users/types'
-import { RequestInput, ItemStateTarget } from 'src/store/types'
+import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
@@ -92,15 +92,7 @@ const update = () => {
     NewPhone: newPhone.value,
     NewCode: verifyCode.value
   }
-  const updatePhoneRequest: RequestInput<UpdatePhoneRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.UpdatePhone.Success'),
-      failMessage: t('notify.UpdatePhone.Fail')
-    },
-    loadingContent: ''
-  }
-  store.dispatch(ActionTypes.UpdatePhone, updatePhoneRequest)
+  store.dispatch(ActionTypes.UpdatePhone, request)
 }
 
 const whenHide = () => {
@@ -112,6 +104,7 @@ const whenHide = () => {
 
 <style scoped>
 @import "~vue3-q-tel-input/dist/vue3-q-tel-input.esm.css";
+
 .dialog-box {
   background-color: white;
   box-shadow: 16px 16px 20px 0 #23292b;

@@ -58,7 +58,7 @@ import { useStore } from 'src/store'
 import { isValidEmail } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
 import { UpdateEmailRequest } from 'src/store/users/types'
-import { RequestInput, ItemStateTarget } from 'src/store/types'
+import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
@@ -103,15 +103,7 @@ const update = () => {
     NewEmail: email.value,
     NewCode: verifyCode.value
   }
-  const updateEmailRequest: RequestInput<UpdateEmailRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.UpdateEmail.Success'),
-      failMessage: t('notify.UpdateEmail.Fail')
-    },
-    loadingContent: ''
-  }
-  store.dispatch(ActionTypes.UpdateEmail, updateEmailRequest)
+  store.dispatch(ActionTypes.UpdateEmail, request)
 }
 
 const whenHide = () => {

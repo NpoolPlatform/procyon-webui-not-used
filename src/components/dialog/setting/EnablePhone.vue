@@ -34,7 +34,7 @@ import { defineEmits, ref, defineProps, withDefaults, toRef, computed, watch, de
 import { useStore } from 'src/store'
 import { useI18n } from 'vue-i18n'
 import { EnablePhoneRequest } from 'src/store/users/types'
-import { RequestInput, ItemStateTarget } from 'src/store/types'
+import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
@@ -73,15 +73,7 @@ const enable = () => {
     PhoneNumber: phoneNumber.value,
     Code: verifyCode.value
   }
-  const enablePhoneRequest: RequestInput<EnablePhoneRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.EnablePhone.Success'),
-      failMessage: t('notify.EnablePhone.Fail')
-    },
-    loadingContent: ''
-  }
-  store.dispatch(ActionTypes.EnablePhone, enablePhoneRequest)
+  store.dispatch(ActionTypes.EnablePhone, request)
 }
 
 const whenHide = () => {
