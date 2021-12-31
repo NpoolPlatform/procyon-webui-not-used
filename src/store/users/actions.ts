@@ -224,6 +224,7 @@ const actions: ActionTree<UserState, RootState> = {
       commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+      commit(MutationTypes.SetGoogleLoginVerify, !payload.requestInput.Set)
       commit(notifyMutation.SetLoading, false)
     })
   },

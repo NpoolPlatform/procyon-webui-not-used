@@ -23,6 +23,8 @@ import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types
 import { RequestInput } from 'src/store/types'
 import { RequestMessageToNotifyMessage } from 'src/utils/utils'
 import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
+import { ActionTypes as userAction } from 'src/store/users/action-types'
+import { UpdateUserGAStatusRequest } from 'src/store/users/types'
 
 // use public api
 interface VerifyActions {
@@ -146,12 +148,30 @@ const actions: ActionTree<VerifyState, RootState> = {
       commit(notifyMutation.SetLoading, false)
     })
   },
-  [ActionTypes.VerifyGoogleAuthentication] ({ commit }, payload: RequestInput<VerifyGoogleAuthenticationCodeRequest>) {
+  [ActionTypes.VerifyGoogleAuthentication] ({
+    commit,
+    dispatch
+  }, payload: RequestInput<VerifyGoogleAuthenticationCodeRequest>) {
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<VerifyGoogleAuthenticationCodeRequest, VerifyGoogleAuthenticationCodeResponse>(VerifyURLPath.VERIFY_GOOGLE_AUTHENTICATION, payload.requestInput).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
-      commit(userMutation.SetLoginVerify, true)
+      if (payload.requestInput.Bind) {
+        const request: UpdateUserGAStatusRequest = {
+          Status: true
+        }
+        const updateUserGAStatueRequest: RequestInput<UpdateUserGAStatusRequest> = {
+          requestInput: request,
+          messages: {
+            successMessage: 'Successfully!',
+            failMessage: 'Fail to update user google authenticator status'
+          },
+          loadingContent: ''
+        }
+        void dispatch(userAction.UpdateUserGAStatus, updateUserGAStatueRequest)
+      } else {
+        commit(userMutation.SetLoginVerify, true)
+      }
       commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))

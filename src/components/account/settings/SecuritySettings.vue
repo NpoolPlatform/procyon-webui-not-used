@@ -4,7 +4,8 @@
       <SettingBox :title="$t('account.Setting.ChangePassword.Title')" :img='changePasswordImg'
                   :content="$t('account.Setting.ChangePassword.ChangePasswordContent')">
         <template v-slot:button>
-          <q-btn class='common-button card-button' :label="$t('account.Setting.ChangePassword.Button')" @click='$router.push("/change/password")'/>
+          <q-btn class='common-button card-button' :label="$t('account.Setting.ChangePassword.Button')"
+                 @click='$router.push("/change/password")' />
         </template>
       </SettingBox>
 
@@ -92,13 +93,13 @@
             :options='loginOptions'
             color='teal'
             inline
-            :disable="!googleVerify || emailAddress === ''"
+            :disable='!googleVerify && emailAddress === ""'
           >
           </q-option-group>
         </template>
 
         <template v-slot:button>
-          <q-btn class='common-button card-button' :disable='emailAddress === "" || !googleVerify'
+          <q-btn class='common-button card-button' :disable='emailAddress === "" && !googleVerify'
                  :label="$t('account.Setting.LoginVerify.Button')" @click='setLoginVerify' />
         </template>
       </SettingBox>
@@ -126,6 +127,7 @@ import { SetGALoginVerifyRequest } from 'src/store/users/types'
 import { RequestInput } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { MutationTypes } from 'src/store/users/mutation-types'
+import { success } from 'src/notify/notify'
 
 const SettingBox = defineAsyncComponent(() => import('src/components/box/SettingBox.vue'))
 const EnableEmailDialog = defineAsyncComponent(() => import('src/components/dialog/setting/EnableEmail.vue'))
@@ -153,13 +155,11 @@ const { t } = useI18n({ useScope: 'global' })
 const loginOptions = ref([
   {
     label: t('account.Setting.LoginVerify.GALogin'),
-    value: true,
-    disable: !googleVerify.value
+    value: true
   },
   {
     label: t('account.Setting.LoginVerify.EmailLogin'),
-    value: false,
-    disable: emailAddress.value === ''
+    value: false
   }
 ])
 
@@ -170,6 +170,10 @@ const showUpdatePhone = ref(false)
 const showEnableGoogle = ref(false)
 
 const setLoginVerify = () => {
+  if (emailAddress.value !== '' && !googleVerify.value && !userGALogin.value) {
+    success(t('notify.SetLoginVerify.Success'))
+    return
+  }
   const request: SetGALoginVerifyRequest = {
     Set: userGALogin.value
   }

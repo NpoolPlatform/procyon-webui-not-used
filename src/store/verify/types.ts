@@ -57,6 +57,7 @@ export interface VerifyGoogleAuthenticationCodeRequest {
   UserID?: string
   AppID?: string
   Code: string
+  Bind?: boolean
 }
 
 export interface VerifyGoogleAuthenticationCodeResponse {
