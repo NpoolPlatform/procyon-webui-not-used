@@ -26,7 +26,7 @@ export interface Invitation {
   UserID: string
   EmailAddress: string
   Label: string,
-  Children: Array<Invitation>
+  children: Array<Invitation>
 }
 
 export enum AffiliateURLPath {
