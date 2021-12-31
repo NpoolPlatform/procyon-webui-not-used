@@ -32,12 +32,9 @@ import { useRouter } from 'vue-router'
 import { MutationTypes as styleMutation } from 'src/store/style/mutation-types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { GetUserDetailRequest, GetUserInvitationCodeRequest } from 'src/store/users/types'
-import { RequestInput } from 'src/store/types'
 import { useI18n } from 'vue-i18n'
 
 const store = useStore()
-// eslint-disable-next-line @typescript-eslint/unbound-method
-const { t } = useI18n({ useScope: 'global' })
 
 const router = useRouter()
 const nowPath = computed(() => router.currentRoute.value.path)
@@ -104,28 +101,12 @@ onBeforeMount(() => {
 
 const getUserDetails = () => {
   const request: GetUserDetailRequest = {}
-  const getUserDetailRequest: RequestInput<GetUserDetailRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: '',
-      failMessage: t('notify.GetUserDetail.Fail')
-    },
-    loadingContent: ''
-  }
-  store.dispatch(ActionTypes.GetUserDetail, getUserDetailRequest)
+  store.dispatch(ActionTypes.GetUserDetail, request)
 }
 
 const getUserInvitationCode = () => {
   const request: GetUserInvitationCodeRequest = {}
-  const getUserInvitationCodeRequest: RequestInput<GetUserInvitationCodeRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: '',
-      failMessage: ''
-    },
-    loadingContent: ''
-  }
-  store.dispatch(ActionTypes.GetUserInvitationCode, getUserInvitationCodeRequest)
+  store.dispatch(ActionTypes.GetUserInvitationCode, request)
 }
 
 onMounted(() => {

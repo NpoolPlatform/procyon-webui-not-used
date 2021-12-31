@@ -60,27 +60,14 @@ import { computed, onMounted } from 'vue'
 import { useStore } from 'src/store'
 import { ActionTypes as GoodActionTypes } from 'src/store/goods/action-types'
 import { GetGoodDetailsRequest } from 'src/store/goods/types'
-import { RequestInput } from 'src/store/types'
-import { useI18n } from 'vue-i18n'
 
 const store = useStore()
-// eslint-disable-next-line @typescript-eslint/unbound-method
-const { t } = useI18n({ useScope: 'global' })
 
 const getPromotionProduct = () => {
   const request: GetGoodDetailsRequest = {
     AppID: ''
   }
-
-  const getGoodDetailsRequest: RequestInput<GetGoodDetailsRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.GetGoodDetails.Success'),
-      failMessage: t('notify.GetGoodDetails.Fail')
-    },
-    loadingContent: ''
-  }
-  store.dispatch(GoodActionTypes.GetGoodDetails, getGoodDetailsRequest)
+  store.dispatch(GoodActionTypes.GetGoodDetails, request)
 }
 
 onMounted(() => {

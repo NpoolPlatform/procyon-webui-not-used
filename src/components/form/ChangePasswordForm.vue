@@ -72,7 +72,7 @@ import { useI18n } from 'vue-i18n'
 import { throttle } from 'quasar'
 import { useStore } from 'src/store'
 import { UserChangePasswordRequest } from 'src/store/users/types'
-import { RequestInput, ItemStateTarget } from 'src/store/types'
+import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
@@ -134,16 +134,7 @@ const changePassword = throttle(() => {
     Password: sha256Password(changePasswordInput.password),
     Code: verifyCode.value
   }
-  const userChangePasswordRequest: RequestInput<UserChangePasswordRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.ChangePassword.Success'),
-      failMessage: t('notify.ChangePassword.Fail')
-    },
-    loadingContent: t('notify.ChangePassword.Load')
-  }
-
-  store.dispatch(ActionTypes.UserChangePassword, userChangePasswordRequest)
+  store.dispatch(ActionTypes.UserChangePassword, request)
 }, ThrottleDelay)
 </script>
 

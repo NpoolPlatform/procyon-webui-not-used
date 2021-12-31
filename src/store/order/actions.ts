@@ -11,10 +11,11 @@ import {
   OrderURLPath,
   UserOrderDetail
 } from './types'
-import { ItemStateTarget, RequestInput } from 'src/store/types'
+import { ItemStateTarget } from 'src/store/types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { RequestMessageToNotifyMessage, TimeStampToDate } from 'src/utils/utils'
 import { GoodURLPath, GetGoodDetailRequest, GetGoodDetailResponse } from 'src/store/goods/types'
+import { useI18n } from 'boot/i18n'
 
 // use public api
 interface OrderActions {
@@ -22,16 +23,17 @@ interface OrderActions {
     commit
   }: AugmentedActionContext<OrderState,
     RootState,
-    OrderMutations<OrderState>>, payload: RequestInput<GetOrdersDetailByAppUserRequest>): void
+    OrderMutations<OrderState>>, payload: GetOrdersDetailByAppUserRequest): void
 }
 
 const actions: ActionTree<OrderState, RootState> = {
-  [ActionTypes.GetUserOrderDetails] ({ commit }, payload: RequestInput<GetOrdersDetailByAppUserRequest>) {
+  [ActionTypes.GetUserOrderDetails] ({ commit }, payload: GetOrdersDetailByAppUserRequest) {
+    const { t } = useI18n()
     commit(notifyMutation.SetInnerLoading, {
       Key: ItemStateTarget.GetUserOrderDetail,
       value: true
     })
-    post<GetOrdersDetailByAppUserRequest, GetOrdersDetailByAppUserResponse>(OrderURLPath.GET_ORDERS_DETAIL_BY_APP_USER, payload.requestInput)
+    post<GetOrdersDetailByAppUserRequest, GetOrdersDetailByAppUserResponse>(OrderURLPath.GET_ORDERS_DETAIL_BY_APP_USER, payload)
       .then((resp: GetOrdersDetailByAppUserResponse) => {
         const myOrders: Array<UserOrderDetail> = []
         resp.Details.forEach(order => {
@@ -56,7 +58,7 @@ const actions: ActionTree<OrderState, RootState> = {
             commit(MutationTypes.SetDurationDays, good.DurationDays)
             myOrders.push(myOrder)
           }).catch((err: Error) => {
-            commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+            commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.GetUserOrders.Fail'), err.message, 'negative'))
             commit(notifyMutation.SetInnerLoading, {
               Key: ItemStateTarget.GetUserOrderDetail,
               value: false
@@ -71,7 +73,7 @@ const actions: ActionTree<OrderState, RootState> = {
       })
       .catch((err: Error) => {
         commit(MutationTypes.SetUserOrderDetails, [])
-        commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
+        commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.GetUserOrders.Fail'), err.message, 'negative'))
         commit(notifyMutation.SetInnerLoading, {
           Key: ItemStateTarget.GetUserOrderDetail,
           value: false

@@ -74,7 +74,7 @@ export default {
       Success: '新しいパスワードの設定に成功',
       Fail: '新しいパスワードの設定に失敗する'
     },
-    GetGoodDetails: {
+    GetPromotionGoods: {
       Success: 'プロモーショングッズを無事ゲット',
       Fail: 'プロモーショングッズの入手に失敗した'
     },
@@ -130,6 +130,9 @@ export default {
       Success: 'パスワードが変更されました',
       Fail: 'パスワードの変更に失敗しました',
       Load: ''
+    },
+    GetUserLoginHistory: {
+      Fail: 'ユーザーログイン履歴の取得に失敗する'
     }
   },
 

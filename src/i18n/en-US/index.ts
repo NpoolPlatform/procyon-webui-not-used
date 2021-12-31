@@ -74,7 +74,7 @@ export default {
       Success: 'Set new password successfully',
       Fail: 'Fail to set new password'
     },
-    GetGoodDetails: {
+    GetPromotionGoods: {
       Success: 'Get promotion goods successfully',
       Fail: 'Fail to get promotion goods'
     },
@@ -130,6 +130,9 @@ export default {
       Success: 'Your password has been reset',
       Fail: 'Fail to change password',
       Load: ''
+    },
+    GetUserLoginHistory: {
+      Fail: 'Fail to get user login histories'
     }
   },
 

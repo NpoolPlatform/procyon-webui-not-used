@@ -45,17 +45,13 @@ import {
   VerifyGoogleAuthenticationCodeRequest
 } from 'src/store/verify/types'
 import { useI18n } from 'vue-i18n'
-import { RequestInput } from 'src/store/types'
 import { GenerateSendEmailRequest, ThrottleDelay } from 'src/utils/utils'
 import { throttle } from 'quasar'
 
 const store = useStore()
 const router = useRouter()
-// eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/unbound-method
-const {
-  t,
-  locale
-} = useI18n({ useScope: 'global' })
+
+const { locale } = useI18n({ useScope: 'global' })
 
 const LoginBox = defineAsyncComponent(() => import('src/components/box/Box.vue'))
 const LoginForm = defineAsyncComponent(() => import('src/components/form/LoginForm.vue'))
@@ -84,21 +80,13 @@ watch(logined, (newLogined, oldLogined) => {
     if (userInfo.value.UserAppInfo.UserApplicationInfo.GALogin) {
       showGoogleAuthenticationVerifyDialog.value = true
     } else if (userInfo.value.UserBasicInfo.EmailAddress !== '') {
-      const request: SendEmailRequest = {
+      let request: SendEmailRequest = {
         Email: userInfo.value.UserBasicInfo.EmailAddress,
         Lang: locale.value,
         ItemTarget: ''
       }
-      let sendEmailRequest: RequestInput<SendEmailRequest> = {
-        requestInput: request,
-        messages: {
-          successMessage: t('notify.SendEmail.Success.Words1') + '<' + userInfo.value.UserBasicInfo.EmailAddress + '>' + t('notify.SendEmail.Success.Words2') + t('notify.SendEmail.Success.Check'),
-          failMessage: t('notify.SendEmail.Fail')
-        },
-        loadingContent: t('notify.SendEmail.Load')
-      }
-      sendEmailRequest = GenerateSendEmailRequest(locale.value, userInfo.value.UserBasicInfo, sendEmailRequest)
-      store.dispatch(verifyAction.SendEmail, sendEmailRequest)
+      request = GenerateSendEmailRequest(locale.value, userInfo.value.UserBasicInfo, request)
+      store.dispatch(verifyAction.SendEmail, request)
       showEmailVerifyDialog.value = true
     } else {
       logined.value = true
@@ -114,15 +102,7 @@ const verifyEmailCode = throttle((verifyCode: string): void => {
     Param: userInfo.value.UserBasicInfo.EmailAddress,
     Code: verifyCode
   }
-  const verifyCodeWithUserIDRequest: RequestInput<VerifyCodeWithUserIDRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.VerifyWithUserID.Success'),
-      failMessage: t('notify.VerifyWithUserID.Fail')
-    },
-    loadingContent: t('notify.VerifyWithUserID.Load')
-  }
-  store.dispatch(ActionTypes.VerifyCodeWithUserID, verifyCodeWithUserIDRequest)
+  store.dispatch(ActionTypes.VerifyCodeWithUserID, request)
 }, ThrottleDelay)
 
 const verifyGoogleCode = throttle((verifyCode: string): void => {
@@ -130,14 +110,6 @@ const verifyGoogleCode = throttle((verifyCode: string): void => {
     UserID: '',
     Code: verifyCode
   }
-  const verifyGoogleAuthenticationCodeRequest: RequestInput<VerifyGoogleAuthenticationCodeRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.VerifyGoogleAuthentication.Success'),
-      failMessage: t('notify.VerifyGoogleAuthentication.Fail')
-    },
-    loadingContent: t('notify.VerifyGoogleAuthentication.Load')
-  }
-  store.dispatch(ActionTypes.VerifyGoogleAuthentication, verifyGoogleAuthenticationCodeRequest)
+  store.dispatch(ActionTypes.VerifyGoogleAuthentication, request)
 }, ThrottleDelay)
 </script>

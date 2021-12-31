@@ -45,13 +45,9 @@
 import { defineProps, computed, toRef, withDefaults } from 'vue'
 import { useStore } from 'src/store'
 import { ActionTypes } from 'src/store/users/action-types'
-import { useI18n } from 'vue-i18n'
-import { RequestInput } from 'src/store/types'
 import { UserLogoutRequest } from 'src/store/users/types'
 
 const store = useStore()
-// eslint-disable-next-line @typescript-eslint/unbound-method
-const { t } = useI18n({ useScope: 'global' })
 
 interface Props {
   avatarSize?: string
@@ -70,15 +66,7 @@ const logined = computed(() => store.getters.getUserLogined)
 
 const logout = () => {
   const request: UserLogoutRequest = {}
-  const userLogoutRequest: RequestInput<UserLogoutRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.Logout.Success'),
-      failMessage: t('notify.Logout.Fail')
-    },
-    loadingContent: t('notify.Logout.Load')
-  }
-  store.dispatch(ActionTypes.UserLogout, userLogoutRequest)
+  store.dispatch(ActionTypes.UserLogout, request)
 }
 </script>
 

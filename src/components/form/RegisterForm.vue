@@ -83,7 +83,7 @@ import { useI18n } from 'vue-i18n'
 import { throttle } from 'quasar'
 import { useStore } from 'src/store'
 import { UserSignUpRequest } from 'src/store/users/types'
-import { RequestInput, ItemStateTarget } from 'src/store/types'
+import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
@@ -139,15 +139,7 @@ const register = throttle(() => {
     VerificationCode: verifyCode.value,
     PhoneNumber: registerInput.phoneNumber
   }
-  const userSignupRequest: RequestInput<UserSignUpRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.Signup.Success'),
-      failMessage: t('notify.Signup.Fail')
-    },
-    loadingContent: t('notify.Signup.Load')
-  }
-  store.dispatch(ActionTypes.UserSignUp, userSignupRequest)
+  store.dispatch(ActionTypes.UserSignUp, request)
 }, ThrottleDelay)
 </script>
 

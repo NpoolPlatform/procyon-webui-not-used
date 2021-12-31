@@ -33,7 +33,6 @@ import { computed, defineEmits, defineProps, onMounted, ref, toRef, watch, withD
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'src/store'
 import { SendEmailRequest, SendSmsRequest } from 'src/store/verify/types'
-import { RequestInput } from 'src/store/types'
 import { GenerateSendEmailRequest } from 'src/utils/utils'
 import { ActionTypes } from 'src/store/verify/action-types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
@@ -83,28 +82,14 @@ const sendEmailCode = () => {
     key: itemTarget.value,
     value: true
   })
-  const successMessage = t('notify.SendEmail.Success.Words1') +
-    ' <' +
-    verifyParam.value +
-    '>, ' +
-    t('notify.SendEmail.Success.Words2') +
-    t('notify.SendEmail.Success.Check')
 
-  const request: SendEmailRequest = {
+  let request: SendEmailRequest = {
     Email: verifyParam.value,
     Lang: locale.value,
     ItemTarget: itemTarget.value
   }
-  let sendEmailRequest: RequestInput<SendEmailRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: successMessage,
-      failMessage: t('notify.SendEmail.Fail')
-    },
-    loadingContent: t('notify.SendEmail.Load')
-  }
-  sendEmailRequest = GenerateSendEmailRequest(locale.value, userBasicInfo.value, sendEmailRequest)
-  store.dispatch(ActionTypes.SendEmail, sendEmailRequest)
+  request = GenerateSendEmailRequest(locale.value, userBasicInfo.value, request)
+  store.dispatch(ActionTypes.SendEmail, request)
 }
 
 const sendSmsCode = () => {
@@ -112,26 +97,12 @@ const sendSmsCode = () => {
     key: itemTarget.value,
     value: true
   })
-  const successMessage = t('notify.SendPhone.Success.Words1') +
-    ' <' +
-    verifyParam.value +
-    '>, ' +
-    t('notify.SendPhone.Success.Words2') +
-    t('notify.SendPhone.Success.Check')
   const request: SendSmsRequest = {
     Lang: locale.value,
     Phone: verifyParam.value,
     ItemTarget: itemTarget.value
   }
-  const sendSmsRequest: RequestInput<SendSmsRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: successMessage,
-      failMessage: t('notify.SendPhone.Fail')
-    },
-    loadingContent: t('notify.SendPhone.Load')
-  }
-  store.dispatch(ActionTypes.SendSMS, sendSmsRequest)
+  store.dispatch(ActionTypes.SendSMS, request)
 }
 
 watch(sendDisable, (n, o) => {

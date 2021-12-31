@@ -36,9 +36,8 @@ import { computed, onMounted } from 'vue'
 import { useStore } from 'src/store'
 import { GetDirectInvitationsRequest } from 'src/store/affiliate/types'
 import { useQuasar } from 'quasar'
-import { ItemStateTarget, RequestInput } from 'src/store/types'
+import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/affiliate/action-types'
-import { useI18n } from 'vue-i18n'
 import { MutationTypes } from 'src/store/notify/mutation-types'
 
 const q = useQuasar()
@@ -48,9 +47,6 @@ const target = ItemStateTarget.GetDirectInvitationList
 const store = useStore()
 const invitationList = computed(() => store.getters.getInvitationList)
 const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
-
-// eslint-disable-next-line @typescript-eslint/unbound-method
-const { t } = useI18n({ useScope: 'global' })
 
 const getInvitationList = () => {
   store.commit(MutationTypes.SetInnerLoading, {
@@ -64,15 +60,7 @@ const getInvitationList = () => {
     EmailAddress: userBasicInfo.value.EmailAddress,
     Target: target
   }
-  const getDirectInvitationsRequest: RequestInput<GetDirectInvitationsRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.GetDirectAffiliate.Success'),
-      failMessage: t('notify.GetDirectAffiliate.Fail')
-    },
-    loadingContent: ''
-  }
-  store.dispatch(ActionTypes.GetDirectInvitationList, getDirectInvitationsRequest)
+  store.dispatch(ActionTypes.GetDirectInvitationList, request)
 }
 
 const innerLoading = computed(() => store.getters.getInnerLoading.get(target))

@@ -35,10 +35,8 @@
 <script setup lang='ts'>
 import { computed, defineAsyncComponent, onMounted } from 'vue'
 import { GetUserDetailRequest, GetUserInvitationCodeRequest } from 'src/store/users/types'
-import { RequestInput } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { useStore } from 'src/store'
-import { useI18n } from 'vue-i18n'
 import { GetQRCodeURLRequest } from 'src/store/verify/types'
 import { ActionTypes as verifyAction } from 'src/store/verify/action-types'
 
@@ -47,33 +45,15 @@ const SecuritySettings = defineAsyncComponent(() => import('src/components/accou
 const LoginHistoryTable = defineAsyncComponent(() => import('src/components/table/LoginHistory.vue'))
 
 const store = useStore()
-// eslint-disable-next-line @typescript-eslint/unbound-method
-const { t } = useI18n({ useScope: 'global' })
 
 const getUserDetail = () => {
   const request: GetUserDetailRequest = {}
-  const getUserDetailRequest: RequestInput<GetUserDetailRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: '',
-      failMessage: t('notify.GetUserDetail.Fail')
-    },
-    loadingContent: ''
-  }
-  store.dispatch(ActionTypes.GetUserDetail, getUserDetailRequest)
+  store.dispatch(ActionTypes.GetUserDetail, request)
 }
 
 const getUserInvitationCode = () => {
   const request: GetUserInvitationCodeRequest = {}
-  const getUserInvitationCodeRequest: RequestInput<GetUserInvitationCodeRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: '',
-      failMessage: t('notify.GetUserInvitationCode.Fail')
-    },
-    loadingContent: ''
-  }
-  store.dispatch(ActionTypes.GetUserInvitationCode, getUserInvitationCodeRequest)
+  store.dispatch(ActionTypes.GetUserInvitationCode, request)
 }
 
 const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
@@ -88,15 +68,7 @@ const getUserGoogleAuthenticatorInfo = () => {
   const request: GetQRCodeURLRequest = {
     Username: username
   }
-  const getQRCodeURLRequest: RequestInput<GetQRCodeURLRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: '',
-      failMessage: ''
-    },
-    loadingContent: ''
-  }
-  store.dispatch(verifyAction.GetQRCodeURL, getQRCodeURLRequest)
+  store.dispatch(verifyAction.GetQRCodeURL, request)
 }
 
 onMounted(() => {

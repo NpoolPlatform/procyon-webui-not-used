@@ -124,7 +124,6 @@ import kycImg from 'src/assets/icon-id.svg'
 import { useStore } from 'src/store'
 import { useI18n } from 'vue-i18n'
 import { SetGALoginVerifyRequest } from 'src/store/users/types'
-import { RequestInput } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { MutationTypes } from 'src/store/users/mutation-types'
 import { success } from 'src/notify/notify'
@@ -177,15 +176,7 @@ const setLoginVerify = () => {
   const request: SetGALoginVerifyRequest = {
     Set: userGALogin.value
   }
-  const setGALoginVerifyRequest: RequestInput<SetGALoginVerifyRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.SetLoginVerify.Success'),
-      failMessage: t('notify.SetLoginVerify.Fail')
-    },
-    loadingContent: ''
-  }
-  store.dispatch(ActionTypes.SetGALoginVerify, setGALoginVerifyRequest)
+  store.dispatch(ActionTypes.SetGALoginVerify, request)
 }
 </script>
 

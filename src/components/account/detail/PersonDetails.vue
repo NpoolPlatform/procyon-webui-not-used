@@ -176,7 +176,6 @@ import { computed, ref } from 'vue'
 import { useStore } from 'src/store'
 import { MutationTypes } from 'src/store/users/mutation-types'
 import { UpdateUserRequest } from 'src/store/users/types'
-import { RequestInput } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { useI18n } from 'vue-i18n'
 import { isValidUsername } from 'src/utils/utils'
@@ -291,15 +290,7 @@ const updateUser = () => {
       UserID: userBasicInfo.value.UserID
     }
   }
-  const updateUserRequest: RequestInput<UpdateUserRequest> = {
-    requestInput: request,
-    messages: {
-      successMessage: t('notify.Update.Success'),
-      failMessage: t('notify.Update.Fail')
-    },
-    loadingContent: t('notify.Update.Load')
-  }
-  store.dispatch(ActionTypes.UpdateUser, updateUserRequest)
+  store.dispatch(ActionTypes.UpdateUser, request)
 }
 </script>
 
