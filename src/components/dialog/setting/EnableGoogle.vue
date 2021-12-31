@@ -1,34 +1,39 @@
 <template>
   <q-dialog v-model='show' persistent>
     <q-card class='dialog-box'>
-      <q-card-section class='dialog-header'>
-        <span>{{
-            $t('account.Setting.Google.Title')
-          }}</span>
-        <q-btn icon='close' flat round dense @click='emit("update:showGoogle", false)' />
+      <q-card-section>
+        <div class='dialog-header'>
+          <span>{{
+              $t('account.Setting.Google.Title')
+            }}</span>
+          <q-btn icon='close' flat round dense @click='emit("update:showGoogle", false)' />
+        </div>
       </q-card-section>
+      <q-separator />
+      <q-card-section class='scroll' style='max-height: 750px;'>
+        <div class='text-black'>
+          <div style='text-align: center; margin-bottom: 10px;'>
+            <q-img class='img-style' :src='userGoogleInfo.qrCodeURL'></q-img>
 
-      <q-card-section style='text-align: center;'>
-        <q-img class='img-style' :src='userGoogleInfo.qrCodeURL'></q-img>
+          </div>
+          <div class='secret-style text-black'>
+            Google Secret: {{ userGoogleInfo.secret }}
+          </div>
+
+          <q-separator />
+
+          <div>
+            <p>{{ $t('GoogleAuthentication.Content1') }}</p>
+            <p>{{ $t('GoogleAuthentication.Content2') }}</p>
+            <p>{{ $t('GoogleAuthentication.Content3') }}</p>
+            <p>{{ $t('GoogleAuthentication.L1') }}</p>
+            <p>{{ $t('GoogleAuthentication.L2') }}</p>
+            <p>{{ $t('GoogleAuthentication.L3') }}</p>
+            <p>{{ $t('GoogleAuthentication.L4') }}</p>
+          </div>
+        </div>
       </q-card-section>
-
-      <q-card-section
-        class='img-section-style text-black'
-        style='font-weight: 600'
-      >
-        Google Secret: {{ userGoogleInfo.secret }}
-      </q-card-section>
-
-      <q-card-section class='text-black'>
-        <p>{{ $t('GoogleAuthentication.Content1') }}</p>
-        <p>{{ $t('GoogleAuthentication.Content2') }}</p>
-        <p>{{ $t('GoogleAuthentication.Content3') }}</p>
-        <p>{{ $t('GoogleAuthentication.L1') }}</p>
-        <p>{{ $t('GoogleAuthentication.L2') }}</p>
-        <p>{{ $t('GoogleAuthentication.L3') }}</p>
-        <p>{{ $t('GoogleAuthentication.L4') }}</p>
-      </q-card-section>
-
+      <q-separator />
       <q-card-actions align='right' class='text-primary'>
         <q-btn
           flat
@@ -68,10 +73,10 @@
 <script setup lang='ts'>
 import { defineEmits, defineProps, toRef, withDefaults, watch, computed, ref } from 'vue'
 import { useStore } from 'src/store'
-import { UpdateUserGAStatusRequest } from 'src/store/users/types'
 import { RequestInput } from 'src/store/types'
-import { ActionTypes } from 'src/store/users/action-types'
+import { ActionTypes } from 'src/store/verify/action-types'
 import { useI18n } from 'vue-i18n'
+import { VerifyGoogleAuthenticationCodeRequest } from 'src/store/verify/types'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
@@ -107,18 +112,19 @@ const verifyCodeRules = ref([
 ])
 
 const bindGoogleAuthenticator = () => {
-  const request: UpdateUserGAStatusRequest = {
-    Status: true
+  const request: VerifyGoogleAuthenticationCodeRequest = {
+    Code: googleVerifyCode.value,
+    Bind: true
   }
-  const updateUserGAStatusRequest: RequestInput<UpdateUserGAStatusRequest> = {
+  const verifyGoogleAuthenticationCodeRequest: RequestInput<VerifyGoogleAuthenticationCodeRequest> = {
     requestInput: request,
     messages: {
-      successMessage: t('notify.UpdateGoogleStatus.Success'),
-      failMessage: t('notify.UpdateGoogleStatus.Fail')
+      successMessage: t('notify.VerifyGoogleAuthentication.Success'),
+      failMessage: t('notify.VerifyGoogleAuthentication.Fail')
     },
     loadingContent: ''
   }
-  store.dispatch(ActionTypes.UpdateUserGAStatus, updateUserGAStatusRequest)
+  store.dispatch(ActionTypes.VerifyGoogleAuthentication, verifyGoogleAuthenticationCodeRequest)
 }
 </script>
 
@@ -130,10 +136,7 @@ const bindGoogleAuthenticator = () => {
   color: #e1eeef;
   padding: 24px;
   margin: 24px;
-  position: relative;
-  overflow-x: hidden;
   min-width: 420px;
-  max-height: 750px;
 }
 
 .dialog-header {
@@ -163,6 +166,13 @@ const bindGoogleAuthenticator = () => {
 .img-style {
   width: 200px;
   height: 200px;
+  text-align: center;
+}
+
+.secret-style {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
   text-align: center;
 }
 </style>

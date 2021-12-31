@@ -23,6 +23,9 @@ import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types
 import { RequestInput } from 'src/store/types'
 import { RequestMessageToNotifyMessage } from 'src/utils/utils'
 import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
+import { ActionTypes as userAction } from 'src/store/users/action-types'
+import { UpdateUserGAStatusRequest } from 'src/store/users/types'
+import { useI18n } from 'src/boot/i18n'
 
 // use public api
 interface VerifyActions {
@@ -51,7 +54,8 @@ interface VerifyActions {
     VerifyMutations<VerifyState>>, payload: RequestInput<VerifyCodeWithUserIDRequest>): void
 
   [ActionTypes.VerifyGoogleAuthentication] ({
-    commit
+    commit,
+    dispatch
   }: AugmentedActionContext<VerifyState,
     RootState,
     VerifyMutations<VerifyState>>, payload: RequestInput<VerifyGoogleAuthenticationCodeRequest>): void
@@ -146,12 +150,31 @@ const actions: ActionTree<VerifyState, RootState> = {
       commit(notifyMutation.SetLoading, false)
     })
   },
-  [ActionTypes.VerifyGoogleAuthentication] ({ commit }, payload: RequestInput<VerifyGoogleAuthenticationCodeRequest>) {
+  [ActionTypes.VerifyGoogleAuthentication] ({
+    commit,
+    dispatch
+  }, payload: RequestInput<VerifyGoogleAuthenticationCodeRequest>) {
+    const { t } = useI18n()
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<VerifyGoogleAuthenticationCodeRequest, VerifyGoogleAuthenticationCodeResponse>(VerifyURLPath.VERIFY_GOOGLE_AUTHENTICATION, payload.requestInput).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.successMessage, '', 'positive'))
-      commit(userMutation.SetLoginVerify, true)
+      if (payload.requestInput.Bind) {
+        const request: UpdateUserGAStatusRequest = {
+          Status: true
+        }
+        const updateUserGAStatueRequest: RequestInput<UpdateUserGAStatusRequest> = {
+          requestInput: request,
+          messages: {
+            successMessage: t('notify.UpdateGoogleStatus.Success'),
+            failMessage: t('notify.UpdateGoogleStatus.Fail')
+          },
+          loadingContent: ''
+        }
+        void dispatch(userAction.UpdateUserGAStatus, updateUserGAStatueRequest)
+      } else {
+        commit(userMutation.SetLoginVerify, true)
+      }
       commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(payload.messages.failMessage, err.message, 'negative'))
