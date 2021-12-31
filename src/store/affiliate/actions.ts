@@ -35,7 +35,7 @@ const actions: ActionTree<AffiliateState, RootState> = {
           Username: payload.Username,
           EmailAddress: payload.EmailAddress,
           Label: '',
-          Children: []
+          children: []
         }
         father.UserID = userid
         const infos = new Map<string, Invitees>(Object.entries(resp.Infos))
@@ -48,9 +48,9 @@ const actions: ActionTree<AffiliateState, RootState> = {
             Username: list.Username,
             UserID: list.UserID,
             Label: '02' + index.toString(),
-            Children: []
+            children: []
           }
-          father.Children.push(childrenInvitation)
+          father.children.push(childrenInvitation)
           index++
         })
         const invitationList: Array<Invitation> = []

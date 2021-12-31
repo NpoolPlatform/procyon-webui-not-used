@@ -1,8 +1,7 @@
 <template>
   <q-form @submit='changePassword'>
     <Vue3QTelInput v-if='showPhone' v-model:tel='changePasswordInput.phoneNumber' bg-color='blue-grey-2' outlined
-                   lazy-rules
-                   :rules='phoneNumberRule' :label="$t('input.PhoneNumber')"></Vue3QTelInput>
+                   lazy-rules :rules='phoneNumberRule' :label="$t('input.PhoneNumber')" :required='false' :error='false' />
     <q-input
       v-if='showEmail'
       bg-color='blue-grey-2'
@@ -16,9 +15,11 @@
     ></q-input>
 
     <SendCodeInput v-if='showEmail' verify-type='email' v-model:verify-code='verifyCode'
-                   :verify-param='userBasicInfo.EmailAddress' :item-target='ItemStateTarget.ChangePasswordEmailSendCodeButton' />
+                   :verify-param='userBasicInfo.EmailAddress'
+                   :item-target='ItemStateTarget.ChangePasswordEmailSendCodeButton' />
     <SendCodeInput v-if='showPhone' verify-type='phone' v-model:verify-code='verifyCode'
-                   :verify-param='changePasswordInput.phoneNumber' :item-target='ItemStateTarget.ChangePasswordPhoneSendCodeButton' />
+                   :verify-param='changePasswordInput.phoneNumber'
+                   :item-target='ItemStateTarget.ChangePasswordPhoneSendCodeButton' />
     <q-input v-model='changePasswordInput.oldPassword' :label="$t('input.OldPassword')" bg-color='blue-grey-2'
              class='common-input'
              outlined lazy-rules
@@ -140,6 +141,7 @@ const changePassword = throttle(() => {
 
 <style scoped>
 @import "~vue3-q-tel-input/dist/vue3-q-tel-input.esm.css";
+
 .change-password-button {
   background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
   border: 1px solid #ff964a;

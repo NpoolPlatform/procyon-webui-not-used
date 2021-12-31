@@ -9,9 +9,8 @@
       </q-card-section>
       <q-card-section>
         <q-form @submit='update'>
-          <Vue3QTelInput v-model:tel='oldPhone' bg-color='blue-grey-2' outlined
-                         lazy-rules
-                         :rules='phoneRules' :label="$t('input.OldPhoneNumber')"></Vue3QTelInput>
+          <Vue3QTelInput v-model:tel='oldPhone' bg-color='blue-grey-2' outlined lazy-rules :rules='phoneRules'
+                         :label="$t('input.OldPhoneNumber')" :required='false' :error='false' />
 
           <send-code-input
             :verifyParam='oldPhone'
@@ -20,9 +19,8 @@
             v-model:verify-code='oldVerifyCode'
           ></send-code-input>
 
-          <Vue3QTelInput v-model:tel='newPhone' bg-color='blue-grey-2' outlined
-                         lazy-rules
-                         :rules='phoneRules' :label="$t('input.PhoneNumber')"></Vue3QTelInput>
+          <Vue3QTelInput v-model:tel='newPhone' bg-color='blue-grey-2' outlined lazy-rules :rules='phoneRules'
+                         :label="$t('input.PhoneNumber')" :required='false' :error='false' />
 
           <send-code-input
             :verifyParam='newPhone'

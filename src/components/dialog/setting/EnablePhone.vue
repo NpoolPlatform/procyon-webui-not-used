@@ -8,9 +8,8 @@
         <q-btn icon='close' flat round dense @click='emit("update:showEnablePhone", false)' />
       </q-card-section>
       <q-form @submit='enable'>
-        <Vue3QTelInput v-model:tel='phoneNumber' bg-color='blue-grey-2' outlined
-                       lazy-rules
-                       :rules='phoneRules' :label="$t('input.PhoneNumber')"></Vue3QTelInput>
+        <Vue3QTelInput v-model:tel='phoneNumber' bg-color='blue-grey-2' outlined lazy-rules :rules='phoneRules'
+                       :label="$t('input.PhoneNumber')" :required='false' :error='false' />
         <send-code-input
           :verifyParam='phoneNumber'
           verifyType='phone'
@@ -84,6 +83,7 @@ const whenHide = () => {
 
 <style scoped>
 @import "~vue3-q-tel-input/dist/vue3-q-tel-input.esm.css";
+
 .dialog-box {
   background-color: white;
   box-shadow: 16px 16px 20px 0 #23292b;

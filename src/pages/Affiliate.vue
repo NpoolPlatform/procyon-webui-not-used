@@ -1,5 +1,5 @@
 <template>
-  <div class='content'>
+  <div class='content' style='margin-left: 20px;'>
     <div class='section-part-title'>{{ $t('affiliate.Title') }}</div>
     <AffiliateTree />
   </div>

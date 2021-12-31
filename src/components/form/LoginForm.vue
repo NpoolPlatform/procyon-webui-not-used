@@ -1,8 +1,7 @@
 <template>
   <q-form @submit='login'>
-    <Vue3QTelInput v-if='showPhone' v-model:tel='loginInput.Phone' bg-color='blue-grey-2' outlined
-                   lazy-rules
-                   :rules='phoneNumberRule' :label="$t('input.PhoneNumber')"></Vue3QTelInput>
+    <Vue3QTelInput v-if='showPhone' v-model:tel='loginInput.Phone' bg-color='blue-grey-2' outlined reactive-rules lazy-rules :rules='phoneNumberRule'
+                   :label="$t('input.PhoneNumber')" :required='false' :error='false' />
     <q-input
       v-if='showEmail'
       bg-color='blue-grey-2'

@@ -8,7 +8,7 @@
                 <span style='font-size: 20px; font-weight: 600'>{{
                     prop.node.Username
                   }}</span>
-              <div class='header-right' v-if='false'>
+              <div class='header-right'>
                 <span>TIER</span>
                 <span
                   style='color: #54e280; font-weight: bold; margin-left: 5px'
@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang='ts'>
-import { computed, onMounted } from 'vue'
+import { computed, onBeforeMount } from 'vue'
 import { useStore } from 'src/store'
 import { GetDirectInvitationsRequest } from 'src/store/affiliate/types'
 import { useQuasar } from 'quasar'
@@ -43,6 +43,12 @@ import { MutationTypes } from 'src/store/notify/mutation-types'
 const q = useQuasar()
 const UserID = q.cookies.get('UserID')
 const target = ItemStateTarget.GetDirectInvitationList
+
+const innerLoading = computed(() => store.getters.getInnerLoading.get(target))
+
+onBeforeMount(() => {
+  getInvitationList()
+})
 
 const store = useStore()
 const invitationList = computed(() => store.getters.getInvitationList)
@@ -62,12 +68,6 @@ const getInvitationList = () => {
   }
   store.dispatch(ActionTypes.GetDirectInvitationList, request)
 }
-
-const innerLoading = computed(() => store.getters.getInnerLoading.get(target))
-
-onMounted(() => {
-  getInvitationList()
-})
 </script>
 
 <style scoped>
