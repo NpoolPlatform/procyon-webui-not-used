@@ -131,11 +131,11 @@ const actions: ActionTree<UserState, RootState> = {
     post<UserLoginRequest, UserLoginResponse>(UserURLPath.LOGIN, payload).then((resp: UserLoginResponse) => {
       commit(MutationTypes.SetUserInfo, resp.Info)
       commit(MutationTypes.SetUserLogined, true)
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Logout.Success'), '', 'positive'))
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Login.Success'), '', 'positive'))
       commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {
       commit(MutationTypes.SetUserLogined, false)
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Logout.Fail'), err.message, 'negative'))
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Login.Fail'), err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)
     })
   },

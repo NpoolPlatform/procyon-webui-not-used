@@ -47,7 +47,7 @@ const actions: ActionTree<AffiliateState, RootState> = {
             EmailAddress: list.EmailAddress,
             Username: list.Username,
             UserID: list.UserID,
-            Label: '02' + index.toString(),
+            Label: '02(' + index.toString() + ')',
             children: []
           }
           father.children.push(childrenInvitation)

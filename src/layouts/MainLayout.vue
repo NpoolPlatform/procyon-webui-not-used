@@ -33,6 +33,8 @@ import { MutationTypes as styleMutation } from 'src/store/style/mutation-types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { GetUserDetailRequest, GetUserInvitationCodeRequest } from 'src/store/users/types'
 import { useI18n } from 'vue-i18n'
+import { loginVeiryConfirm } from 'src/utils/utils'
+import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
 
 const store = useStore()
 
@@ -42,17 +44,29 @@ const nowPath = computed(() => router.currentRoute.value.path)
 const loading = computed(() => store.getters.getLoading)
 const messages = computed(() => store.getters.getNotifyMessages)
 const loadingContent = computed(() => store.getters.getLoadingContent)
+const logined = computed({
+  get: () => store.getters.getUserLogined,
+  set: (val) => {
+    store.commit(userMutation.SetUserLogined, val)
+  }
+})
+
+const loginVerify = computed({
+  get: () => store.getters.getLoginVerify,
+  set: (val) => {
+    store.commit(userMutation.SetLoginVerify, val)
+  }
+})
 
 const q = useQuasar()
-const $q = useQuasar()
 
 watch(loading, (newLoding, oldLoading) => {
   if (newLoding && !oldLoading) {
-    $q.loading.show({
+    q.loading.show({
       message: loadingContent.value
     })
   } else if (!newLoding && oldLoading) {
-    $q.loading.hide()
+    q.loading.hide()
   }
 })
 
@@ -111,8 +125,14 @@ const getUserInvitationCode = () => {
 
 onMounted(() => {
   if (q.cookies.has('UserID') && q.cookies.has('AppSession')) {
-    getUserDetails()
-    getUserInvitationCode()
+    if (q.cookies.has(loginVeiryConfirm)) {
+      getUserDetails()
+      getUserInvitationCode()
+    } else {
+      logined.value = false
+      loginVerify.value = false
+      void router.push('/login')
+    }
   }
 })
 

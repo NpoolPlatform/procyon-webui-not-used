@@ -6,7 +6,7 @@
   <VerifyDialog :dialog-title="$t('dialog.EmailVerify.Title')" v-model:show-dialog='showEmailVerifyDialog'
                 @verify='verifyEmailCode'>
     <template v-slot:content>
-      <q-card-section>
+      <q-card-section style='text-align: center;'>
         {{ $t('dialog.EmailVerify.Content1')
         }}<span style='font-weight: bolder'>{{ userInfo.UserBasicInfo.EmailAddress
         }}</span>,{{ $t('dialog.EmailVerify.Content3')
@@ -28,7 +28,7 @@
   <VerifyDialog :dialog-title="$t('dialog.GoogleVerify.Title')"
                 v-model:show-dialog='showGoogleAuthenticationVerifyDialog' @verify='verifyGoogleCode'>
     <template v-slot:content>
-      <div>{{ $t('login.GoogleVerifyContent') }}</div>
+      <div style='text-align: center;'>{{ $t('login.GoogleVerifyContent') }}</div>
     </template>
   </VerifyDialog>
 </template>
@@ -45,11 +45,13 @@ import {
   VerifyGoogleAuthenticationCodeRequest
 } from 'src/store/verify/types'
 import { useI18n } from 'vue-i18n'
-import { GenerateSendEmailRequest, ThrottleDelay } from 'src/utils/utils'
-import { throttle } from 'quasar'
+import { GenerateSendEmailRequest, loginVeiryConfirm, ThrottleDelay } from 'src/utils/utils'
+import { throttle, useQuasar } from 'quasar'
 
 const store = useStore()
 const router = useRouter()
+
+const q = useQuasar()
 
 const { locale } = useI18n({ useScope: 'global' })
 
@@ -79,7 +81,7 @@ watch(logined, (newLogined, oldLogined) => {
   if (newLogined && !oldLogined) {
     if (userInfo.value.UserAppInfo.UserApplicationInfo.GALogin) {
       showGoogleAuthenticationVerifyDialog.value = true
-    } else if (userInfo.value.UserBasicInfo.EmailAddress !== '') {
+    } else if (userInfo.value.UserBasicInfo.EmailAddress !== '' && userInfo.value.UserBasicInfo.EmailAddress !== undefined && userInfo.value.UserBasicInfo.EmailAddress !== null) {
       let request: SendEmailRequest = {
         Email: userInfo.value.UserBasicInfo.EmailAddress,
         Lang: locale.value,
@@ -89,6 +91,7 @@ watch(logined, (newLogined, oldLogined) => {
       store.dispatch(verifyAction.SendEmail, request)
       showEmailVerifyDialog.value = true
     } else {
+      q.cookies.set(loginVeiryConfirm, 'true')
       logined.value = true
       loginVerify.value = true
       void router.push({ path: '/account' })

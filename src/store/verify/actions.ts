@@ -20,7 +20,7 @@ import {
   VerifyURLPath
 } from './types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
-import { RequestMessageToNotifyMessage } from 'src/utils/utils'
+import { RequestMessageToNotifyMessage, setLoginVerify } from 'src/utils/utils'
 import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
 import { ActionTypes as userAction } from 'src/store/users/action-types'
 import { UpdateUserGAStatusRequest } from 'src/store/users/types'
@@ -151,6 +151,7 @@ const actions: ActionTree<VerifyState, RootState> = {
     commit(notifyMutation.SetLoadingContent, payload)
     post<VerifyCodeWithUserIDRequest, VerifyCodeWithUserIDResponse>(VerifyURLPath.VERIFY_CODE_WITH_USERID, payload).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.VerifyWithUserID.Success'), '', 'positive'))
+      void setLoginVerify()
       commit(userMutation.SetLoginVerify, true)
       commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {
@@ -172,9 +173,9 @@ const actions: ActionTree<VerifyState, RootState> = {
           Status: true
         }
         void dispatch(userAction.UpdateUserGAStatus, request)
-      } else {
-        commit(userMutation.SetLoginVerify, true)
       }
+      commit(userMutation.SetLoginVerify, true)
+      void setLoginVerify()
       commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.VerifyGoogleAuthentication.Fail'), err.message, 'negative'))
