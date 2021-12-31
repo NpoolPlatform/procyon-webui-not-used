@@ -25,6 +25,7 @@ import { RequestMessageToNotifyMessage } from 'src/utils/utils'
 import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
 import { ActionTypes as userAction } from 'src/store/users/action-types'
 import { UpdateUserGAStatusRequest } from 'src/store/users/types'
+import { useI18n } from 'src/boot/i18n'
 
 // use public api
 interface VerifyActions {
@@ -53,7 +54,8 @@ interface VerifyActions {
     VerifyMutations<VerifyState>>, payload: RequestInput<VerifyCodeWithUserIDRequest>): void
 
   [ActionTypes.VerifyGoogleAuthentication] ({
-    commit
+    commit,
+    dispatch
   }: AugmentedActionContext<VerifyState,
     RootState,
     VerifyMutations<VerifyState>>, payload: RequestInput<VerifyGoogleAuthenticationCodeRequest>): void
@@ -152,6 +154,7 @@ const actions: ActionTree<VerifyState, RootState> = {
     commit,
     dispatch
   }, payload: RequestInput<VerifyGoogleAuthenticationCodeRequest>) {
+    const { t } = useI18n()
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, payload.loadingContent)
     post<VerifyGoogleAuthenticationCodeRequest, VerifyGoogleAuthenticationCodeResponse>(VerifyURLPath.VERIFY_GOOGLE_AUTHENTICATION, payload.requestInput).then(() => {
@@ -163,8 +166,8 @@ const actions: ActionTree<VerifyState, RootState> = {
         const updateUserGAStatueRequest: RequestInput<UpdateUserGAStatusRequest> = {
           requestInput: request,
           messages: {
-            successMessage: 'Successfully!',
-            failMessage: 'Fail to update user google authenticator status'
+            successMessage: t('notify.UpdateGoogleStatus.Success'),
+            failMessage: t('notify.UpdateGoogleStatus.Fail')
           },
           loadingContent: ''
         }

@@ -67,7 +67,7 @@ const store = useStore()
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
 
-onMounted(() => {
+const getPromotionProduct = () => {
   const request: GetGoodDetailsRequest = {
     AppID: ''
   }
@@ -81,6 +81,10 @@ onMounted(() => {
     loadingContent: ''
   }
   store.dispatch(GoodActionTypes.GetGoodDetails, getGoodDetailsRequest)
+}
+
+onMounted(() => {
+  getPromotionProduct()
 })
 
 const myGoods = computed(() => store.getters.getGoodDetails)
