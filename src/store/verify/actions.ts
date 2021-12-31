@@ -155,7 +155,13 @@ const actions: ActionTree<VerifyState, RootState> = {
       commit(userMutation.SetLoginVerify, true)
       commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.VerifyWithUserID.Fail'), err.message, 'negative'))
+      let error = ''
+      if (err.message.indexOf('nil')) {
+        error = t('verifyCodeFailReason')
+      } else {
+        error = err.message
+      }
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.VerifyWithUserID.Fail'), error, 'negative'))
       commit(notifyMutation.SetLoading, false)
     })
   },

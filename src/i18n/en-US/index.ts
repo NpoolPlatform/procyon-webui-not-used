@@ -136,6 +136,8 @@ export default {
     }
   },
 
+  verifyCodeFailReason: 'Verify code is wrong or expired',
+
   NoData: 'No data available',
 
   account: {

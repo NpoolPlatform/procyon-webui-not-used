@@ -136,6 +136,8 @@ export default {
     }
   },
 
+  verifyCodeFailReason: 'コードが間違っているか、有効期限が切れていることを確認する',
+
   NoData: '該当データなし',
 
   account: {

@@ -162,7 +162,13 @@ const actions: ActionTree<UserState, RootState> = {
       commit(notifyMutation.SetLoading, false)
       void router.push('/login')
     }).catch((err: Error) => {
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Signup.Fail'), err.message, 'negative'))
+      let error = ''
+      if (err.message.indexOf('nil')) {
+        error = t('verifyCodeFailReason')
+      } else {
+        error = err.message
+      }
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Signup.Fail'), error, 'negative'))
       commit(notifyMutation.SetLoading, false)
     })
   },
@@ -177,7 +183,13 @@ const actions: ActionTree<UserState, RootState> = {
       commit(styleMutation.SetUserDialogShow, false)
       void router.push('/account')
     }).catch((err: Error) => {
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.ChangePassword.Fail'), err.message, 'negative'))
+      let error = ''
+      if (err.message.indexOf('nil')) {
+        error = t('verifyCodeFailReason')
+      } else {
+        error = err.message
+      }
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.ChangePassword.Fail'), error, 'negative'))
       commit(notifyMutation.SetLoading, false)
     })
   },
@@ -191,7 +203,13 @@ const actions: ActionTree<UserState, RootState> = {
       commit(notifyMutation.SetLoading, false)
       void router.push('/login')
     }).catch((err: Error) => {
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Forget.Fail'), err.message, 'negative'))
+      let error = ''
+      if (err.message.indexOf('nil')) {
+        error = t('verifyCodeFailReason')
+      } else {
+        error = err.message
+      }
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Forget.Fail'), error, 'negative'))
       commit(notifyMutation.SetLoading, false)
     })
   },
@@ -266,7 +284,13 @@ const actions: ActionTree<UserState, RootState> = {
       commit(notifyMutation.SetLoading, false)
       commit(styleMutation.SetUserDialogShow, false)
     }).catch((err: Error) => {
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.EnableEmail.Fail'), err.message, 'negative'))
+      let error = ''
+      if (err.message.indexOf('nil')) {
+        error = t('verifyCodeFailReason')
+      } else {
+        error = err.message
+      }
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.EnableEmail.Fail'), error, 'negative'))
       commit(notifyMutation.SetLoading, false)
     })
   },
@@ -281,7 +305,13 @@ const actions: ActionTree<UserState, RootState> = {
       commit(notifyMutation.SetLoading, false)
       commit(styleMutation.SetUserDialogShow, false)
     }).catch((err: Error) => {
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.EnablePhone.Fail'), err.message, 'negative'))
+      let error = ''
+      if (err.message.indexOf('nil')) {
+        error = t('verifyCodeFailReason')
+      } else {
+        error = err.message
+      }
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.EnablePhone.Fail'), error, 'negative'))
       commit(notifyMutation.SetLoading, false)
     })
   },
