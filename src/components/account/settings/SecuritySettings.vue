@@ -86,7 +86,7 @@
       </SettingBox>
 
       <SettingBox :title="$t('account.Setting.LoginVerify.Title')" :content="$t('account.Setting.LoginVerify.Content')"
-                  :img='googleImg'>
+                  :img='googleImg' v-if='emailAddress !== "" || googleVerify'>
         <template v-slot:choose>
           <q-option-group
             v-model='userGALogin'
@@ -99,7 +99,7 @@
         </template>
 
         <template v-slot:button>
-          <q-btn class='common-button card-button' :disable='emailAddress === "" && !googleVerify'
+          <q-btn class='common-button card-button' :disable='emailAddress === "" && !userGALogin'
                  :label="$t('account.Setting.LoginVerify.Button')" @click='setLoginVerify' />
         </template>
       </SettingBox>

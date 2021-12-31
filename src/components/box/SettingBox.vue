@@ -53,6 +53,7 @@ const content = toRef(props, 'content')
   width: 90%;
   height: auto;
   min-height: 265px;
+  max-width: 520px;
 }
 
 .setting-header {

@@ -82,5 +82,6 @@ watch(loginVerify, (n, o) => {
   border: 1px solid #ff964a;
   margin: 0 0 10px 0;
   width: 100%;
+  text-align: center;
 }
 </style>

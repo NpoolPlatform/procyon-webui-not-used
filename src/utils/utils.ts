@@ -5,8 +5,10 @@ import { NotifyMessage } from 'src/store/notify/types'
 import { notifyType } from 'src/notify/notify'
 import { UserBasicInfo } from 'src/store/users/types'
 import { SendEmailRequest } from 'src/store/verify/types'
-import { useQuasar } from 'quasar'
+import { Cookies, useQuasar } from 'quasar'
 import { useRouter } from 'src/router'
+
+export const loginVeiryConfirm = 'userLoginVerify'
 
 export const TimeStampToDate = (
   timestamp: number,
@@ -136,4 +138,8 @@ export const CheckLogined = (): boolean => {
     return false
   }
   return true
+}
+
+export const setLoginVerify = () => {
+  Cookies.set(loginVeiryConfirm, 'true')
 }
