@@ -1,8 +1,7 @@
 <template>
   <q-form @submit='forget'>
-    <Vue3QTelInput v-if='showPhone' v-model:tel='forgetInput.phoneNumber' bg-color='blue-grey-2' outlined
-                   lazy-rules
-                   :rules='phoneNumberRule' :label="$t('input.PhoneNumber')"></Vue3QTelInput>
+    <Vue3QTelInput v-if='showPhone' v-model:tel='forgetInput.phoneNumber' bg-color='blue-grey-2' outlined lazy-rules
+                   :rules='phoneNumberRule' :label="$t('input.PhoneNumber')" :required='false' :error='false' />
     <q-input
       v-if='showEmail'
       bg-color='blue-grey-2'
@@ -15,9 +14,11 @@
     ></q-input>
 
     <SendCodeInput v-if='showEmail' verify-type='email' v-model:verify-code='verifyCode'
-                   :verify-param='forgetInput.emailAddress' :item-target='ItemStateTarget.ForgetPasswordEmailSendCodeButton' />
+                   :verify-param='forgetInput.emailAddress'
+                   :item-target='ItemStateTarget.ForgetPasswordEmailSendCodeButton' />
     <SendCodeInput v-if='showPhone' verify-type='phone' v-model:verify-code='verifyCode'
-                   :verify-param='forgetInput.phoneNumber' :item-target='ItemStateTarget.ForgetPasswordPhoneSendCodeButton' />
+                   :verify-param='forgetInput.phoneNumber'
+                   :item-target='ItemStateTarget.ForgetPasswordPhoneSendCodeButton' />
     <q-input v-model='forgetInput.password' :label="$t('input.Password')" bg-color='blue-grey-2'
              class='common-input'
              outlined lazy-rules
@@ -119,6 +120,7 @@ const forget = throttle(() => {
 
 <style scoped>
 @import "~vue3-q-tel-input/dist/vue3-q-tel-input.esm.css";
+
 .forget-button {
   background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
   border: 1px solid #ff964a;

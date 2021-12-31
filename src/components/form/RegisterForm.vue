@@ -1,8 +1,7 @@
 <template>
   <q-form @submit='register'>
-    <Vue3QTelInput v-if='showPhone' v-model:tel='registerInput.phoneNumber' bg-color='blue-grey-2' outlined
-                   lazy-rules
-                   :rules='phoneNumberRule' :label="$t('input.PhoneNumber')"></Vue3QTelInput>
+    <Vue3QTelInput v-if='showPhone' v-model:tel='registerInput.phoneNumber' bg-color='blue-grey-2' outlined lazy-rules
+                   :rules='phoneNumberRule' :label="$t('input.PhoneNumber')" :required='false' :error='false' />
     <q-input
       v-if='showEmail'
       bg-color='blue-grey-2'
@@ -15,9 +14,11 @@
     ></q-input>
 
     <SendCodeInput v-if='showEmail' verify-type='email' v-model:verify-code='verifyCode'
-                   :verify-param='registerInput.emailAddress' :item-target='ItemStateTarget.RegisterEmailSendCodeButton' />
+                   :verify-param='registerInput.emailAddress'
+                   :item-target='ItemStateTarget.RegisterEmailSendCodeButton' />
     <SendCodeInput v-if='showPhone' verify-type='phone' v-model:verify-code='verifyCode'
-                   :verify-param='registerInput.phoneNumber' :item-target='ItemStateTarget.RegisterPhoneSendCodeButton' />
+                   :verify-param='registerInput.phoneNumber'
+                   :item-target='ItemStateTarget.RegisterPhoneSendCodeButton' />
     <q-input v-model='registerInput.password' :label="$t('input.Password')" bg-color='blue-grey-2'
              class='common-input'
              outlined lazy-rules
@@ -145,6 +146,7 @@ const register = throttle(() => {
 
 <style scoped>
 @import "~vue3-q-tel-input/dist/vue3-q-tel-input.esm.css";
+
 .register-button {
   background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
   border: 1px solid #ff964a;
