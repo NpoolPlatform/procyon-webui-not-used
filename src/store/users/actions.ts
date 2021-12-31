@@ -35,10 +35,11 @@ import {
   EnablePhoneRequest, EnablePhoneResponse, EnableEmailRequest, EnableEmailResponse, UserSignUpResponse
 } from './types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
-import { RequestMessageToNotifyMessage } from 'src/utils/utils'
+import { loginVeiryConfirm, RequestMessageToNotifyMessage } from 'src/utils/utils'
 import { MutationTypes as styleMutation } from 'src/store/style/mutation-types'
 import { useRouter } from 'src/router/index'
 import { useI18n } from 'boot/i18n'
+import { Cookies } from 'quasar'
 
 // use public api
 interface UserActions {
@@ -117,6 +118,7 @@ const actions: ActionTree<UserState, RootState> = {
         commit(MutationTypes.SetUserLogined, false)
         commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Logout.Success'), '', 'positive'))
         commit(notifyMutation.SetLoading, false)
+        Cookies.remove(loginVeiryConfirm)
         void router.push('/')
       })
       .catch((err: Error) => {
