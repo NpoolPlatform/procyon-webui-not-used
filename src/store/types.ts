@@ -1,14 +1,3 @@
-export interface RequestMessages {
-  successMessage: string
-  failMessage: string
-}
-
-export interface RequestInput<T> {
-  requestInput: T,
-  messages: RequestMessages,
-  loadingContent: string
-}
-
 export enum ItemStateTarget {
   ChangePasswordEmailSendCodeButton = 'CHANGE_PASSWORD_EMAIL_SEND_CODE_BUTTON',
   ChangePasswordPhoneSendCodeButton = 'CHANGE_PASSWORD_PHONE_SEND_CODE_BUTTON',
