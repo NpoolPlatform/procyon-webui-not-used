@@ -6,10 +6,10 @@
   <VerifyDialog :dialog-title="$t('dialog.EmailVerify.Title')" v-model:show-dialog='showEmailVerifyDialog'
                 @verify='verifyEmailCode'>
     <template v-slot:content>
-      <q-card-section style='text-align: center;'>
+      <q-card-section>
         {{ $t('dialog.EmailVerify.Content1')
         }}<span style='font-weight: bolder'>{{ userInfo.UserBasicInfo.EmailAddress
-        }}</span>,{{ $t('dialog.EmailVerify.Content3')
+        }}</span>, {{ $t('dialog.EmailVerify.Content3')
         }}
       </q-card-section>
     </template>
