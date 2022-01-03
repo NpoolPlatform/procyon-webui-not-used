@@ -89,17 +89,17 @@
                   :img='googleImg' v-if='emailAddress !== "" || googleVerify'>
         <template v-slot:choose>
           <q-option-group
-            v-model='userGALogin'
+            v-model='verifyMethod'
             :options='loginOptions'
             color='teal'
             inline
-            :disable='!googleVerify && emailAddress === ""'
+            :disable='!verifySelectEnable'
           >
           </q-option-group>
         </template>
 
         <template v-slot:button>
-          <q-btn class='common-button card-button' :disable='emailAddress === "" && !userGALogin'
+          <q-btn class='common-button card-button' :disable='!verifySelectEnable'
                  :label="$t('account.Setting.LoginVerify.Button')" @click='setLoginVerify' />
         </template>
       </SettingBox>
@@ -126,7 +126,6 @@ import { useI18n } from 'vue-i18n'
 import { SetGALoginVerifyRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { MutationTypes } from 'src/store/users/mutation-types'
-import { success } from 'src/notify/notify'
 
 const SettingBox = defineAsyncComponent(() => import('src/components/box/SettingBox.vue'))
 const EnableEmailDialog = defineAsyncComponent(() => import('src/components/dialog/setting/EnableEmail.vue'))
@@ -141,6 +140,11 @@ const emailAddress = computed(() => store.getters.getUserEmailAddress)
 const phoneNumber = computed(() => store.getters.getUserPhoneNumber)
 const googleVerify = computed(() => store.getters.getUserGoogleAuthenticator)
 const kycVerify = computed(() => store.state.user.info.UserAppInfo.UserApplicationInfo.KycVerify)
+
+const verifyMethodEmail = 'email-verification'
+const verifyMethodGoogle = 'google-verification'
+const verifyMethodUnknown = 'unknown-verification'
+
 const userGALogin = computed({
   get: () => store.getters.getUserGoogleLoginVerify,
   set: (val) => {
@@ -148,17 +152,43 @@ const userGALogin = computed({
   }
 })
 
+const verifyMethodConst = computed(
+  () => {
+    if (googleVerify.value && userGALogin.value) {
+      return verifyMethodGoogle
+    }
+    if (emailAddress.value !== '') {
+      return verifyMethodEmail
+    }
+    return verifyMethodUnknown
+  }
+)
+
+const verifyMethod = ref(verifyMethodConst.value)
+
+const verifySelectEnable = computed(
+  () => {
+    if (googleVerify.value) {
+      return emailAddress.value !== ''
+    }
+    if (emailAddress.value !== '') {
+      return googleVerify.value
+    }
+    return true
+  }
+)
+
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
 
 const loginOptions = ref([
   {
     label: t('account.Setting.LoginVerify.GALogin'),
-    value: true
+    value: 'google-verification'
   },
   {
     label: t('account.Setting.LoginVerify.EmailLogin'),
-    value: false
+    value: 'email-verification'
   }
 ])
 
@@ -169,12 +199,8 @@ const showUpdatePhone = ref(false)
 const showEnableGoogle = ref(false)
 
 const setLoginVerify = () => {
-  if (emailAddress.value !== '' && !googleVerify.value && !userGALogin.value) {
-    success(t('notify.SetLoginVerify.Success'))
-    return
-  }
   const request: SetGALoginVerifyRequest = {
-    Set: userGALogin.value
+    Set: verifyMethod.value === verifyMethodGoogle
   }
   store.dispatch(ActionTypes.SetGALoginVerify, request)
 }

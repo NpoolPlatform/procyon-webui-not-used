@@ -28,7 +28,7 @@
   <VerifyDialog :dialog-title="$t('dialog.GoogleVerify.Title')"
                 v-model:show-dialog='showGoogleAuthenticationVerifyDialog' @verify='verifyGoogleCode'>
     <template v-slot:content>
-      <div style='text-align: center;'>{{ $t('login.GoogleVerifyContent') }}</div>
+      <q-card-section>{{ $t('login.GoogleVerifyContent') }}</q-card-section>
     </template>
   </VerifyDialog>
 </template>
