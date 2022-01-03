@@ -8,13 +8,6 @@
                 <span style='font-size: 20px; font-weight: 600'>{{
                     prop.node.Username
                   }}</span>
-              <div class='header-right'>
-                <span>TIER</span>
-                <span
-                  style='color: #54e280; font-weight: bold; margin-left: 5px'
-                >{{ prop.node.Label }}</span
-                >
-              </div>
             </div>
           </div>
 
@@ -88,7 +81,7 @@ const getInvitationList = () => {
   padding: 24px;
   margin: 24px;
   position: relative;
-  width: 400px;
+  width: 600px;
   height: auto;
 }
 
@@ -104,17 +97,12 @@ const getInvitationList = () => {
   position: absolute;
   top: 55px;
   height: 1px;
-  width: 1200px;
+  width: 600px;
 }
 
 .header-content {
   display: flex;
   justify-content: space-between;
-}
-
-.header-right {
-  display: flex;
-  font-size: 20px;
 }
 
 .title {
