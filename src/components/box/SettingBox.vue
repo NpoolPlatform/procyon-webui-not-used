@@ -1,13 +1,15 @@
 <template>
-  <div class='setting-box'>
-    <div class='setting-header'>
-      <q-img :src='img' class='setting-img'></q-img>
-      <div class='setting-subtitle'>{{ title }}</div>
+  <div class='setting-box column'>
+    <div class='col-10'>
+      <div class='setting-header'>
+        <q-img :src='img' class='setting-img'></q-img>
+        <div class='setting-subtitle'>{{ title }}</div>
+      </div>
+      <div class='setting-content'>{{ content }}</div>
+      <slot name='verify-content'></slot>
+      <slot name='choose'></slot>
     </div>
-    <div class='setting-content'>{{ content }}</div>
-    <slot name='verify-content'></slot>
-    <slot name='choose'></slot>
-    <div class='button-position'>
+    <div class='button-position col'>
       <slot name='button'></slot>
     </div>
   </div>
@@ -92,8 +94,8 @@ const content = toRef(props, 'content')
 .button-position {
   width: 100%;
   text-align: center;
-  position: absolute;
   bottom: 24px;
   left: 0;
 }
+
 </style>
