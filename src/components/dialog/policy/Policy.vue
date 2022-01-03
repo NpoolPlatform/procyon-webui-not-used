@@ -1,22 +1,22 @@
 <template>
   <q-dialog persistent v-model='showMe'>
     <q-card style='color: #e1eeef; background-color: #23292b;'>
-      <q-card-section class='title-close-style'>
-          <q-btn
-            icon='close'
-            flat
-            round
-            dense
-            @click='onDone(false)'
-            v-close-popup />
+      <q-card-section class='title-close-style row'>
+        <div class='text-h6' style='margin-left: 10px'>
+          {{ $t('legal.Title2') }}
+        </div>
+        <q-space />
+        <q-btn
+          icon='close'
+          flat
+          round
+          dense
+          @click='onDone(false)'
+          v-close-popup />
       </q-card-section>
       <q-separator />
       <q-card-section class='scroll' style='max-height: 750px'>
         <div>
-          <div class='text-h6' style='margin-left: 10px'>
-            {{ $t('legal.Title2') }}
-          </div>
-
           <p>{{ $t('legal.P1') }}</p>
           <h5>{{ $t('legal.H1') }}</h5>
           <p>{{ $t('legal.P2') }}</p>
