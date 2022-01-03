@@ -13,8 +13,8 @@ type OrderGetters = {
 const getters: GetterTree<OrderState, RootState> & OrderGetters = {
   getUserOrderDetails: (state: OrderState): Array<UserOrderDetail> => state.userOrderDetails,
   getTotalAmount: (state: OrderState): number => state.totalAmount,
-  getDurationDays: (state: OrderState): number => state.totalCapacity,
-  getTotalCapacity: (state: OrderState): number => state.durationDays
+  getDurationDays: (state: OrderState): number => state.durationDays,
+  getTotalCapacity: (state: OrderState): number => state.totalCapacity
 }
 
 export { OrderGetters, getters }
