@@ -1,8 +1,14 @@
 <template>
-  <q-dialog v-model='show' persistent>
+  <q-dialog persistent v-model='showMe'>
     <q-card style='color: #e1eeef; background-color: #23292b;'>
       <q-card-section class='title-close-style'>
-          <q-btn icon='close' flat round dense @click='emit("update:showPolicy", false)' />
+          <q-btn
+            icon='close'
+            flat
+            round
+            dense
+            @click='onDone(false)'
+            v-close-popup />
       </q-card-section>
       <q-separator />
       <q-card-section class='scroll' style='max-height: 750px'>
@@ -140,13 +146,15 @@
           flat
           :label="$t('button.Cancel')"
           color='primary'
-          @click="emit('update:showPolicy', false)"
+          @click="onDone(false)"
+          v-close-popup
         />
         <q-btn
           flat
           :label="$t('button.Confirm')"
           color='primary'
-          @click="emit('update:showPolicy', false)"
+          @click="onDone(true)"
+          v-close-popup
         />
       </q-card-actions>
     </q-card>
@@ -154,18 +162,25 @@
 </template>
 
 <script setup lang='ts'>
-import { defineProps, toRef, withDefaults, defineEmits } from 'vue'
+import { defineEmits, defineProps, withDefaults, toRef } from 'vue'
 
 interface Props {
-  showPolicy: boolean
+  show: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  showPolicy: false
+  show: false
 })
 
-const show = toRef(props, 'showPolicy')
-const emit = defineEmits<{(e: 'update:showPolicy', value: boolean): void }>()
+const showMe = toRef(props, 'show')
+
+const emit = defineEmits<{(e: 'update:agree', value: boolean): void, (e: 'update:show', value: boolean): void }>()
+
+function onDone (agree: boolean) {
+  emit('update:agree', agree)
+  emit('update:show', false)
+}
+
 </script>
 
 <style scoped>

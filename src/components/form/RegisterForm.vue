@@ -54,27 +54,27 @@
     <q-field ref='agreeRef' :model-value='agree' :rules='agreeRules'>
       <q-checkbox v-model='agree'></q-checkbox>
       <span class='text-style'>
-                {{ $t('register.Agree1') }}
-                <span
-                  href
-                  class='link'
-                  @click='showPolicy = true'
-                  style='cursor: pointer'
-                >{{ $t('register.Policy') }}</span
-                >
-                {{ $t('register.And') }}
-                <span
-                  href
-                  class='link'
-                  @click='showPolicy = true'
-                  style='cursor: pointer'
-                >{{ $t('register.User') }}</span
-                >{{ $t('register.Behind') }}
-              </span>
+        {{ $t('register.Agree1') }}
+        <span
+          href
+          class='link'
+          @click='onShowPolicy'
+          style='cursor: pointer'
+        >{{ $t('register.Policy') }}</span
+        >
+        {{ $t('register.And') }}
+        <span
+          href
+          class='link'
+          @click='onShowPolicy'
+          style='cursor: pointer'
+        >{{ $t('register.User') }}</span
+        >{{ $t('register.Behind') }}
+      </span>
     </q-field>
     <q-btn type='submit' class='common-button register-button' :label="$t('button.Register')"></q-btn>
   </q-form>
-  <PolicyDialog v-model:show-policy='showPolicy' />
+  <PolicyDialog v-model:agree='agree' v-model:show='showPolicy' />
 </template>
 
 <script setup lang='ts'>
@@ -142,6 +142,11 @@ const register = throttle(() => {
   }
   store.dispatch(ActionTypes.UserSignUp, request)
 }, ThrottleDelay)
+
+function onShowPolicy () {
+  showPolicy.value = true
+}
+
 </script>
 
 <style scoped>
