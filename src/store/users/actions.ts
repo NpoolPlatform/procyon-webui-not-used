@@ -118,6 +118,7 @@ const actions: ActionTree<UserState, RootState> = {
         commit(MutationTypes.SetUserLogined, false)
         commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Logout.Success'), '', 'positive'))
         commit(notifyMutation.SetLoading, false)
+        commit(MutationTypes.ClearUserInfo)
         Cookies.remove(loginVeiryConfirm)
         void router.push('/')
       })

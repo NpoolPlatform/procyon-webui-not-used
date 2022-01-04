@@ -1,14 +1,12 @@
 import { MutationTree } from 'vuex'
 import { MutationTypes } from './mutation-types'
 import { UserState } from './state'
-import { LoginRecord, UserBasicInfo, UserInfo } from './types'
+import { LoginRecord, NilUserInfo, UserBasicInfo, UserInfo } from './types'
 
 type UserMutations<S = UserState> = {
   [MutationTypes.SetUserInfo] (state: S, payload: UserInfo): void
   [MutationTypes.SetUserLogined] (state: S, payload: boolean): void
   [MutationTypes.SetUserBasicInfo] (state: S, payload: UserBasicInfo): void
-  [MutationTypes.SetError] (state: S, payload: string): void
-  [MutationTypes.SetLoading] (state: S, payload: boolean): void
   [MutationTypes.SetInvitationCode] (state: S, payload: string): void
   [MutationTypes.SetLoginVerify] (state: S, payload: boolean): void
   [MutationTypes.SetUsername] (state: S, payload: string): void
@@ -26,6 +24,7 @@ type UserMutations<S = UserState> = {
   [MutationTypes.SetGoogleAuthenticator] (state: S, payload: boolean): void
   [MutationTypes.SetGoogleLoginVerify] (state: S, payload: boolean): void
   [MutationTypes.SetLoginHistory] (state: S, payload: Array<LoginRecord>): void
+  [MutationTypes.ClearUserInfo] (state: S): void
 }
 
 const mutations: MutationTree<UserState> & UserMutations = {
@@ -37,12 +36,6 @@ const mutations: MutationTree<UserState> & UserMutations = {
   },
   [MutationTypes.SetUserBasicInfo] (state: UserState, payload: UserBasicInfo) {
     state.info.UserBasicInfo = payload
-  },
-  [MutationTypes.SetError] (state: UserState, payload: string) {
-    state.error = payload
-  },
-  [MutationTypes.SetLoading] (state: UserState, payload: boolean) {
-    state.loading = payload
   },
   [MutationTypes.SetInvitationCode] (state: UserState, payload: string) {
     state.invitationCode = payload
@@ -94,6 +87,11 @@ const mutations: MutationTree<UserState> & UserMutations = {
   },
   [MutationTypes.SetLoginHistory] (state: UserState, payload: Array<LoginRecord>) {
     state.loginHistory = payload
+  },
+  [MutationTypes.ClearUserInfo] (state: UserState) {
+    state.info = NilUserInfo
+    state.invitationCode = ''
+    state.loginHistory = []
   }
 }
 
