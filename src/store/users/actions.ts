@@ -128,6 +128,7 @@ const actions: ActionTree<UserState, RootState> = {
       })
   },
   [ActionTypes.UserLogin] ({ commit }, payload: UserLoginRequest) {
+    commit(MutationTypes.SetLoadGoogleRecaptcha, false)
     const { t } = useI18n()
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, t('notify.Login.Load'))
@@ -139,6 +140,7 @@ const actions: ActionTree<UserState, RootState> = {
     }).catch((err: Error) => {
       commit(MutationTypes.SetUserLogined, false)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Login.Fail'), err.message, 'negative'))
+      commit(MutationTypes.SetLoadGoogleRecaptcha, true)
       commit(notifyMutation.SetLoading, false)
     })
   },

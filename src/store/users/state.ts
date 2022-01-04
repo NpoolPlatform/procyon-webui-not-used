@@ -6,6 +6,7 @@ interface UserState {
   invitationCode: string
   loginVerify: boolean
   loginHistory: Array<LoginRecord>
+  loadGoogleRecaptcha: boolean
 }
 
 function state (): UserState {
@@ -15,7 +16,8 @@ function state (): UserState {
     logined: false,
     invitationCode: '',
     loginVerify: false,
-    loginHistory: []
+    loginHistory: [],
+    loadGoogleRecaptcha: true
   }
 }
 

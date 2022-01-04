@@ -4,26 +4,27 @@ import { UserState } from './state'
 import { LoginRecord, UserBasicInfo, UserInfo } from './types'
 
 type UserGetters = {
-  getUserInfo (state: UserState): UserInfo
-  getUserLogined (state: UserState): boolean
-  getUserInvitationCode (state: UserState): string
-  getLoginVerify (state: UserState): boolean
-  getUserBasicInfo (state: UserState): UserBasicInfo
-  getUserUsername (state: UserState): string
-  getUserGender (state: UserState): string
-  getUserFirstName (state: UserState): string
-  getUserLastName (state: UserState): string
-  getUserPostalCode (state: UserState): string
-  getUserProvince (state: UserState): string
-  getUserStreetAddress1 (state: UserState): string
-  getUserStreetAddress2 (state: UserState): string
-  getUserCity (state: UserState): string
-  getUserCountry (state: UserState): string
-  getUserEmailAddress (state: UserState): string
-  getUserPhoneNumber (state: UserState): string
-  getUserGoogleAuthenticator (state: UserState): boolean
-  getUserGoogleLoginVerify (state: UserState): boolean
-  getUserLoginHistory (state: UserState): Array<LoginRecord>
+  getUserInfo(state: UserState): UserInfo
+  getUserLogined(state: UserState): boolean
+  getUserInvitationCode(state: UserState): string
+  getLoginVerify(state: UserState): boolean
+  getUserBasicInfo(state: UserState): UserBasicInfo
+  getUserUsername(state: UserState): string
+  getUserGender(state: UserState): string
+  getUserFirstName(state: UserState): string
+  getUserLastName(state: UserState): string
+  getUserPostalCode(state: UserState): string
+  getUserProvince(state: UserState): string
+  getUserStreetAddress1(state: UserState): string
+  getUserStreetAddress2(state: UserState): string
+  getUserCity(state: UserState): string
+  getUserCountry(state: UserState): string
+  getUserEmailAddress(state: UserState): string
+  getUserPhoneNumber(state: UserState): string
+  getUserGoogleAuthenticator(state: UserState): boolean
+  getUserGoogleLoginVerify(state: UserState): boolean
+  getUserLoginHistory(state: UserState): Array<LoginRecord>
+  getUserLoadGoogleRecaptcha(state: UserState): boolean
 }
 
 const getters: GetterTree<UserState, RootState> & UserGetters = {
@@ -46,7 +47,8 @@ const getters: GetterTree<UserState, RootState> & UserGetters = {
   getUserPhoneNumber: (state: UserState): string => state.info.UserBasicInfo.PhoneNumber,
   getUserGoogleAuthenticator: (state: UserState): boolean => state.info.UserAppInfo.UserApplicationInfo.GAVerify,
   getUserGoogleLoginVerify: (state: UserState): boolean => state.info.UserAppInfo.UserApplicationInfo.GALogin,
-  getUserLoginHistory: (state: UserState): Array<LoginRecord> => state.loginHistory
+  getUserLoginHistory: (state: UserState): Array<LoginRecord> => state.loginHistory,
+  getUserLoadGoogleRecaptcha: (state: UserState): boolean => state.loadGoogleRecaptcha
 }
 
 export { UserGetters, getters }
