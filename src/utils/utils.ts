@@ -145,6 +145,5 @@ export const setLoginVerify = () => {
 }
 
 export const formatPhoneNumber = (phoneNumber: string): string => {
-  const splitSpacePhoneNumber = phoneNumber.replace(/-/g, '')
-  return splitSpacePhoneNumber.replace(/\s/g, '')
+  return phoneNumber.replace(/-|\s/g, '')
 }
