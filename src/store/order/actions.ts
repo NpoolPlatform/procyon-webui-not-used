@@ -50,8 +50,7 @@ const actions: ActionTree<OrderState, RootState> = {
               Product: good.CoinInfo.Name,
               Amount: order.Units.toString() + good.Unit,
               Price: good.Price.toString() + good.PriceCurrency.Unit + '/' + good.Unit,
-              Discount: (parseFloat((order.Discount + 100 - (order.SpecialReductionAmount / (order.Units * good.Price))).toFixed(3)) *
-                        100).toString() + '%',
+              Discount: (parseFloat((order.Discount + (order.SpecialReductionAmount * 100 / (order.Units * good.Price))).toFixed(3))).toString() + '%',
               TechFee: '20%',
               Period: good.DurationDays.toString(),
               Total: order.Payment.Amount.toString()
