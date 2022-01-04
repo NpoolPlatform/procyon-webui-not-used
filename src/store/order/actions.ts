@@ -27,7 +27,7 @@ interface OrderActions {
 }
 
 const actions: ActionTree<OrderState, RootState> = {
-  [ActionTypes.GetUserOrderDetails] ({ commit }, payload: GetOrdersDetailByAppUserRequest) {
+  [ActionTypes.GetUserOrderDetails] ({ commit, state }, payload: GetOrdersDetailByAppUserRequest) {
     const { t } = useI18n()
     commit(notifyMutation.SetInnerLoading, {
       Key: ItemStateTarget.GetUserOrderDetail,
@@ -35,7 +35,6 @@ const actions: ActionTree<OrderState, RootState> = {
     })
     post<GetOrdersDetailByAppUserRequest, GetOrdersDetailByAppUserResponse>(OrderURLPath.GET_ORDERS_DETAIL_BY_APP_USER, payload)
       .then((resp: GetOrdersDetailByAppUserResponse) => {
-        const myOrders: Array<UserOrderDetail> = []
         let totalUnits = 0
         let totalAmount = 0
 
@@ -43,37 +42,44 @@ const actions: ActionTree<OrderState, RootState> = {
           const request: GetGoodDetailRequest = {
             ID: order.Good.ID
           }
-          void post<GetGoodDetailRequest, GetGoodDetailResponse>(GoodURLPath.GET_GOOD_DETAIL, request).then((resp: GetGoodDetailResponse) => {
-            const good = resp.Detail
-            const myOrder: UserOrderDetail = {
-              Date: TimeStampToDate(order.Start, 'YYYY-MM-DD HH:mm:ss'),
-              Product: good.CoinInfo.Name,
-              Amount: order.Units.toString() + good.Unit,
-              Price: good.Price.toString() + good.PriceCurrency.Unit + '/' + good.Unit,
-              Discount: (parseFloat((order.Discount + (order.SpecialReductionAmount * 100 / (order.Units * good.Price))).toFixed(3))).toString() + '%',
-              TechFee: '20%',
-              Period: good.DurationDays.toString(),
-              Total: order.Payment.Amount.toString()
-            }
+          post<GetGoodDetailRequest, GetGoodDetailResponse>(GoodURLPath.GET_GOOD_DETAIL, request)
+            .then((resp: GetGoodDetailResponse) => {
+              const good = resp.Detail
+              const myOrder: UserOrderDetail = {
+                Date: TimeStampToDate(order.Start, 'YYYY-MM-DD HH:mm:ss'),
+                Product: good.CoinInfo.Name,
+                Amount: order.Units.toString() + good.Unit,
+                Price: good.Price.toString() + good.PriceCurrency.Unit + '/' + good.Unit,
+                Discount: (parseFloat((order.Discount + 100 - (order.SpecialReductionAmount / (order.Units * good.Price))).toFixed(3)) *
+                  100).toString() + '%',
+                TechFee: '20%',
+                Period: good.DurationDays.toString(),
+                Total: order.Payment.Amount.toString()
+              }
+              // TODO: problem implementation
+              totalUnits = order.Units
+              totalAmount = order.Payment.Amount
 
-            // TODO: problem implementation
-            totalUnits = order.Units
-            totalAmount = order.Payment.Amount
+              commit(MutationTypes.SetTotalCapacity, totalUnits)
+              commit(MutationTypes.SetTotalAmount, totalAmount)
+              commit(MutationTypes.SetDurationDays, good.DurationDays)
 
-            commit(MutationTypes.SetTotalCapacity, totalUnits)
-            commit(MutationTypes.SetTotalAmount, totalAmount)
-            commit(MutationTypes.SetDurationDays, good.DurationDays)
-
-            myOrders.push(myOrder)
-            commit(MutationTypes.SetUserOrderDetails, myOrders)
-          }).catch((err: Error) => {
-            commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.GetUserOrders.Fail'), err.message, 'negative'))
-            commit(notifyMutation.SetInnerLoading, {
-              Key: ItemStateTarget.GetUserOrderDetail,
-              value: false
+              const myOrders: Array<UserOrderDetail> = []
+              for (let i = 0; i < state.userOrderDetails.length; i++) {
+                myOrders.push(state.userOrderDetails[i])
+              }
+              myOrders.push(myOrder)
+              commit(MutationTypes.SetUserOrderDetails, myOrders)
             })
-          })
+            .catch((err: Error) => {
+              commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.GetUserOrders.Fail'), err.message, 'negative'))
+              commit(notifyMutation.SetInnerLoading, {
+                Key: ItemStateTarget.GetUserOrderDetail,
+                value: false
+              })
+            })
         })
+
         commit(notifyMutation.SetInnerLoading, {
           Key: ItemStateTarget.GetUserOrderDetail,
           value: false

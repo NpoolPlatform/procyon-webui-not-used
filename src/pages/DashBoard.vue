@@ -31,10 +31,7 @@ const OrderTable = defineAsyncComponent(() => import('components/table/OrderTabl
 
 const store = useStore()
 
-const orders = computed(() => {
-  console.log(store.getters.getUserOrderDetails)
-  return store.getters.getUserOrderDetails
-})
+const orders = computed(() => store.getters.getUserOrderDetails)
 
 const getUserOrders = () => {
   const request: GetOrdersDetailByAppUserRequest = {}
