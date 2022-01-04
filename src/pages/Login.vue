@@ -94,7 +94,7 @@ watch(logined, (newLogined, oldLogined) => {
       q.cookies.set(loginVeiryConfirm, 'true')
       logined.value = true
       loginVerify.value = true
-      void router.push({ path: '/account' })
+      void router.push({ path: '/dashboard' })
     }
   }
 })
