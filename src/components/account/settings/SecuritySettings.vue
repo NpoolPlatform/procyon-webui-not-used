@@ -85,8 +85,9 @@
         </template>
       </SettingBox>
 
-      <SettingBox :title="$t('account.Setting.LoginVerify.Title')" :content="$t('account.Setting.LoginVerify.Content')"
-                  :img='googleImg' v-if='emailAddress !== "" || googleVerify'>
+      <SettingBox :title="$t('account.Setting.LoginVerify.Title')"
+                  :content="$t('account.Setting.LoginVerify.Content')"
+                  :img='googleImg'>
         <template v-slot:choose>
           <q-option-group
             v-model='verifyMethod'
