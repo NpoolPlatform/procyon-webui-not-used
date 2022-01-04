@@ -46,7 +46,7 @@
     </div>
 
     <div>
-      <q-btn disable class='common-button product-btn'>{{
+      <q-btn disable color='grey' class='common-button product-btn'>{{
           $t('button.StartMining')
         }}
       </q-btn>
