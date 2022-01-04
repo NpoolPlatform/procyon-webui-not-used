@@ -97,5 +97,4 @@ const content = toRef(props, 'content')
   margin-bottom: 32px;
   left: 0;
 }
-
 </style>
