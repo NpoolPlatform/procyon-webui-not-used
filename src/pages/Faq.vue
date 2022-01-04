@@ -171,9 +171,9 @@
   background-clip: border-box;
   font-size: 24px;
   font-weight: 400;
-  margin: 48px auto 18px auto;
+  margin: 48px auto 12px auto;
   position: relative;
-  padding: 0 0 8px;
+  padding: 0 0 12px;
   text-transform: unset;
   -webkit-background-clip: text;
   -webkit-box-decoration-break: clone;
