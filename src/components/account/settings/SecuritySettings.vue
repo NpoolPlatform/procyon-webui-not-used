@@ -60,6 +60,15 @@
 
         <template v-slot:button>
           <div>
+            <q-tooltip
+              class='text-body2'
+              anchor='top middle'
+              self='bottom middle'
+              :offset='[10, 10]'
+              v-if='googleVerify'
+            >{{ $t('account.Setting.Google.HasDone') }}
+            </q-tooltip
+            >
             <q-btn class='common-button card-button' :disable='googleVerify'
                    :label="$t('account.Setting.Google.Button')" @click='showEnableGoogle = true' />
           </div>

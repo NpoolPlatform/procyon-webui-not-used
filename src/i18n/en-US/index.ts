@@ -186,7 +186,8 @@ export default {
         Title: 'Google Authenticator',
         GoogleContent: 'Two-factor Authentication (2FA) secures your account by adding a second security check when logging in and making transfers.',
         Button: 'Enable Two-factor Auth',
-        VerifyContent: 'Please enter your verification code in your google authenticator.'
+        VerifyContent: 'Please enter your verification code in your google authenticator.',
+        HasDone: 'Google authentication has been completed.'
       },
       KYC: {
         Title: 'ID Verification',

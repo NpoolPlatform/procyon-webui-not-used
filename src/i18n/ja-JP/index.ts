@@ -186,7 +186,8 @@ export default {
         Title: 'Google認証',
         GoogleContent: '2段階認証を設定する事で、アカウントから入出金する際のセキュリティを強化する事ができます。',
         Button: '2段階認証を設定',
-        VerifyContent: 'Google認証アプリに表示されている認証コードを記入ください。'
+        VerifyContent: 'Google認証アプリに表示されている認証コードを記入ください。',
+        HasDone: 'Googleの認証が完了しました。'
       },
       KYC: {
         Title: '身分証明の設定',
