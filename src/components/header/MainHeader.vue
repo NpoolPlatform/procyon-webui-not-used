@@ -1,44 +1,49 @@
 <template>
-  <div class="header-left">
+  <div class='header-left'>
     <router-link :to="{ path: '/' }">
-      <q-img :src="logo" class="header-title"></q-img>
+      <q-img :src='logo' class='header-title'></q-img>
     </router-link>
   </div>
-  <div class="header-right">
-    <router-link class="nav-link" :to="{ path: '/' }">
+  <div class='header-right'>
+    <router-link class='nav-link' :to="{ path: '/' }">
       {{ $t('header.Home') }}
     </router-link>
-    <a class="nav-link" href="https://procyon-vip.medium.com/" target="_blank">
+    <a class='nav-link' href='https://procyon-vip.medium.com/' target='_blank'>
       {{ $t('header.Blog') }}
     </a>
-    <router-link class="nav-link" :to="{ path: '/faq' }">
+    <router-link class='nav-link' :to="{ path: '/faq' }">
       {{ $t('header.Support') }}
     </router-link>
-    <a class="nav-link" href="mailto:support@procyon.vip">
+    <a class='nav-link' href='mailto:support@procyon.vip'>
       {{ $t('header.Contact') }}
     </a>
-    <ChangeLang style="margin-right: 10px"></ChangeLang>
+    <div style='padding: 12px'>
+      <ChangeLang />
+    </div>
+    <div style='padding: 12px'>
+      <q-btn
+        v-if='!logined'
+        class='common-button register'
+        flat
+        @click="$router.push('/register')"
+      >
+        {{ $t('button.Register') }}
+      </q-btn>
+    </div>
     <q-btn
-      v-if="!logined"
-      class="common-button register"
-      flat
-      @click="$router.push('/register')"
-    >
-      {{ $t('button.Register') }}
-    </q-btn>
-    <q-btn
-      v-if="!logined"
-      class="common-button login"
+      v-if='!logined'
+      class='common-button login'
       flat
       @click="$router.push('/login')"
     >
       {{ $t('button.Login') }}
     </q-btn>
+
     <AvatarDropdown :hasInvitationCode='hasInvitationCode' />
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang='ts'>
 import { computed, defineAsyncComponent } from 'vue'
 import logo from '../../assets/procyon-light.svg'
 import { useStore } from 'src/store/index'
@@ -104,7 +109,6 @@ a:hover {
   border: 0;
   color: #e4f4f0;
   width: 140px;
-  margin-right: 10px;
 }
 
 .login {

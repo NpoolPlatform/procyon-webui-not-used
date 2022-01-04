@@ -26,7 +26,7 @@ import { UserOrderDetail } from 'src/store/order/types'
 import { useI18n } from 'vue-i18n'
 
 interface Props {
-  orders: ReadonlyArray<UserOrderDetail>
+  orders: Array<UserOrderDetail>
 }
 
 const props = defineProps<Props>()

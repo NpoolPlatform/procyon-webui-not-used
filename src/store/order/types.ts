@@ -3,6 +3,18 @@ export interface GetOrdersDetailByAppUserRequest {
   UserID?: string
 }
 
+export interface FeesDetails {
+  ID: string,
+  AppID: string,
+  Fee: {
+    ID: string,
+    FeeType: string,
+    FeeDescription: string,
+    PayType: string
+  },
+  Value: number
+}
+
 export interface OrderDetail {
   ID: string
   Good: {
@@ -45,7 +57,7 @@ export interface OrderDetail {
       PriceCurrency: string,
       Title: string,
       Unit: string
-    },
+    } | null,
     VendorLocation: {
       ID: string,
       Country: string,
@@ -64,17 +76,17 @@ export interface OrderDetail {
         Unit: string,
         Logo: string
       }
-    ],
+    ] | [],
     Total: number,
     Extra: {
       ID: string,
       GoodID: string,
       Posters: [
         string
-      ],
+      ] | [],
       Labels: [
         string
-      ],
+      ] | [],
       OutSale: boolean,
       PreSale: boolean,
       VoteCount: number,
@@ -88,19 +100,7 @@ export interface OrderDetail {
       Unit: string,
       Symbol: string
     },
-    Fees: [
-      {
-        ID: string,
-        AppID: string,
-        Fee: {
-          ID: string,
-          FeeType: string,
-          FeeDescription: string,
-          PayType: string
-        },
-        Value: number
-      }
-    ]
+    Fees: Array<FeesDetails>
   },
   AppID: string,
   UserID: string,
@@ -119,7 +119,7 @@ export interface OrderDetail {
       Message: string,
       Name: string
     }
-  },
+  } | null,
   UserSpecialReduction: {
     ID: string,
     AppID: string,
@@ -142,7 +142,7 @@ export interface OrderDetail {
       PaymentID: string,
       DurationMinutes: number
     }
-  ],
+  ] | [],
   Compensates: [
     {
       ID: string,
@@ -151,7 +151,7 @@ export interface OrderDetail {
       End: number,
       Message: string
     }
-  ],
+  ] | [],
   OutOfGases: [
     {
       ID: string,
@@ -159,7 +159,7 @@ export interface OrderDetail {
       Start: number,
       End: number
     }
-  ],
+  ] | [],
   Payment: {
     ID: string,
     OrderID: string,
@@ -197,7 +197,7 @@ export interface OrderDetail {
       Message: string,
       Name: string
     }
-  },
+  } | null,
   Discount: number,
   SpecialReductionAmount: number
 }
