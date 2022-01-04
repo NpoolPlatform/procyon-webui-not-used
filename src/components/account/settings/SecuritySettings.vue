@@ -168,7 +168,7 @@ const verifyMethodConst = computed(
     if (googleVerify.value && userGALogin.value) {
       return verifyMethodGoogle
     }
-    if (emailAddress.value !== '') {
+    if (emailAddress.value !== undefined && emailAddress.value !== '') {
       return verifyMethodEmail
     }
     return verifyMethodUnknown
