@@ -20,7 +20,7 @@
     <div style='padding: 12px'>
       <ChangeLang />
     </div>
-    <div style='padding: 12px' v-if='!logined'>
+    <div style='padding: 12px 12px 12px 0px' v-if='!logined'>
       <q-btn
         class='common-button register'
         flat
