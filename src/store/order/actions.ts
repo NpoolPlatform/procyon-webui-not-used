@@ -38,6 +38,8 @@ const actions: ActionTree<OrderState, RootState> = {
         let totalUnits = 0
         let totalAmount = 0
 
+        commit(MutationTypes.SetUserOrderDetails, [])
+
         resp.Details.forEach(order => {
           const request: GetGoodDetailRequest = {
             ID: order.Good.ID
