@@ -1,6 +1,7 @@
 <template>
   <q-form @submit='login'>
-    <Vue3QTelInput v-if='showPhone' v-model:tel='loginInput.Phone' bg-color='blue-grey-2' outlined reactive-rules lazy-rules :rules='phoneNumberRule'
+    <Vue3QTelInput v-if='showPhone' v-model:tel='loginInput.Phone' bg-color='blue-grey-2' outlined reactive-rules
+                   lazy-rules :rules='phoneNumberRule'
                    :label="$t('input.PhoneNumber')" :required='false' :error='false' />
     <q-input
       v-if='showEmail'
@@ -56,7 +57,7 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, computed, reactive, onBeforeMount, defineAsyncComponent } from 'vue'
+import { ref, computed, reactive, onBeforeMount, defineAsyncComponent, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { isValidLoginUsername, sha256Password, ThrottleDelay } from 'src/utils/utils'
 import { useStore } from 'src/store'
@@ -78,8 +79,12 @@ const initGoogleRecaptcha = () => {
   })
 }
 
+const loadGoogleRecaptcha = computed(() => store.getters.getUserLoadGoogleRecaptcha)
+
 onBeforeMount(() => {
-  initGoogleRecaptcha()
+  if (loadGoogleRecaptcha.value) {
+    initGoogleRecaptcha()
+  }
 })
 
 const store = useStore()
@@ -119,6 +124,12 @@ const login = throttle((): void => {
   }
   store.dispatch(ActionTypes.UserLogin, request)
 }, ThrottleDelay)
+
+watch(loadGoogleRecaptcha, (n, o) => {
+  if (n && !o) {
+    initGoogleRecaptcha()
+  }
+})
 </script>
 
 <style scoped>
