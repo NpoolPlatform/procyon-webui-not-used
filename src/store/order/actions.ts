@@ -35,10 +35,9 @@ const actions: ActionTree<OrderState, RootState> = {
     })
     post<GetOrdersDetailByAppUserRequest, GetOrdersDetailByAppUserResponse>(OrderURLPath.GET_ORDERS_DETAIL_BY_APP_USER, payload)
       .then((resp: GetOrdersDetailByAppUserResponse) => {
-        let totalUnits = 0
-        let totalAmount = 0
-
         commit(MutationTypes.SetUserOrderDetails, [])
+        commit(MutationTypes.SetTotalCapacity, 0)
+        commit(MutationTypes.SetTotalAmount, 0)
 
         resp.Details.forEach(order => {
           const request: GetGoodDetailRequest = {
@@ -58,11 +57,12 @@ const actions: ActionTree<OrderState, RootState> = {
                 Total: order.Payment.Amount.toString()
               }
               // TODO: problem implementation
-              totalUnits = order.Units
-              totalAmount = order.Payment.Amount
+              const totalUnits = state.totalCapacity + order.Units
+              const totalAmount = state.totalAmount + order.Payment.Amount
 
               commit(MutationTypes.SetTotalCapacity, totalUnits)
               commit(MutationTypes.SetTotalAmount, totalAmount)
+
               commit(MutationTypes.SetDurationDays, good.DurationDays)
 
               const myOrders: Array<UserOrderDetail> = []

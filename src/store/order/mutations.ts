@@ -15,13 +15,13 @@ const mutations: MutationTree<OrderState> & OrderMutations = {
     state.userOrderDetails = payload
   },
   [MutationTypes.SetTotalAmount] (state: OrderState, payload: number) {
-    state.totalAmount += payload
+    state.totalAmount = payload
   },
   [MutationTypes.SetDurationDays] (state: OrderState, payload: number) {
     state.durationDays = payload
   },
   [MutationTypes.SetTotalCapacity] (state: OrderState, payload: number) {
-    state.totalCapacity += payload
+    state.totalCapacity = payload
   }
 }
 
