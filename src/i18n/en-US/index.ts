@@ -275,7 +275,7 @@ export default {
     Verify: 'Verify',
     Confirm: 'Confirm',
     Cancel: 'Cancel',
-    Export: 'Export History(CSV)',
+    Export: 'Export History (CSV)',
     Purchase: 'Purchase Capacity',
     Save: 'Save Changes'
   },
@@ -386,7 +386,7 @@ export default {
       TotalDaysMining: 'Total Days Mining:',
       Hashrate: 'Hashrate (30 day avg.):',
       NetworkDailyOutput: 'Network Daily Ouput:',
-      Export: 'Export Daily Output(CSV)',
+      Export: 'Export Daily Output (CSV)',
       Purchase: 'Purchase Capacity'
     },
 

@@ -9,13 +9,13 @@
       <div class='top-line-item'>
         <span class='label'>{{ $t('dashboard.Column2.Earning') }}</span>
         <span class='value'>* SMH</span>
-        <span class='sub-value'>(* USDT)</span>
+        <span class='sub-value'> (* USDT)</span>
       </div>
 
       <div class='top-line-item'>
         <span class='label'>{{ $t('dashboard.Column2.Last') }}</span>
         <span class='value'>* SMH</span>
-        <span class='sub-value'>(* USDT)</span>
+        <span class='sub-value'> (* USDT)</span>
       </div>
 
       <div class='top-line-item'>
@@ -46,7 +46,7 @@
             <span class='label'>{{
                 $t('dashboard.Column2.TotalDaysMining')
               }}</span>
-        <span class='value'>{{ durationDays }}{{ $t('dashboard.Day') }}</span>
+        <span class='value'>{{ durationDays }} {{ $t('dashboard.Day') }}</span>
       </div>
 
       <div class='line'>

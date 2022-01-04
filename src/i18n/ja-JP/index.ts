@@ -274,7 +274,7 @@ export default {
     Verify: 'ベリファイ',
     Confirm: '確認',
     Cancel: '取消',
-    Export: '履歴のエクスポート(CSV)',
+    Export: '履歴のエクスポート (CSV)',
     Purchase: 'ストレージ容量を追加購入',
     Save: '保存'
   },

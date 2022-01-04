@@ -3,7 +3,7 @@
     <div class='earn-box-item'>
       <div>
         <span class='price'>*</span>
-        <span class='unit'>USDT</span>
+        <span class='unit'> USDT</span>
       </div>
       <div class='hr sub-hr'></div>
       <span class='subtitle'>{{ $t('dashboard.Column1.Total') }}</span>
@@ -12,7 +12,7 @@
     <div class='earn-box-item'>
       <div>
         <span class='price'>*</span>
-        <span class='unit'>USDT</span>
+        <span class='unit'> USDT</span>
       </div>
       <div class='hr sub-hr'></div>
       <span class='subtitle'>{{ $t('dashboard.Column1.Yesterday') }}</span>
@@ -21,7 +21,7 @@
     <div class='earn-box-item'>
       <div>
         <span class='price'>*</span>
-        <span class='unit'>USDT</span>
+        <span class='unit'> USDT</span>
       </div>
       <div class='hr sub-hr'></div>
       <span class='subtitle'>{{ $t('dashboard.Column1.Current') }}</span>
