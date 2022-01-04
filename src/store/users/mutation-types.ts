@@ -2,8 +2,6 @@ export enum MutationTypes {
   SetUserInfo = 'USER_SET_USER_INFO',
   SetUserLogined = 'USER_SET_USER_LOGINED',
   SetUserBasicInfo = 'USER_SET_USER_BASIC_INFO',
-  SetError = 'USER_SET_ERROR',
-  SetLoading = 'USER_SET_LOADING',
   SetInvitationCode = 'USER_SET_INVITATION_CODE',
   SetLoginVerify = 'USER_SET_LOGIN_VERIFY',
   SetUsername = 'USER_SET_USERNAME',
@@ -20,5 +18,6 @@ export enum MutationTypes {
   SetPhoneNumber = 'USER_SET_PHONE_NUMBER',
   SetGoogleAuthenticator = 'USER_SET_GOOGLE_AUTHENTICATOR',
   SetGoogleLoginVerify = 'USER_SET_GOOGLE_LOGIN_VERIFY',
-  SetLoginHistory = 'USER_SET_LOGIN_HISTORY'
+  SetLoginHistory = 'USER_SET_LOGIN_HISTORY',
+  ClearUserInfo = 'USER_CLEAR_USER_INFO'
 }

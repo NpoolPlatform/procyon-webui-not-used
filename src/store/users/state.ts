@@ -1,73 +1,18 @@
-import { LoginRecord, UserInfo } from './types'
+import { LoginRecord, NilUserInfo, UserInfo } from './types'
 
 interface UserState {
   info: UserInfo
   logined: boolean
-  error: string
-  loading: boolean
   invitationCode: string
   loginVerify: boolean
   loginHistory: Array<LoginRecord>
 }
 
 function state (): UserState {
-  const info: UserInfo = {
-    UserBasicInfo: {
-      UserID: '',
-      Username: '',
-      Password: '',
-      Avatar: '',
-      Age: 0,
-      Gender: '',
-      Region: '',
-      Birthday: '',
-      Country: '',
-      Province: '',
-      City: '',
-      PhoneNumber: '',
-      Compony: '',
-      EmailAddress: '',
-      SignupMethod: '',
-      Career: '',
-      DisplayName: '',
-      FirstName: '',
-      LastName: '',
-      StreetAddress1: '',
-      StreetAddress2: '',
-      PostalCode: ''
-    },
-    UserAppInfo: {
-      UserApplicationInfo: {
-        ID: '',
-        AppID: '',
-        UserID: '',
-        Original: true,
-        KycVerify: false,
-        GAVerify: false,
-        GALogin: false,
-        LoginNumber: 0,
-        CreateAT: 0
-      },
-      UserRoleInfo: {
-        UserID: '',
-        AppID: '',
-        Infos: []
-      },
-      UserGroupInfo: {
-        ID: '',
-        GroupID: '',
-        AppID: '',
-        UserID: '',
-        Annotation: '',
-        CreateAT: 0
-      }
-    }
-  }
+  const info: UserInfo = NilUserInfo
   return {
     info: info,
     logined: false,
-    loading: false,
-    error: '',
     invitationCode: '',
     loginVerify: false,
     loginHistory: []
