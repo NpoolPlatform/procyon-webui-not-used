@@ -59,7 +59,7 @@
 <script setup lang='ts'>
 import { ref, computed, reactive, onBeforeMount, defineAsyncComponent, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { isValidLoginUsername, sha256Password, ThrottleDelay } from 'src/utils/utils'
+import { formatPhoneNumber, isValidLoginUsername, sha256Password, ThrottleDelay } from 'src/utils/utils'
 import { useStore } from 'src/store'
 import { UserLoginRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
@@ -125,7 +125,7 @@ const login = throttle((): void => {
     Username: loginInput.Username,
     Password: sha256Password(loginInput.Password),
     GoogleRecaptchaResponse: googleRecaptchaResponse.value,
-    Phone: loginInput.Phone
+    Phone: formatPhoneNumber(loginInput.Phone)
   }
   store.dispatch(ActionTypes.UserLogin, request)
 }, ThrottleDelay)

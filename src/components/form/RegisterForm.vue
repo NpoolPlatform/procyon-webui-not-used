@@ -86,7 +86,7 @@
 
 <script setup lang='ts'>
 import { reactive, ref, defineAsyncComponent, computed } from 'vue'
-import { isValidEmail, isValidPassword, sha256Password, ThrottleDelay } from 'src/utils/utils'
+import { formatPhoneNumber, isValidEmail, isValidPassword, sha256Password, ThrottleDelay } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
 import { throttle } from 'quasar'
 import { useStore } from 'src/store'
@@ -145,7 +145,7 @@ const register = throttle(() => {
     Password: sha256Password(registerInput.password),
     InvitationCode: registerInput.invitationCode,
     VerificationCode: verifyCode.value,
-    PhoneNumber: registerInput.phoneNumber
+    PhoneNumber: formatPhoneNumber(registerInput.phoneNumber)
   }
   store.dispatch(ActionTypes.UserSignUp, request)
 }, ThrottleDelay)
