@@ -59,18 +59,19 @@
         </template>
 
         <template v-slot:button>
-          <div>
-            <q-tooltip
-              class='text-body2'
-              anchor='top middle'
-              self='bottom middle'
-              :offset='[10, 10]'
-              v-if='googleVerify'
-            >{{ $t('account.Setting.Google.HasDone') }}
-            </q-tooltip
-            >
-            <q-btn class='common-button card-button' :disable='googleVerify'
-                   :label="$t('account.Setting.Google.Button')" @click='showEnableGoogle = true' />
+          <div style='position: relative; width: 100%'>
+            <div style='position:absolute; left: 50%; transform: translate(-50%, 0); max-width: 360px; width: 80%'>
+              <q-tooltip
+                class='text-body2'
+                anchor='top middle'
+                self='bottom middle'
+                :offset='[10, 10]'
+                v-if='googleVerify'
+              >{{ $t('account.Setting.Google.HasDone') }}
+              </q-tooltip>
+              <q-btn class='common-button card-button' :disable='googleVerify'
+                     :label="$t('account.Setting.Google.Button')" @click='showEnableGoogle = true' />
+            </div>
           </div>
         </template>
       </SettingBox>
@@ -247,7 +248,7 @@ const setLoginVerify = () => {
   font-weight: 600;
   font-size: 18px;
   line-height: 22px;
-  width: 80%;
+  width: 100%;
   max-width: 360px;
 }
 </style>
