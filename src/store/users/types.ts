@@ -71,7 +71,7 @@ interface UserInfo {
   UserAppInfo: UserAppInfo
 }
 
-export const NilUserInfo = {
+export const NilUserInfo: UserInfo = {
   UserBasicInfo: {
     UserID: '',
     Username: '',

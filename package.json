@@ -6,7 +6,7 @@
   "author": "crazyzpl<crazyzplzpl@gmail.com>",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext .js,.ts,.vue ./",
+    "lint": "eslint --ext .js,.ts,.vue ./ --fix",
     "test": "echo \"No test specified\" && exit 0"
   },
   "pre-commit": [

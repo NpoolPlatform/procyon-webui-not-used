@@ -1,6 +1,6 @@
 <template>
   <div class='setting-box column'>
-    <div class='col-10'>
+    <div class='col-9'>
       <div class='setting-header'>
         <q-img :src='img' class='setting-img'></q-img>
         <div class='setting-subtitle'>{{ title }}</div>
@@ -9,7 +9,8 @@
       <slot name='verify-content'></slot>
       <slot name='choose'></slot>
     </div>
-    <div class='button-position col'>
+    <q-space />
+    <div class='button-position col-1'>
       <slot name='button'></slot>
     </div>
   </div>
@@ -93,7 +94,7 @@ const content = toRef(props, 'content')
 .button-position {
   width: 100%;
   text-align: center;
-  bottom: 24px;
+  margin-bottom: 32px;
   left: 0;
 }
 
