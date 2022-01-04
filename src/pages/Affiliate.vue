@@ -1,5 +1,5 @@
 <template>
-  <div class='content' style='margin-left: 20px;'>
+  <div class='content'>
     <div class='section-part-title'>{{ $t('affiliate.Title') }}</div>
     <AffiliateTree />
   </div>
@@ -39,4 +39,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.content {
+  max-width: 100%;
+  margin: 0 72px;
+  padding: 0 24px;
+}
 </style>
