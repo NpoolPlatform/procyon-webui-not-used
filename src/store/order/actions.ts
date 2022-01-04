@@ -36,6 +36,9 @@ const actions: ActionTree<OrderState, RootState> = {
     post<GetOrdersDetailByAppUserRequest, GetOrdersDetailByAppUserResponse>(OrderURLPath.GET_ORDERS_DETAIL_BY_APP_USER, payload)
       .then((resp: GetOrdersDetailByAppUserResponse) => {
         const myOrders: Array<UserOrderDetail> = []
+        let totalUnits = 0
+        let totalAmount = 0
+
         resp.Details.forEach(order => {
           const request: GetGoodDetailRequest = {
             ID: order.Good.ID
@@ -53,10 +56,17 @@ const actions: ActionTree<OrderState, RootState> = {
               Period: good.DurationDays.toString(),
               Total: order.Payment.Amount.toString()
             }
-            commit(MutationTypes.SetTotalCapacity, order.Units)
-            commit(MutationTypes.SetTotalAmount, order.Payment.Amount)
+
+            // TODO: problem implementation
+            totalUnits = order.Units
+            totalAmount = order.Payment.Amount
+
+            commit(MutationTypes.SetTotalCapacity, totalUnits)
+            commit(MutationTypes.SetTotalAmount, totalAmount)
             commit(MutationTypes.SetDurationDays, good.DurationDays)
+
             myOrders.push(myOrder)
+            commit(MutationTypes.SetUserOrderDetails, myOrders)
           }).catch((err: Error) => {
             commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.GetUserOrders.Fail'), err.message, 'negative'))
             commit(notifyMutation.SetInnerLoading, {
@@ -65,7 +75,6 @@ const actions: ActionTree<OrderState, RootState> = {
             })
           })
         })
-        commit(MutationTypes.SetUserOrderDetails, myOrders)
         commit(notifyMutation.SetInnerLoading, {
           Key: ItemStateTarget.GetUserOrderDetail,
           value: false
