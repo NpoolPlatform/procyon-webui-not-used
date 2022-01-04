@@ -11,8 +11,7 @@
           flat
           round
           dense
-          @click='onDone(false)'
-          v-close-popup />
+          @click='onDone(false)'/>
       </q-card-section>
       <q-separator />
       <q-card-section class='scroll' style='max-height: 750px'>
@@ -147,14 +146,12 @@
           :label="$t('button.Cancel')"
           color='primary'
           @click="onDone(false)"
-          v-close-popup
         />
         <q-btn
           flat
           :label="$t('button.Confirm')"
           color='primary'
           @click="onDone(true)"
-          v-close-popup
         />
       </q-card-actions>
     </q-card>
