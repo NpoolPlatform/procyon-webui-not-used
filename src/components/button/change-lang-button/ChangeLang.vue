@@ -2,7 +2,6 @@
   <q-btn-toggle
     v-model="locale"
     push
-    glossy
     toggle-color="orange-9"
     @click="changeLang"
     :options="languageOptions"
