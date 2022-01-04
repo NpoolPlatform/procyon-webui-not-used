@@ -128,8 +128,8 @@ interface UserLoginRequest {
   AppID?: string
   Username?: string
   Password: string
-  Email?: string
-  Phone?: string
+  Email: string
+  Phone: string
   // email or phone verify code
   VerifyCode?: string
   // google recaptcha response
@@ -177,8 +177,8 @@ interface GetUserInvitationCodeResponse {
 interface UserSignUpRequest {
   Username?: string,
   Password: string
-  EmailAddress?: string
-  PhoneNumber?: string
+  EmailAddress: string
+  PhoneNumber: string
   VerificationCode: string
   AppID?: string
   InvitationCode: string

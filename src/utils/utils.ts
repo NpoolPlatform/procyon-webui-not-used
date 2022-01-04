@@ -143,3 +143,8 @@ export const CheckLogined = (): boolean => {
 export const setLoginVerify = () => {
   Cookies.set(loginVeiryConfirm, 'true')
 }
+
+export const formatPhoneNumber = (phoneNumber: string): string => {
+  const splitSpacePhoneNumber = phoneNumber.split(' ').join('')
+  return splitSpacePhoneNumber.split('-').join('')
+}

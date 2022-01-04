@@ -68,7 +68,7 @@
 
 <script setup lang='ts'>
 import { reactive, ref, defineAsyncComponent, computed } from 'vue'
-import { isValidEmail, isValidPassword, sha256Password, ThrottleDelay } from 'src/utils/utils'
+import { formatPhoneNumber, isValidEmail, isValidPassword, sha256Password, ThrottleDelay } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
 import { throttle } from 'quasar'
 import { useStore } from 'src/store'
@@ -125,7 +125,7 @@ const changePassword = throttle(() => {
     verifyParam = userBasicInfo.value.EmailAddress
   } else if (showPhone.value) {
     type = 'phone'
-    verifyParam = changePasswordInput.phoneNumber
+    verifyParam = formatPhoneNumber(changePasswordInput.phoneNumber)
   }
 
   const request: UserChangePasswordRequest = {
