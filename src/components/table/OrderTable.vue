@@ -12,7 +12,7 @@
 
   <div class='buttons'>
     <q-btn disabled class='common-button export-button'>
-      {{ $t('button.Export') }}
+      {{ $t('dashboard.Column2.Export') }}
     </q-btn>
     <q-btn disabled class='common-button purchase-button'>
       {{ $t('button.Purchase') }}
@@ -100,6 +100,10 @@ const orderTableColumns = [
   color: #e1eeef;
   padding: 24px;
   margin: 24px;
+}
+
+.table-box >>> th {
+  font-size: 16px !important;
 }
 
 .buttons {

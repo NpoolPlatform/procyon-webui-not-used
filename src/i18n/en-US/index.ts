@@ -341,7 +341,9 @@ export default {
     Policy: ' Privacy Policy',
     And: ' and',
     User: ' User Agreements',
-    Behind: ''
+    Behind: '',
+    Have: 'Already have an account? ',
+    Click: 'Click here to sign in.'
   },
 
   changePassword: {

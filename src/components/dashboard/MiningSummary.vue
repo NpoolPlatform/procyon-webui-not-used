@@ -61,15 +61,15 @@
         <span class='value'>* SMH</span>
       </div>
     </div>
-  </div>
 
-  <div class='buttons'>
-    <q-btn disabled class='common-button export-button'>
-      {{ $t('button.Export') }}
-    </q-btn>
-    <q-btn disabled class='common-button purchase-button'>
-      {{ $t('button.Purchase') }}
-    </q-btn>
+    <div class='buttons'>
+      <q-btn disabled class='common-button export-button'>
+        {{ $t('dashboard.Column2.Export') }}
+      </q-btn>
+      <q-btn disabled class='common-button purchase-button'>
+        {{ $t('button.Purchase') }}
+      </q-btn>
+    </div>
   </div>
 </template>
 
@@ -182,7 +182,7 @@ h3.mining-title {
 .buttons {
   display: flex;
   justify-content: space-between;
-  margin: 0 24px 30px 24px;
+  margin: 24px 12px 0 12px;
 }
 
 .export-button {

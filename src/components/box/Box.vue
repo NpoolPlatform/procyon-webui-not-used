@@ -17,7 +17,7 @@
         >{{ $t('box.EmailLink') }}</a>
       </div>
     </q-card-section>
-    <q-card-section>
+    <q-card-section class='form-container'>
       <slot></slot>
     </q-card-section>
   </q-card>
@@ -62,5 +62,9 @@ const showPhone = computed({
   font-weight: 200;
   margin-right: 10px;
   cursor: pointer;
+}
+
+.form-container.q-card__section--vert {
+  padding: 16px 0 !important;
 }
 </style>
