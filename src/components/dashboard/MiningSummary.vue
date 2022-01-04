@@ -148,7 +148,7 @@ h3.mining-title {
 }
 
 .top-line-item .label {
-  font-weight: 200;
+  font-weight: 400;
 }
 
 .top-line-item .value {
@@ -172,7 +172,7 @@ h3.mining-title {
 }
 
 .detailed-summary .label {
-  font-weight: 200;
+  font-weight: 400;
 }
 
 .detailed-summary .value {
