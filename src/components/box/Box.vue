@@ -58,7 +58,7 @@ const showPhone = computed({
 
 <style scoped>
 .title-link {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 200;
   margin-right: 10px;
   cursor: pointer;

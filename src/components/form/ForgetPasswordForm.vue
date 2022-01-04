@@ -1,7 +1,16 @@
 <template>
   <q-form @submit='forget'>
-    <Vue3QTelInput v-if='showPhone' v-model:tel='forgetInput.phoneNumber' bg-color='blue-grey-2' outlined lazy-rules
-                   :rules='phoneNumberRule' :label="$t('input.PhoneNumber')" :required='false' :error='false' />
+    <Vue3QTelInput
+      v-if='showPhone'
+      v-model:tel='forgetInput.phoneNumber'
+      bg-color='blue-grey-2'
+      outlined
+      lazy-rules
+      :rules='phoneNumberRule'
+      :label="$t('input.PhoneNumber')"
+      :required='false'
+      :error='false'
+      class='common-input' />
     <q-input
       v-if='showEmail'
       bg-color='blue-grey-2'
