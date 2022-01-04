@@ -73,7 +73,7 @@ const pagination = ref({
   rowsPerPage: 3
 })
 
-const pagesNumber = computed(() => parseInt((userLoginHistory.value.length / pagination.value.rowsPerPage).toPrecision(1)))
+const pagesNumber = computed(() => Math.ceil((userLoginHistory.value.length / pagination.value.rowsPerPage)))
 </script>
 
 <style scoped>
@@ -88,5 +88,9 @@ const pagesNumber = computed(() => parseInt((userLoginHistory.value.length / pag
   color: #e1eeef;
   padding: 24px;
   margin: 24px;
+}
+
+.table-box >>> th {
+  font-size: 16px !important;
 }
 </style>

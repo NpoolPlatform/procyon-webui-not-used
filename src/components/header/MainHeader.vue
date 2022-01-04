@@ -20,9 +20,8 @@
     <div style='padding: 12px'>
       <ChangeLang />
     </div>
-    <div style='padding: 12px'>
+    <div style='padding: 12px' v-if='!logined'>
       <q-btn
-        v-if='!logined'
         class='common-button register'
         flat
         @click="$router.push('/register')"

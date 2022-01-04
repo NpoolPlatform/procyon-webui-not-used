@@ -73,6 +73,13 @@
       </span>
     </q-field>
     <q-btn type='submit' class='common-button register-button' :label="$t('button.Register')"></q-btn>
+    <p class='text-style'>
+      {{ $t('register.Have') }}
+      <router-link class='link' :to="{ path: '/login' }">{{
+          $t('register.Click')
+        }}
+      </router-link>
+    </p>
   </q-form>
   <PolicyDialog v-model:agree='agree' v-model:show='showPolicy' />
 </template>

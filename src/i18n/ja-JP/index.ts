@@ -340,7 +340,9 @@ export default {
     Policy: 'プライバシー・ポリシー',
     And: 'そして',
     User: 'ユーザー同意書',
-    Behind: 'を読み、同意しました。'
+    Behind: 'を読み、同意しました。',
+    Have: '既にアカウントをお持ちの方は、',
+    Click: 'ここをクリックしログインしてください。'
   },
 
   changePassword: {

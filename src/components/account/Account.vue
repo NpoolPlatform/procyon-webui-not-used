@@ -1,5 +1,5 @@
 <template>
-  <div class='content'>
+  <div class='content' style='max-width: none'>
     <div>
       <div class='section-part-title'>{{ $t('account.Title') }}</div>
       <PersonDetails />
