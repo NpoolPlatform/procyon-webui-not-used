@@ -102,6 +102,7 @@
           <q-option-group
             v-model='verifyMethod'
             :options='loginOptions'
+            @update:model-value='onSelectVerifyMethod(verifyMethod)'
             color='teal'
             inline
             :disable='!verifySelectEnable'
@@ -177,15 +178,31 @@ const verifyMethodConst = computed(
 
 const verifyMethod = ref(verifyMethodConst.value)
 
+function onSelectVerifyMethod (value: string) {
+  switch (value) {
+    case verifyMethodEmail:
+      if (emailAddress.value === undefined || emailAddress.value === '') {
+        if (googleVerify.value && userGALogin.value) {
+          verifyMethod.value = verifyMethodGoogle
+        } else {
+          verifyMethod.value = verifyMethodUnknown
+        }
+      }
+      break
+  }
+}
+
 const verifySelectEnable = computed(
   () => {
     if (googleVerify.value) {
-      return emailAddress.value !== ''
+      if (!userGALogin.value) {
+        return true
+      }
+      if (emailAddress.value !== undefined && emailAddress.value !== '') {
+        return true
+      }
     }
-    if (emailAddress.value !== '') {
-      return googleVerify.value
-    }
-    return true
+    return false
   }
 )
 
