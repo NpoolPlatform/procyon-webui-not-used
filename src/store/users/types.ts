@@ -128,7 +128,7 @@ interface UserLoginRequest {
   AppID?: string
   Username?: string
   Password: string
-  Email: string
+  Email?: string
   Phone: string
   // email or phone verify code
   VerifyCode?: string
