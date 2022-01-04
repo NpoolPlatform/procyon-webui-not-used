@@ -20,5 +20,5 @@ export enum MutationTypes {
   SetGoogleLoginVerify = 'USER_SET_GOOGLE_LOGIN_VERIFY',
   SetLoginHistory = 'USER_SET_LOGIN_HISTORY',
   ClearUserInfo = 'USER_CLEAR_USER_INFO',
-  LoadGoogleRecaptcha = 'USER_LOAD_GOOGLE_RECAPTCHA'
+  SetLoadGoogleRecaptcha = 'USER_SET_LOAD_GOOGLE_RECAPTCHA'
 }

@@ -25,7 +25,7 @@ type UserMutations<S = UserState> = {
   [MutationTypes.SetGoogleLoginVerify] (state: S, payload: boolean): void
   [MutationTypes.SetLoginHistory] (state: S, payload: Array<LoginRecord>): void
   [MutationTypes.ClearUserInfo] (state: S): void
-  [MutationTypes.LoadGoogleRecaptcha] (state: S, payload: boolean): void
+  [MutationTypes.SetLoadGoogleRecaptcha] (state: S, payload: boolean): void
 }
 
 const mutations: MutationTree<UserState> & UserMutations = {
@@ -94,7 +94,7 @@ const mutations: MutationTree<UserState> & UserMutations = {
     state.invitationCode = ''
     state.loginHistory = []
   },
-  [MutationTypes.LoadGoogleRecaptcha] (state: UserState, payload: boolean) {
+  [MutationTypes.SetLoadGoogleRecaptcha] (state: UserState, payload: boolean) {
     state.loadGoogleRecaptcha = payload
   }
 }

@@ -63,6 +63,7 @@ import { isValidLoginUsername, sha256Password, ThrottleDelay } from 'src/utils/u
 import { useStore } from 'src/store'
 import { UserLoginRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
+import { MutationTypes } from 'src/store/users/mutation-types'
 import { throttle } from 'quasar'
 import { load } from 'recaptcha-v3'
 
@@ -79,12 +80,16 @@ const initGoogleRecaptcha = () => {
   })
 }
 
-const loadGoogleRecaptcha = computed(() => store.getters.getUserLoadGoogleRecaptcha)
+const loadGoogleRecaptcha = computed({
+  get: () => store.getters.getUserLoadGoogleRecaptcha,
+  set: (val: boolean) => {
+    store.commit(MutationTypes.SetLoadGoogleRecaptcha, val)
+  }
+})
 
 onBeforeMount(() => {
-  if (loadGoogleRecaptcha.value) {
-    initGoogleRecaptcha()
-  }
+  loadGoogleRecaptcha.value = true
+  initGoogleRecaptcha()
 })
 
 const store = useStore()
