@@ -126,7 +126,6 @@ const whenHide = () => {
 
 .dialog-header {
   display: flex;
-  margin-bottom: 10px;
   font-style: normal;
   font-weight: bold;
   font-size: 28px;
