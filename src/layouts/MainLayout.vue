@@ -189,7 +189,6 @@ const hasInvitationCode = computed(() => store.getters.getUserInvitationCode !==
 .page-footer {
   background: linear-gradient(to bottom right, #27424c 0, #051319 100%);
   box-shadow: 0px 0px 60px 15px #051319;
-  padding: 16px 0;
   width: 100%;
   z-index: 1;
   height: auto;

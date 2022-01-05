@@ -195,6 +195,6 @@ div.content-h4 {
 .copyright {
   font-size: 14px;
   line-height: 14px;
-  margin: 8px 0;
+  margin: 0;
 }
 </style>
