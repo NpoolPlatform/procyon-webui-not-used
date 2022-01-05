@@ -363,7 +363,19 @@ export default {
     ReferralCode: 'Referral Code',
     CopyCode: 'Copy Code',
     OnBoarded: 'ONBOARDED',
-    Sales: 'Sales'
+    Sales: 'Sales',
+    Direct: {
+      Title: 'DIRECT REFERRALS',
+      Name: 'Name',
+      Date: 'Date Joined',
+      Purchased: 'TBs Purchased',
+      Total: 'Total Payment',
+      Referral: 'Referral Value'
+    },
+    Export: {
+      Title: 'DATA EXPORT',
+      Button: 'Export all data (CSV)'
+    }
   },
 
   product: {
