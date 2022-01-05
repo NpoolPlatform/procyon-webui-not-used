@@ -11,7 +11,7 @@
           flat
           round
           dense
-          @click='onDone(false)'
+          @click='onDone(agree)'
           v-close-popup />
       </q-card-section>
       <q-separator />
@@ -166,13 +166,16 @@ import { defineEmits, defineProps, withDefaults, toRef } from 'vue'
 
 interface Props {
   show: boolean
+  agree: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  show: false
+  show: false,
+  agree: false
 })
 
 const showMe = toRef(props, 'show')
+const agree = toRef(props, 'agree')
 
 const emit = defineEmits<{(e: 'update:agree', value: boolean): void, (e: 'update:show', value: boolean): void }>()
 
