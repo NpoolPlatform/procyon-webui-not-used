@@ -190,4 +190,8 @@ const myGoods = computed(() => store.getters.getGoodDetails)
   color: #ff964a;
   border: 1px solid #ff964a;
 }
+
+.disabled {
+  filter: saturate(0) !important;
+}
 </style>
