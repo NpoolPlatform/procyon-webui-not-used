@@ -9,7 +9,7 @@ import {
   GetDirectInvitationsRequest,
   GetDirectInvitationsResponse,
   AffiliateURLPath,
-  Invitation, Invitees
+  Invitation, Invitees, InvitationSummary
 } from './types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { RequestMessageToNotifyMessage } from 'src/utils/utils'
@@ -38,7 +38,9 @@ const actions: ActionTree<AffiliateState, RootState> = {
           children: [],
           Kol: true,
           Summarys: new Map(),
-          InvitedCount: 0
+          InvitedCount: 0,
+          MySummarys: new Map(),
+          JoinDate: 0
         }
         father.UserID = userid
         const infos = new Map<string, Invitees>(Object.entries(resp.Infos))
@@ -53,8 +55,10 @@ const actions: ActionTree<AffiliateState, RootState> = {
             Label: '02(' + index.toString() + ')',
             children: [],
             Kol: list.Kol,
-            Summarys: new Map(),
-            InvitedCount: list.InvitedCount
+            Summarys: new Map<string, InvitationSummary>(Object.entries(list.Summarys)),
+            MySummarys: new Map<string, InvitationSummary>(Object.entries(list.MySummarys)),
+            InvitedCount: list.InvitedCount,
+            JoinDate: list.JoinDate
           }
           father.children.push(childrenInvitation)
           index++

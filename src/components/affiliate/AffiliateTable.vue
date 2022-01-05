@@ -8,15 +8,13 @@ import { computed } from 'vue'
 import { useStore } from 'src/store'
 import { Invitation, InvitationSummary } from 'src/store/affiliate/types'
 import { useI18n } from 'vue-i18n'
-import { useQuasar } from 'quasar'
+import { TimeStampToDate } from 'src/utils/utils'
 
-const q = useQuasar()
-const userid = q.cookies.get('UserID')
 const store = useStore()
 const invitationList = computed(() => store.getters.getInvitationList)
-const normalList = computed(() => invitationList.value.filter((invitee: Invitation) => {
-  return invitee.UserID === userid
-})[0].children)
+const normalList = computed(() => invitationList.value[0].children.filter((invitee: Invitation) => {
+  return !invitee.Kol
+}))
 
 const totalUnits = (summarys: Map<string, InvitationSummary>) => {
   let total = 0
@@ -48,25 +46,25 @@ const normalListColumns = [
     name: 'JoinDate',
     label: t('affiliate.Direct.Date'),
     align: 'center',
-    field: 'Username'
+    field: (row: Invitation) => TimeStampToDate(row.JoinDate, 'YYYY-MM-DD HH:mm:ss')
   },
   {
     name: 'TBsPurchased',
     label: t('affiliate.Direct.Purchased'),
     align: 'center',
-    field: (row: Invitation) => totalUnits(row.Summarys)
+    field: (row: Invitation) => totalUnits(row.MySummarys).toString() + ' TB'
   },
   {
     name: 'TotalPayment',
     label: t('affiliate.Direct.Total'),
     align: 'center',
-    field: (row: Invitation) => totalAmount(row.Summarys)
+    field: (row: Invitation) => totalAmount(row.MySummarys).toString() + ' USDT'
   },
   {
     name: 'ReferralValue',
     label: t('affiliate.Direct.Referral'),
     align: 'center',
-    field: 'Username'
+    field: (row: Invitation) => totalAmount(row.Summarys).toString() + ' USDT'
   }
 ]
 </script>

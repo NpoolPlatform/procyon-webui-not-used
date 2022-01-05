@@ -19,6 +19,8 @@ export interface Invitee {
   Kol: boolean
   Summarys: Map<string, InvitationSummary>
   InvitedCount: number
+  MySummarys: Map<string, InvitationSummary>
+  JoinDate: number
 }
 
 export interface Invitees {
@@ -27,6 +29,7 @@ export interface Invitees {
 
 export interface GetDirectInvitationsResponse {
   Infos: Map<string, Invitees>
+  MySelf: Invitee
 }
 
 export interface Invitation {
@@ -37,7 +40,9 @@ export interface Invitation {
   children: Array<Invitation>
   Kol: boolean
   Summarys: Map<string, InvitationSummary>
-  InvitedCount: number
+  InvitedCount: number,
+  MySummarys: Map<string, InvitationSummary>
+  JoinDate: number
 }
 
 export enum AffiliateURLPath {

@@ -18,9 +18,9 @@
 
           <div class='invitation-content'>
             <span>SMH: </span>
-            <span class='sales-number'>{{ totalUnits(prop.node.Summarys) }}</span>
+            <span class='sales-number'>{{ totalUnits(prop.node.Summarys) + totalUnits(prop.node.MySummarys) }}</span>
             <span> TiB / </span>
-            <span class='sales-number'>{{ totalAmount(prop.node.Summarys) }}</span>
+            <span class='sales-number'>{{ totalAmount(prop.node.Summarys) + totalAmount(prop.node.MySummarys) }}</span>
             <span> USDT</span>
           </div>
         </div>
