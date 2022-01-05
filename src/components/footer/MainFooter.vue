@@ -165,7 +165,6 @@ div.content-h4 {
   text-decoration: none;
   transition: all ease-in-out 0.3s;
   font-size: 16px;
-  font-weight: lighter;
   padding: 6px 0;
 }
 
