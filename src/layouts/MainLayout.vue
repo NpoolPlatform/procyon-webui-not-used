@@ -34,6 +34,7 @@ import { ActionTypes } from 'src/store/users/action-types'
 import { GetUserDetailRequest, GetUserInvitationCodeRequest } from 'src/store/users/types'
 import { useI18n } from 'vue-i18n'
 import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
+import { loginVeiryConfirm } from 'src/utils/utils'
 
 const store = useStore()
 
@@ -113,6 +114,19 @@ type MyFunction = () => void
 
 const unsubscribe = ref<MyFunction>()
 
+const logined = computed({
+  get: () => store.getters.getUserLogined,
+  set: (val) => {
+    store.commit(userMutation.SetUserLogined, val)
+  }
+})
+const loginVerify = computed({
+  get: () => store.getters.getLoginVerify,
+  set: (val) => {
+    store.commit(userMutation.SetLoginVerify, val)
+  }
+})
+
 onMounted(() => {
   unsubscribe.value = store.subscribe((mutation) => {
     if (mutation.type === userMutation.SetUserLogined) {
@@ -122,6 +136,18 @@ onMounted(() => {
       }
     }
   })
+
+  if (q.cookies.has('UserID') && q.cookies.has('AppSession')) {
+    if (q.cookies.has(loginVeiryConfirm)) {
+      getUserDetails()
+      getUserInvitationCode()
+      logined.value = true
+      loginVerify.value = true
+    } else {
+      logined.value = false
+      loginVerify.value = false
+    }
+  }
 })
 
 onUnmounted(() => {
