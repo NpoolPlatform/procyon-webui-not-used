@@ -125,7 +125,7 @@
 </template>
 
 <script setup lang='ts'>
-import { computed, defineAsyncComponent, ref, onMounted } from 'vue'
+import { computed, defineAsyncComponent, ref, onMounted, onUnmounted } from 'vue'
 import changePasswordImg from 'src/assets/icon-password.svg'
 import emailImg from 'src/assets/icon-email.svg'
 import passImg from 'src/assets/icon-pass.svg'
@@ -174,23 +174,38 @@ const verifyMethod = computed({
 
 let lastVerifyMethod = verifyMethod.value
 
+type MyFunction = () => void
+const unsubscribe = ref<MyFunction>()
+
 onMounted(() => {
   if (googleVerify.value && userGALogin.value) {
     verifyMethod.value = verifyMethodGoogle
-  }
-  if (emailAddress.value !== undefined && emailAddress.value !== '') {
+  } else if (emailAddress.value !== undefined && emailAddress.value !== '') {
     verifyMethod.value = verifyMethodEmail
+  } else {
+    verifyMethod.value = verifyMethodUnknown
   }
-  verifyMethod.value = verifyMethodUnknown
   lastVerifyMethod = verifyMethod.value
+
+  unsubscribe.value = store.subscribe((mutation) => {
+    if (mutation.type === MutationTypes.SetEmailAddress) {
+      if (verifyMethod.value !== verifyMethodGoogle) {
+        verifyMethod.value = verifyMethodEmail
+      }
+    }
+  })
+})
+
+onUnmounted(() => {
+  unsubscribe.value?.()
 })
 
 function onSelectVerifyMethod (value: string) {
   switch (value) {
     case verifyMethodEmail:
       if (emailAddress.value === undefined || emailAddress.value === '') {
-         verifyMethod.value = lastVerifyMethod
-         return
+        verifyMethod.value = lastVerifyMethod
+        return
       }
       break
     case verifyMethodGoogle:
