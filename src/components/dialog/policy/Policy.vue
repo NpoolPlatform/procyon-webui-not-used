@@ -1,6 +1,6 @@
 <template>
-  <q-dialog full-heigh full-width persistent v-model='showMe'>
-    <q-card style='padding: 48px; color: #e1eeef; background-color: #23292b;'>
+  <q-dialog full-height full-width persistent v-model='showMe'>
+    <div style='padding: 48px; color: #e1eeef; background-color: #23292b;'>
       <q-card-section class='title-close-style row'>
         <div class='text-h6' style='margin-left: 10px'>
           {{ $t('legal.Title2') }}
@@ -15,7 +15,7 @@
           v-close-popup />
       </q-card-section>
       <q-separator />
-      <q-card-section class='scroll' style='max-height: 750px'>
+      <q-card-section class='scroll' style='max-height: 70%'>
         <div>
           <p>{{ $t('legal.P1') }}</p>
           <h5>{{ $t('legal.H1') }}</h5>
@@ -157,7 +157,7 @@
           v-close-popup
         />
       </q-card-actions>
-    </q-card>
+    </div>
   </q-dialog>
 </template>
 
