@@ -35,7 +35,10 @@ const actions: ActionTree<AffiliateState, RootState> = {
           Username: payload.Username,
           EmailAddress: payload.EmailAddress,
           Label: '',
-          children: []
+          children: [],
+          Kol: true,
+          Summarys: new Map(),
+          InvitedCount: 0
         }
         father.UserID = userid
         const infos = new Map<string, Invitees>(Object.entries(resp.Infos))
@@ -48,11 +51,15 @@ const actions: ActionTree<AffiliateState, RootState> = {
             Username: list.Username,
             UserID: list.UserID,
             Label: '02(' + index.toString() + ')',
-            children: []
+            children: [],
+            Kol: list.Kol,
+            Summarys: new Map(),
+            InvitedCount: list.InvitedCount
           }
           father.children.push(childrenInvitation)
           index++
         })
+        father.InvitedCount = index - 1
         const invitationList: Array<Invitation> = []
         invitationList.push(father)
         commit(MutationTypes.SetInvitationList, invitationList)

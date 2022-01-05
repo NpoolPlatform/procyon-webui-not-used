@@ -1,18 +1,27 @@
 <template>
-  <q-tree :nodes='invitationList' node-key='UserID' default-expand-all :expanded='[UserID]'>
+  <q-tree :nodes='kolList' node-key='UserID' default-expand-all :expanded='[UserID]'>
     <template v-slot:default-header='prop'>
       <div>
         <div class='invitation-box'>
           <div class='invitation-header'>
-            <div class='header-content'>
-                <span style='font-size: 20px; font-weight: 600'>{{
-                    prop.node.Username
-                  }}</span>
+            <div class='header-content row'>
+              <span style='font-size: 20px; font-weight: 600;'>{{ prop.node.Username }}</span>
+              <q-space />
+              <span style='font-size: 14px; font-weight: 300; margin-right: 5px; margin-top: 6px;'>{{ $t('affiliate.OnBoarded') }}</span>
+              <span class='invited-count'>{{ prop.node.InvitedCount }}</span>
             </div>
           </div>
 
           <div class='invitation-content'>
             <span>{{ prop.node.EmailAddress }}</span>
+          </div>
+
+          <div class='invitation-content'>
+            <span>SMH: </span>
+            <span class='sales-number'>{{ totalUnits(prop.node.Summarys) }}</span>
+            <span> TiB / </span>
+            <span class='sales-number'>{{ totalAmount(prop.node.Summarys) }}</span>
+            <span> USDT</span>
           </div>
         </div>
       </div>
@@ -27,7 +36,7 @@
 <script setup lang='ts'>
 import { computed, onBeforeMount, ref, onUnmounted } from 'vue'
 import { useStore } from 'src/store'
-import { GetDirectInvitationsRequest } from 'src/store/affiliate/types'
+import { GetDirectInvitationsRequest, Invitation, InvitationSummary } from 'src/store/affiliate/types'
 import { useQuasar } from 'quasar'
 import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/affiliate/action-types'
@@ -62,6 +71,26 @@ onUnmounted(() => {
 const store = useStore()
 const invitationList = computed(() => store.getters.getInvitationList)
 const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
+
+const totalUnits = (summarys: Map<string, InvitationSummary>) => {
+  let total = 0
+  for (const [, summary] of summarys) {
+    total += summary.Units
+  }
+  return total
+}
+
+const totalAmount = (summarys: Map<string, InvitationSummary>) => {
+  let total = 0
+  for (const [, summary] of summarys) {
+    total += summary.Amount
+  }
+  return total
+}
+
+const kolList = computed(() => invitationList.value.filter((invitee: Invitation) => {
+  return invitee.Kol
+}))
 
 const getInvitationList = () => {
   store.commit(MutationTypes.SetInnerLoading, {
@@ -104,7 +133,7 @@ const getUserDetails = () => {
   padding: 24px;
   margin: 24px;
   position: relative;
-  width: 600px;
+  width: 400px;
   height: auto;
 }
 
@@ -120,7 +149,7 @@ const getUserDetails = () => {
   position: absolute;
   top: 55px;
   height: 1px;
-  width: 600px;
+  width: 1200px;
 }
 
 .header-content {
@@ -164,4 +193,22 @@ const getUserDetails = () => {
 .invitation-content {
   margin-top: 10px;
 }
+
+.invited-count {
+  background: linear-gradient(to left, #54e280 0, #1ec498 50%);
+  background-clip: border-box;
+  filter: contrast(2);
+  font-size: 20px;
+  font-weight: bold;
+  -webkit-background-clip: text;
+  -webkit-box-decoration-break: clone;
+  -webkit-text-fill-color: transparent;
+}
+
+.sales-number {
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
 </style>

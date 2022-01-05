@@ -360,7 +360,9 @@ export default {
   affiliate: {
     Title: 'Affiliate',
     ReferralCode: '招待コード',
-    CopyCode: 'コードをコピーする'
+    CopyCode: 'コードをコピーする',
+    OnBoarded: 'オンボード',
+    Sales: '売上高'
   },
 
   product: {

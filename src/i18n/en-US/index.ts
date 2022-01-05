@@ -361,7 +361,9 @@ export default {
   affiliate: {
     Title: 'Affiliate',
     ReferralCode: 'Referral Code',
-    CopyCode: 'Copy Code'
+    CopyCode: 'Copy Code',
+    OnBoarded: 'ONBOARDED',
+    Sales: 'Sales'
   },
 
   product: {
