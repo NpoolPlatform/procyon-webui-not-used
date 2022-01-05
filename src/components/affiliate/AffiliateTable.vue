@@ -1,5 +1,5 @@
 <template>
-  <q-table flat class='table-box' :rows='normalList' :columns='normalListColumns' row-key='Name'
+  <q-table flat class='table-box' :rows='directReferralsList' :columns='directReferralsListColumns' row-key='Name'
            color='#e1eeef' :no-data-label="$t('NoData')" />
 </template>
 
@@ -12,7 +12,7 @@ import { TimeStampToDate } from 'src/utils/utils'
 
 const store = useStore()
 const invitationList = computed(() => store.getters.getInvitationList)
-const normalList = computed(() => invitationList.value[0].children.filter((invitee: Invitation) => {
+const directReferralsList = computed(() => invitationList.value[0].children.filter((invitee: Invitation) => {
   return !invitee.Kol
 }))
 
@@ -35,7 +35,7 @@ const totalAmount = (summarys: Map<string, InvitationSummary>) => {
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n()
 
-const normalListColumns = [
+const directReferralsListColumns = [
   {
     name: 'Name',
     label: t('affiliate.Direct.Name'),
