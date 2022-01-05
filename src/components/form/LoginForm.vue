@@ -121,6 +121,14 @@ const passwordRule = ref([
 ])
 
 const login = throttle((): void => {
+  if (showPhone.value) {
+    loginInput.Username = ''
+  }
+
+  if (showEmail.value) {
+    loginInput.Phone = ''
+  }
+
   const request: UserLoginRequest = {
     Username: loginInput.Username,
     Password: sha256Password(loginInput.Password),
