@@ -64,7 +64,7 @@ const loginVerify = computed(() => store.getters.getLoginVerify)
 watch(loginVerify, (n, o) => {
   if (n && !o) {
     emit('update:showDialog', false)
-    void router.push('/account')
+    void router.push('/dashboard')
   }
 })
 </script>

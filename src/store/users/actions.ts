@@ -178,7 +178,7 @@ const actions: ActionTree<UserState, RootState> = {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.ChangePassword.Success'), '', 'positive'))
       commit(notifyMutation.SetLoading, false)
       commit(styleMutation.SetUserDialogShow, false)
-      void router.push('/account')
+      void router.push('/dashboard')
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.ChangePassword.Fail'), err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)
