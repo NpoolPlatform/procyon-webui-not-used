@@ -45,7 +45,8 @@
 import { defineProps, computed, toRef, withDefaults } from 'vue'
 import { useStore } from 'src/store'
 import { ActionTypes } from 'src/store/users/action-types'
-import { UserLogoutRequest } from 'src/store/users/types'
+import { MutationTypes } from 'src/store/users/mutation-types'
+import { NilUserInfo, UserLogoutRequest } from 'src/store/users/types'
 
 const store = useStore()
 
@@ -62,10 +63,34 @@ const props = withDefaults(defineProps<Props>(), {
 const avatarSize = toRef(props, 'avatarSize')
 const showAffiliate = toRef(props, 'hasInvitationCode')
 
-const logined = computed(() => store.getters.getUserLogined)
+const logined = computed({
+  get: () => store.getters.getUserLogined,
+  set: (val) => {
+    store.commit(MutationTypes.SetUserLogined, val)
+  }
+})
+
+const loginVerify = computed({
+  get: () => store.getters.getLoginVerify,
+  set: (val) => {
+    store.commit(MutationTypes.SetLoginVerify, val)
+  }
+})
+
+const userInfo = computed({
+  get: () => store.getters.getUserInfo,
+  set: (val) => {
+    store.commit(MutationTypes.SetUserInfo, val)
+  }
+})
 
 const logout = () => {
   const request: UserLogoutRequest = {}
+
+  userInfo.value = NilUserInfo
+  logined.value = false
+  loginVerify.value = false
+
   store.dispatch(ActionTypes.UserLogout, request)
 }
 </script>

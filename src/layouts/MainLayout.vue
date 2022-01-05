@@ -9,7 +9,7 @@
       v-model='showDrawer'
       style='background: transparent !important'
     >
-      <MainDrawer :hasInvitationCode='hasInvitationCode' />
+      <MainDrawer :hasInvitationCode='userInvitationCode !== ""' />
     </q-drawer>
 
     <q-page-container>
@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang='ts'>
-import { computed, defineAsyncComponent, onBeforeMount, onMounted, onUpdated, watch } from 'vue'
+import { computed, defineAsyncComponent, onBeforeMount, onMounted, onUpdated, watch, ref, onUnmounted } from 'vue'
 import { useStore } from 'src/store'
 import { useQuasar } from 'quasar'
 import { MutationTypes } from 'src/store/notify/mutation-types'
@@ -33,7 +33,6 @@ import { MutationTypes as styleMutation } from 'src/store/style/mutation-types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { GetUserDetailRequest, GetUserInvitationCodeRequest } from 'src/store/users/types'
 import { useI18n } from 'vue-i18n'
-import { loginVeiryConfirm } from 'src/utils/utils'
 import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
 
 const store = useStore()
@@ -44,19 +43,6 @@ const nowPath = computed(() => router.currentRoute.value.path)
 const loading = computed(() => store.getters.getLoading)
 const messages = computed(() => store.getters.getNotifyMessages)
 const loadingContent = computed(() => store.getters.getLoadingContent)
-const logined = computed({
-  get: () => store.getters.getUserLogined,
-  set: (val) => {
-    store.commit(userMutation.SetUserLogined, val)
-  }
-})
-
-const loginVerify = computed({
-  get: () => store.getters.getLoginVerify,
-  set: (val) => {
-    store.commit(userMutation.SetLoginVerify, val)
-  }
-})
 
 const q = useQuasar()
 
@@ -123,17 +109,23 @@ const getUserInvitationCode = () => {
   store.dispatch(ActionTypes.GetUserInvitationCode, request)
 }
 
+type MyFunction = () => void
+
+const unsubscribe = ref<MyFunction>()
+
 onMounted(() => {
-  if (q.cookies.has('UserID') && q.cookies.has('AppSession')) {
-    if (q.cookies.has(loginVeiryConfirm)) {
-      getUserDetails()
-      getUserInvitationCode()
-    } else {
-      logined.value = false
-      loginVerify.value = false
-      void router.push('/login')
+  unsubscribe.value = store.subscribe((mutation) => {
+    if (mutation.type === userMutation.SetUserLogined) {
+      if (mutation.payload) {
+        getUserDetails()
+        getUserInvitationCode()
+      }
     }
-  }
+  })
+})
+
+onUnmounted(() => {
+  unsubscribe.value?.()
 })
 
 onUpdated(() => {
@@ -154,7 +146,7 @@ const MainFooter = defineAsyncComponent(
   () => import('src/components/footer/MainFooter.vue')
 )
 
-const hasInvitationCode = computed(() => store.getters.getUserInvitationCode !== '')
+const userInvitationCode = computed(() => store.getters.getUserInvitationCode)
 </script>
 
 <style scoped>

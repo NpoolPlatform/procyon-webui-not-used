@@ -77,6 +77,8 @@ const loginVerify = computed({
 })
 const userInfo = computed(() => store.getters.getUserInfo)
 
+console.log(loginVerify.value)
+
 watch(logined, (newLogined, oldLogined) => {
   if (newLogined && !oldLogined) {
     if (userInfo.value.UserAppInfo.UserApplicationInfo.GALogin) {

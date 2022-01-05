@@ -38,7 +38,7 @@
       {{ $t('button.Login') }}
     </q-btn>
 
-    <AvatarDropdown :hasInvitationCode='hasInvitationCode' />
+    <AvatarDropdown :hasInvitationCode='hasInvitationCode' v-if='logined' />
   </div>
 </template>
 

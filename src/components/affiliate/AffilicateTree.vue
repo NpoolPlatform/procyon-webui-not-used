@@ -1,4 +1,5 @@
 <template>
+  <div>{{ invitationList }}</div>
   <q-tree :nodes='invitationList' node-key='UserID' default-expand-all :expanded='[UserID]'>
     <template v-slot:default-header='prop'>
       <div>

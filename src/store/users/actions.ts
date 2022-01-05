@@ -202,8 +202,6 @@ const actions: ActionTree<UserState, RootState> = {
     const { t } = useI18n()
     post<GetUserDetailRequest, GetUserDetailResponse>(UserURLPath.GET_USER_DETAIL, payload).then((resp: GetUserDetailResponse) => {
       commit(MutationTypes.SetUserInfo, resp.Info)
-      commit(MutationTypes.SetLoginVerify, true)
-      commit(MutationTypes.SetUserLogined, true)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.GetUserDetail.Fail'), err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)
