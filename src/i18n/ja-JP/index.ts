@@ -362,7 +362,19 @@ export default {
     ReferralCode: '招待コード',
     CopyCode: 'コードをコピーする',
     OnBoarded: 'オンボード',
-    Sales: '売上高'
+    Sales: '売上高',
+    Direct: {
+      Title: 'ダイレクト・リファレンシャル',
+      Name: 'ユーザー名',
+      Date: '入社年月日',
+      Purchased: '購入したTB',
+      Total: '支払総額',
+      Referral: '紹介価値'
+    },
+    Export: {
+      Title: 'データエクスポート',
+      Button: '全データの書き出し（CSV）'
+    }
   },
 
   product: {
