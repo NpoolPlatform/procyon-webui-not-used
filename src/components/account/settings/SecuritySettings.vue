@@ -164,8 +164,8 @@ const userGALogin = computed({
   }
 })
 
-const verifyMethodConst = computed(
-  () => {
+const verifyMethod = computed({
+  get: () => {
     if (googleVerify.value && userGALogin.value) {
       return verifyMethodGoogle
     }
@@ -173,10 +173,11 @@ const verifyMethodConst = computed(
       return verifyMethodEmail
     }
     return verifyMethodUnknown
+  },
+  set: (val) => {
+    verifyMethod.value = val
   }
-)
-
-const verifyMethod = ref(verifyMethodConst.value)
+})
 
 function onSelectVerifyMethod (value: string) {
   switch (value) {
@@ -232,6 +233,7 @@ const setLoginVerify = () => {
   }
   store.dispatch(ActionTypes.SetGALoginVerify, request)
 }
+
 </script>
 
 <style scoped>

@@ -5,11 +5,7 @@
       v-model:tel='registerInput.phoneNumber'
       bg-color='blue-grey-2'
       outlined
-      lazy-rules
-      :rules='phoneNumberRule'
       :label="$t('input.PhoneNumber')"
-      :required='false'
-      :error='false'
       class='common-input' />
     <q-input
       v-if='showEmail'
@@ -128,9 +124,6 @@ const registerInput = reactive({
   invitationCode: ''
 })
 
-const phoneNumberRule = ref([
-  (val: string) => (val && val.length > 0) || t('input.PhoneNumberWarning')
-])
 const emailRule = ref([
   (val: string) => isValidEmail(val) || t('input.EmailAddressWarning')
 ])
@@ -149,6 +142,14 @@ const agreeRules = ref([
 ])
 
 const register = throttle(() => {
+  if (showEmail.value) {
+    registerInput.phoneNumber = ''
+  }
+
+  if (showPhone.value) {
+    registerInput.emailAddress = ''
+  }
+
   const request: UserSignUpRequest = {
     EmailAddress: registerInput.emailAddress,
     Password: sha256Password(registerInput.password),

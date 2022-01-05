@@ -19,7 +19,7 @@ const api = axios.create({
   withCredentials: true,
   headers: { 'Content-Type': 'application/json' },
   responseType: 'json',
-  timeout: 10000
+  timeout: 300000
 })
 
 // define common response handle

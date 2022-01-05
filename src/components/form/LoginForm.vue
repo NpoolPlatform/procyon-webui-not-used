@@ -5,12 +5,7 @@
       v-model:tel='loginInput.Phone'
       bg-color='blue-grey-2'
       outlined
-      reactive-rules
-      lazy-rules
-      :rules='phoneNumberRule'
       :label="$t('input.PhoneNumber')"
-      :required='false'
-      :error='false'
       class='common-input' />
     <q-input
       v-if='showEmail'
@@ -68,7 +63,7 @@
 <script setup lang='ts'>
 import { ref, computed, reactive, onBeforeMount, defineAsyncComponent, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { formatPhoneNumber, isValidLoginUsername, sha256Password, ThrottleDelay } from 'src/utils/utils'
+import { formatPhoneNumber, isValidLoginUsername, sha256Password, ThrottleDelay, isValidPassword } from 'src/utils/utils'
 import { useStore } from 'src/store'
 import { UserLoginRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
@@ -122,14 +117,18 @@ const usernameRule = ref([
 ])
 
 const passwordRule = ref([
-  (val: string) => (val && val.length > 0) || t('input.PasswordWarning')
-])
-
-const phoneNumberRule = ref([
-  (val: string) => (val && val.length > 0) || t('input.PhoneNumberWarning')
+  (val: string) => isValidPassword(val) || t('input.PasswordWarning')
 ])
 
 const login = throttle((): void => {
+  if (showPhone.value) {
+    loginInput.Username = ''
+  }
+
+  if (showEmail.value) {
+    loginInput.Phone = ''
+  }
+
   const request: UserLoginRequest = {
     Username: loginInput.Username,
     Password: sha256Password(loginInput.Password),
