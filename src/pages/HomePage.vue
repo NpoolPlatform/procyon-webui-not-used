@@ -209,7 +209,6 @@ const logined = computed(() => store.getters.getUserLogined)
   text-transform: uppercase;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  display: flex;
   align-items: center;
 }
 
