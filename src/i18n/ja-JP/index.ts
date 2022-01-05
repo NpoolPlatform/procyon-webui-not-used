@@ -133,6 +133,10 @@ export default {
     },
     GetUserLoginHistory: {
       Fail: 'ユーザーログイン履歴の取得に失敗する'
+    },
+    SendUserSiteContactEmail: {
+      Success: 'お問い合わせメールの送信に成功しました 返信をお待ちください。',
+      Fail: 'コンタクトメールの送信に失敗する'
     }
   },
 
@@ -276,7 +280,8 @@ export default {
     Cancel: '取消',
     Export: '履歴のエクスポート(CSV)',
     Purchase: 'ストレージ容量を追加購入',
-    Save: '保存'
+    Save: '保存',
+    SendMessage: 'メッセージを送る'
   },
 
   input: {
@@ -303,7 +308,13 @@ export default {
     Login: {
       Username: 'ユーザー名 / メールアドレス',
       UsernameWarning: '正しいユーザー名／メールアドレスを入力してください'
-    }
+    },
+    Name: '名称',
+    NameWarning: 'お名前を入力してください',
+    Subject: '主題',
+    SubjectWarning: 'お問い合わせの件名を入力してください',
+    Message: 'メッセージ',
+    MessageWarning: 'コンタクトメッセージの内容を入力してください。'
   },
 
   dialog: {
@@ -363,6 +374,27 @@ export default {
     MaintenanceFeeLabel: 'メンテナンス費用:',
     MaintenanceFeeValue: '日',
     OrderEffectiveLabel: '注文受け付け日:'
+  },
+
+  contact: {
+    Title: 'CONTACT PROCYON SUPPORT',
+    Left: {
+      Title: 'Contact Procyon via Email'
+    },
+    Right: {
+      Title: 'Contact Procyon via LINE',
+      Box1Content: {
+        Word1: 'To scan the QR code below, open ',
+        StrongWord1: 'LINE',
+        Word2: ' on your phone and tap the ',
+        StrongWord2: '\'Add Friends\'',
+        Word3: ' icon. Then select ',
+        StrongWord3: '\'QR code\'',
+        Word4: ' at the top.'
+      },
+      Content: 'Feel free to contact us with questions about our platform, support issues, or just to say hi. We look forward to hearing from you!',
+      Signature: '—Procyon Support Team'
+    }
   },
 
   dashboard: {

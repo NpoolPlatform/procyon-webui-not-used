@@ -14,9 +14,9 @@
     <router-link class='nav-link' :to="{ path: '/faq' }">
       {{ $t('header.Support') }}
     </router-link>
-    <a class='nav-link' href='mailto:support@procyon.vip'>
+    <router-link class='nav-link' :to="{ path: '/contact' }">
       {{ $t('header.Contact') }}
-    </a>
+    </router-link>
     <div style='padding: 12px'>
       <ChangeLang />
     </div>
