@@ -25,6 +25,13 @@ export default {
     P2: '大変ご不便をおかけ致しますが、どうぞご理解とご協力のほどよろしくお願い申し上げます。'
   },
 
+  verificationCode: {
+    Hint: {
+      Words1: '確認コードを',
+      Words2: 'に送信します'
+    }
+  },
+
   notify: {
     Logout: {
       Load: 'ログアウトするまでお待ちください',

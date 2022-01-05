@@ -9,8 +9,13 @@
       </q-card-section>
       <q-card-section>
         <q-form @submit='update'>
-          <Vue3QTelInput v-model:tel='oldPhone' bg-color='blue-grey-2' outlined lazy-rules :rules='phoneRules'
-                         :label="$t('input.OldPhoneNumber')" :required='false' :error='false' />
+          <div class='row send-hint'>
+            <span>
+              {{ $t('verificationCode.Hint.Words1') }}
+              <span class='send-number'>{{ oldPhone }}</span>
+              {{ $t('verificationCode.Hint.Words2') }}
+            </span>
+          </div>
 
           <send-code-input
             :verifyParam='oldPhone'
@@ -132,5 +137,14 @@ const whenHide = () => {
   border: 0;
   color: #e4f4f0;
   width: 100%;
+}
+
+.send-hint {
+  color: #888888;
+}
+
+.send-number {
+  color: #555555;
+  font-weight: bold;
 }
 </style>

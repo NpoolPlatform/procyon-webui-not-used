@@ -9,15 +9,13 @@
       </q-card-section>
       <q-card-section>
         <q-form @submit='update'>
-          <q-input
-            outlined
-            bg-color='blue-grey-2'
-            class='common-input'
-            :label="$t('input.OldEmailAddress')"
-            v-model='oldEmail'
-            disable
-            lazy-rules
-            :rules='emailRules' />
+          <div class='row send-hint'>
+            <span>
+              {{ $t('verificationCode.Hint.Words1') }}
+              <span class='send-number'>{{ oldEmail }}</span>
+              {{ $t('verificationCode.Hint.Words2') }}
+            </span>
+          </div>
 
           <send-code-input
             :verifyParam='oldEmail'
@@ -142,5 +140,14 @@ const whenHide = () => {
   border: 0;
   color: #e4f4f0;
   width: 100%;
+}
+
+.send-hint {
+  color: #888888;
+}
+
+.send-number {
+  color: #555555;
+  font-weight: bold;
 }
 </style>

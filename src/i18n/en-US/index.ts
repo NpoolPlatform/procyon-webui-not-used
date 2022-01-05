@@ -25,6 +25,13 @@ export default {
     P2: 'However, please feel free to use Procyon on your phone or desktop browser.'
   },
 
+  verificationCode: {
+    Hint: {
+      Words1: 'Send verification code to',
+      Words2: ''
+    }
+  },
+
   notify: {
     Logout: {
       Load: 'Please wait to logout...',
