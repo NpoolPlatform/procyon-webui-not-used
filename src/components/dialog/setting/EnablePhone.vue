@@ -35,6 +35,7 @@ import { useI18n } from 'vue-i18n'
 import { EnablePhoneRequest } from 'src/store/users/types'
 import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
+import { formatPhoneNumber } from 'src/utils/utils'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
 const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
@@ -69,7 +70,7 @@ watch(userDialogShow, (n, o) => {
 
 const enable = () => {
   const request: EnablePhoneRequest = {
-    PhoneNumber: phoneNumber.value,
+    PhoneNumber: formatPhoneNumber(phoneNumber.value),
     Code: verifyCode.value
   }
   store.dispatch(ActionTypes.EnablePhone, request)

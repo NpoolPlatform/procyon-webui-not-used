@@ -51,6 +51,7 @@ import { useI18n } from 'vue-i18n'
 import { UpdatePhoneRequest } from 'src/store/users/types'
 import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
+import { formatPhoneNumber } from 'src/utils/utils'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
 const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
@@ -90,9 +91,9 @@ watch(userDialogShow, (n, o) => {
 
 const update = () => {
   const request: UpdatePhoneRequest = {
-    OldPhone: oldPhone.value,
+    OldPhone: formatPhoneNumber(oldPhone.value),
     OldCode: oldVerifyCode.value,
-    NewPhone: newPhone.value,
+    NewPhone: formatPhoneNumber(newPhone.value),
     NewCode: verifyCode.value
   }
   store.dispatch(ActionTypes.UpdatePhone, request)
