@@ -1,5 +1,5 @@
 <template>
-  <q-dialog persistent v-model='showMe'>
+  <q-dialog maximized  persistent v-model='showMe'>
     <q-card style='color: #e1eeef; background-color: #23292b;'>
       <q-card-section class='title-close-style row'>
         <div class='text-h6' style='margin-left: 10px'>
@@ -190,4 +190,5 @@ function onDone (agree: boolean) {
 .title-close-style {
   text-align: right;
 }
+
 </style>
