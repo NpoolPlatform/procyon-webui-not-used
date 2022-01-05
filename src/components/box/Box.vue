@@ -7,13 +7,13 @@
         <a
           v-if='showEmail'
           class='link title-link'
-          @click='switchChangePasswordMethod("email")'
+          @click='switchChangePasswordMethod("phone")'
         >{{ $t('box.PhoneLink') }}</a>
 
         <a
           v-if='showPhone'
           class='link title-link'
-          @click='switchChangePasswordMethod("phone")'
+          @click='switchChangePasswordMethod("email")'
         >{{ $t('box.EmailLink') }}</a>
       </div>
     </q-card-section>

@@ -146,7 +146,7 @@
           flat
           :label="$t('button.Cancel')"
           color='primary'
-          @click="onDone(false)"
+          @click="onDone(agree)"
           v-close-popup
         />
         <q-btn
