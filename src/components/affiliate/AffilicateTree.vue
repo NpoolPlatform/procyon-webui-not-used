@@ -1,5 +1,4 @@
 <template>
-  <div>{{ invitationList }}</div>
   <q-tree :nodes='invitationList' node-key='UserID' default-expand-all :expanded='[UserID]'>
     <template v-slot:default-header='prop'>
       <div>
@@ -26,13 +25,16 @@
 </template>
 
 <script setup lang='ts'>
-import { computed, onBeforeMount } from 'vue'
+import { computed, onBeforeMount, ref, onUnmounted } from 'vue'
 import { useStore } from 'src/store'
 import { GetDirectInvitationsRequest } from 'src/store/affiliate/types'
 import { useQuasar } from 'quasar'
 import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/affiliate/action-types'
+import { ActionTypes as userActionTypes } from 'src/store/users/action-types'
 import { MutationTypes } from 'src/store/notify/mutation-types'
+import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
+import { GetUserDetailRequest } from 'src/store/users/types'
 
 const q = useQuasar()
 const UserID = q.cookies.get('UserID')
@@ -40,8 +42,21 @@ const target = ItemStateTarget.GetDirectInvitationList
 
 const innerLoading = computed(() => store.getters.getInnerLoading.get(target))
 
+type MyFunction = () => void
+
+const unsubscribe = ref<MyFunction>()
+
 onBeforeMount(() => {
-  getInvitationList()
+  getUserDetails()
+  unsubscribe.value = store.subscribe((mutation) => {
+    if (mutation.type === userMutation.SetUserInfo) {
+      getInvitationList()
+    }
+  })
+})
+
+onUnmounted(() => {
+  unsubscribe.value?.()
 })
 
 const store = useStore()
@@ -53,6 +68,7 @@ const getInvitationList = () => {
     key: target,
     value: true
   })
+
   const request: GetDirectInvitationsRequest = {
     AppID: q.cookies.get('AppID'),
     InviterID: q.cookies.get('UserID'),
@@ -62,6 +78,12 @@ const getInvitationList = () => {
   }
   store.dispatch(ActionTypes.GetDirectInvitationList, request)
 }
+
+const getUserDetails = () => {
+  const request: GetUserDetailRequest = {}
+  store.dispatch(userActionTypes.GetUserDetail, request)
+}
+
 </script>
 
 <style scoped>
