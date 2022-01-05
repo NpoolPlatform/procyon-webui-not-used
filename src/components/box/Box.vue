@@ -5,13 +5,13 @@
 
       <div v-if='showLink'>
         <a
-          v-if='showPhone'
+          v-if='showEmail'
           class='link title-link'
           @click='switchChangePasswordMethod("email")'
         >{{ $t('box.PhoneLink') }}</a>
 
         <a
-          v-if='showEmail'
+          v-if='showPhone'
           class='link title-link'
           @click='switchChangePasswordMethod("phone")'
         >{{ $t('box.EmailLink') }}</a>
