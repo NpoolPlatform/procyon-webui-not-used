@@ -92,7 +92,7 @@ const actions: ActionTree<VerifyState, RootState> = {
         key: payload.ItemTarget,
         value: false
       })
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.SendEmail.Success.Words1') + '<' + payload.Email + '>' + t('notify.SendEmail.Success.Words2') + t('notify.SendEmail.Success.Check'), '', 'positive'))
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.SendEmail.Success.Words1') + '<' + payload.Email + '>, ' + t('notify.SendEmail.Success.Words2') + t('notify.SendEmail.Success.Check'), '', 'positive'))
       countInternal(commit, payload.ItemTarget)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.SendEmail.Fail'), err.message, 'negative'))
