@@ -160,6 +160,7 @@
 <style scoped>
 .faq h2:not(#hero h2) {
   margin: 96px 0 36px 0;
+  line-height: 1;
 }
 
 .faq h2:not(#hero h2):first-of-type {
@@ -171,13 +172,14 @@
   background-clip: border-box;
   font-size: 24px;
   font-weight: 400;
-  margin: 48px auto 12px auto;
+  margin: 48px auto 12px;
   position: relative;
   padding: 0 0 12px;
   text-transform: unset;
   -webkit-background-clip: text;
   -webkit-box-decoration-break: clone;
   -webkit-text-fill-color: transparent;
+  line-height: 1;
 }
 
 .faq h3::before {
