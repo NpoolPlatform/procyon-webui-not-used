@@ -21,7 +21,7 @@
         :disable='sendDisable'
         @click='sendSmsCode'
       >
-        {{ $t('button.SendCode') }}
+        {{ sendCodeText }}
       </q-btn
       >
     </template>
@@ -33,7 +33,7 @@ import { computed, defineEmits, defineProps, onMounted, ref, toRef, watch, withD
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'src/store'
 import { SendEmailRequest, SendSmsRequest } from 'src/store/verify/types'
-import { GenerateSendEmailRequest } from 'src/utils/utils'
+import { formatPhoneNumber, GenerateSendEmailRequest } from 'src/utils/utils'
 import { ActionTypes } from 'src/store/verify/action-types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { MutationTypes as verifyMutation } from 'src/store/verify/mutation-types'
@@ -99,7 +99,7 @@ const sendSmsCode = () => {
   })
   const request: SendSmsRequest = {
     Lang: locale.value,
-    Phone: verifyParam.value,
+    Phone: formatPhoneNumber(verifyParam.value),
     ItemTarget: itemTarget.value
   }
   store.dispatch(ActionTypes.SendSMS, request)
