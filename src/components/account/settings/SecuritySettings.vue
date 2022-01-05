@@ -272,4 +272,8 @@ const setLoginVerify = () => {
 .disable-button {
   background: linear-gradient(to bottom right, #acaaa9 0, #949291 100%);
 }
+
+.disabled {
+  filter: saturate(0);
+}
 </style>

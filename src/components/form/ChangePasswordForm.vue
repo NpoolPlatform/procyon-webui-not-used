@@ -9,10 +9,10 @@
     </div>
 
     <SendCodeInput v-if='showEmail' verify-type='email' v-model:verify-code='verifyCode'
-                   :verify-param='userBasicInfo.EmailAddress'
+                   :verify-param='accountNumber'
                    :item-target='ItemStateTarget.ChangePasswordEmailSendCodeButton' />
     <SendCodeInput v-if='showPhone' verify-type='phone' v-model:verify-code='verifyCode'
-                   :verify-param='changePasswordInput.phoneNumber'
+                   :verify-param='accountNumber'
                    :item-target='ItemStateTarget.ChangePasswordPhoneSendCodeButton' />
     <q-input v-model='changePasswordInput.oldPassword' :label="$t('input.OldPassword')" bg-color='blue-grey-2'
              class='common-input'
@@ -95,8 +95,6 @@ const isCPwd = ref(true)
 const isOPwd = ref(true)
 
 const changePasswordInput = reactive({
-  phoneNumber: '',
-  emailAddress: '',
   oldPassword: '',
   password: '',
   confirmPassword: ''
@@ -121,7 +119,7 @@ const changePassword = throttle(() => {
     verifyParam = userBasicInfo.value.EmailAddress
   } else if (showPhone.value) {
     type = 'phone'
-    verifyParam = formatPhoneNumber(changePasswordInput.phoneNumber)
+    verifyParam = formatPhoneNumber(userBasicInfo.value.PhoneNumber)
   }
 
   const request: UserChangePasswordRequest = {
