@@ -12,7 +12,8 @@
       <q-btn
         class='common-button copy-button'
         :label='$t("affiliate.CopyCode")'
-        dense />
+        dense
+        @click='onCopyCode' />
       <q-space class='col-1' />
     </div>
   </div>
@@ -36,6 +37,13 @@ onMounted(() => {
 })
 
 const userInvitationCode = computed(() => store.getters.getUserInvitationCode)
+
+function onCopyCode () {
+  navigator.clipboard.writeText(userInvitationCode.value)
+    .catch((err) => {
+      console.log('fail copy referral code', err)
+    })
+}
 
 </script>
 
@@ -69,9 +77,8 @@ const userInvitationCode = computed(() => store.getters.getUserInvitationCode)
   color: #e4f4f0;
   font-style: normal;
   font-weight: 600;
-  font-size: 18px;
   line-height: 48px;
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 600;
   padding: 0 48px 0 48px;
   margin-right: 24px;
