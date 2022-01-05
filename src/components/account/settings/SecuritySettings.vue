@@ -102,7 +102,7 @@
           <q-option-group
             v-model='verifyMethod'
             :options='loginOptions'
-            @update:model-value='onSelectVerifyMethod(verifyMethod)'
+            @update:model-value='(value) => onSelectVerifyMethod(value)'
             color='teal'
             inline
             :disable='!verifySelectEnable'
@@ -125,7 +125,7 @@
 </template>
 
 <script setup lang='ts'>
-import { computed, defineAsyncComponent, ref } from 'vue'
+import { computed, defineAsyncComponent, ref, onMounted } from 'vue'
 import changePasswordImg from 'src/assets/icon-password.svg'
 import emailImg from 'src/assets/icon-email.svg'
 import passImg from 'src/assets/icon-pass.svg'
@@ -138,6 +138,7 @@ import { useI18n } from 'vue-i18n'
 import { SetGALoginVerifyRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { MutationTypes } from 'src/store/users/mutation-types'
+import { MutationTypes as verifyMutationTypes } from 'src/store/verify/mutation-types'
 
 const SettingBox = defineAsyncComponent(() => import('src/components/box/SettingBox.vue'))
 const EnableEmailDialog = defineAsyncComponent(() => import('src/components/dialog/setting/EnableEmail.vue'))
@@ -165,32 +166,41 @@ const userGALogin = computed({
 })
 
 const verifyMethod = computed({
-  get: () => {
-    if (googleVerify.value && userGALogin.value) {
-      return verifyMethodGoogle
-    }
-    if (emailAddress.value !== undefined && emailAddress.value !== '') {
-      return verifyMethodEmail
-    }
-    return verifyMethodUnknown
-  },
+  get: () => store.state.verify.verifyMethod,
   set: (val) => {
-    verifyMethod.value = val
+    store.commit(verifyMutationTypes.SetVerifyMethod, val)
   }
+})
+
+let lastVerifyMethod = verifyMethod.value
+
+onMounted(() => {
+  if (googleVerify.value && userGALogin.value) {
+    verifyMethod.value = verifyMethodGoogle
+  }
+  if (emailAddress.value !== undefined && emailAddress.value !== '') {
+    verifyMethod.value = verifyMethodEmail
+  }
+  verifyMethod.value = verifyMethodUnknown
+  lastVerifyMethod = verifyMethod.value
 })
 
 function onSelectVerifyMethod (value: string) {
   switch (value) {
     case verifyMethodEmail:
       if (emailAddress.value === undefined || emailAddress.value === '') {
-        if (googleVerify.value && userGALogin.value) {
-          verifyMethod.value = verifyMethodGoogle
-        } else {
-          verifyMethod.value = verifyMethodUnknown
-        }
+         verifyMethod.value = lastVerifyMethod
+         return
+      }
+      break
+    case verifyMethodGoogle:
+      if (!googleVerify.value) {
+        verifyMethod.value = lastVerifyMethod
+        return
       }
       break
   }
+  lastVerifyMethod = verifyMethod.value
 }
 
 const verifySelectEnable = computed(

@@ -8,6 +8,7 @@ interface VerifyState {
   googleAuthenticationInfo: GoogleAuthenticationInfo
   sendCodeButtonDisable: Map<string, boolean>
   sendCodeButtonText: Map<string, string>
+  verifyMethod: string
 }
 
 function state (): VerifyState {
@@ -22,7 +23,8 @@ function state (): VerifyState {
     error: '',
     googleAuthenticationInfo: info,
     sendCodeButtonDisable: new Map<string, boolean>(),
-    sendCodeButtonText: new Map<string, string>()
+    sendCodeButtonText: new Map<string, string>(),
+    verifyMethod: 'unknown-verification'
   }
 }
 

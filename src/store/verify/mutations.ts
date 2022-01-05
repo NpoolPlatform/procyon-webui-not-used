@@ -11,6 +11,7 @@ type VerifyMutations<S = VerifyState> = {
   [MutationTypes.SetGoogleAuthenticationInfo] (state: S, payload: GoogleAuthenticationInfo): void
   [MutationTypes.SetDisable] (state: S, payload: DisableState): void
   [MutationTypes.SetSendCodeButtonText] (state: S, payload: TextState): void
+  [MutationTypes.SetVerifyMethod] (state: S, payload: string): void
 }
 
 const mutations: MutationTree<VerifyState> & VerifyMutations = {
@@ -34,6 +35,9 @@ const mutations: MutationTree<VerifyState> & VerifyMutations = {
   },
   [MutationTypes.SetSendCodeButtonText] (state: VerifyState, payload: TextState) {
     state.sendCodeButtonText.set(payload.key, payload.value)
+  },
+  [MutationTypes.SetVerifyMethod] (state: VerifyState, payload: string) {
+    state.verifyMethod = payload
   }
 }
 
