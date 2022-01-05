@@ -1,6 +1,6 @@
 <template>
-  <q-dialog maximized  persistent v-model='showMe'>
-    <q-card style='color: #e1eeef; background-color: #23292b;'>
+  <q-dialog maximized persistent v-model='showMe'>
+    <q-card style='padding: 48px; color: #e1eeef; background-color: #23292b;'>
       <q-card-section class='title-close-style row'>
         <div class='text-h6' style='margin-left: 10px'>
           {{ $t('legal.Title2') }}
