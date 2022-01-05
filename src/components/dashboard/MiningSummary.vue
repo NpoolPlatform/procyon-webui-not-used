@@ -182,7 +182,7 @@ h3.mining-title {
 .buttons {
   display: flex;
   justify-content: space-between;
-  margin: 24px 12px 0 12px;
+  margin: 24px 0 0 0;
 }
 
 .export-button {
