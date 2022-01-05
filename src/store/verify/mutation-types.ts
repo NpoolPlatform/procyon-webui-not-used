@@ -6,4 +6,5 @@ export enum MutationTypes {
   SetGoogleAuthenticationInfo = 'VERIFY_SET_GOOGLE_AUTHENTICATION_INFO',
   SetDisable = 'VERIFY_SET_DISABLE',
   SetSendCodeButtonText = 'VERIFY_SET_SEND_CODE_BUTTON_TEXT',
+  SetVerifyMethod = 'VERIFY_SET_VERIFY_METHOD'
 }

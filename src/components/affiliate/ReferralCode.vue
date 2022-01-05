@@ -24,6 +24,7 @@ import { computed, onMounted } from 'vue'
 import { GetUserInvitationCodeRequest } from 'src/store/users/types'
 import { useStore } from 'src/store'
 import { ActionTypes } from 'src/store/users/action-types'
+import copy from 'copy-to-clipboard'
 
 const store = useStore()
 
@@ -39,10 +40,7 @@ onMounted(() => {
 const userInvitationCode = computed(() => store.getters.getUserInvitationCode)
 
 function onCopyCode () {
-  navigator.clipboard.writeText(userInvitationCode.value)
-    .catch((err) => {
-      console.log('fail copy referral code', err)
-    })
+  copy(userInvitationCode.value)
 }
 
 </script>
