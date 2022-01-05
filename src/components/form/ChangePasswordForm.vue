@@ -1,27 +1,12 @@
 <template>
   <q-form @submit='changePassword'>
-    <Vue3QTelInput
-      v-if='showPhone'
-      v-model:tel='changePasswordInput.phoneNumber'
-      bg-color='blue-grey-2'
-      outlined
-      lazy-rules
-      :rules='phoneNumberRule'
-      :label="$t('input.PhoneNumber')"
-      :required='false'
-      :error='false'
-      class='common-input' />
-    <q-input
-      v-if='showEmail'
-      bg-color='blue-grey-2'
-      class='common-input'
-      outlined
-      disable
-      v-model='userBasicInfo.EmailAddress'
-      :label="$t('input.EmailAddress')"
-      lazy-rules
-      :rules='emailRule'
-    ></q-input>
+    <div class='row send-hint'>
+      <span>
+        {{ $t('verificationCode.Hint.Words1') }}
+        <span class='send-number'>{{ accountNumber }}</span>
+        {{ $t('verificationCode.Hint.Words2') }}
+      </span>
+    </div>
 
     <SendCodeInput v-if='showEmail' verify-type='email' v-model:verify-code='verifyCode'
                    :verify-param='userBasicInfo.EmailAddress'
@@ -77,7 +62,7 @@
 
 <script setup lang='ts'>
 import { reactive, ref, defineAsyncComponent, computed } from 'vue'
-import { formatPhoneNumber, isValidEmail, isValidPassword, sha256Password, ThrottleDelay } from 'src/utils/utils'
+import { formatPhoneNumber, isValidPassword, sha256Password, ThrottleDelay } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
 import { throttle } from 'quasar'
 import { useStore } from 'src/store'
@@ -86,8 +71,6 @@ import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
-const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
-
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
 
@@ -95,6 +78,16 @@ const store = useStore()
 const showEmail = computed(() => store.getters.getShowEmail)
 const showPhone = computed(() => store.getters.getShowPhone)
 const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
+
+const accountNumber = computed(() => {
+  if (showEmail.value) {
+    return userBasicInfo.value.EmailAddress
+  }
+  if (showPhone.value) {
+    return userBasicInfo.value.PhoneNumber
+  }
+  return ''
+})
 
 const verifyCode = ref('')
 const isPwd = ref(true)
@@ -109,12 +102,6 @@ const changePasswordInput = reactive({
   confirmPassword: ''
 })
 
-const phoneNumberRule = ref([
-  (val: string) => (val && val.length > 0) || t('input.PhoneNumberWarning')
-])
-const emailRule = ref([
-  (val: string) => isValidEmail(val) || t('input.EmailAddressWarning')
-])
 const passwordRules = ref([
   (val: string) => isValidPassword(val) || t('input.PasswordWarning')
 ])
@@ -156,5 +143,14 @@ const changePassword = throttle(() => {
   border: 1px solid #ff964a;
   margin: 0 0 10px 0;
   width: 100%;
+}
+
+.send-hint {
+  color: #bbbbbb;
+}
+
+.send-number {
+  color: #cccccc;
+  font-weight: bold;
 }
 </style>

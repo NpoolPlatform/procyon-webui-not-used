@@ -5,15 +5,15 @@
 
       <div v-if='showLink'>
         <a
-          v-if='showEmail'
+          v-if='showPhone'
           class='link title-link'
-          @click='showEmail = false;showPhone = true'
+          @click='switchChangePasswordMethod("email")'
         >{{ $t('box.PhoneLink') }}</a>
 
         <a
-          v-if='showPhone'
+          v-if='showEmail'
           class='link title-link'
-          @click='showEmail = true;showPhone = false'
+          @click='switchChangePasswordMethod("phone")'
         >{{ $t('box.EmailLink') }}</a>
       </div>
     </q-card-section>
@@ -41,19 +41,58 @@ const props = withDefaults(defineProps<Props>(), {
 const cardTitle = toRef(props, 'title')
 const showLink = toRef(props, 'showLink')
 
+const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
+const phoneNumber = computed(() => userBasicInfo.value.PhoneNumber)
+const emailAddress = computed(() => userBasicInfo.value.EmailAddress)
+
 const showEmail = computed({
-  get: () => store.getters.getShowEmail,
+  get: () => {
+    if (emailAddress.value === undefined || emailAddress.value === '') {
+      return false
+    }
+    return store.getters.getShowEmail
+  },
   set: (val) => {
     store.commit(MutationTypes.SetShowEmail, val)
   }
 })
 
 const showPhone = computed({
-  get: () => store.getters.getShowPhone,
+  get: () => {
+    if (phoneNumber.value === undefined || phoneNumber.value === '') {
+      return false
+    }
+    return store.getters.getShowPhone
+  },
   set: (val) => {
     store.commit(MutationTypes.SetShowPhone, val)
   }
 })
+
+const changePasswordMethodPhone = 'phone'
+const changePasswordMethodEmail = 'email'
+
+function switchChangePasswordMethod (method: string) {
+  switch (method) {
+    case changePasswordMethodPhone:
+      if (phoneNumber.value === undefined || phoneNumber.value === '') {
+        showPhone.value = false
+      } else {
+        showPhone.value = true
+        showEmail.value = false
+      }
+      break
+    case changePasswordMethodEmail:
+      if (emailAddress.value === undefined || emailAddress.value === '') {
+        showEmail.value = false
+      } else {
+        showEmail.value = true
+        showPhone.value = false
+      }
+      break
+  }
+}
+
 </script>
 
 <style scoped>

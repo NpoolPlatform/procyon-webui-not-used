@@ -10,7 +10,7 @@
     content-style='{width: 150px;background: linear-gradient(to bottom right,rgba(225, 238, 239, 0.2) 0, rgba(161, 208, 208, 0.2) 100%);box-shadow: 16px 16px 20px 0 #23292b;border-radius: 12px;color: #e1eeef;overflow: hidden;}'
   >
     <q-list>
-      <div>
+      <div class='avatar-dropdown'>
         <q-item clickable v-close-popup @click='$router.push("/dashboard")'>
           <q-item-section>
             <q-item-label>{{ $t('menuList.Dashboard') }}</q-item-label>
@@ -71,4 +71,8 @@ const logout = () => {
 </script>
 
 <style scoped>
+.avatar-dropdown {
+  color: white;
+  width: 160px;
+}
 </style>
