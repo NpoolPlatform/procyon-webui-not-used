@@ -162,8 +162,7 @@
             class='common-button save-button'
             type='submit'
           >{{ $t('button.Save') }}
-          </q-btn
-          >
+          </q-btn>
         </div>
       </div>
     </q-form>
@@ -325,5 +324,10 @@ const updateUser = () => {
   background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
   border: 0;
   color: #e4f4f0;
+  line-height: 22px;
+  width: 100%;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
 }
 </style>
