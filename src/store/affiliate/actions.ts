@@ -38,21 +38,20 @@ const actions: ActionTree<AffiliateState, RootState> = {
           children: [],
           Kol: true,
           Summarys: new Map(),
-          InvitedCount: 0,
+          InvitedCount: resp.MySelf.InvitedCount,
           MySummarys: new Map(),
           JoinDate: 0
         }
         father.UserID = userid
         const infos = new Map<string, Invitees>(Object.entries(resp.Infos))
         const lists = infos?.get(userid)?.Invitees
-        father.Label = lists ? '01(' + lists?.length.toString() + ')' : '01(0)'
-        let index = 1
+        father.Label = lists ? '01(' + resp.MySelf.InvitedCount.toString() + ')' : '01(0)'
         lists?.forEach(list => {
           const childrenInvitation: Invitation = {
             EmailAddress: list.EmailAddress,
             Username: list.Username,
             UserID: list.UserID,
-            Label: '02(' + index.toString() + ')',
+            Label: '02(' + list.InvitedCount.toString() + ')',
             children: [],
             Kol: list.Kol,
             Summarys: new Map<string, InvitationSummary>(Object.entries(list.Summarys)),
@@ -61,9 +60,7 @@ const actions: ActionTree<AffiliateState, RootState> = {
             JoinDate: list.JoinDate
           }
           father.children.push(childrenInvitation)
-          index++
         })
-        father.InvitedCount = index - 1
         const invitationList: Array<Invitation> = []
         invitationList.push(father)
         commit(MutationTypes.SetInvitationList, invitationList)

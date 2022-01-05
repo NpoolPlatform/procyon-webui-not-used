@@ -12,9 +12,14 @@ import { TimeStampToDate } from 'src/utils/utils'
 
 const store = useStore()
 const invitationList = computed(() => store.getters.getInvitationList)
-const directReferralsList = computed(() => invitationList.value[0].children.filter((invitee: Invitation) => {
-  return !invitee.Kol
-}))
+const directReferralsList = computed(() => {
+  if (invitationList.value.length > 0) {
+    return invitationList.value[0].children.filter((invitee: Invitation) => {
+      return !invitee.Kol
+    })
+  }
+  return invitationList.value
+})
 
 const totalUnits = (summarys: Map<string, InvitationSummary>) => {
   let total = 0

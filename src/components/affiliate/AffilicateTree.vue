@@ -7,7 +7,9 @@
             <div class='header-content row'>
               <span style='font-size: 20px; font-weight: 600;'>{{ prop.node.Username }}</span>
               <q-space />
-              <span style='font-size: 14px; font-weight: 300; margin-right: 5px; margin-top: 6px;'>{{ $t('affiliate.OnBoarded') }}</span>
+              <span
+                style='font-size: 14px; font-weight: 300; margin-right: 5px; margin-top: 6px;'>{{ $t('affiliate.OnBoarded')
+                }}</span>
               <span class='invited-count'>{{ prop.node.InvitedCount }}</span>
             </div>
           </div>
@@ -28,15 +30,15 @@
     </template>
   </q-tree>
 
-  <q-inner-loading :showing="innerLoading">
-    <q-spinner-gears size="50px" color="primary" />
+  <q-inner-loading :showing='innerLoading'>
+    <q-spinner-gears size='50px' color='primary' />
   </q-inner-loading>
 </template>
 
 <script setup lang='ts'>
 import { computed, onBeforeMount, ref, onUnmounted } from 'vue'
 import { useStore } from 'src/store'
-import { GetDirectInvitationsRequest, Invitation, InvitationSummary } from 'src/store/affiliate/types'
+import { GetDirectInvitationsRequest, InvitationSummary, Invitation } from 'src/store/affiliate/types'
 import { useQuasar } from 'quasar'
 import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/affiliate/action-types'
@@ -88,9 +90,30 @@ const totalAmount = (summarys: Map<string, InvitationSummary>) => {
   return total
 }
 
-const kolList = computed(() => invitationList.value.filter((invitee: Invitation) => {
-  return invitee.Kol
-}))
+const kolList = computed(() => {
+  if (invitationList.value.length === 0) {
+    return invitationList.value
+  }
+  const lists: Array<Invitation> = []
+  const list: Invitation = {
+    Username: invitationList.value[0].Username,
+    UserID: invitationList.value[0].UserID,
+    EmailAddress: invitationList.value[0].EmailAddress,
+    Label: invitationList.value[0].Label,
+    children: [],
+    Kol: invitationList.value[0].Kol,
+    Summarys: invitationList.value[0].Summarys,
+    InvitedCount: invitationList.value[0].InvitedCount,
+    MySummarys: invitationList.value[0].MySummarys,
+    JoinDate: invitationList.value[0].JoinDate
+  }
+  list.children = invitationList.value[0].children.filter((invitee: Invitation) => {
+    return invitee.Kol
+  })
+  lists.push(list)
+  console.log('lists is: ', lists)
+  return lists
+})
 
 const getInvitationList = () => {
   store.commit(MutationTypes.SetInnerLoading, {
@@ -112,7 +135,6 @@ const getUserDetails = () => {
   const request: GetUserDetailRequest = {}
   store.dispatch(userActionTypes.GetUserDetail, request)
 }
-
 </script>
 
 <style scoped>
