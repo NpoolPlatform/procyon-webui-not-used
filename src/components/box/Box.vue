@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang='ts'>
-import { toRef, defineProps, withDefaults, computed } from 'vue'
+import { toRef, defineProps, withDefaults, computed, onMounted } from 'vue'
 import { useStore } from 'src/store'
 import { MutationTypes } from 'src/store/style/mutation-types'
 
@@ -32,14 +32,17 @@ const store = useStore()
 
 interface Props {
   title: string,
-  showLink?: boolean
+  showLink?: boolean,
+  alwaysSelectable: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
   title: '',
-  showLink: true
+  showLink: true,
+  alwaysSelectable: true
 })
 const cardTitle = toRef(props, 'title')
 const showLink = toRef(props, 'showLink')
+const alwaysSelectable = toRef(props, 'alwaysSelectable')
 
 const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
 const phoneNumber = computed(() => userBasicInfo.value.PhoneNumber)
@@ -47,8 +50,10 @@ const emailAddress = computed(() => userBasicInfo.value.EmailAddress)
 
 const showEmail = computed({
   get: () => {
-    if (emailAddress.value === undefined || emailAddress.value === '') {
-      return false
+    if (!alwaysSelectable.value) {
+      if (emailAddress.value === undefined || emailAddress.value === '') {
+        return false
+      }
     }
     return store.getters.getShowEmail
   },
@@ -59,8 +64,10 @@ const showEmail = computed({
 
 const showPhone = computed({
   get: () => {
-    if (phoneNumber.value === undefined || phoneNumber.value === '') {
-      return false
+    if (!alwaysSelectable.value) {
+      if (phoneNumber.value === undefined || phoneNumber.value === '') {
+        return false
+      }
     }
     return store.getters.getShowPhone
   },
@@ -75,23 +82,31 @@ const changePasswordMethodEmail = 'email'
 function switchChangePasswordMethod (method: string) {
   switch (method) {
     case changePasswordMethodPhone:
-      if (phoneNumber.value === undefined || phoneNumber.value === '') {
-        showPhone.value = false
-      } else {
+      if ((phoneNumber.value !== undefined && phoneNumber.value !== '') || alwaysSelectable.value) {
         showPhone.value = true
         showEmail.value = false
       }
       break
     case changePasswordMethodEmail:
-      if (emailAddress.value === undefined || emailAddress.value === '') {
-        showEmail.value = false
-      } else {
+      if ((emailAddress.value !== undefined && emailAddress.value !== '') || alwaysSelectable.value) {
         showEmail.value = true
         showPhone.value = false
       }
       break
   }
 }
+
+onMounted(() => {
+  if (emailAddress.value !== undefined && emailAddress.value !== '') {
+    showEmail.value = true
+    showPhone.value = false
+    return
+  }
+  if (phoneNumber.value !== undefined && phoneNumber.value !== '') {
+    showPhone.value = true
+    showEmail.value = false
+  }
+})
 
 </script>
 

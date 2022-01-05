@@ -1,5 +1,5 @@
 <template>
-  <RegisterBox :title="$t('register.Title')">
+  <RegisterBox :title="$t('register.Title')" :always-selectable="true">
     <RegisterForm />
   </RegisterBox>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <LoginBox :title="$t('login.Title')">
+  <LoginBox :title="$t('login.Title')" :always-selectable="true">
     <LoginForm />
   </LoginBox>
 

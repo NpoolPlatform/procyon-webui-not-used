@@ -1,5 +1,5 @@
 <template>
-  <ForgetBox :title="$t('forget.Title')">
+  <ForgetBox :title="$t('forget.Title')" :always-selectable="true">
     <ForgetForm />
   </ForgetBox>
 </template>

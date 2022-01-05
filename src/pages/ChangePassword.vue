@@ -1,5 +1,5 @@
 <template>
-  <ChangePasswordBox :title="$t('changePassword.Title')">
+  <ChangePasswordBox :title="$t('changePassword.Title')" :always-selectable="false">
     <ChangePasswordForm />
   </ChangePasswordBox>
 </template>
