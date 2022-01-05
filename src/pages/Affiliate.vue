@@ -1,5 +1,7 @@
 <template>
   <div class='content'>
+    <div class='section-part-title'>{{ $t('affiliate.ReferralCode') }}</div>
+    <ReferralCode />
     <div class='section-part-title'>{{ $t('affiliate.Title') }}</div>
     <AffiliateTree />
   </div>
@@ -14,6 +16,7 @@ import { GetUserInvitationCodeRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
 
 const AffiliateTree = defineAsyncComponent(() => import('src/components/affiliate/AffilicateTree.vue'))
+const ReferralCode = defineAsyncComponent(() => import('src/components/affiliate/ReferralCode.vue'))
 
 const router = useRouter()
 
@@ -32,7 +35,6 @@ onBeforeMount(() => {
 onMounted(() => {
   CheckLogined()
   if (userInvitationCode.value === '') {
-    console.log('invitation code is: ', userInvitationCode.value)
     void router.push('/')
   }
 })

@@ -359,7 +359,9 @@ export default {
   },
 
   affiliate: {
-    Title: 'Affiliate'
+    Title: 'Affiliate',
+    ReferralCode: 'Referral Code',
+    CopyCode: 'Copy Code'
   },
 
   product: {

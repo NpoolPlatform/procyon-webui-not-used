@@ -358,7 +358,9 @@ export default {
   },
 
   affiliate: {
-    Title: 'Affiliate'
+    Title: 'Affiliate',
+    ReferralCode: '招待コード',
+    CopyCode: 'コードをコピーする'
   },
 
   product: {
