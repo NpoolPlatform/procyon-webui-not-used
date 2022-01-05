@@ -56,7 +56,6 @@ function onCopyCode () {
   border-radius: 12px;
   color: #e1eeef;
   padding: 24px;
-  margin: 24px 0 24px 48px;
   position: relative;
   width: 600px;
   height: auto;

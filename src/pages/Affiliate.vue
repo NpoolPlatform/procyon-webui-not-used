@@ -7,7 +7,7 @@
     <div class='section-part-title'>{{$t('affiliate.Direct.Title')}}</div>
     <AffiliateTable />
     <div class='section-part-title'>{{$t('affiliate.Export.Title')}}</div>
-    <q-btn flat class='common-button export-button' :label="$t('affiliate.Export.Button')"></q-btn>
+    <q-btn flat class='common-button export-button' :label="$t('affiliate.Export.Button')" disable></q-btn>
     <div class='hr' />
   </div>
 </template>

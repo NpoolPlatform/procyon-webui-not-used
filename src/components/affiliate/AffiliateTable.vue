@@ -85,7 +85,6 @@ const directReferralsListColumns = [
   border-radius: 12px;
   color: #e1eeef;
   padding: 24px;
-  margin: 24px;
 }
 
 .table-box >>> th {
