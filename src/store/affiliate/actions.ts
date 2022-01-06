@@ -37,9 +37,9 @@ const actions: ActionTree<AffiliateState, RootState> = {
           Label: '',
           children: [],
           Kol: true,
-          Summarys: new Map(),
+          Summarys: new Map<string, InvitationSummary>(Object.entries(resp.MySelf.Summarys)),
           InvitedCount: resp.MySelf.InvitedCount,
-          MySummarys: new Map(),
+          MySummarys: new Map<string, InvitationSummary>(Object.entries(resp.MySelf.MySummarys)),
           JoinDate: 0
         }
         father.UserID = userid
