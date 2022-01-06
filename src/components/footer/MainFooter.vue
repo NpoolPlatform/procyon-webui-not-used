@@ -100,6 +100,7 @@ h4 {
   display: block;
   height: 100%;
   width: 100%;
+  padding-bottom: 24px;
 }
 
 .footer-content {
