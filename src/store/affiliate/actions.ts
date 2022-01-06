@@ -42,7 +42,6 @@ const actions: ActionTree<AffiliateState, RootState> = {
           MySummarys: new Map<string, InvitationSummary>(Object.entries(resp.MySelf.MySummarys)),
           JoinDate: resp.MySelf.JoinDate
         }
-        father.UserID = userid
         const infos = new Map<string, Invitees>(Object.entries(resp.Infos))
         const lists = infos?.get(userid)?.Invitees
         father.Label = lists ? '01(' + resp.MySelf.InvitedCount.toString() + ')' : '01(0)'
