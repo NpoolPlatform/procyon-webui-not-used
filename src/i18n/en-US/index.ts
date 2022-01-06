@@ -140,6 +140,10 @@ export default {
     },
     GetUserLoginHistory: {
       Fail: 'Fail to get user login histories'
+    },
+    SendUserSiteContactEmail: {
+      Success: 'Send contact email successfully! Please wait for our reply.',
+      Fail: 'Fail to send contact email'
     }
   },
 
@@ -284,7 +288,8 @@ export default {
     Cancel: 'Cancel',
     Export: 'Export History (CSV)',
     Purchase: 'Purchase Capacity',
-    Save: 'Save Changes'
+    Save: 'Save Changes',
+    SendMessage: 'Send Message'
   },
 
   input: {
@@ -311,7 +316,13 @@ export default {
     Login: {
       Username: 'Username / Email',
       UsernameWarning: 'Please enter a legal username or email address'
-    }
+    },
+    Name: 'Name',
+    NameWarning: 'Please enter your name',
+    Subject: 'Subject',
+    SubjectWarning: 'Please enter your contact subject',
+    Message: 'Message',
+    MessageWarning: 'Please enter your contact message content'
   },
 
   dialog: {
@@ -387,6 +398,27 @@ export default {
     MaintenanceFeeLabel: 'Maintenance Fee:',
     MaintenanceFeeValue: 'day',
     OrderEffectiveLabel: 'Order Effective:'
+  },
+
+  contact: {
+    Title: 'CONTACT PROCYON SUPPORT',
+    Left: {
+      Title: 'Contact Procyon via Email'
+    },
+    Right: {
+      Title: 'Contact Procyon via LINE',
+      Box1Content: {
+        Word1: 'To scan the QR code below, open ',
+        StrongWord1: 'LINE',
+        Word2: ' on your phone and tap the ',
+        StrongWord2: '\'Add Friends\'',
+        Word3: ' icon. Then select ',
+        StrongWord3: '\'QR code\'',
+        Word4: ' at the top.'
+      },
+      Content: 'Feel free to contact us with questions about our platform, support issues, or just to say hi. We look forward to hearing from you!',
+      Signature: '—Procyon Support Team'
+    }
   },
 
   dashboard: {
