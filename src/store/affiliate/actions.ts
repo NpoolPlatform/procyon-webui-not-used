@@ -36,11 +36,11 @@ const actions: ActionTree<AffiliateState, RootState> = {
           EmailAddress: payload.EmailAddress,
           Label: '',
           children: [],
-          Kol: true,
+          Kol: resp.MySelf.Kol,
           Summarys: new Map<string, InvitationSummary>(Object.entries(resp.MySelf.Summarys)),
           InvitedCount: resp.MySelf.InvitedCount,
           MySummarys: new Map<string, InvitationSummary>(Object.entries(resp.MySelf.MySummarys)),
-          JoinDate: 0
+          JoinDate: resp.MySelf.JoinDate
         }
         father.UserID = userid
         const infos = new Map<string, Invitees>(Object.entries(resp.Infos))
