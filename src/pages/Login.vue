@@ -79,7 +79,7 @@ const userInfo = computed(() => store.getters.getUserInfo)
 
 watch(logined, (newLogined, oldLogined) => {
   if (newLogined && !oldLogined) {
-    if (userInfo.value.UserAppInfo.UserApplicationInfo.GALogin) {
+    if (userInfo.value.UserAppInfo.UserApplicationInfo.GAVerify && userInfo.value.UserAppInfo.UserApplicationInfo.GALogin) {
       showGoogleAuthenticationVerifyDialog.value = true
     } else if (userInfo.value.UserBasicInfo.EmailAddress !== '' && userInfo.value.UserBasicInfo.EmailAddress !== undefined && userInfo.value.UserBasicInfo.EmailAddress !== null) {
       let request: SendEmailRequest = {
