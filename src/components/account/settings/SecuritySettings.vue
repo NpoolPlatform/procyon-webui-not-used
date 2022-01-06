@@ -89,7 +89,7 @@
 
         <template v-slot:button>
           <div>
-            <q-btn class='common-button card-button disable-button' disable
+            <q-btn class='common-button card-button' disable
                    :label="$t('account.Setting.KYC.Button')"></q-btn>
           </div>
         </template>
@@ -294,10 +294,6 @@ const setLoginVerify = () => {
   line-height: 22px;
   width: 100%;
   max-width: 360px;
-}
-
-.disable-button {
-  background: linear-gradient(to bottom right, #acaaa9 0, #949291 100%);
 }
 
 .disabled {
