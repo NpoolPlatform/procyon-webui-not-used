@@ -29,7 +29,6 @@
       </div>
     </template>
   </q-tree>
-
   <q-inner-loading :showing='innerLoading'>
     <q-spinner-gears size='50px' color='primary' />
   </q-inner-loading>
@@ -111,7 +110,6 @@ const kolList = computed(() => {
     return invitee.Kol
   })
   lists.push(list)
-  console.log('lists is: ', lists)
   return lists
 })
 
