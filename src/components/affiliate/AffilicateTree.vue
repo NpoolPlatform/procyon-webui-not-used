@@ -1,37 +1,35 @@
 <template>
   <q-tree :nodes='kolList' node-key='UserID' default-expand-all :expanded='[UserID]'>
     <template v-slot:default-header='prop'>
-      <div>
-        <div class='invitation-box'>
-          <div class='invitation-header'>
-            <div class='header-content row'>
-              <span style='font-size: 20px; font-weight: 600;'>{{ prop.node.Username }}</span>
-              <q-space />
-              <span
-                style='font-size: 14px; font-weight: 300; margin-right: 5px; margin-top: 6px;'>{{ $t('affiliate.OnBoarded')
-                }}</span>
-              <span class='invited-count'>{{ prop.node.InvitedCount }}</span>
-            </div>
-          </div>
-
-          <div class='invitation-content'>
-            <span>{{ prop.node.EmailAddress }}</span>
-          </div>
-
-          <div class='invitation-content'>
-            <span>SMH: </span>
-            <span class='sales-number'>{{ totalUnits(prop.node.Summarys) + totalUnits(prop.node.MySummarys) }}</span>
-            <span> TiB / </span>
-            <span class='sales-number'>{{ totalAmount(prop.node.Summarys) + totalAmount(prop.node.MySummarys) }}</span>
-            <span> USDT</span>
+      <div class='invitation-box'>
+        <div class='invitation-header'>
+          <div class='header-content row'>
+            <span style='font-size: 20px; font-weight: 600;'>{{ prop.node.Username }}</span>
+            <q-space />
+            <span
+              style='font-size: 14px; font-weight: 300; margin-right: 5px; margin-top: 6px;'>{{ $t('affiliate.OnBoarded')
+              }}</span>
+            <span class='invited-count'>{{ prop.node.InvitedCount }}</span>
           </div>
         </div>
+
+        <div class='invitation-content'>
+          <span>{{ prop.node.EmailAddress }}</span>
+        </div>
+
+        <div class='invitation-content'>
+          <span>SMH: </span>
+          <span class='sales-number'>{{ totalUnits(prop.node.Summarys) + totalUnits(prop.node.MySummarys) }}</span>
+          <span> TiB / </span>
+          <span class='sales-number'>{{ totalAmount(prop.node.Summarys) + totalAmount(prop.node.MySummarys) }}</span>
+          <span> USDT</span>
+        </div>
       </div>
+      <q-inner-loading dark :showing='innerLoading' v-if='userBasicInfo.UserID === prop.node.UserID'>
+        <q-spinner-gears size='50px' color='primary' />
+      </q-inner-loading>
     </template>
   </q-tree>
-  <q-inner-loading :showing='innerLoading'>
-    <q-spinner-gears size='50px' color='primary' />
-  </q-inner-loading>
 </template>
 
 <script setup lang='ts'>
