@@ -7,7 +7,8 @@ export default {
     Wallet: 'WALLET',
     Account: 'ACCOUNT',
     Logout: 'LOGOUT',
-    Affiliates: 'AFFILIATES'
+    Affiliates: 'AFFILIATES',
+    Security: 'SECURITY'
   },
 
   drawer: {
@@ -15,7 +16,8 @@ export default {
     Wallet: 'WALLET',
     Account: 'ACCOUNT',
     Logout: 'LOGOUT',
-    Affiliates: 'AFFILIATES'
+    Affiliates: 'AFFILIATES',
+    Security: 'SECURITY'
   },
 
   notice: {
@@ -140,6 +142,9 @@ export default {
     },
     GetUserLoginHistory: {
       Fail: 'Fail to get user login histories'
+    },
+    GetQRCodeURL: {
+      Fail: 'Fail to get user Google Authenticator QR code'
     }
   },
 

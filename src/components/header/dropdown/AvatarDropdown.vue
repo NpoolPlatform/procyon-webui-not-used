@@ -26,6 +26,11 @@
             <q-item-label>{{ $t('menuList.Affiliates') }}</q-item-label>
           </q-item-section>
         </q-item>
+        <q-item clickable v-close-popup @click='$router.push("/security")'>
+          <q-item-section>
+            <q-item-label>{{ $t('menuList.Security') }}</q-item-label>
+          </q-item-section>
+        </q-item>
         <q-item clickable v-close-popup @click='$router.push("/account")'>
           <q-item-section>
             <q-item-label>{{ $t('menuList.Account') }}</q-item-label>

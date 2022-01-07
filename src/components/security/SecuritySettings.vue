@@ -126,13 +126,13 @@
 
 <script setup lang='ts'>
 import { computed, defineAsyncComponent, ref, onMounted, onUnmounted } from 'vue'
-import changePasswordImg from 'src/assets/icon-password.svg'
-import emailImg from 'src/assets/icon-email.svg'
-import passImg from 'src/assets/icon-pass.svg'
-import notPassImg from 'src/assets/icon-notpass.svg'
-import phoneImg from 'src/assets/icon-mobile.svg'
-import googleImg from 'src/assets/icon-authentication.svg'
-import kycImg from 'src/assets/icon-id.svg'
+import changePasswordImg from 'assets/icon-password.svg'
+import emailImg from 'assets/icon-email.svg'
+import passImg from 'assets/icon-pass.svg'
+import notPassImg from 'assets/icon-notpass.svg'
+import phoneImg from 'assets/icon-mobile.svg'
+import googleImg from 'assets/icon-authentication.svg'
+import kycImg from 'assets/icon-id.svg'
 import { useStore } from 'src/store'
 import { useI18n } from 'vue-i18n'
 import { SetGALoginVerifyRequest } from 'src/store/users/types'
@@ -140,12 +140,12 @@ import { ActionTypes } from 'src/store/users/action-types'
 import { MutationTypes } from 'src/store/users/mutation-types'
 import { MutationTypes as verifyMutationTypes } from 'src/store/verify/mutation-types'
 
-const SettingBox = defineAsyncComponent(() => import('src/components/box/SettingBox.vue'))
-const EnableEmailDialog = defineAsyncComponent(() => import('src/components/dialog/setting/EnableEmail.vue'))
-const UpdateEmailDialog = defineAsyncComponent(() => import('src/components/dialog/setting/UpdateEmail.vue'))
-const EnablePhoneDialog = defineAsyncComponent(() => import('src/components/dialog/setting/EnablePhone.vue'))
-const UpdatePhoneDialog = defineAsyncComponent(() => import('src/components/dialog/setting/UpdatePhone.vue'))
-const EnableGoogleDialog = defineAsyncComponent(() => import('src/components/dialog/setting/EnableGoogle.vue'))
+const SettingBox = defineAsyncComponent(() => import('components/box/SettingBox.vue'))
+const EnableEmailDialog = defineAsyncComponent(() => import('components/dialog/setting/EnableEmail.vue'))
+const UpdateEmailDialog = defineAsyncComponent(() => import('components/dialog/setting/UpdateEmail.vue'))
+const EnablePhoneDialog = defineAsyncComponent(() => import('components/dialog/setting/EnablePhone.vue'))
+const UpdatePhoneDialog = defineAsyncComponent(() => import('components/dialog/setting/UpdatePhone.vue'))
+const EnableGoogleDialog = defineAsyncComponent(() => import('components/dialog/setting/EnableGoogle.vue'))
 
 const store = useStore()
 

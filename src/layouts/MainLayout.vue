@@ -155,7 +155,7 @@ onUnmounted(() => {
 })
 
 onUpdated(() => {
-  if (nowPath.value === '/account' || nowPath.value === '/dashboard' || nowPath.value === '/affiliate') {
+  if (nowPath.value === '/account' || nowPath.value === '/dashboard' || nowPath.value === '/affiliate' || nowPath.value === '/security') {
     showDrawer.value = true
   } else {
     showDrawer.value = false
