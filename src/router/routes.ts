@@ -50,6 +50,10 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/Notice.vue')
       },
       {
+        path: 'security',
+        component: () => import('pages/Security.vue')
+      },
+      {
         path: 'contact',
         component: () => import('pages/Contact.vue')
       }

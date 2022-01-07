@@ -4,35 +4,53 @@
       <h3 class='common-card-title'>{{ $t('contact.Right.Title') }}</h3>
     </q-card-section>
     <q-card-section>
-      <div class='box-content'>
-        <p class='content-style'>{{ $t('contact.Right.Box1Content.Word1') }}<strong>{{ $t('contact.Right.Box1Content.StrongWord1') }}</strong>{{ $t('contact.Right.Box1Content.Word2') }}<strong>{{ $t('contact.Right.Box1Content.StrongWord2') }}</strong>{{ $t('contact.Right.Box1Content.Word3') }}<strong>{{ $t('contact.Right.Box1Content.StrongWord3') }}</strong>{{ $t('contact.Right.Box1Content.Word4') }}
-        </p>
-      </div>
+      <p class='qr-code-text text-background'>{{ $t('contact.Right.Box1Content.Word1')
+        }}<strong>{{ $t('contact.Right.Box1Content.StrongWord1') }}</strong>{{ $t('contact.Right.Box1Content.Word2')
+        }}<strong>{{ $t('contact.Right.Box1Content.StrongWord2') }}</strong>{{ $t('contact.Right.Box1Content.Word3')
+        }}<strong>{{ $t('contact.Right.Box1Content.StrongWord3') }}</strong>{{ $t('contact.Right.Box1Content.Word4') }}
+      </p>
+    </q-card-section>
+    <q-card-section class='qr-code-container'>
+      <q-img class='img-style' :src='qrcodeUrl' />
     </q-card-section>
     <q-card-section>
-      <q-img></q-img>
-    </q-card-section>
-    <q-card-section>
-      <p class='content-style'>{{$t('contact.Right.Content')}}</p>
-      <h4 class="signature">—Procyon Support Team</h4>
+      <p class='qr-code-text'>{{ $t('contact.Right.Content') }}</p>
+      <h4 class='signature'>—Procyon Support Team</h4>
     </q-card-section>
   </q-card>
 </template>
 
 <script setup lang='ts'>
+import { ref } from 'vue'
+
+const qrcodeUrl = ref('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAAD6AQAAAACgl2eQAAABu0lEQVR4Xu2WwW3EMAwECagAl6TWWZILEKBwlkbi8+PyXsCEc6fQ89kjl2Ls75HxzDziBTpeoOMFOgRkVBw5lFgxV8Qi1e9sgPpbR9YTRx32OGd9dt4IQFflpXETDTsCuVHH2RoomfXQaSLtgK2W22dQrHN243XeCMDqMs7fQ6rfuQBXRI0v1GH/36QToKkVeF9dp8KN8ybTAahOG7J8D7GlltMcMALQtfA7ZapOG2LG3TgGAN9DLUfynFUmgHs1DYDs2zz0DIzDNGv7+ACVkUBqhHG22m/fiuUAXBmqAwmvSTzNALqLS4TZVbm66+M+xCwAdC1tKUubiTpQqq0AJnDZ5AwZJ3XGSlZAVYflSp02h7puM8fSDDhwvd4GxgGYW+ED1OzS+DrRiIlaqRsQutA3y9Vs73C5RP8ELgBlIk9wuBgzQHe6aoRf1Hg0obrOB8jOQ1awqLTGtAI6sr0vgf3WC0CU6jW3gOiuu60oFsDWHMP7oMRDpgWg/aRHWWoIp5g+eQGJ8ZUcqP6wvw+gPBNsIvZzRbEAtlpuXetWdLRkI4D/mcAaxZQM4b1r+QDf4gU6XqDjBTr+B34Ac7ujAMSWx/8AAAAASUVORK5CYII=')
 </script>
 
 <style scoped>
-.box-content {
+.qr-code-text {
+  font-size: 16px;
+  line-height: 28px;
+}
+
+.qr-code-text strong {
+  color: #1ec498;
+}
+
+.text-background {
   background: #ffffff22;
   border-radius: 12px;
   padding: 12px;
 }
 
-.content-style {
-  margin-bottom: 0;
-  font-size: 16px;
-  line-height: 28px;
+.qr-code-container {
+  text-align: center;
+  width: 100%;
+}
+
+.qr-code-container img {
+  border-radius: 12px;
+  opacity: .8;
+  width: 100%;
 }
 
 strong {
@@ -54,5 +72,11 @@ strong {
   min-width: 360px;
   max-width: 480px;
   width: 35%;
+}
+
+.img-style {
+  border-radius: 12px;
+  opacity: .8;
+  width: 100%;
 }
 </style>

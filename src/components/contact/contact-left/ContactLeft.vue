@@ -5,15 +5,22 @@
     </q-card-section>
     <q-card-section>
       <q-form @submit='sendMessage'>
-        <q-input class='common-input input-style' bg-color='blue-grey-2' outlined v-model='email'
-                 :label='$t("input.EmailAddress")' lazy-rules :rules='emailRules'></q-input>
-        <q-input class='common-input input-style' bg-color='blue-grey-2' outlined v-model='name'
-                 :label='$t("input.Name")' lazy-rules :rules='nameRules'></q-input>
-        <q-input class='common-input input-style' bg-color='blue-grey-2' outlined v-model='subject'
-                 :label='$t("input.Subject")' lazy-rules :rules='subjectRules'></q-input>
+        <q-item-label>{{ $t('input.EmailAddress') }}</q-item-label>
+        <q-input class='common-input input-style' bg-color='blue-grey-2' outlined v-model='email' lazy-rules
+                 :rules='emailRules' />
+
+        <q-item-label>{{ $t('input.Name') }}</q-item-label>
+        <q-input class='common-input input-style' bg-color='blue-grey-2' outlined v-model='name' lazy-rules
+                 :rules='nameRules' />
+
+        <q-item-label>{{ $t('input.Subject') }}</q-item-label>
+        <q-input class='common-input input-style' bg-color='blue-grey-2' outlined v-model='subject' lazy-rules
+                 :rules='subjectRules' />
+
+        <q-item-label>{{ $t('input.Message') }}</q-item-label>
         <q-input class='common-input input-style input-textarea-style' bg-color='blue-grey-2' outlined
-                 v-model='messages' :label='$t("input.Message")' type='textarea' lazy-rules
-                 :rules='messageRules'></q-input>
+                 v-model='messages' type='textarea' lazy-rules :rules='messageRules' />
+
         <q-btn class='common-button send-message' :label="$t('button.SendMessage')" type='submit'></q-btn>
       </q-form>
     </q-card-section>
@@ -76,7 +83,7 @@ const sendMessage = () => {
 }
 
 .input-style {
-  margin: 8px 0 24px 0;
+  margin: 5px 0 0 0;
   width: 100%;
 }
 
@@ -87,7 +94,7 @@ const sendMessage = () => {
 .send-message {
   background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
   border: 1px solid #ff964a;
-  margin: 0 0 10px 0;
+  margin: 36px 0 0 0;
   width: 100%;
 }
 </style>

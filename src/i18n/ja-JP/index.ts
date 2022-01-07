@@ -7,7 +7,8 @@ export default {
     Wallet: 'ウォレット',
     Account: 'アカウント',
     Logout: 'ログアウト',
-    Affiliates: 'AFFILIATES'
+    Affiliates: 'AFFILIATES',
+    Security: 'セキュリティ'
   },
 
   drawer: {
@@ -15,7 +16,8 @@ export default {
     Wallet: 'ウォレット',
     Account: 'アカウント',
     Logout: 'ログアウト',
-    Affiliates: 'AFFILIATES'
+    Affiliates: 'AFFILIATES',
+    Security: 'セキュリティ'
   },
 
   notice: {
@@ -140,6 +142,9 @@ export default {
     },
     GetUserLoginHistory: {
       Fail: 'ユーザーログイン履歴の取得に失敗する'
+    },
+    GetQRCodeURL: {
+      Fail: 'ユーザーGoogle AuthenticatorのQRコード取得に失敗する'
     },
     SendUserSiteContactEmail: {
       Success: 'お問い合わせメールの送信に成功しました 返信をお待ちください。',

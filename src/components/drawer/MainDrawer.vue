@@ -34,6 +34,17 @@
         <span class='drawer-item-span'>{{ $t('drawer.Affiliates') }}</span>
       </router-link>
 
+      <router-link class='drawer-item' :to="{ path: '/security' }">
+        <q-img
+          fit='none'
+          :src='accountImg'
+          class='drawer-item-img'
+          style='object-fit: none !important'
+        >
+        </q-img>
+        <span class='drawer-item-span'>{{ $t('drawer.Security') }}</span>
+      </router-link>
+
       <router-link class='drawer-item' :to="{ path: '/account' }">
         <q-img
           fit='none'
