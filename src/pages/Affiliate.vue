@@ -13,11 +13,17 @@
 </template>
 
 <script setup lang='ts'>
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, onMounted } from 'vue'
+import { CheckLogined } from 'src/utils/utils'
 
 const AffiliateTree = defineAsyncComponent(() => import('src/components/affiliate/AffilicateTree.vue'))
 const ReferralCode = defineAsyncComponent(() => import('src/components/affiliate/ReferralCode.vue'))
 const AffiliateTable = defineAsyncComponent(() => import('src/components/affiliate/AffiliateTable.vue'))
+
+onMounted(() => {
+  CheckLogined()
+})
+
 </script>
 
 <style scoped>
