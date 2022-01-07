@@ -10,7 +10,8 @@
       :label="$t('input.PhoneNumber')"
       :required='false'
       :error='false'
-      class='common-input' />
+      class='common-input'
+    />
     <q-input
       v-if='showEmail'
       bg-color='blue-grey-2'

@@ -145,6 +145,10 @@ export default {
     },
     GetQRCodeURL: {
       Fail: 'ユーザーGoogle AuthenticatorのQRコード取得に失敗する'
+    },
+    SendUserSiteContactEmail: {
+      Success: 'お問い合わせメールの送信に成功しました 返信をお待ちください。',
+      Fail: 'コンタクトメールの送信に失敗する'
     }
   },
 
@@ -288,7 +292,8 @@ export default {
     Cancel: '取消',
     Export: '履歴のエクスポート (CSV)',
     Purchase: 'ストレージ容量を追加購入',
-    Save: '保存'
+    Save: '保存',
+    SendMessage: 'メッセージを送る'
   },
 
   input: {
@@ -315,7 +320,13 @@ export default {
     Login: {
       Username: 'ユーザー名 / メールアドレス',
       UsernameWarning: '正しいユーザー名／メールアドレスを入力してください'
-    }
+    },
+    Name: '名称',
+    NameWarning: 'お名前を入力してください',
+    Subject: '主題',
+    SubjectWarning: 'お問い合わせの件名を入力してください',
+    Message: 'メッセージ',
+    MessageWarning: 'コンタクトメッセージの内容を入力してください。'
   },
 
   dialog: {
@@ -391,6 +402,27 @@ export default {
     MaintenanceFeeLabel: 'メンテナンス費用:',
     MaintenanceFeeValue: '日',
     OrderEffectiveLabel: '注文受け付け日:'
+  },
+
+  contact: {
+    Title: 'プロキオンサポートに連絡',
+    Left: {
+      Title: 'プロキオンにメールで問い合わせる'
+    },
+    Right: {
+      Title: 'プロキオンにLINEで問い合わせる',
+      Box1Content: {
+        Word1: '下のQRコードを読み取るには、スマートフォンで',
+        StrongWord1: 'LINE',
+        Word2: 'を開き、',
+        StrongWord2: '「友だち追加」',
+        Word3: 'アイコンをタップしてください。その後、上部にある',
+        StrongWord3: '「QRコード」',
+        Word4: 'を選択します。'
+      },
+      Content: 'プラットフォームに関するご質問、サポートに関する問題、またはご挨拶など、お気軽にお問い合わせください。ご連絡をお待ちしております。',
+      Signature: '—Procyon Support Team'
+    }
   },
 
   dashboard: {
