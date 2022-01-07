@@ -78,8 +78,7 @@ const sendMessage = () => {
   padding: 48px;
   margin: 48px auto;
   min-width: 360px;
-  max-width: 480px;
-  width: 35%;
+  width: 45%;
 }
 
 .input-style {

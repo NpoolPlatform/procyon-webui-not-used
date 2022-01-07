@@ -47,12 +47,6 @@ const qrcodeUrl = ref('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAAD6AQA
   width: 100%;
 }
 
-.qr-code-container img {
-  border-radius: 12px;
-  opacity: .8;
-  width: 100%;
-}
-
 strong {
   color: #1ec498;
 }
@@ -70,13 +64,11 @@ strong {
   padding: 48px;
   margin: 48px auto;
   min-width: 360px;
-  max-width: 480px;
-  width: 35%;
+  width: 45%;
 }
 
 .img-style {
   border-radius: 12px;
-  opacity: .8;
   width: 100%;
 }
 </style>
