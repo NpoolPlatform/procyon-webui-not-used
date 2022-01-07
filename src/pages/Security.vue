@@ -47,4 +47,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.content {
+  max-width: 100%;
+  margin: 0 72px;
+  padding: 0 24px;
+}
 </style>

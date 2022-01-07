@@ -8,7 +8,7 @@ export default {
     Account: 'ACCOUNT',
     Logout: 'LOGOUT',
     Affiliates: 'AFFILIATES',
-    Security: 'Security'
+    Security: 'SECURITY'
   },
 
   drawer: {
@@ -17,7 +17,7 @@ export default {
     Account: 'ACCOUNT',
     Logout: 'LOGOUT',
     Affiliates: 'AFFILIATES',
-    Security: 'Security'
+    Security: 'SECURITY'
   },
 
   notice: {
