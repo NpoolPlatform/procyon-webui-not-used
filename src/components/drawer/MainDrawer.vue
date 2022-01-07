@@ -37,7 +37,7 @@
       <router-link class='drawer-item' :to="{ path: '/security' }">
         <q-img
           fit='none'
-          :src='accountImg'
+          :src='securityImg'
           class='drawer-item-img'
           style='object-fit: none !important'
         >
@@ -64,6 +64,7 @@ import dashboardImg from 'src/assets/icon-mining.svg'
 import walletImg from 'src/assets/icon-wallet.svg'
 import affiliatesImg from 'src/assets/icon-affiliates.svg'
 import accountImg from 'src/assets/icon-account.svg'
+import securityImg from 'src/assets/icon-security.svg'
 
 import { defineProps, withDefaults, toRef } from 'vue'
 
