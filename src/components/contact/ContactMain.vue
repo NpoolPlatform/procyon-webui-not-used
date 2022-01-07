@@ -5,6 +5,7 @@
       <ContactLeft />
       <ContactRight />
     </div>
+    <div class='hr' />
   </div>
 </template>
 

@@ -405,22 +405,22 @@ export default {
   },
 
   contact: {
-    Title: 'CONTACT PROCYON SUPPORT',
+    Title: 'プロキオンサポートに連絡',
     Left: {
-      Title: 'Contact Procyon via Email'
+      Title: 'プロキオンにメールで問い合わせる'
     },
     Right: {
-      Title: 'Contact Procyon via LINE',
+      Title: 'プロキオンにLINEで問い合わせる',
       Box1Content: {
-        Word1: 'To scan the QR code below, open ',
+        Word1: '下のQRコードを読み取るには、スマートフォンで',
         StrongWord1: 'LINE',
-        Word2: ' on your phone and tap the ',
-        StrongWord2: '\'Add Friends\'',
-        Word3: ' icon. Then select ',
-        StrongWord3: '\'QR code\'',
-        Word4: ' at the top.'
+        Word2: 'を開き、',
+        StrongWord2: '「友だち追加」',
+        Word3: 'アイコンをタップしてください。その後、上部にある',
+        StrongWord3: '「QRコード」',
+        Word4: 'を選択します。'
       },
-      Content: 'Feel free to contact us with questions about our platform, support issues, or just to say hi. We look forward to hearing from you!',
+      Content: 'プラットフォームに関するご質問、サポートに関する問題、またはご挨拶など、お気軽にお問い合わせください。ご連絡をお待ちしております。',
       Signature: '—Procyon Support Team'
     }
   },
