@@ -162,7 +162,7 @@ module.exports = configure(function (ctx) {
       manifest: {
         name: 'procyon',
         short_name: 'procyon',
-        description: 'procyon',
+        description: 'Procyon | Crypto Mining and IDO Platform',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',

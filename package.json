@@ -1,9 +1,9 @@
 {
   "name": "procyon-webui",
   "version": "0.0.1",
-  "description": "Procyon's cloud power app",
+  "description": "Procyon | Crypto Mining and IDO Platform",
   "productName": "Procyon",
-  "author": "crazyzpl<crazyzplzpl@gmail.com>",
+  "author": "Procyon<admin@procyon.vip>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./ --fix",
