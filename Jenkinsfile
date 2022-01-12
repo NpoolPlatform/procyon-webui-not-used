@@ -13,7 +13,7 @@ pipeline {
       }
       steps {
         sh (returnStdout: false, script: '''
-          sed -i "s/https:\/\/www.procyon.vip\//$WEB_DAMAIN/g" ./src/index.template.html
+          sed -i "s/https:\\/\\/www.procyon.vip\\//$WEB_DAMAIN/g" ./src/index.template.html
           set +e
           PATH=/usr/local/bin:$PATH:./node_modules/@quasar/app/bin command quasar
           rc=$?
