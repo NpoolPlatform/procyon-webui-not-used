@@ -13,7 +13,6 @@ pipeline {
       }
       steps {
         sh (returnStdout: false, script: '''
-          WEB_DOMAIN=$WEB_DOMAIN.replaceALL('\\\\','\\\\\\\\')
           sed -i "s/https:\\/\\/www.procyon.vip\\//$WEB_DOMAIN/g" ./src/index.template.html
           set +e
           PATH=/usr/local/bin:$PATH:./node_modules/@quasar/app/bin command quasar
