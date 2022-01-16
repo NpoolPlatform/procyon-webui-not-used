@@ -59,7 +59,7 @@
       <router-link class='drawer-item' :to="{ path: '/kyc' }">
         <q-img
           fit='none'
-          :src='securityImg'
+          :src='kycImg'
           class='drawer-item-img'
           style='object-fit: none !important'
         >
@@ -76,6 +76,7 @@ import walletImg from 'src/assets/icon-wallet.svg'
 import affiliatesImg from 'src/assets/icon-affiliates.svg'
 import accountImg from 'src/assets/icon-account.svg'
 import securityImg from 'src/assets/icon-security.svg'
+import kycImg from 'src/assets/icon-kyc.svg'
 
 import { defineProps, withDefaults, toRef } from 'vue'
 

@@ -9,6 +9,9 @@
     <div class='hr-t'></div>
     <div class='section-part-title'>{{ $t('general.KYCImages') }}</div>
     <div>
+      <input ref='selectFrontImgFile' type='file' style='display: none;' @change='onFrontImgSelected' />
+      <input ref='selectBackImgFile' type='file' style='display: none;' @change='onBackImgSelected' />
+      <input ref='selectHandingImgFile' type='file' style='display: none;' @change='onHandingImgSelected' />
       <div class='row'>
         <q-img class='kyc-image rounded-borders cursor-pointer' @click='onFrontImgClick' :src='frontImg' :ratio='1'>
           <div class="absolute-bottom text-subtitle1 text-center">
@@ -51,20 +54,48 @@ const frontImg = ref('icons/icon-512x512.png')
 const backImg = ref('icons/icon-512x512.png')
 const handingImg = ref('icons/icon-512x512.png')
 
+const selectFrontImgFile = ref<HTMLDivElement>()
+const selectBackImgFile = ref<HTMLDivElement>()
+const selectHandingImgFile = ref<HTMLDivElement>()
+
 onMounted(() => {
   CheckLogined()
 })
 
+// TODO: limit photo size
+// TODO: limit file format to be a photo
+
+const onHandingImgSelected = (evt: Event) => {
+  const target = evt.target as unknown as HTMLInputElement
+  if (target.files) {
+    handingImg.value = URL.createObjectURL(target.files[0])
+  }
+}
+
 const onHandingImgClick = () => {
-  console.log('handing')
+  selectHandingImgFile.value?.click()
+}
+
+const onFrontImgSelected = (evt: Event) => {
+  const target = evt.target as unknown as HTMLInputElement
+  if (target.files) {
+    frontImg.value = URL.createObjectURL(target.files[0])
+  }
 }
 
 const onFrontImgClick = () => {
-  console.log('front')
+  selectFrontImgFile.value?.click()
+}
+
+const onBackImgSelected = (evt: Event) => {
+  const target = evt.target as unknown as HTMLInputElement
+  if (target.files) {
+    backImg.value = URL.createObjectURL(target.files[0])
+  }
 }
 
 const onBackImgClick = () => {
-  console.log('back')
+  selectBackImgFile.value?.click()
 }
 
 </script>
