@@ -2,6 +2,16 @@
 // so you can safely delete all default props below
 
 export default {
+  general: {
+    KYCStatus: 'KYC Status',
+    NotVerified: 'Not Verified',
+    KYCImages: 'KYC Images',
+    Submit: 'Submit',
+    FrontImage: 'Front',
+    BackImage: 'Back',
+    HandingImage: 'Handing'
+  },
+
   menuList: {
     Dashboard: 'DASHBOARD',
     Wallet: 'WALLET',

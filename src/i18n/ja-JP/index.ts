@@ -2,6 +2,16 @@
 // so you can safely delete all default props below
 
 export default {
+  general: {
+    KYCStatus: 'KYCステータス',
+    NotVerified: '検証されていない',
+    KYCImages: 'KYC画像',
+    Submit: '参加する',
+    FrontImage: 'フロント',
+    BackImage: '戻る',
+    HandingImage: 'ハンドヘルド'
+  },
+
   menuList: {
     Dashboard: 'ダッシュボード',
     Wallet: 'ウォレット',
