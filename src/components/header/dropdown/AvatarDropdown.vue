@@ -36,6 +36,11 @@
             <q-item-label>{{ $t('menuList.Account') }}</q-item-label>
           </q-item-section>
         </q-item>
+        <q-item clickable v-close-popup @click='$router.push("/kyc")'>
+          <q-item-section>
+            <q-item-label>{{ $t('menuList.KYC') }}</q-item-label>
+          </q-item-section>
+        </q-item>
         <q-item clickable v-close-popup @click='logout'>
           <q-item-section>
             <q-item-label>{{ $t('menuList.Logout') }}</q-item-label>
