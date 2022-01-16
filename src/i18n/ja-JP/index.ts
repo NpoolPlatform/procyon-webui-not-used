@@ -17,7 +17,8 @@ export default {
     Account: 'アカウント',
     Logout: 'ログアウト',
     Affiliates: 'AFFILIATES',
-    Security: 'セキュリティ'
+    Security: 'セキュリティ',
+    KYC: 'KYC'
   },
 
   notice: {

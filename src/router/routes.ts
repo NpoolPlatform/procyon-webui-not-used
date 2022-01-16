@@ -56,6 +56,10 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'contact',
         component: () => import('pages/Contact.vue')
+      },
+      {
+        path: 'kyc',
+        component: () => import('pages/KYC.vue')
       }
     ]
   },

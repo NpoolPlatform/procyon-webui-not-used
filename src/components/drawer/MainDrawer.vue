@@ -55,6 +55,17 @@
         </q-img>
         <span class='drawer-item-span'>{{ $t('drawer.Account') }}</span>
       </router-link>
+
+      <router-link class='drawer-item' :to="{ path: '/kyc' }">
+        <q-img
+          fit='none'
+          :src='securityImg'
+          class='drawer-item-img'
+          style='object-fit: none !important'
+        >
+        </q-img>
+        <span class='drawer-item-span'>{{ $t('drawer.KYC') }}</span>
+      </router-link>
     </div>
   </div>
 </template>

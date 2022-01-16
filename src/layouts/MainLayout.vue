@@ -71,15 +71,24 @@ const fontStyle = computed({
   }
 })
 
+const setShowDrawer = (path) => {
+  switch (path) {
+    case '/account':
+    case '/dashboard':
+    case '/affiliate':
+    case '/kyc':
+    case '/security':
+      showDrawer.value = true
+      return
+  }
+  showDrawer.value = false
+}
+
 onBeforeMount(() => {
   const appid = 'ff2c5d50-be56-413e-aba5-9c7ad888a769'
   q.cookies.set('AppID', appid)
 
-  if (nowPath.value === '/account' || nowPath.value === '/dashboard' || nowPath.value === '/affiliate') {
-    showDrawer.value = true
-  } else {
-    showDrawer.value = false
-  }
+  setShowDrawer(nowPath.value)
 
   const { locale } = useI18n({ useScope: 'global' })
   if (locale.value === 'en-US') {
@@ -155,11 +164,7 @@ onUnmounted(() => {
 })
 
 onUpdated(() => {
-  if (nowPath.value === '/account' || nowPath.value === '/dashboard' || nowPath.value === '/affiliate' || nowPath.value === '/security') {
-    showDrawer.value = true
-  } else {
-    showDrawer.value = false
-  }
+  setShowDrawer(nowPath.value)
 })
 
 const MainHeader = defineAsyncComponent(
