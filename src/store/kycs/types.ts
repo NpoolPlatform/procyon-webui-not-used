@@ -1,6 +1,6 @@
 import { ImageType, State } from './const'
 
-interface KYC {
+interface KYCInfo {
   ID?: string
   AppID?: string
   UserID?: string
@@ -8,8 +8,12 @@ interface KYC {
   CardID?: string
   FrontCardImg?: string
   BackCardImg?: string
-  UserHandlingCardImg?: string
-  CreateAt?: number,
+  UserHandingCardImg?: string
+  CreateAt?: number
+}
+
+interface KYC {
+  Info?: KYCInfo
   State: State
 }
 
@@ -23,8 +27,42 @@ interface KYCImage {
   Base64?: string
 }
 
+interface CreateKYCRequest {
+  Info: KYCInfo
+}
+
+interface CreateKYCResponse {
+  Info: KYC
+}
+
+interface UploadKYCImageRequest {
+  AppID?: string
+  UserID?: string
+  ImageType: ImageType
+  ImageBase64: string
+}
+
+interface UploadKYCImageResponse {
+  Info: string
+}
+
+interface GetKYCImageRequest extends KYCImage {
+  ImageS3Key?: string
+}
+
+interface GetKYCImageResponse {
+  Info: string
+}
+
 export {
   KYC,
+  KYCInfo,
   GetKYCResponse,
-  KYCImage
+  KYCImage,
+  CreateKYCRequest,
+  CreateKYCResponse,
+  UploadKYCImageRequest,
+  UploadKYCImageResponse,
+  GetKYCImageRequest,
+  GetKYCImageResponse
 }

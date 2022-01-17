@@ -32,6 +32,7 @@
       <div class='kyc-submit-container'>
         <q-btn
           class='common-button save-button'
+          @click="onSubmit"
         >{{ $t('general.Submit') }}
         </q-btn>
       </div>
@@ -41,14 +42,15 @@
 </template>
 
 <script setup lang='ts'>
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref, computed, onUnmounted } from 'vue'
 import { CheckLogined } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'src/store'
 import { ActionTypes as KYCActionTypes } from 'src/store/kycs/action-types'
 import { MutationTypes as KYCMutationTypes } from 'src/store/kycs/mutation-types'
-import { KYCImage } from 'src/store/kycs/types'
+import { KYC, KYCImage } from 'src/store/kycs/types'
 import { ImageType, State } from 'src/store/kycs/const'
+import { useQuasar, uid } from 'quasar'
 
 const store = useStore()
 
@@ -73,21 +75,21 @@ const kycStatus = computed(() => {
 const frontImg = computed({
   get: () => store.getters.getKYCFrontImage,
   set: (val: KYCImage) => {
-    store.commit(KYCMutationTypes.SetKYCFrontImage, val)
+    store.commit(KYCMutationTypes.SetLocalKYCFrontImage, val)
   }
 })
 
 const backImg = computed({
   get: () => store.getters.getKYCBackImage,
   set: (val: KYCImage) => {
-    store.commit(KYCMutationTypes.SetKYCBackImage, val)
+    store.commit(KYCMutationTypes.SetLocalKYCBackImage, val)
   }
 })
 
 const handingImg = computed({
   get: () => store.getters.getKYCHandingImage,
   set: (val: KYCImage) => {
-    store.commit(KYCMutationTypes.SetKYCHandingImage, val)
+    store.commit(KYCMutationTypes.SetLocalKYCHandingImage, val)
   }
 })
 
@@ -98,12 +100,6 @@ const selectHandingImgFile = ref<HTMLDivElement>()
 const img2src = (img: KYCImage) => {
   return img.Base64 === undefined ? ref('icons/icon-512x512.png') : img.Base64
 }
-
-onMounted(() => {
-  if (CheckLogined()) {
-    store.dispatch(KYCActionTypes.GetKYCInfo)
-  }
-})
 
 type Base64Handler = (base64: string) => void
 
@@ -171,6 +167,85 @@ const onBackImgSelected = (evt: Event) => {
 const onBackImgClick = () => {
   selectBackImgFile.value?.click()
 }
+
+const q = useQuasar()
+
+const onSubmit = () => {
+  store.dispatch(KYCActionTypes.UploadKYCImage, {
+    AppID: q.cookies.get('AppID'),
+    UserID: q.cookies.get('UserID'),
+    ImageType: ImageType.Front,
+    ImageBase64: frontImg.value.Base64 as string
+  })
+}
+
+type FunctionVoid = () => void
+const unsubscribe = ref<FunctionVoid>()
+
+onMounted(() => {
+  unsubscribe.value = store.subscribe((mutation) => {
+    if (mutation.type === KYCMutationTypes.SetKYCFrontImage) {
+      store.dispatch(KYCActionTypes.UploadKYCImage, {
+        AppID: q.cookies.get('AppID'),
+        UserID: q.cookies.get('UserID'),
+        ImageType: ImageType.Back,
+        ImageBase64: backImg.value.Base64 as string
+      })
+    }
+
+    if (mutation.type === KYCMutationTypes.SetKYCBackImage) {
+      store.dispatch(KYCActionTypes.UploadKYCImage, {
+        AppID: q.cookies.get('AppID'),
+        UserID: q.cookies.get('UserID'),
+        ImageType: ImageType.Handing,
+        ImageBase64: handingImg.value.Base64 as string
+      })
+    }
+
+    if (mutation.type === KYCMutationTypes.SetKYCHandingImage) {
+      store.dispatch(KYCActionTypes.CreateKYC, {
+        Info: {
+          AppID: q.cookies.get('AppID'),
+          UserID: q.cookies.get('UserID'),
+          CardType: 'passport',
+          CardID: 'DONOTNEEDCARDIDINPUTFROMUSER-' + uid(),
+          FrontCardImg: frontImg.value.URI,
+          BackCardImg: backImg.value.URI,
+          UserHandingCardImg: handingImg.value.URI
+        }
+      })
+    }
+
+    if (mutation.type === KYCMutationTypes.SetKYCInfo) {
+      const kyc = mutation.payload as KYC
+      store.dispatch(KYCActionTypes.GetKYCImage, {
+        ImageType: ImageType.Front,
+        URI: kyc.Info?.FrontCardImg,
+        ImageS3Key: kyc.Info?.FrontCardImg
+      })
+
+      store.dispatch(KYCActionTypes.GetKYCImage, {
+        ImageType: ImageType.Back,
+        URI: kyc.Info?.BackCardImg,
+        ImageS3Key: kyc.Info?.BackCardImg
+      })
+
+      store.dispatch(KYCActionTypes.GetKYCImage, {
+        ImageType: ImageType.Handing,
+        URI: kyc.Info?.UserHandingCardImg,
+        ImageS3Key: kyc.Info?.UserHandingCardImg
+      })
+    }
+  })
+
+  if (CheckLogined()) {
+    store.dispatch(KYCActionTypes.GetKYCInfo)
+  }
+})
+
+onUnmounted(() => {
+  unsubscribe.value?.()
+})
 
 </script>
 

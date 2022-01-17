@@ -8,6 +8,9 @@ type KYCMutations<S = KYCState> = {
   [MutationTypes.SetKYCFrontImage] (state: S, payload: KYCImage): void
   [MutationTypes.SetKYCBackImage] (state: S, payload: KYCImage): void
   [MutationTypes.SetKYCHandingImage] (state: S, payload: KYCImage): void
+  [MutationTypes.SetLocalKYCFrontImage] (state: S, payload: KYCImage): void
+  [MutationTypes.SetLocalKYCBackImage] (state: S, payload: KYCImage): void
+  [MutationTypes.SetLocalKYCHandingImage] (state: S, payload: KYCImage): void
 }
 
 const mutations: MutationTree<KYCState> & KYCMutations = {
@@ -21,6 +24,15 @@ const mutations: MutationTree<KYCState> & KYCMutations = {
     state.BackImage = payload
   },
   [MutationTypes.SetKYCHandingImage] (state: KYCState, payload: KYCImage) {
+    state.HandingImage = payload
+  },
+  [MutationTypes.SetLocalKYCFrontImage] (state: KYCState, payload: KYCImage) {
+    state.FrontImage = payload
+  },
+  [MutationTypes.SetLocalKYCBackImage] (state: KYCState, payload: KYCImage) {
+    state.BackImage = payload
+  },
+  [MutationTypes.SetLocalKYCHandingImage] (state: KYCState, payload: KYCImage) {
     state.HandingImage = payload
   }
 }
