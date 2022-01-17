@@ -15,6 +15,7 @@ interface KYCInfo {
 interface KYC {
   Kyc?: KYCInfo
   State: State
+  Message?: string
 }
 
 interface GetKYCResponse {

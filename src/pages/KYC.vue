@@ -6,6 +6,11 @@
       <span class='kyc-status'>{{ kycStatus }}</span>
       <q-space />
     </div>
+    <div class='row'>
+      <q-space />
+      <span v-if='kycInfo.State === State.Rejected' class='kyc-reject-reason'>{{ kycInfo.Message }}</span>
+      <q-space />
+    </div>
     <div class='hr-t'></div>
     <div class='section-part-title'>{{ $t('general.KYCImages') }}</div>
     <div>
@@ -32,7 +37,8 @@
       <div class='kyc-submit-container'>
         <q-btn
           class='common-button save-button'
-          @click="onSubmit"
+          @click='onSubmit'
+          :disable='kycInfo.State === State.Verified'
         >{{ $t('general.Submit') }}
         </q-btn>
       </div>
@@ -57,8 +63,10 @@ const store = useStore()
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
 
+const kycInfo = computed(() => store.getters.getKYCInfo)
+
 const kycStatus = computed(() => {
-  switch (store.getters.getKYCInfo.State) {
+  switch (kycInfo.value.State) {
     case State.NotVerified:
       return t('general.NotVerified')
     case State.Verified:
@@ -129,6 +137,9 @@ const onHandingImgSelected = (evt: Event) => {
 }
 
 const onHandingImgClick = () => {
+  if (kycInfo.value.State === State.Verified) {
+    return
+  }
   selectHandingImgFile.value?.click()
 }
 
@@ -147,6 +158,9 @@ const onFrontImgSelected = (evt: Event) => {
 }
 
 const onFrontImgClick = () => {
+  if (kycInfo.value.State === State.Verified) {
+    return
+  }
   selectFrontImgFile.value?.click()
 }
 
@@ -165,6 +179,9 @@ const onBackImgSelected = (evt: Event) => {
 }
 
 const onBackImgClick = () => {
+  if (kycInfo.value.State === State.Verified) {
+    return
+  }
   selectBackImgFile.value?.click()
 }
 
@@ -259,6 +276,11 @@ onUnmounted(() => {
 
 .kyc-status {
   font-size: 28px;
+}
+
+.kyc-reject-reason {
+  font-size: 14px;
+  color: red;
 }
 
 .kyc-image {

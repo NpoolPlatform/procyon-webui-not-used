@@ -14,7 +14,7 @@ enum API {
 enum State {
   NotVerified = 'not-verified',
   Wait = 'wait',
-  Verified = 'verified',
+  Verified = 'approved',
   Rejected = 'rejected'
 }
 

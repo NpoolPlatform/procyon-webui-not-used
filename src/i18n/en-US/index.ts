@@ -5,7 +5,7 @@ export default {
   general: {
     KYCStatus: 'KYC Status',
     NotVerified: 'Not Verified',
-    Vefified: 'Verified',
+    Verified: 'Verified',
     Wait: 'Being Reviewed',
     Rejected: 'Rejected',
     KYCImages: 'KYC Images',

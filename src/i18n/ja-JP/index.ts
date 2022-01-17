@@ -5,7 +5,7 @@ export default {
   general: {
     KYCStatus: 'KYCステータス',
     NotVerified: '検証されていない',
-    Vefified: 'Verified',
+    Verified: 'Verified',
     Wait: 'Being Reviewed',
     Rejected: 'Rejected',
     KYCImages: 'KYC画像',
