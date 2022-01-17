@@ -9,9 +9,9 @@
     <div class='hr-t'></div>
     <div class='section-part-title'>{{ $t('general.KYCImages') }}</div>
     <div>
-      <input ref='selectFrontImgFile' type='file' style='display: none;' @change='onFrontImgSelected' />
-      <input ref='selectBackImgFile' type='file' style='display: none;' @change='onBackImgSelected' />
-      <input ref='selectHandingImgFile' type='file' style='display: none;' @change='onHandingImgSelected' />
+      <input ref='selectFrontImgFile' type='file' style='display: none;' @change='onFrontImgSelected' accept='image/jpeg, image/png, image/jpg' />
+      <input ref='selectBackImgFile' type='file' style='display: none;' @change='onBackImgSelected' accept='image/jpeg, image/png, image/jpg' />
+      <input ref='selectHandingImgFile' type='file' style='display: none;' @change='onHandingImgSelected' accept='image/jpeg, image/png, image/jpg' />
       <div class='row'>
         <q-img class='kyc-image rounded-borders cursor-pointer' @click='onFrontImgClick' :src='frontImg' :ratio='1'>
           <div class="absolute-bottom text-subtitle1 text-center">
@@ -62,13 +62,25 @@ onMounted(() => {
   CheckLogined()
 })
 
+type Base64Handler = (base64: string) => void
+
 // TODO: limit photo size
 // TODO: limit file format to be a photo
+
+const toBase64 = (filename: Blob, onLoaded: Base64Handler) => {
+  const reader = new FileReader()
+  reader.onloadend = function () {
+    onLoaded(reader.result as string)
+  }
+  reader.readAsDataURL(filename)
+}
 
 const onHandingImgSelected = (evt: Event) => {
   const target = evt.target as unknown as HTMLInputElement
   if (target.files) {
-    handingImg.value = URL.createObjectURL(target.files[0])
+    toBase64(target.files[0], function (base64: string) {
+      handingImg.value = base64
+    })
   }
 }
 
@@ -79,7 +91,9 @@ const onHandingImgClick = () => {
 const onFrontImgSelected = (evt: Event) => {
   const target = evt.target as unknown as HTMLInputElement
   if (target.files) {
-    frontImg.value = URL.createObjectURL(target.files[0])
+    toBase64(target.files[0], function (base64: string) {
+      frontImg.value = base64
+    })
   }
 }
 
@@ -90,7 +104,9 @@ const onFrontImgClick = () => {
 const onBackImgSelected = (evt: Event) => {
   const target = evt.target as unknown as HTMLInputElement
   if (target.files) {
-    backImg.value = URL.createObjectURL(target.files[0])
+    toBase64(target.files[0], function (base64: string) {
+      backImg.value = base64
+    })
   }
 }
 
