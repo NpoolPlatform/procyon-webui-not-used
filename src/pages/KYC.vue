@@ -218,22 +218,23 @@ onMounted(() => {
 
     if (mutation.type === KYCMutationTypes.SetKYCInfo) {
       const kyc = mutation.payload as KYC
+
       store.dispatch(KYCActionTypes.GetKYCImage, {
         ImageType: ImageType.Front,
-        URI: kyc.Info?.FrontCardImg,
-        ImageS3Key: kyc.Info?.FrontCardImg
+        URI: kyc.Kyc?.FrontCardImg,
+        ImageS3Key: kyc.Kyc?.FrontCardImg
       })
 
       store.dispatch(KYCActionTypes.GetKYCImage, {
         ImageType: ImageType.Back,
-        URI: kyc.Info?.BackCardImg,
-        ImageS3Key: kyc.Info?.BackCardImg
+        URI: kyc.Kyc?.BackCardImg,
+        ImageS3Key: kyc.Kyc?.BackCardImg
       })
 
       store.dispatch(KYCActionTypes.GetKYCImage, {
         ImageType: ImageType.Handing,
-        URI: kyc.Info?.UserHandingCardImg,
-        ImageS3Key: kyc.Info?.UserHandingCardImg
+        URI: kyc.Kyc?.UserHandingCardImg,
+        ImageS3Key: kyc.Kyc?.UserHandingCardImg
       })
     }
   })

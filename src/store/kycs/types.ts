@@ -13,7 +13,7 @@ interface KYCInfo {
 }
 
 interface KYC {
-  Info?: KYCInfo
+  Kyc?: KYCInfo
   State: State
 }
 
