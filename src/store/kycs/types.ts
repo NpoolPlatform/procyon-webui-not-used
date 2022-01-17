@@ -36,6 +36,14 @@ interface CreateKYCResponse {
   Info: KYC
 }
 
+interface UpdateKYCRequest {
+  Info: KYCInfo
+}
+
+interface UpdateKYCResponse {
+  Info: KYC
+}
+
 interface UploadKYCImageRequest {
   AppID?: string
   UserID?: string
@@ -65,5 +73,7 @@ export {
   UploadKYCImageRequest,
   UploadKYCImageResponse,
   GetKYCImageRequest,
-  GetKYCImageResponse
+  GetKYCImageResponse,
+  UpdateKYCRequest,
+  UpdateKYCResponse
 }

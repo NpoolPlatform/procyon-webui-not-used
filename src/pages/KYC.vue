@@ -220,17 +220,32 @@ onMounted(() => {
     }
 
     if (mutation.type === KYCMutationTypes.SetKYCHandingImage) {
-      store.dispatch(KYCActionTypes.CreateKYC, {
-        Info: {
-          AppID: q.cookies.get('AppID'),
-          UserID: q.cookies.get('UserID'),
-          CardType: 'passport',
-          CardID: 'DONOTNEEDCARDIDINPUTFROMUSER-' + uid(),
-          FrontCardImg: frontImg.value.URI,
-          BackCardImg: backImg.value.URI,
-          UserHandingCardImg: handingImg.value.URI
-        }
-      })
+      if (kycInfo.value.Kyc === undefined) {
+        store.dispatch(KYCActionTypes.CreateKYC, {
+          Info: {
+            AppID: q.cookies.get('AppID'),
+            UserID: q.cookies.get('UserID'),
+            CardType: 'passport',
+            CardID: 'DONOTNEEDCARDIDINPUTFROMUSER-' + uid(),
+            FrontCardImg: frontImg.value.URI,
+            BackCardImg: backImg.value.URI,
+            UserHandingCardImg: handingImg.value.URI
+          }
+        })
+      } else {
+        store.dispatch(KYCActionTypes.UpdateKYC, {
+          Info: {
+            ID: kycInfo.value.Kyc.ID,
+            AppID: q.cookies.get('AppID'),
+            UserID: q.cookies.get('UserID'),
+            CardType: 'passport',
+            CardID: kycInfo.value.Kyc.CardID,
+            FrontCardImg: frontImg.value.URI,
+            BackCardImg: backImg.value.URI,
+            UserHandingCardImg: handingImg.value.URI
+          }
+        })
+      }
     }
 
     if (mutation.type === KYCMutationTypes.SetKYCInfo) {
