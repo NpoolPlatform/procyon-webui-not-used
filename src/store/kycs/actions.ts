@@ -66,21 +66,21 @@ const actions: ActionTree<KYCState, RootState> = {
       .then((resp: UploadKYCImageResponse) => {
         switch (payload.ImageType) {
           case ImageType.Front:
-            commit(KYCMutationTypes.SetKYCFrontImage, {
+            commit(KYCMutationTypes.SetLocalKYCFrontImage, {
               ImageType: ImageType.Front,
               URI: resp.Info,
               Base64: resp.Info
             })
             break
           case ImageType.Back:
-            commit(KYCMutationTypes.SetKYCBackImage, {
+            commit(KYCMutationTypes.SetLocalKYCBackImage, {
               ImageType: ImageType.Back,
               URI: resp.Info,
               Base64: resp.Info
             })
             break
           case ImageType.Handing:
-            commit(KYCMutationTypes.SetKYCHandingImage, {
+            commit(KYCMutationTypes.SetLocalKYCHandingImage, {
               ImageType: ImageType.Handing,
               URI: resp.Info,
               Base64: resp.Info
