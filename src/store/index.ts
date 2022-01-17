@@ -36,6 +36,14 @@ import {
   OrderMutations
 } from './order'
 
+import {
+  kyc,
+  KYCState,
+  KYCActions,
+  KYCGetters,
+  KYCMutations
+} from './kycs'
+
 import { style, StyleState, StyleMutations, StyleGetters } from './style'
 
 import { notify, NotifyState, NotifyMutations, NotifyGetters } from './notify'
@@ -58,13 +66,14 @@ export interface RootState {
   verify: VerifyState
   affiliate: AffiliateState
   order: OrderState
+  kyc: KYCState
 }
 
 // 3 combine your actions, mutations and getters to root, if have multi use & combin
 // for example a & b
-type Actions = UserActions & GoodActions & VerifyActions & AffiliateActions & OrderActions
-type Mutations = UserMutations & StyleMutations & GoodMutations & NotifyMutations & VerifyMutations & AffiliateMutations & OrderMutations
-type Getters = UserGetters & StyleGetters & GoodGetters & NotifyGetters & VerifyGetters & AffiliateGetters & OrderGetters
+type Actions = UserActions & GoodActions & VerifyActions & AffiliateActions & OrderActions & KYCActions
+type Mutations = UserMutations & StyleMutations & GoodMutations & NotifyMutations & VerifyMutations & AffiliateMutations & OrderMutations & KYCMutations
+type Getters = UserGetters & StyleGetters & GoodGetters & NotifyGetters & VerifyGetters & AffiliateGetters & OrderGetters & KYCGetters
 
 // 4 attach your module to root
 export default store(function (/* { ssrContext } */) {
@@ -76,7 +85,8 @@ export default store(function (/* { ssrContext } */) {
       notify,
       verify,
       affiliate,
-      order
+      order,
+      kyc
     },
 
     // enable strict mode (adds overhead!)

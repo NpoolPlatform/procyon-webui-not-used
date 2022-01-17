@@ -13,17 +13,17 @@
       <input ref='selectBackImgFile' type='file' style='display: none;' @change='onBackImgSelected' accept='image/jpeg, image/png, image/jpg' />
       <input ref='selectHandingImgFile' type='file' style='display: none;' @change='onHandingImgSelected' accept='image/jpeg, image/png, image/jpg' />
       <div class='row'>
-        <q-img class='kyc-image rounded-borders cursor-pointer' @click='onFrontImgClick' :src='frontImg' :ratio='1'>
+        <q-img class='kyc-image rounded-borders cursor-pointer' @click='onFrontImgClick' :src='img2src(frontImg) as string' :ratio='1'>
           <div class="absolute-bottom text-subtitle1 text-center">
             {{ $t('general.FrontImage') }}
           </div>
         </q-img>
-        <q-img class='kyc-image rounded-borders cursor-pointer' @click='onBackImgClick' :src='backImg' :ratio='1'>
+        <q-img class='kyc-image rounded-borders cursor-pointer' @click='onBackImgClick' :src='img2src(backImg) as string' :ratio='1'>
           <div class="absolute-bottom text-subtitle1 text-center">
             {{ $t('general.BackImage') }}
           </div>
         </q-img>
-        <q-img class='kyc-image rounded-borders cursor-pointer' @click='onHandingImgClick' :src='handingImg' :ratio='1'>
+        <q-img class='kyc-image rounded-borders cursor-pointer' @click='onHandingImgClick' :src='img2src(handingImg) as string' :ratio='1'>
           <div class="absolute-bottom text-subtitle1 text-center">
             {{ $t('general.HandingImage') }}
           </div>
@@ -41,25 +41,68 @@
 </template>
 
 <script setup lang='ts'>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { CheckLogined } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
+import { useStore } from 'src/store'
+import { ActionTypes as KYCActionTypes } from 'src/store/kycs/action-types'
+import { MutationTypes as KYCMutationTypes } from 'src/store/kycs/mutation-types'
+import { KYCImage } from 'src/store/kycs/types'
+import { ImageType, State } from 'src/store/kycs/const'
+
+const store = useStore()
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
 
-const kycStatus = ref(t('general.NotVerified'))
+const kycStatus = computed(() => {
+  switch (store.getters.getKYCInfo.State) {
+    case State.NotVerified:
+      return t('general.NotVerified')
+    case State.Verified:
+      return t('general.Verified')
+    case State.Wait:
+      return t('general.Wait')
+    case State.Rejected:
+      return t('general.Rejected')
+    default:
+      return t('general.NotVerified')
+  }
+})
 
-const frontImg = ref('icons/icon-512x512.png')
-const backImg = ref('icons/icon-512x512.png')
-const handingImg = ref('icons/icon-512x512.png')
+const frontImg = computed({
+  get: () => store.getters.getKYCFrontImage,
+  set: (val: KYCImage) => {
+    store.commit(KYCMutationTypes.SetKYCFrontImage, val)
+  }
+})
+
+const backImg = computed({
+  get: () => store.getters.getKYCBackImage,
+  set: (val: KYCImage) => {
+    store.commit(KYCMutationTypes.SetKYCBackImage, val)
+  }
+})
+
+const handingImg = computed({
+  get: () => store.getters.getKYCHandingImage,
+  set: (val: KYCImage) => {
+    store.commit(KYCMutationTypes.SetKYCHandingImage, val)
+  }
+})
 
 const selectFrontImgFile = ref<HTMLDivElement>()
 const selectBackImgFile = ref<HTMLDivElement>()
 const selectHandingImgFile = ref<HTMLDivElement>()
 
+const img2src = (img: KYCImage) => {
+  return img.Base64 === undefined ? ref('icons/icon-512x512.png') : img.Base64
+}
+
 onMounted(() => {
-  CheckLogined()
+  if (CheckLogined()) {
+    store.dispatch(KYCActionTypes.GetKYCInfo)
+  }
 })
 
 type Base64Handler = (base64: string) => void
@@ -78,8 +121,13 @@ const toBase64 = (filename: Blob, onLoaded: Base64Handler) => {
 const onHandingImgSelected = (evt: Event) => {
   const target = evt.target as unknown as HTMLInputElement
   if (target.files) {
-    toBase64(target.files[0], function (base64: string) {
-      handingImg.value = base64
+    const filename = target.files[0]
+    toBase64(filename, function (base64: string) {
+      handingImg.value = {
+        ImageType: ImageType.Front,
+        URI: filename.name,
+        Base64: base64
+      }
     })
   }
 }
@@ -91,8 +139,13 @@ const onHandingImgClick = () => {
 const onFrontImgSelected = (evt: Event) => {
   const target = evt.target as unknown as HTMLInputElement
   if (target.files) {
-    toBase64(target.files[0], function (base64: string) {
-      frontImg.value = base64
+    const filename = target.files[0]
+    toBase64(filename, function (base64: string) {
+      frontImg.value = {
+        ImageType: ImageType.Front,
+        URI: filename.name,
+        Base64: base64
+      }
     })
   }
 }
@@ -104,8 +157,13 @@ const onFrontImgClick = () => {
 const onBackImgSelected = (evt: Event) => {
   const target = evt.target as unknown as HTMLInputElement
   if (target.files) {
-    toBase64(target.files[0], function (base64: string) {
-      backImg.value = base64
+    const filename = target.files[0]
+    toBase64(filename, function (base64: string) {
+      backImg.value = {
+        ImageType: ImageType.Front,
+        URI: filename.name,
+        Base64: base64
+      }
     })
   }
 }

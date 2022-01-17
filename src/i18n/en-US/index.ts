@@ -5,11 +5,15 @@ export default {
   general: {
     KYCStatus: 'KYC Status',
     NotVerified: 'Not Verified',
+    Vefified: 'Verified',
+    Wait: 'Being Reviewed',
+    Rejected: 'Rejected',
     KYCImages: 'KYC Images',
     Submit: 'Submit',
     FrontImage: 'Front',
     BackImage: 'Back',
-    HandingImage: 'Handing'
+    HandingImage: 'Handing',
+    GetKYCFail: 'Cannot get kyc info'
   },
 
   menuList: {

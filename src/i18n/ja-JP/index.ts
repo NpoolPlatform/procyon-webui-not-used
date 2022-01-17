@@ -5,11 +5,15 @@ export default {
   general: {
     KYCStatus: 'KYCステータス',
     NotVerified: '検証されていない',
+    Vefified: 'Verified',
+    Wait: 'Being Reviewed',
+    Rejected: 'Rejected',
     KYCImages: 'KYC画像',
     Submit: '参加する',
     FrontImage: 'フロント',
     BackImage: '戻る',
-    HandingImage: 'ハンドヘルド'
+    HandingImage: 'ハンドヘルド',
+    GetKYCFail: 'Cannot get kyc info'
   },
 
   menuList: {
