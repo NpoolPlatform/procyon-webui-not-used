@@ -73,7 +73,7 @@ import { load } from 'recaptcha-v3'
 
 const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
 
-const siteKey = '6LclwaIdAAAAAKVQTwz8FYinU0rP43_m6EedDv2S'
+const siteKey = '6Lcg4yIeAAAAANIyLz_mbENlYRSkK1C_aQkejb_4'
 const googleRecaptchaResponse = ref('')
 
 const initGoogleRecaptcha = () => {
