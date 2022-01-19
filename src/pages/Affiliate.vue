@@ -2,8 +2,10 @@
   <div class='content'>
     <div class='section-part-title'>{{ $t('affiliate.ReferralCode') }}</div>
     <ReferralCode />
+    <div class='hr' />
     <div class='section-part-title'>{{ $t('affiliate.Title') }}</div>
     <AffiliateTree />
+    <div class='hr' />
     <div class='section-part-title'>{{$t('affiliate.Direct.Title')}}</div>
     <AffiliateTable />
     <div class='section-part-title'>{{$t('affiliate.Export.Title')}}</div>
