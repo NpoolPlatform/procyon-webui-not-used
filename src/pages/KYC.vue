@@ -18,17 +18,17 @@
       <input ref='selectBackImgFile' type='file' style='display: none;' @change='onBackImgSelected' accept='image/jpeg, image/png, image/jpg' />
       <input ref='selectHandingImgFile' type='file' style='display: none;' @change='onHandingImgSelected' accept='image/jpeg, image/png, image/jpg' />
       <div class='row'>
-        <q-img class='kyc-image rounded-borders cursor-pointer' @click='onFrontImgClick' :src='img2src(frontImg) as string' :ratio='1'>
+        <q-img class='kyc-image rounded-borders cursor-pointer' @click='onFrontImgClick' :src='img2src(frontImg)' :ratio='1'>
           <div class="absolute-bottom text-subtitle1 text-center">
             {{ $t('general.FrontImage') }}
           </div>
         </q-img>
-        <q-img class='kyc-image rounded-borders cursor-pointer' @click='onBackImgClick' :src='img2src(backImg) as string' :ratio='1'>
+        <q-img class='kyc-image rounded-borders cursor-pointer' @click='onBackImgClick' :src='img2src(backImg)' :ratio='1'>
           <div class="absolute-bottom text-subtitle1 text-center">
             {{ $t('general.BackImage') }}
           </div>
         </q-img>
-        <q-img class='kyc-image rounded-borders cursor-pointer' @click='onHandingImgClick' :src='img2src(handingImg) as string' :ratio='1'>
+        <q-img class='kyc-image rounded-borders cursor-pointer' @click='onHandingImgClick' :src='img2src(handingImg)' :ratio='1'>
           <div class="absolute-bottom text-subtitle1 text-center">
             {{ $t('general.HandingImage') }}
           </div>
