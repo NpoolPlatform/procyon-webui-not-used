@@ -48,12 +48,12 @@ const actions: ActionTree<OrderState, RootState> = {
               const good = resp.Detail
               const myOrder: UserOrderDetail = {
                 Date: TimeStampToDate(order.Start, 'YYYY-MM-DD HH:mm:ss'),
-                Product: good.CoinInfo.Name,
-                Amount: order.Units.toString() + good.Unit,
-                Price: good.Price.toString() + good.PriceCurrency.Unit + '/' + good.Unit,
-                Discount: ((order.Discount + order.SpecialReductionAmount * 100 / order.Units / good.Price).toFixed(3)).toString() + '%',
+                Product: good.Main?.Name as string,
+                Amount: order.Units.toString() + good.Good.Unit,
+                Price: good.Good.Price.toString() + good.Good.PriceCurrency.Unit + '/' + good.Good.Unit,
+                Discount: ((order.Discount + order.SpecialReductionAmount * 100 / order.Units / good.Good.Price).toFixed(3)).toString() + '%',
                 TechFee: '20%',
-                Period: good.DurationDays.toString(),
+                Period: good.Good.DurationDays.toString(),
                 Total: order.Payment.Amount.toString()
               }
               // TODO: problem implementation
@@ -63,7 +63,7 @@ const actions: ActionTree<OrderState, RootState> = {
               commit(MutationTypes.SetTotalCapacity, totalUnits)
               commit(MutationTypes.SetTotalAmount, totalAmount)
 
-              commit(MutationTypes.SetDurationDays, good.DurationDays)
+              commit(MutationTypes.SetDurationDays, good.Good.DurationDays)
 
               const myOrders: Array<UserOrderDetail> = []
               for (let i = 0; i < state.userOrderDetails.length; i++) {

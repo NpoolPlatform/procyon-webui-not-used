@@ -29,7 +29,7 @@ const actions: ActionTree<GoodState, RootState> = {
     })
     post<GetGoodDetailsRequest, GetGoodDetailsResponse>(GoodURLPath.GET_GOOD_DETAILS, payload)
       .then((resp: GetGoodDetailsResponse) => {
-        commit(goodsMutation.SetGoodDetails, resp.Details)
+        commit(goodsMutation.SetGoodDetails, resp.Infos)
         commit(notifyMutation.SetInnerLoading, {
           key: ItemStateTarget.GetPromotionProduct,
           value: false

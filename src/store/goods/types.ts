@@ -1,96 +1,79 @@
-export interface GoodDetail {
+interface DeviceInfo {
+  ID?: string
+  Manufacturer: string
+  Consumption: number
+  ShipmentAt: number
+  Type: string
+}
+
+interface VendorLocation {
+  ID?: string
+  Country: string
+  Province: string
+  City: string
+  Address: string
+}
+
+interface PriceCurrency {
+  ID?: string
+  Name: string
+  Unit: string
+  Symbol: string
+}
+
+interface GoodExtra {
   ID: string
-  DeviceInfo: {
-    ID: string
-    Type: string
-    Manufacturer: string
-    PowerComsuption: number
-    ShipmentAt: number
-  }
+  GoodID: string
+  Labels: Array<string>
+  OutSale: boolean
+  Posters: Array<string>
+  PreSale: false
+  Rating: number
+  VoteCount: number
+}
+
+interface GoodBase {
+  ID?: string
   SeparateFee: boolean
   UnitPower: number
   DurationDays: number
-  CoinInfo: {
-    ID: string
-    PreSale: boolean
-    Name: string
-    Unit: string
-    Logo: string
-  }
   Actuals: boolean
   DeliveryAt: number
-  InheritFromGood: {
-    ID: string
-    DeviceInfoID: string
-    SeparateFee: boolean
-    UnitPower: number
-    DurationDays: number
-    CoinInfoID: string
-    Actuals: boolean
-    DeliveryAt: number
-    InheritFromGoodID: string
-    VendorLocationID: string
-    Price: number
-    BenefitType: string
-    Classic: boolean
-    SupportCoinTypeIDs: []
-    Total: number
-    PriceCurrency: string
-    Title: string
-    Unit: string
-    Start: number
-  }
-  VendorLocation: {
-    ID: string
-    Country: string
-    Province: string
-    City: string
-    Address: string
-  }
   Price: number
   BenefitType: string
   Classic: boolean
-  SupportCoins: [
-    {
-      ID: string
-      PreSale: boolean
-      Name: string
-      Unit: string
-      Logo: string
-    }
-  ]
-  Total: number
-  Extra: {
-    ID: string
-    GoodID: string
-    Posters: []
-    Labels: []
-    OutSale: boolean
-    PreSale: boolean
-    VoteCount: number
-    Rating: number
-  }
   Title: string
+  Total: number
   Unit: string
-  Start: number
-  PriceCurrency: {
-    ID: string
-    Name: string
-    Unit: string
-    Symbol: string
-  }
-  Fees: [
-    {
-      Fee: {
-        ID: string
-        AppID: string
-        FeeType: string
-        FeeDescription: string
-        PayType: string
-      }
-      Value: number
-    }
-  ]
+}
+
+interface Fee {
+  ID?: string
+  AppID: string
+  FeeTypeID: string
+  Value: number
+}
+
+export interface Good extends GoodBase {
+  DeviceInfo: DeviceInfo
+  VendorLocation: VendorLocation
+  Fees: Array<Fee>
+  PriceCurrency: PriceCurrency
+  Extra: GoodExtra
+}
+
+interface Coin {
+  ID: string
+  Name: string
+  PreSale: boolean
+  Unit: string
+  Logo: string
+}
+
+export interface GoodDetail {
+  Good: Good
+  Main?: Coin
+  SupportCoins?: Array<Coin>
 }
 
 export interface GetGoodDetailsRequest {
@@ -98,7 +81,7 @@ export interface GetGoodDetailsRequest {
 }
 
 export interface GetGoodDetailsResponse {
-  Details: Array<GoodDetail>
+  Infos: Array<GoodDetail>
   Total: number
 }
 
@@ -111,6 +94,6 @@ export interface GetGoodDetailResponse {
 }
 
 export enum GoodURLPath {
-  GET_GOOD_DETAILS = '/cloud-hashing-apis-v2/v1/get/goods/detail',
-  GET_GOOD_DETAIL = '/cloud-hashing-apis-v2/v1/get/good/detail'
+  GET_GOOD_DETAILS = '/cloud-hashing-apis-v2/v1/get/goods',
+  GET_GOOD_DETAIL = '/cloud-hashing-apis-v2/v1/get/good'
 }

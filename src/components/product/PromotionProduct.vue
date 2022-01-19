@@ -2,11 +2,11 @@
   <div class='product-card' v-for='(good, index) in myGoods' :key='index'>
     <div class='card-header'>
       <q-img :src='spacemeshImg' class='header-img'></q-img>
-      <h3 class='header-title'>{{ good.CoinInfo.Name }}</h3>
+      <h3 class='header-title'>{{ good.Main.Name }}</h3>
     </div>
 
     <div class='product-price'>
-      <span>{{ good.Price }}</span
+      <span>{{ good.Good.Price }}</span
       >USDT / TB
     </div>
 
@@ -22,7 +22,7 @@
     <div class='product-line'>
       <span class='line-label'>{{ $t('product.ServicePeriodLabel') }}</span>
       <span class='line-value'
-      >{{ good.DurationDays }} {{ $t('product.ServicePeriodValue') }}</span
+      >{{ good.Good.DurationDays }} {{ $t('product.ServicePeriodValue') }}</span
       >
     </div>
 
@@ -74,7 +74,11 @@ onMounted(() => {
   getPromotionProduct()
 })
 
-const myGoods = computed(() => store.getters.getGoodDetails)
+const myGoods = computed(() => {
+  return store.getters.getGoodDetails.filter((good, index) => {
+    return index < 3
+  })
+})
 </script>
 
 <style scoped>
