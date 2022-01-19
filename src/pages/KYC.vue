@@ -49,14 +49,14 @@
 
 <script setup lang='ts'>
 import { onMounted, ref, computed, onUnmounted } from 'vue'
-import { CheckLogined } from 'src/utils/utils'
+import { CheckLogined, ThrottleDelay } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'src/store'
 import { ActionTypes as KYCActionTypes } from 'src/store/kycs/action-types'
 import { MutationTypes as KYCMutationTypes } from 'src/store/kycs/mutation-types'
 import { KYC, KYCImage } from 'src/store/kycs/types'
 import { ImageType, State } from 'src/store/kycs/const'
-import { useQuasar, uid } from 'quasar'
+import { useQuasar, uid, throttle } from 'quasar'
 
 const store = useStore()
 
@@ -187,14 +187,14 @@ const onBackImgClick = () => {
 
 const q = useQuasar()
 
-const onSubmit = () => {
+const onSubmit = throttle(() => {
   store.dispatch(KYCActionTypes.UploadKYCImage, {
     AppID: q.cookies.get('AppID'),
     UserID: q.cookies.get('UserID'),
     ImageType: ImageType.Front,
     ImageBase64: frontImg.value.Base64 as string
   })
-}
+}, ThrottleDelay * 3)
 
 type FunctionVoid = () => void
 const unsubscribe = ref<FunctionVoid>()
