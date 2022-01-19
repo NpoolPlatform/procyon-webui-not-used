@@ -326,7 +326,7 @@ enum UserURLPath {
   LOGIN = '/login-door/v1/login',
   LOGOUT = '/login-door/v1/logout',
   GET_USER_INVITATION_CODE = '/cloud-hashing-inspire/v1/get/user/invitation/code/by/app/user',
-  SIGN_UP = '/cloud-hashing-apis/v1/signup',
+  SIGN_UP = '/cloud-hashing-apis-v2/v1/signup',
   CHANGE_PASSWORD = '/user-management/v1/change/password',
   FORGET_PASSWORD = '/user-management/v1/forget/password',
   GET_USER_DETAIL = '/user-management/v1/get/user/details',

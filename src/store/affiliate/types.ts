@@ -46,5 +46,5 @@ export interface Invitation {
 }
 
 export enum AffiliateURLPath {
-  GET_DIRECT_INVITATIONS = '/cloud-hashing-apis/v1/get/my/direct/invitations'
+  GET_DIRECT_INVITATIONS = '/cloud-hashing-apis-v2/v1/get/my/direct/invitations'
 }

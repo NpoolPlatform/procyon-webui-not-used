@@ -218,5 +218,5 @@ export interface UserOrderDetail {
 }
 
 export enum OrderURLPath {
-  GET_ORDERS_DETAIL_BY_APP_USER = '/cloud-hashing-apis/v1/get/orders/detail/by/app/user'
+  GET_ORDERS_DETAIL_BY_APP_USER = '/cloud-hashing-apis-v2/v1/get/orders/detail/by/app/user'
 }
