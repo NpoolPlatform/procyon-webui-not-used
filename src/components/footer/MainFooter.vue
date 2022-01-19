@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-      <p class="copyright">© 2021 PRCN Technology Ltd.</p>
+      <p class="copyright">© 2021 - {{ new Date().getFullYear() }} PRCN Technology Ltd.</p>
     </div>
   </div>
 </template>
