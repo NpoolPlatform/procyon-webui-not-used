@@ -66,7 +66,6 @@ const actions: ActionTree<KYCState, RootState> = {
 
   [ActionTypes.GetKYCImage] ({ commit }, payload: GetKYCImageRequest) {
     const { t } = useI18n()
-    console.log(payload.ImageS3Key)
     post<GetKYCImageRequest, GetKYCImageResponse>(API.GET_KYC_IMAGE, {
       ImageS3Key: payload.ImageS3Key
     })

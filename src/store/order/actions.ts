@@ -39,26 +39,30 @@ const actions: ActionTree<OrderState, RootState> = {
         commit(MutationTypes.SetTotalCapacity, 0)
         commit(MutationTypes.SetTotalAmount, 0)
 
-        resp.Details.forEach(order => {
+        resp.Infos.forEach(order => {
           const request: GetGoodDetailRequest = {
-            ID: order.Good.ID
+            ID: order.Good.Good.ID as string
           }
           post<GetGoodDetailRequest, GetGoodDetailResponse>(GoodURLPath.GET_GOOD_DETAIL, request)
             .then((resp: GetGoodDetailResponse) => {
-              const good = resp.Detail
+              let reductionAmount = 0
+              if (order.UserSpecialReduction) {
+                reductionAmount = order.UserSpecialReduction.Amount
+              }
+              const good = resp.Info
               const myOrder: UserOrderDetail = {
-                Date: TimeStampToDate(order.Start, 'YYYY-MM-DD HH:mm:ss'),
+                Date: TimeStampToDate(order.Order.Start, 'YYYY-MM-DD HH:mm:ss'),
                 Product: good.Main?.Name as string,
-                Amount: order.Units.toString() + good.Good.Unit,
+                Amount: order.Order.Units.toString() + good.Good.Unit,
                 Price: good.Good.Price.toString() + good.Good.PriceCurrency.Unit + '/' + good.Good.Unit,
-                Discount: ((order.Discount + order.SpecialReductionAmount * 100 / order.Units / good.Good.Price).toFixed(3)).toString() + '%',
+                Discount: ((reductionAmount * 100 / order.Order.Units / good.Good.Price).toFixed(3)).toString() + '%',
                 TechFee: '20%',
                 Period: good.Good.DurationDays.toString(),
-                Total: order.Payment.Amount.toString()
+                Total: order.Order.Payment.Amount.toString()
               }
               // TODO: problem implementation
-              const totalUnits = state.totalCapacity + order.Units
-              const totalAmount = state.totalAmount + order.Payment.Amount
+              const totalUnits = state.totalCapacity + order.Order.Units
+              const totalAmount = state.totalAmount + order.Order.Payment.Amount
 
               commit(MutationTypes.SetTotalCapacity, totalUnits)
               commit(MutationTypes.SetTotalAmount, totalAmount)

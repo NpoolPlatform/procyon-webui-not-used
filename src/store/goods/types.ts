@@ -90,7 +90,7 @@ export interface GetGoodDetailRequest {
 }
 
 export interface GetGoodDetailResponse {
-  Detail: GoodDetail
+  Info: GoodDetail
 }
 
 export enum GoodURLPath {
