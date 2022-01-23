@@ -3,12 +3,12 @@
 
 export default {
   general: {
-    KYCStatus: 'KYC Status',
+    KYCStatus: 'KYC Verification Status',
     NotVerified: 'Not Verified',
     Verified: 'Verified',
-    Wait: 'Being Reviewed',
+    Wait: 'Under Review',
     Rejected: 'Rejected',
-    KYCImages: 'KYC Images',
+    KYCImages: 'Identification Documents',
     Submit: 'Submit',
     FrontImage: 'Front',
     BackImage: 'Back',

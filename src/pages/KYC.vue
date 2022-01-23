@@ -1,11 +1,7 @@
 <template>
   <div class='content'>
     <div class='section-part-title'>{{ $t('general.KYCStatus') }}</div>
-    <div class='row'>
-      <q-space />
-      <span class='kyc-status'>{{ kycStatus }}</span>
-      <q-space />
-    </div>
+    <KYCState :state='kycState' />
     <div class='row'>
       <q-space />
       <span v-if='kycInfo.State === State.Rejected' class='kyc-reject-reason'>{{ kycInfo.Message }}</span>
@@ -13,6 +9,7 @@
     </div>
     <div class='hr-t'></div>
     <div class='section-part-title'>{{ $t('general.KYCImages') }}</div>
+    <KYCDocuments />
     <div>
       <input ref='selectFrontImgFile' type='file' style='display: none;' @change='onFrontImgSelected' accept='image/jpeg, image/png, image/jpg' />
       <input ref='selectBackImgFile' type='file' style='display: none;' @change='onBackImgSelected' accept='image/jpeg, image/png, image/jpg' />
@@ -48,9 +45,8 @@
 </template>
 
 <script setup lang='ts'>
-import { onMounted, ref, computed, onUnmounted } from 'vue'
+import { onMounted, ref, computed, onUnmounted, defineAsyncComponent } from 'vue'
 import { CheckLogined, ThrottleDelay } from 'src/utils/utils'
-import { useI18n } from 'vue-i18n'
 import { useStore } from 'src/store'
 import { ActionTypes as KYCActionTypes } from 'src/store/kycs/action-types'
 import { MutationTypes as KYCMutationTypes } from 'src/store/kycs/mutation-types'
@@ -58,26 +54,15 @@ import { KYC, KYCImage } from 'src/store/kycs/types'
 import { ImageType, State } from 'src/store/kycs/const'
 import { useQuasar, uid, throttle } from 'quasar'
 
-const store = useStore()
+const KYCState = defineAsyncComponent(() => import('src/components/kyc/KYCState.vue'))
+const KYCDocuments = defineAsyncComponent(() => import('src/components/kyc/KYCDocuments.vue'))
 
-// eslint-disable-next-line @typescript-eslint/unbound-method
-const { t } = useI18n({ useScope: 'global' })
+const store = useStore()
 
 const kycInfo = computed(() => store.getters.getKYCInfo)
 
-const kycStatus = computed(() => {
-  switch (kycInfo.value.State) {
-    case State.NotVerified:
-      return t('general.NotVerified')
-    case State.Verified:
-      return t('general.Verified')
-    case State.Wait:
-      return t('general.Wait')
-    case State.Rejected:
-      return t('general.Rejected')
-    default:
-      return t('general.NotVerified')
-  }
+const kycState = computed(() => {
+  return kycInfo.value ? kycInfo.value.State : State.NotVerified
 })
 
 const frontImg = computed({
