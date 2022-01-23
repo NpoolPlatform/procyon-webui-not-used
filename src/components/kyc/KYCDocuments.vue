@@ -200,13 +200,14 @@ type Base64Handler = (base64: string) => void
 // TODO: limit file format to be a photo
 
 const toBase64 = (filename: File, onLoaded: Base64Handler) => {
-  const maxSize = 400000
+  const maxSize = 4000000
   // eslint-disable-next-line no-new
   new Compressor(filename, {
     convertSize: maxSize,
     success (result: Blob) {
       const reader = new FileReader()
       reader.onloadend = () => {
+        console.log((reader.result as string).length)
         if ((reader.result as string).length > maxSize) {
           store.commit(NotifyMutationTypes.PushMessage,
             RequestMessageToNotifyMessage('Size of ' + filename.name + ' > ' + maxSize.toString(), '', 'negative'))
