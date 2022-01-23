@@ -207,7 +207,6 @@ const toBase64 = (filename: File, onLoaded: Base64Handler) => {
     success (result: Blob) {
       const reader = new FileReader()
       reader.onloadend = () => {
-        console.log((reader.result as string).length)
         if ((reader.result as string).length > maxSize) {
           store.commit(NotifyMutationTypes.PushMessage,
             RequestMessageToNotifyMessage('Size of ' + filename.name + ' > ' + maxSize.toString(), '', 'negative'))
