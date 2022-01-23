@@ -89,6 +89,7 @@
 import { ref, withDefaults, defineProps, toRef, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useQuasar, uid, throttle } from 'quasar'
+import Compressor from 'compressorjs'
 
 import { DocumentType, ImageType, State } from 'src/store/kycs/const'
 
@@ -99,7 +100,8 @@ import { useStore } from 'src/store'
 import { KYC, KYCImage } from 'src/store/kycs/types'
 import { MutationTypes as KYCMutationTypes } from 'src/store/kycs/mutation-types'
 import { ActionTypes as KYCActionTypes } from 'src/store/kycs/action-types'
-import { ThrottleDelay } from 'src/utils/utils'
+import { ThrottleDelay, RequestMessageToNotifyMessage } from 'src/utils/utils'
+import { MutationTypes as NotifyMutationTypes } from 'src/store/notify/mutation-types'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
@@ -197,12 +199,27 @@ type Base64Handler = (base64: string) => void
 // TODO: limit photo size
 // TODO: limit file format to be a photo
 
-const toBase64 = (filename: Blob, onLoaded: Base64Handler) => {
-  const reader = new FileReader()
-  reader.onloadend = function () {
-    onLoaded(reader.result as string)
-  }
-  reader.readAsDataURL(filename)
+const toBase64 = (filename: File, onLoaded: Base64Handler) => {
+  const maxSize = 400000
+  // eslint-disable-next-line no-new
+  new Compressor(filename, {
+    convertSize: maxSize,
+    success (result: Blob) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        if ((reader.result as string).length > maxSize) {
+          store.commit(NotifyMutationTypes.PushMessage,
+            RequestMessageToNotifyMessage('Size of ' + filename.name + ' > ' + maxSize.toString(), '', 'negative'))
+          return
+        }
+        onLoaded(reader.result as string)
+      }
+      reader.readAsDataURL(result)
+    },
+    error (err: Error) {
+      console.log('fail compress', filename, err)
+    }
+  })
 }
 
 const onHandingImgSelected = (evt: Event) => {
