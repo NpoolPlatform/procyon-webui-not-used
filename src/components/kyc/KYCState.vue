@@ -1,19 +1,19 @@
 <template>
-  <q-card class='kyc-bg'>
-    <q-item>
-      <q-img class='kyc-state-icon' :src='myState.icon' />
-      <span class='kyc-state-text'>{{ myState.label.toUpperCase() }}</span>
-    </q-item>
-    <span
-      class='kyc-state-message'
-      v-if='kycState === State.Rejected'>
+  <q-card class='content-glass kyc-status'>
+    <div class='row'>
+      <img class='kyc-status-img' :src='myState.icon' />
+      <span class='status'>{{ myState.label.toUpperCase() }}</span>
+    </div>
+    <p
+      class='rejection-note'
+      v-if='kycState === State.Rejected && message'>
       {{ message }}
-    </span>
+    </p>
   </q-card>
 </template>
 
 <script setup lang='ts'>
-import { defineProps, withDefaults, toRef, computed } from 'vue'
+import { defineProps, withDefaults, toRef, computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import kycNotVerifiedImg from 'src/assets/kyc-not-verified.svg'
@@ -35,7 +35,8 @@ const props = withDefaults(defineProps<Props>(), {
   message: ''
 })
 
-const kycState = toRef(props, 'state')
+// const kycState = toRef(props, 'state')
+const kycState = ref(State.Rejected)
 const message = toRef(props, 'message')
 
 interface KYCState {
@@ -76,27 +77,35 @@ const myState = computed(() => {
 </script>
 
 <style scoped>
-.kyc-bg {
-  max-width: 100%;
-  background: linear-gradient(to bottom right,rgba(225, 238, 239, 0.2) 0, rgba(161, 208, 208, 0.2) 100%);
-  margin: 10px;
-  padding: 16px 0 16px 10px;
-  border-radius: 16px;
+.content-glass {
+  background: linear-gradient(to bottom right, rgba(225, 238, 239, 0.2) 0, rgba(161, 208, 208, 0.2) 100%);
+  box-shadow: 16px 16px 20px 0 #23292b;
+  border-radius: 12px;
+  color: #e1eeef;
+  padding: 24px;
+  margin: 24px;
 }
 
-.kyc-state-icon {
-  width: 36px;
-  height: 36px;
+.kyc-status {
+  align-items: center;
+  flex-wrap: wrap;
+  display: flex;
 }
 
-.kyc-state-text {
-  line-height: 36px;
+.kyc-status img {
+  height: 32px;
+  margin: 0 8px 0 0;
+}
+
+.status {
   font-size: 24px;
   font-weight: 600;
-  margin-left: 10px;
+  text-transform: uppercase;
 }
 
-.kyc-state-message {
-  margin-left: 14px;
+.rejection-note {
+  margin: 12px 0 0 0;
+  width: 100%;
+  font-size: 16px;
 }
 </style>

@@ -7,7 +7,6 @@
       <span v-if='kycInfo.State === State.Rejected' class='kyc-reject-reason'>{{ kycInfo.Message }}</span>
       <q-space />
     </div>
-    <div class='hr-t'></div>
     <div class='section-part-title'>{{ $t('general.KYCImages') }}</div>
     <KYCDocuments />
     <div>

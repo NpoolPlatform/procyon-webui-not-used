@@ -13,7 +13,11 @@ export default {
     FrontImage: 'フロント',
     BackImage: '戻る',
     HandingImage: 'ハンドヘルド',
-    GetKYCFail: 'Cannot get kyc info'
+    GetKYCFail: 'Cannot get kyc info',
+    DocumentType: 'Document Type',
+    IDCard: 'ID Card',
+    Passport: 'Passport',
+    Upload: 'Upload'
   },
 
   menuList: {

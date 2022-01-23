@@ -19,8 +19,14 @@ enum State {
   Rejected = 'rejected'
 }
 
+enum DocumentType {
+  IDCard = 'id-card',
+  Passport = 'passport'
+}
+
 export {
   ImageType,
   API,
-  State
+  State,
+  DocumentType
 }
