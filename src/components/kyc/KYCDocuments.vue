@@ -19,7 +19,7 @@
       <input ref='selectHandingImgFile' type='file' style='display: none;' @change='onHandingImgSelected' accept='image/jpeg, image/png, image/jpg' />
       <div class="kyc-upload">
         <div class="kyc-image">
-          <img @click='onFrontImgClick' :src='img2src(frontImg, ImageType.Front)'>
+          <q-img class='kyc-image-img' @click='onFrontImgClick' :src='img2src(frontImg, ImageType.Front)' :ratio='4/3' />
           <span>{{ $t('general.Upload').toUpperCase() }}</span>
         </div>
         <div class="kyc-instructions">
@@ -31,7 +31,7 @@
       </div>
       <div v-if='documentType === DocumentType.IDCard' class="kyc-upload">
         <div class="kyc-image">
-          <img @click='onBackImgClick' :src='img2src(backImg, ImageType.Back)'>
+          <q-img class='kyc-image-img' @click='onBackImgClick' :src='img2src(backImg, ImageType.Back)' :ratio='4/3' />
           <span>{{ $t('general.Upload').toUpperCase() }}</span>
         </div>
         <div class="kyc-instructions">
@@ -41,7 +41,7 @@
       </div>
       <div class="kyc-upload">
         <div class="kyc-image">
-          <img @click='onHandingImgClick' :src='img2src(handingImg, ImageType.Handing)'>
+          <q-img class='kyc-image-img' @click='onHandingImgClick' :src='img2src(handingImg, ImageType.Handing)' :ratio='4/3' />
           <span>{{ $t('general.Upload').toUpperCase() }}</span>
         </div>
         <div class="kyc-instructions">
@@ -397,13 +397,16 @@ onUnmounted(() => {
   text-transform: uppercase;
 }
 
-.kyc-image img {
+.kyc-image-img {
   opacity: .5;
   transition: all ease-in-out .1s;
   width: 100%;
 }
 
-.kyc-image:hover img,
+.kyc-image-img:hover {
+  opacity: 1;
+}
+
 .kyc-image:hover span {
   opacity: 1;
 }
