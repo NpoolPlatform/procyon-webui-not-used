@@ -1,17 +1,34 @@
 <template>
   <q-card class='content-glass kyc-documents'>
-    <div class='document-select'>
+    <div class='document-select column'>
       <span class='kyc-document-text'>
         {{ $t('general.DocumentType').toUpperCase() }}
       </span>
-      <q-select
+      <q-btn-dropdown
         class='kyc-select'
-        borderless
+        flat
         dense
-        filled
-        v-model='documentLabel'
-        :options='documentTypes'
-      />
+        no-caps
+        unelevated
+        align='between'
+        auto-close
+        :label='documentLabel.label'
+      >
+        <q-list>
+          <q-item
+            dense
+            class='kyc-select-item'
+            clickable
+            v-for='type in documentTypes'
+            :key='type.value'
+            @click="() => onDocumentTypeSelected(type)"
+          >
+            <q-item-section>
+              <q-item-label>{{ type.label }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-btn-dropdown>
     </div>
     <div class='row document-select'>
       <input ref='selectFrontImgFile' type='file' style='display: none;' @change='onFrontImgSelected' accept='image/jpeg, image/png, image/jpg' />
@@ -102,14 +119,19 @@ const kycState = computed(() => {
   return State.NotVerified
 })
 
+interface DocTypeItem {
+  label: string
+  value: DocumentType
+}
+
 const documentTypes = ref([
   {
     label: t('general.IDCard'),
     value: DocumentType.IDCard
-  }, {
+  } as DocTypeItem, {
     label: t('general.Passport'),
     value: DocumentType.Passport
-  }
+  } as DocTypeItem
 ])
 
 const myDocumentType = computed(() => {
@@ -124,8 +146,12 @@ const myDocumentType = computed(() => {
   return documentTypes.value[0]
 })
 
-const documentLabel = ref(myDocumentType.value)
+const documentLabel = ref(myDocumentType.value as unknown as DocTypeItem)
 const documentType = computed(() => documentLabel.value.value)
+
+const onDocumentTypeSelected = (type: DocTypeItem) => {
+  documentLabel.value = type
+}
 
 const frontImg = computed({
   get: () => store.getters.getKYCFrontImage,
@@ -363,8 +389,15 @@ onUnmounted(() => {
   border-radius: 12px;
   width: 240px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
   margin: 8px 0 24px 0;
+  color: #23292b;
+  padding-left: 10px;
+}
+
+.kyc-select-item {
+  color: #23292b;
+  line-height: 20px;
 }
 
 .kyc-select:hover {
@@ -380,6 +413,7 @@ onUnmounted(() => {
   line-height: 36px;
   font-size: 14px;
   font-weight: 600;
+  width: 100%;
 }
 
 .kyc-image {
