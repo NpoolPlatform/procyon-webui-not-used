@@ -18,16 +18,16 @@ export default {
     IDCard: 'マイナンバーカード',
     Passport: 'パスポート',
     Upload: 'アップロード',
-    IDFrontHint: 'Take a photo of the <strong>front side</strong> of your ID (e.g. Passport or Residence Card).',
-    IDBackHint: 'Take a photo of the <strong>back side</strong> of your ID (e.g. Passport or Residence Card).',
-    IDHandingHint: 'Take a selfie while holding your ID next to your face.',
+    IDFrontHint: '身分証明書の<strong>表面</strong>の画像を添付 (マイナンバーカード、パスポート、運転免許証 等)',
+    IDBackHint: '身分証明書の<strong>裏面</strong>の画像を添付 (マイナンバーカード、パスポート、運転免許証 等)',
+    IDHandingHint: '身分証明書とご自身の顔がはっきりと見えるように自撮りをしてください。',
     IDSubmitConfirmation: '<ul>' +
-                            '<li>We do not accept scanned documents, <strong>only photos.</strong></li>' +
-                            '<li>Please be sure to take a photo with your smartphone in good lighting.</li>' +
-                            '<li>We only accept <strong>JPG/PNG files under 5MB</strong>.</li>' +
+                            '<li>身分証明書のスキャンは無効となりますので、必ず<strong>撮影した画像を</strong>申請してください。</li>' +
+                            '<li>画像は、十分に明る場所で撮影することを推奨しています。</li>' +
+                            '<li>画像は、必ず<strong>5MB以下のJPGもしくはPNG形式</strong>で申請してください。</li>' +
                           '</ul>',
-    PassportPhotoHint: 'Take a photo of your passport photo page with all info clearly visible.',
-    PassportHandingHint: 'Take a selfie with your <strong>passport open to the photo page</strong> while holding it next to your face.',
+    PassportPhotoHint: 'パスポートの個人情報ページに記載されている情報がはっきりと見えるように撮影をしてください。',
+    PassportHandingHint: 'パスポートの<strong>個人情報ページとご自身の顔</strong>がはっきりと見えるように自撮りをしてください。',
     PassportPhotoPage: 'パスポートの個人情報ページ',
     PassportHanding: 'パスポートの個人情報ページと自撮り',
     ConfirmBeforeSubmit: '申請内容を確認'
