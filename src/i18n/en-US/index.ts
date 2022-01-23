@@ -29,7 +29,8 @@ export default {
     PassportPhotoHint: 'Take a photo of your passport photo page with all info clearly visible.',
     PassportHandingHint: 'Take a selfie with your <strong>passport open to the photo page</strong> while holding it next to your face.',
     PassportPhotoPage: 'Passport Photo Page',
-    PassportHanding: 'Selfid + Photo Page'
+    PassportHanding: 'Selfid + Photo Page',
+    ConfirmBeforeSubmit: 'Confirm before you submit'
   },
 
   menuList: {

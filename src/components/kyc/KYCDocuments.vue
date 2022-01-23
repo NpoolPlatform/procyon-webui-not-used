@@ -71,7 +71,7 @@
     </div>
     <div class='hr-t'></div>
     <div class="kyc-submit">
-      <h4>Confirm before you submit</h4>
+      <h4>{{ $t('general.ConfirmBeforeSubmit') }}</h4>
       <span v-html='$t("general.IDSubmitConfirmation")' />
       <div class='kyc-submit-container'>
         <q-btn

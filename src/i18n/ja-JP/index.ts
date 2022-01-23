@@ -3,21 +3,21 @@
 
 export default {
   general: {
-    KYCStatus: 'KYCステータス',
-    NotVerified: '検証されていない',
-    Verified: '確認済み',
-    Wait: 'レビュー中',
-    Rejected: '拒否されました',
-    KYCImages: 'KYC画像',
-    SubmitDocuments: 'Submit Documents',
-    IDFront: 'ID Front',
-    IDBack: 'ID Back',
-    IDHanding: 'Selfie + ID',
-    GetKYCFail: 'Cannot get kyc info',
-    DocumentType: 'Document Type',
-    IDCard: 'ID Card',
-    Passport: 'Passport',
-    Upload: 'Upload',
+    KYCStatus: '身分証明の認証ステータス',
+    NotVerified: '未登録',
+    Verified: '成功',
+    Wait: '審査中',
+    Rejected: '失敗',
+    KYCImages: '身分証明書',
+    SubmitDocuments: '申請',
+    IDFront: '身分証明書の表面',
+    IDBack: '身分証明書の裏面',
+    IDHanding: '身分証明書との自撮り画像',
+    GetKYCFail: 'kyc情報を取得できない',
+    DocumentType: '身分証明書一覧',
+    IDCard: 'マイナンバーカード',
+    Passport: 'パスポート',
+    Upload: 'アップロード',
     IDFrontHint: 'Take a photo of the <strong>front side</strong> of your ID (e.g. Passport or Residence Card).',
     IDBackHint: 'Take a photo of the <strong>back side</strong> of your ID (e.g. Passport or Residence Card).',
     IDHandingHint: 'Take a selfie while holding your ID next to your face.',
@@ -28,8 +28,9 @@ export default {
                           '</ul>',
     PassportPhotoHint: 'Take a photo of your passport photo page with all info clearly visible.',
     PassportHandingHint: 'Take a selfie with your <strong>passport open to the photo page</strong> while holding it next to your face.',
-    PassportPhotoPage: 'Passport Photo Page',
-    PassportHanding: 'Selfid + Photo Page'
+    PassportPhotoPage: 'パスポートの個人情報ページ',
+    PassportHanding: 'パスポートの個人情報ページと自撮り',
+    ConfirmBeforeSubmit: '申請内容を確認'
   },
 
   menuList: {
