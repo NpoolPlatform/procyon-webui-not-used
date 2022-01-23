@@ -1,65 +1,104 @@
 <template>
-  <q-card class='kyc-bg'>
-    <span class='kyc-document-text'>
-      {{ $t('general.DocumentType').toUpperCase() }}
-    </span>
-    <q-item>
+  <q-card class='content-glass kyc-documents'>
+    <div class='document-select'>
+      <span class='kyc-document-text'>
+        {{ $t('general.DocumentType').toUpperCase() }}
+      </span>
       <q-select
         class='kyc-select'
         borderless
+        dense
+        filled
         v-model='documentLabel'
         :options='documentTypes'
       />
-    </q-item>
-    <q-item class='kyc-document'>
-      <q-card flat class='kyc-image-container rounded-borders'>
-        <q-item>
-          <q-img class='kyc-image rounded-borders cursor-pointer' :src='kycFrontImg' />
-        </q-item>
-        <q-item class='kyc-image-text-container'>
-          <span class='text-center kyc-image-text'>
-            {{ $t('general.Upload').toUpperCase() }}
-          </span>
-        </q-item>
-      </q-card>
-      <q-space class='kyc-space' />
-      <q-card flat class='kyc-image-container rounded-borders'>
-        <q-item>
-          <q-img class='kyc-image rounded-borders cursor-pointer' :src='kycBackImg' />
-        </q-item>
-        <q-item class='kyc-image-text-container'>
-          <span class='text-center kyc-image-text'>
-            {{ $t('general.Upload').toUpperCase() }}
-          </span>
-        </q-item>
-      </q-card>
-      <q-space class='kyc-space' />
-      <q-card flat class='kyc-image-container rounded-borders'>
-        <q-item>
-          <q-img class='kyc-image rounded-borders cursor-pointer' :src='kycHandingImg' />
-        </q-item>
-        <q-item class='kyc-image-text-container'>
-          <span class='text-center kyc-image-text'>
-            {{ $t('general.Upload').toUpperCase() }}
-          </span>
-        </q-item>
-      </q-card>
-    </q-item>
+    </div>
+    <div class='row document-select'>
+      <input ref='selectFrontImgFile' type='file' style='display: none;' @change='onFrontImgSelected' accept='image/jpeg, image/png, image/jpg' />
+      <input ref='selectBackImgFile' type='file' style='display: none;' @change='onBackImgSelected' accept='image/jpeg, image/png, image/jpg' />
+      <input ref='selectHandingImgFile' type='file' style='display: none;' @change='onHandingImgSelected' accept='image/jpeg, image/png, image/jpg' />
+      <div class="kyc-upload">
+        <div class="kyc-image">
+          <img @click='onFrontImgClick' :src='img2src(frontImg, ImageType.Front)'>
+          <span>{{ $t('general.Upload').toUpperCase() }}</span>
+        </div>
+        <div class="kyc-instructions">
+          <h4 v-if='documentType === DocumentType.IDCard'>{{ $t('general.IDFront') }}</h4>
+          <h4 v-else>{{ $t('general.PassportPhotoPage') }}</h4>
+          <p v-if='documentType === DocumentType.IDCard' class="kyc-note" v-html='$t("general.IDFrontHint")' />
+          <p v-else class="kyc-note" v-html='$t("general.PassportPhotoHint")' />
+        </div>
+      </div>
+      <div v-if='documentType === DocumentType.IDCard' class="kyc-upload">
+        <div class="kyc-image">
+          <img @click='onBackImgClick' :src='img2src(backImg, ImageType.Back)'>
+          <span>{{ $t('general.Upload').toUpperCase() }}</span>
+        </div>
+        <div class="kyc-instructions">
+          <h4>{{ $t('general.IDBack') }}</h4>
+          <p class="kyc-note" v-html='$t("general.IDBackHint")' />
+        </div>
+      </div>
+      <div class="kyc-upload">
+        <div class="kyc-image">
+          <img @click='onHandingImgClick' :src='img2src(handingImg, ImageType.Handing)'>
+          <span>{{ $t('general.Upload').toUpperCase() }}</span>
+        </div>
+        <div class="kyc-instructions">
+          <h4 v-if='documentType === DocumentType.IDCard'>{{ $t('general.IDHanding') }}</h4>
+          <h4 v-else>{{ $t('general.PassportHanding') }}</h4>
+          <p v-if='documentType === DocumentType.IDCard' class="kyc-note" v-html='$t("general.IDHandingHint")' />
+          <p v-else class="kyc-note" v-html='$t("general.PassportHandingHint")' />
+        </div>
+      </div>
+    </div>
+    <div class='hr-t'></div>
+    <div class="kyc-submit">
+      <h4>Confirm before you submit</h4>
+      <span v-html='$t("general.IDSubmitConfirmation")' />
+      <div class='kyc-submit-container'>
+        <q-btn
+          class='common-button save-button'
+          @click='onSubmit'
+          :disable='kycState === State.Verified'
+        >{{ $t('general.SubmitDocuments') }}
+        </q-btn>
+      </div>
+    </div>
   </q-card>
 </template>
 
 <script setup lang='ts'>
-import { ref } from 'vue'
+import { ref, withDefaults, defineProps, toRef, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useQuasar, uid, throttle } from 'quasar'
 
-import { DocumentType } from 'src/store/kycs/const'
+import { DocumentType, ImageType, State } from 'src/store/kycs/const'
 
 import kycFrontImg from 'src/assets/kyc-id-front.svg'
 import kycBackImg from 'src/assets/kyc-id-back.svg'
 import kycHandingImg from 'src/assets/kyc-selfie-id.svg'
+import { useStore } from 'src/store'
+import { KYC, KYCImage } from 'src/store/kycs/types'
+import { MutationTypes as KYCMutationTypes } from 'src/store/kycs/mutation-types'
+import { ActionTypes as KYCActionTypes } from 'src/store/kycs/action-types'
+import { ThrottleDelay } from 'src/utils/utils'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
+const store = useStore()
+
+interface Props {
+  state: State,
+  kycInfo?: KYC
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  state: State.NotVerified
+})
+
+const kycState = toRef(props, 'state')
+const kycInfo = toRef(props, 'kycInfo')
 
 const documentTypes = ref([
   {
@@ -70,83 +109,338 @@ const documentTypes = ref([
     value: DocumentType.Passport
   }
 ])
-const documentLabel = ref(t('general.IDCard'))
-
-/*
-const documentType = computed(() => {
-  for (let i = 0; i < documentTypes.value.length; i++) {
-    if (documentLabel.value === documentTypes.value[i].label) {
-      return documentTypes.value[i].value
-    }
-  }
-  return DocumentType.IDCard
+const documentLabel = ref({
+  label: t('general.IDCard'),
+  value: DocumentType.IDCard
 })
-*/
+
+const documentType = computed(() => documentLabel.value.value)
+
+const frontImg = computed({
+  get: () => store.getters.getKYCFrontImage,
+  set: (val: KYCImage) => {
+    store.commit(KYCMutationTypes.SetLocalKYCFrontImage, val)
+  }
+})
+
+const backImg = computed({
+  get: () => store.getters.getKYCBackImage,
+  set: (val: KYCImage) => {
+    store.commit(KYCMutationTypes.SetLocalKYCBackImage, val)
+  }
+})
+
+const handingImg = computed({
+  get: () => store.getters.getKYCHandingImage,
+  set: (val: KYCImage) => {
+    store.commit(KYCMutationTypes.SetLocalKYCHandingImage, val)
+  }
+})
+
+const selectFrontImgFile = ref<HTMLDivElement>()
+const selectBackImgFile = ref<HTMLDivElement>()
+const selectHandingImgFile = ref<HTMLDivElement>()
+
+const img2src = (img: KYCImage, type: ImageType) => {
+  if (img.Base64) {
+    return img.Base64
+  }
+  switch (type) {
+    case ImageType.Front:
+      return kycFrontImg
+    case ImageType.Back:
+      return kycBackImg
+    case ImageType.Handing:
+      return kycHandingImg
+  }
+}
+
+type Base64Handler = (base64: string) => void
+
+// TODO: limit photo size
+// TODO: limit file format to be a photo
+
+const toBase64 = (filename: Blob, onLoaded: Base64Handler) => {
+  const reader = new FileReader()
+  reader.onloadend = function () {
+    onLoaded(reader.result as string)
+  }
+  reader.readAsDataURL(filename)
+}
+
+const onHandingImgSelected = (evt: Event) => {
+  const target = evt.target as unknown as HTMLInputElement
+  if (target.files) {
+    const filename = target.files[0]
+    toBase64(filename, function (base64: string) {
+      handingImg.value = {
+        ImageType: ImageType.Front,
+        URI: filename.name,
+        Base64: base64
+      }
+    })
+  }
+}
+
+const onHandingImgClick = () => {
+  if (kycState.value === State.Verified) {
+    return
+  }
+  selectHandingImgFile.value?.click()
+}
+
+const onFrontImgSelected = (evt: Event) => {
+  const target = evt.target as unknown as HTMLInputElement
+  if (target.files) {
+    const filename = target.files[0]
+    toBase64(filename, function (base64: string) {
+      frontImg.value = {
+        ImageType: ImageType.Front,
+        URI: filename.name,
+        Base64: base64
+      }
+    })
+  }
+}
+
+const onFrontImgClick = () => {
+  if (kycState.value === State.Verified) {
+    return
+  }
+  selectFrontImgFile.value?.click()
+}
+
+const onBackImgSelected = (evt: Event) => {
+  const target = evt.target as unknown as HTMLInputElement
+  if (target.files) {
+    const filename = target.files[0]
+    toBase64(filename, function (base64: string) {
+      backImg.value = {
+        ImageType: ImageType.Front,
+        URI: filename.name,
+        Base64: base64
+      }
+    })
+  }
+}
+
+const onBackImgClick = () => {
+  if (kycState.value === State.Verified) {
+    return
+  }
+  selectBackImgFile.value?.click()
+}
+
+const q = useQuasar()
+
+const onSubmit = throttle(() => {
+  store.dispatch(KYCActionTypes.UploadKYCImage, {
+    AppID: q.cookies.get('AppID'),
+    UserID: q.cookies.get('UserID'),
+    ImageType: ImageType.Front,
+    ImageBase64: frontImg.value.Base64 as string
+  })
+}, ThrottleDelay * 3)
+
+type FunctionVoid = () => void
+const unsubscribe = ref<FunctionVoid>()
+
+onMounted(() => {
+  unsubscribe.value = store.subscribe((mutation) => {
+    if (mutation.type === KYCMutationTypes.SetKYCFrontImage) {
+      const imageType = documentType.value === DocumentType.IDCard ? ImageType.Back : ImageType.Handing
+      const image = documentType.value === DocumentType.IDCard ? backImg : handingImg
+      store.dispatch(KYCActionTypes.UploadKYCImage, {
+        AppID: q.cookies.get('AppID'),
+        UserID: q.cookies.get('UserID'),
+        ImageType: imageType,
+        ImageBase64: image.value.Base64 as string
+      })
+    }
+
+    if (mutation.type === KYCMutationTypes.SetKYCBackImage) {
+      store.dispatch(KYCActionTypes.UploadKYCImage, {
+        AppID: q.cookies.get('AppID'),
+        UserID: q.cookies.get('UserID'),
+        ImageType: ImageType.Handing,
+        ImageBase64: handingImg.value.Base64 as string
+      })
+    }
+
+    if (mutation.type === KYCMutationTypes.SetKYCHandingImage) {
+      if (kycState.value === State.NotVerified) {
+        store.dispatch(KYCActionTypes.CreateKYC, {
+          Info: {
+            AppID: q.cookies.get('AppID'),
+            UserID: q.cookies.get('UserID'),
+            CardType: 'passport',
+            CardID: 'DONOTNEEDCARDIDINPUTFROMUSER-' + uid(),
+            FrontCardImg: frontImg.value.URI,
+            BackCardImg: backImg.value.URI,
+            UserHandingCardImg: handingImg.value.URI
+          }
+        })
+      } else {
+        store.dispatch(KYCActionTypes.UpdateKYC, {
+          Info: {
+            ID: kycInfo.value?.Kyc?.ID,
+            AppID: q.cookies.get('AppID'),
+            UserID: q.cookies.get('UserID'),
+            CardType: 'passport',
+            CardID: kycInfo.value?.Kyc?.CardID,
+            FrontCardImg: frontImg.value.URI,
+            BackCardImg: backImg.value.URI,
+            UserHandingCardImg: handingImg.value.URI
+          }
+        })
+      }
+    }
+
+    if (mutation.type === KYCMutationTypes.SetKYCInfo) {
+      const kyc = mutation.payload as KYC
+
+      store.dispatch(KYCActionTypes.GetKYCImage, {
+        ImageType: ImageType.Front,
+        URI: kyc.Kyc?.FrontCardImg,
+        ImageS3Key: kyc.Kyc?.FrontCardImg
+      })
+
+      store.dispatch(KYCActionTypes.GetKYCImage, {
+        ImageType: ImageType.Back,
+        URI: kyc.Kyc?.BackCardImg,
+        ImageS3Key: kyc.Kyc?.BackCardImg
+      })
+
+      store.dispatch(KYCActionTypes.GetKYCImage, {
+        ImageType: ImageType.Handing,
+        URI: kyc.Kyc?.UserHandingCardImg,
+        ImageS3Key: kyc.Kyc?.UserHandingCardImg
+      })
+    }
+  })
+})
+
+onUnmounted(() => {
+  unsubscribe.value?.()
+})
 
 </script>
 
 <style scoped>
-.kyc-bg {
-  max-width: 100%;
-  background: linear-gradient(to bottom right,rgba(225, 238, 239, 0.2) 0, rgba(161, 208, 208, 0.2) 100%);
-  margin: 10px;
-  padding: 36px 0 16px 10px;
-  border-radius: 16px;
+.content-glass {
+  background: linear-gradient(to bottom right, rgba(225, 238, 239, 0.2) 0, rgba(161, 208, 208, 0.2) 100%);
+  box-shadow: 16px 16px 20px 0 #23292b;
+  border-radius: 12px;
+  color: #e1eeef;
+  padding: 24px;
+  margin: 24px;
 }
 
-.kyc-state-icon {
-  width: 36px;
-  height: 36px;
+.kyc-documents {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.document-select {
+  width: 100%;
 }
 
 .kyc-select {
-  background-color: white;
-  border-radius: 16px;
-  width: 300px;
-  font-size: 20px;
+  background-color: #e1eeef;
+  border: solid 2px transparent;
+  border-radius: 12px;
+  width: 240px;
+  font-size: 14px;
   font-weight: 600;
-  padding-left: 20px;
+  margin: 8px 0 24px 0;
+}
+
+.kyc-select:hover {
+  border: solid 2px #1ec498;
+}
+
+.kyc-upload {
+  margin: 0 3% 0 0;
+  width: 30%;
 }
 
 .kyc-document-text {
   line-height: 36px;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 600;
-  margin-left: 14px;
-}
-
-.kyc-image-container {
-  border: dashed 1px green;
-  border-radius: 32px;
-  max-width: 32.3%;
-  min-width: 32.3%;
-  background-color: transparent;
-}
-
-.kyc-space {
-  max-width: 24px;
-}
-
-.kyc-image-text {
-  color: #bbbbbb;
-  font-weight: 500;
-  line-height: 24px;
-  width: 100%;
-}
-
-.kyc-image-text-container {
-  padding: 0;
-  margin: 0;
-}
-
-.kyc-document {
-  margin-top: 36px;
-  margin-right: 10px;
 }
 
 .kyc-image {
-  max-width: 92%;
-  margin-left: 4%;
-  margin-top: 6%;
+  border: 1px dashed #11afaf;
+  border-radius: 32px;
+  cursor: pointer;
+  margin: 24px 0;
+  padding: 24px 24px 6px 24px;
+  text-align: center;
+}
+
+.kyc-image span {
+  line-height: 2;
+  opacity: .7;
+  text-transform: uppercase;
+}
+
+.kyc-image img {
+  opacity: .5;
+  transition: all ease-in-out .1s;
+  width: 100%;
+}
+
+.kyc-image:hover img,
+.kyc-image:hover span {
+  opacity: 1;
+}
+
+::v-deep strong {
+  color: #1ec498;
+  filter: contrast(1.5);
+}
+
+.kyc-note {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 28px;
+}
+
+.kyc-submit {
+  width: 100%;
+}
+
+.kyc-submit p {
+  background: #ffffff22;
+  border-radius: 12px;
+  font-size: 18px;
+  line-height: 28px;
+  min-width: 400px;
+  padding: 8px 16px;
+  width: 70%;
+}
+
+.kyc-submit button {
+  margin: 16px 16px 16px 0;
+  min-width: 220px;
+}
+
+.kyc-documents .hr {
+  margin: 24px 0;
+}
+
+.save-button {
+  background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
+  border: 0;
+  color: #e4f4f0;
+  line-height: 22px;
+  width: 100%;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 16px 16px 16px 0;
+  width: 220px;
 }
 </style>

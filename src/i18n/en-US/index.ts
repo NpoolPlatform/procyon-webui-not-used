@@ -9,15 +9,27 @@ export default {
     Wait: 'Under Review',
     Rejected: 'Rejected',
     KYCImages: 'Identification Documents',
-    Submit: 'Submit',
-    FrontImage: 'Front',
-    BackImage: 'Back',
-    HandingImage: 'Handing',
+    SubmitDocuments: 'Submit Documents',
+    IDFront: 'ID Front',
+    IDBack: 'ID Back',
+    IDHanding: 'Selfie + ID',
     GetKYCFail: 'Cannot get kyc info',
     DocumentType: 'Document Type',
     IDCard: 'ID Card',
     Passport: 'Passport',
-    Upload: 'Upload'
+    Upload: 'Upload',
+    IDFrontHint: 'Take a photo of the <strong>front side</strong> of your ID (e.g. Passport or Residence Card).',
+    IDBackHint: 'Take a photo of the <strong>back side</strong> of your ID (e.g. Passport or Residence Card).',
+    IDHandingHint: 'Take a selfie while holding your ID next to your face.',
+    IDSubmitConfirmation: '<ul>' +
+                            '<li>We do not accept scanned documents, <strong>only photos.</strong></li>' +
+                            '<li>Please be sure to take a photo with your smartphone in good lighting.</li>' +
+                            '<li>We only accept <strong>JPG/PNG files under 5MB</strong>.</li>' +
+                          '</ul>',
+    PassportPhotoHint: 'Take a photo of your passport photo page with all info clearly visible.',
+    PassportHandingHint: 'Take a selfie with your <strong>passport open to the photo page</strong> while holding it next to your face.',
+    PassportPhotoPage: 'Passport Photo Page',
+    PassportHanding: 'Selfid + Photo Page'
   },
 
   menuList: {

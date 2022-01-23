@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang='ts'>
-import { defineProps, withDefaults, toRef, computed, ref } from 'vue'
+import { defineProps, withDefaults, toRef, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import kycNotVerifiedImg from 'src/assets/kyc-not-verified.svg'
@@ -35,8 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
   message: ''
 })
 
-// const kycState = toRef(props, 'state')
-const kycState = ref(State.Rejected)
+const kycState = toRef(props, 'state')
 const message = toRef(props, 'message')
 
 interface KYCState {
