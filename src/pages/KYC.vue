@@ -13,6 +13,7 @@ import { CheckLogined } from 'src/utils/utils'
 import { useStore } from 'src/store'
 import { ActionTypes as KYCActionTypes } from 'src/store/kycs/action-types'
 import { State } from 'src/store/kycs/const'
+import { MutationTypes as KYCMutationTypes } from 'src/store/kycs/mutation-types'
 
 const KYCState = defineAsyncComponent(() => import('src/components/kyc/KYCState.vue'))
 const KYCDocuments = defineAsyncComponent(() => import('src/components/kyc/KYCDocuments.vue'))
@@ -26,6 +27,9 @@ const kycState = computed(() => {
 
 onMounted(() => {
   if (CheckLogined()) {
+    store.commit(KYCMutationTypes.SetLocalKYCFrontImage, {})
+    store.commit(KYCMutationTypes.SetLocalKYCBackImage, {})
+    store.commit(KYCMutationTypes.SetLocalKYCHandingImage, {})
     store.dispatch(KYCActionTypes.GetKYCInfo)
   }
 })
