@@ -89,16 +89,18 @@ const { t } = useI18n({ useScope: 'global' })
 const store = useStore()
 
 interface Props {
-  state: State,
   kycInfo?: KYC
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  state: State.NotVerified
-})
-
-const kycState = toRef(props, 'state')
+const props = withDefaults(defineProps<Props>(), {})
 const kycInfo = toRef(props, 'kycInfo')
+
+const kycState = computed(() => {
+  if (kycInfo.value) {
+    return kycInfo.value.State
+  }
+  return State.NotVerified
+})
 
 const documentTypes = ref([
   {
@@ -109,11 +111,20 @@ const documentTypes = ref([
     value: DocumentType.Passport
   }
 ])
-const documentLabel = ref({
-  label: t('general.IDCard'),
-  value: DocumentType.IDCard
+
+const myDocumentType = computed(() => {
+  if (!kycInfo.value) {
+    return documentTypes.value[0]
+  }
+  for (let i = 0; i < documentTypes.value.length; i++) {
+    if (kycInfo.value.Kyc?.CardType === documentTypes.value[i].value) {
+      return documentTypes.value[i]
+    }
+  }
+  return documentTypes.value[0]
 })
 
+const documentLabel = ref(myDocumentType.value)
 const documentType = computed(() => documentLabel.value.value)
 
 const frontImg = computed({
@@ -273,7 +284,7 @@ onMounted(() => {
           Info: {
             AppID: q.cookies.get('AppID'),
             UserID: q.cookies.get('UserID'),
-            CardType: 'passport',
+            CardType: documentType.value,
             CardID: 'DONOTNEEDCARDIDINPUTFROMUSER-' + uid(),
             FrontCardImg: frontImg.value.URI,
             BackCardImg: backImg.value.URI,
@@ -286,7 +297,7 @@ onMounted(() => {
             ID: kycInfo.value?.Kyc?.ID,
             AppID: q.cookies.get('AppID'),
             UserID: q.cookies.get('UserID'),
-            CardType: 'passport',
+            CardType: documentType.value,
             CardID: kycInfo.value?.Kyc?.CardID,
             FrontCardImg: frontImg.value.URI,
             BackCardImg: backImg.value.URI,
