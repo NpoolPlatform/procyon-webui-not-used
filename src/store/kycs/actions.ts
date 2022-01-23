@@ -74,21 +74,21 @@ const actions: ActionTree<KYCState, RootState> = {
           case ImageType.Front:
             commit(KYCMutationTypes.SetLocalKYCFrontImage, {
               ImageType: ImageType.Front,
-              URI: resp.Info,
+              URI: payload.ImageS3Key,
               Base64: resp.Info
             })
             break
           case ImageType.Back:
             commit(KYCMutationTypes.SetLocalKYCBackImage, {
               ImageType: ImageType.Back,
-              URI: resp.Info,
+              URI: payload.ImageS3Key,
               Base64: resp.Info
             })
             break
           case ImageType.Handing:
             commit(KYCMutationTypes.SetLocalKYCHandingImage, {
               ImageType: ImageType.Handing,
-              URI: resp.Info,
+              URI: payload.ImageS3Key,
               Base64: resp.Info
             })
             break
