@@ -421,7 +421,7 @@ onUnmounted(() => {
   border-radius: 32px;
   cursor: pointer;
   margin: 24px 0;
-  padding: 24px 24px 6px 24px;
+  padding: 24px 24px 0px 24px;
   text-align: center;
 }
 
