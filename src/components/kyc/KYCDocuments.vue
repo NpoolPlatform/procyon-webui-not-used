@@ -137,19 +137,19 @@ const documentTypes = ref([
   } as DocTypeItem
 ])
 
-const myDocumentType = computed(() => {
-  if (!kycInfo.value) {
+const myDocumentType = (kycInfo: KYC) => {
+  if (!kycInfo) {
     return documentTypes.value[0]
   }
   for (let i = 0; i < documentTypes.value.length; i++) {
-    if (kycInfo.value.Kyc?.CardType === documentTypes.value[i].value) {
+    if (kycInfo.Kyc?.CardType === documentTypes.value[i].value) {
       return documentTypes.value[i]
     }
   }
   return documentTypes.value[0]
-})
+}
 
-const documentLabel = ref(myDocumentType.value as unknown as DocTypeItem)
+const documentLabel = ref(myDocumentType(kycInfo.value as KYC))
 const documentType = computed(() => documentLabel.value.value)
 
 const onDocumentTypeSelected = (type: DocTypeItem) => {
@@ -353,6 +353,8 @@ onMounted(() => {
 
     if (mutation.type === KYCMutationTypes.SetKYCInfo) {
       const kyc = mutation.payload as KYC
+
+      documentLabel.value = myDocumentType(kycInfo.value as KYC)
 
       store.dispatch(KYCActionTypes.GetKYCImage, {
         ImageType: ImageType.Front,
