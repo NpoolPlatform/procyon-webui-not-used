@@ -362,7 +362,7 @@ onMounted(() => {
         ImageS3Key: kyc.Kyc?.FrontCardImg
       })
 
-      if (documentType.value === DocumentType.IDCard) {
+      if (documentLabel.value.value === DocumentType.IDCard) {
         store.dispatch(KYCActionTypes.GetKYCImage, {
           ImageType: ImageType.Back,
           URI: kyc.Kyc?.BackCardImg,
