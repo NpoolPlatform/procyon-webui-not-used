@@ -30,7 +30,8 @@ export default {
     PassportHandingHint: 'Take a selfie with your <strong>passport open to the photo page</strong> while holding it next to your face.',
     PassportPhotoPage: 'Passport Photo Page',
     PassportHanding: 'Selfid + Photo Page',
-    ConfirmBeforeSubmit: 'Confirm before you submit'
+    ConfirmBeforeSubmit: 'Confirm before you submit',
+    SuccessUploadImage: 'Success upload image'
   },
 
   menuList: {

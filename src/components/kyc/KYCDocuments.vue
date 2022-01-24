@@ -13,7 +13,7 @@
         align='between'
         auto-close
         :label='documentLabel.label'
-        :disable='kycState === State.Verified'
+        :disable='updatable'
       >
         <q-list>
           <q-item
@@ -78,7 +78,7 @@
         <q-btn
           class='common-button save-button'
           @click='onSubmit'
-          :disable='kycState === State.Verified'
+          :disable='updatable'
         >{{ $t('general.SubmitDocuments') }}
         </q-btn>
       </div>
@@ -121,6 +121,7 @@ const kycState = computed(() => {
   }
   return State.NotVerified
 })
+const updatable = computed(() => (kycState.value === State.Verified || kycState.value === State.Wait))
 
 interface DocTypeItem {
   label: string
@@ -238,7 +239,7 @@ const onHandingImgSelected = (evt: Event) => {
 }
 
 const onHandingImgClick = () => {
-  if (kycState.value === State.Verified) {
+  if (updatable.value) {
     return
   }
   selectHandingImgFile.value?.click()
@@ -259,7 +260,7 @@ const onFrontImgSelected = (evt: Event) => {
 }
 
 const onFrontImgClick = () => {
-  if (kycState.value === State.Verified) {
+  if (updatable.value) {
     return
   }
   selectFrontImgFile.value?.click()
@@ -280,15 +281,17 @@ const onBackImgSelected = (evt: Event) => {
 }
 
 const onBackImgClick = () => {
-  if (kycState.value === State.Verified) {
+  if (updatable.value) {
     return
   }
   selectBackImgFile.value?.click()
 }
 
 const q = useQuasar()
+const submitting = ref(false)
 
 const onSubmit = throttle(() => {
+  submitting.value = true
   store.dispatch(KYCActionTypes.UploadKYCImage, {
     AppID: q.cookies.get('AppID'),
     UserID: q.cookies.get('UserID'),
@@ -354,6 +357,11 @@ onMounted(() => {
     if (mutation.type === KYCMutationTypes.SetKYCInfo) {
       const kyc = mutation.payload as KYC
 
+      if (submitting.value) {
+        store.commit(NotifyMutationTypes.PushMessage,
+          RequestMessageToNotifyMessage(t('general.SuccessUploadImage'), '', 'positive'))
+        submitting.value = false
+      }
       documentLabel.value = myDocumentType(kyc)
 
       store.dispatch(KYCActionTypes.GetKYCImage, {

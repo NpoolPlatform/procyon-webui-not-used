@@ -30,7 +30,8 @@ export default {
     PassportHandingHint: 'パスポートの<strong>個人情報ページとご自身の顔</strong>がはっきりと見えるように自撮りをしてください。',
     PassportPhotoPage: 'パスポートの個人情報ページ',
     PassportHanding: 'パスポートの個人情報ページと自撮り',
-    ConfirmBeforeSubmit: '申請内容を確認'
+    ConfirmBeforeSubmit: '申請内容を確認',
+    SuccessUploadImage: '画像のアップロードに成功'
   },
 
   menuList: {
