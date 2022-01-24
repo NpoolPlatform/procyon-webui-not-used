@@ -359,11 +359,13 @@ onMounted(() => {
         ImageS3Key: kyc.Kyc?.FrontCardImg
       })
 
-      store.dispatch(KYCActionTypes.GetKYCImage, {
-        ImageType: ImageType.Back,
-        URI: kyc.Kyc?.BackCardImg,
-        ImageS3Key: kyc.Kyc?.BackCardImg
-      })
+      if (documentType.value === DocumentType.IDCard) {
+        store.dispatch(KYCActionTypes.GetKYCImage, {
+          ImageType: ImageType.Back,
+          URI: kyc.Kyc?.BackCardImg,
+          ImageS3Key: kyc.Kyc?.BackCardImg
+        })
+      }
 
       store.dispatch(KYCActionTypes.GetKYCImage, {
         ImageType: ImageType.Handing,
