@@ -354,7 +354,7 @@ onMounted(() => {
     if (mutation.type === KYCMutationTypes.SetKYCInfo) {
       const kyc = mutation.payload as KYC
 
-      documentLabel.value = myDocumentType(kycInfo.value as KYC)
+      documentLabel.value = myDocumentType(kyc)
 
       store.dispatch(KYCActionTypes.GetKYCImage, {
         ImageType: ImageType.Front,
