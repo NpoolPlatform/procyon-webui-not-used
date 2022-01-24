@@ -37,7 +37,7 @@
       <input ref='selectHandingImgFile' type='file' style='display: none;' @change='onHandingImgSelected' accept='image/jpeg, image/png, image/jpg' />
       <div class="kyc-upload">
         <div class="kyc-image">
-          <q-img class='kyc-image-img' @click='onFrontImgClick' :src='img2src(frontImg, ImageType.Front)' :ratio='640/426.67' />
+          <q-img class='kyc-image-img' fit='contain' @click='onFrontImgClick' :src='img2src(frontImg, ImageType.Front)' :ratio='640/426.67' />
           <span>{{ $t('general.Upload').toUpperCase() }}</span>
         </div>
         <div class="kyc-instructions">
@@ -49,7 +49,7 @@
       </div>
       <div v-if='documentType === DocumentType.IDCard' class="kyc-upload">
         <div class="kyc-image">
-          <q-img class='kyc-image-img' @click='onBackImgClick' :src='img2src(backImg, ImageType.Back)' :ratio='640/426.67' />
+          <q-img class='kyc-image-img' fit='contain' @click='onBackImgClick' :src='img2src(backImg, ImageType.Back)' :ratio='640/426.67' />
           <span>{{ $t('general.Upload').toUpperCase() }}</span>
         </div>
         <div class="kyc-instructions">
@@ -59,7 +59,7 @@
       </div>
       <div class="kyc-upload">
         <div class="kyc-image">
-          <q-img class='kyc-image-img' @click='onHandingImgClick' :src='img2src(handingImg, ImageType.Handing)' :ratio='640/426.67' />
+          <q-img class='kyc-image-img' fit='contain' @click='onHandingImgClick' :src='img2src(handingImg, ImageType.Handing)' :ratio='640/426.67' />
           <span>{{ $t('general.Upload').toUpperCase() }}</span>
         </div>
         <div class="kyc-instructions">
