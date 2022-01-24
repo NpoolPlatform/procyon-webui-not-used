@@ -13,6 +13,7 @@
         align='between'
         auto-close
         :label='documentLabel.label'
+        :disable='kycState === State.Verified'
       >
         <q-list>
           <q-item
