@@ -130,8 +130,8 @@ export default {
     },
     Update: {
       Success: 'Successful to update personal details',
-      Fail: 'Saving user details',
-      Load: 'Fail to update user info'
+      Load: 'Saving user details',
+      Fail: 'Fail to update user info'
     },
     GetUserDetail: {
       Fail: 'Fail to get user detail'
