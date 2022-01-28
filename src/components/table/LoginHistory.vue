@@ -7,7 +7,6 @@
     row-key='name'
     class='table-box'
     v-model:pagination='pagination'
-    :rows-per-page-options='[10, 10]'
     hide-pagination
     :no-data-label="$t('NoData')"
   />
@@ -71,7 +70,7 @@ const pagination = ref({
   sortBy: 'desc',
   descending: false,
   page: 1,
-  rowsPerPage: 3
+  rowsPerPage: 10
 })
 
 const pagesNumber = computed(() => Math.ceil((userLoginHistory.value.length / pagination.value.rowsPerPage)))
