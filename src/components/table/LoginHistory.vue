@@ -7,6 +7,7 @@
     row-key='name'
     class='table-box'
     v-model:pagination='pagination'
+    :rows-per-page-options='[10, 10]'
     hide-pagination
     :no-data-label="$t('NoData')"
   />

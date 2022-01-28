@@ -1,6 +1,6 @@
 <template>
   <q-table flat class='table-box' :rows='directReferralsList' :columns='directReferralsListColumns' row-key='Name'
-           color='#e1eeef' :no-data-label="$t('NoData')" />
+           color='#e1eeef' :no-data-label="$t('NoData')" :rows-per-page-options='[10, 10]' />
 </template>
 
 <script setup lang='ts'>
