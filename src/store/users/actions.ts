@@ -4,7 +4,7 @@ import { ActionTypes } from './action-types'
 import { MutationTypes } from './mutation-types'
 import { UserMutations } from './mutations'
 import { UserState } from './state'
-import { post } from 'src/boot/axios'
+import { api, post } from 'src/boot/axios'
 import {
   UserLoginRequest,
   UserLoginResponse,
@@ -133,6 +133,8 @@ const actions: ActionTree<UserState, RootState> = {
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, t('notify.Login.Load'))
     post<UserLoginRequest, UserLoginResponse>(UserURLPath.LOGIN, payload).then((resp: UserLoginResponse) => {
+      const headers = api.defaults.headers as Record<string, string>
+      headers['X-User-ID'] = resp.Info.UserBasicInfo.UserID
       commit(MutationTypes.SetUserInfo, resp.Info)
       commit(MutationTypes.SetUserLogined, true)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Login.Success'), '', 'positive'))

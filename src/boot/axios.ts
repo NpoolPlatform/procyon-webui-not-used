@@ -1,5 +1,6 @@
 import { boot } from 'quasar/wrappers'
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios'
+import { AppID } from 'src/const/const'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -17,7 +18,10 @@ const api = axios.create({
   method: 'POST',
   baseURL: '/api',
   withCredentials: true,
-  headers: { 'Content-Type': 'application/json' },
+  headers: {
+    'Content-Type': 'application/json',
+    'X-App-ID': AppID
+  },
   responseType: 'json',
   timeout: 600000
 })
