@@ -85,6 +85,9 @@ const setShowDrawer = (path: string) => {
 }
 
 onBeforeMount(() => {
+  const appid = 'ff2c5d50-be56-413e-aba5-9c7ad888a769'
+  q.cookies.set('AppID', appid)
+
   setShowDrawer(nowPath.value)
 
   const { locale } = useI18n({ useScope: 'global' })
