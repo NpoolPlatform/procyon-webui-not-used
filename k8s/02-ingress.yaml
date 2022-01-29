@@ -8,7 +8,8 @@ metadata:
     k8s.kuboard.cn/workload: procyon-webui
     kubernetes.io/ingress.class: "traefik-internet"
     traefik.ingress.kubernetes.io/router.entrypoints: websecure, web
-    traefik.ingress.kubernetes.io/router.middlewares: kube-system-http-redirect-https@kubernetescrd, kube-system-http-redirect-https-testing@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: kube-system-http-redirect-https@kubernetescrd,
+                                                      kube-system-http-redirect-https-testing@kubernetescrd
 
 spec:
   tls:
