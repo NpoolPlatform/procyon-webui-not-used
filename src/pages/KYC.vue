@@ -1,7 +1,7 @@
 <template>
   <div class='content'>
     <div class='section-part-title'>{{ $t('general.KYCStatus') }}</div>
-    <KYCState :state='kycState' />
+    <KYCState :state='kycState' :message='message' />
     <div class='section-part-title'>{{ $t('general.KYCImages') }}</div>
     <KYCDocuments :kyc-info='kycInfo' />
   </div>
@@ -23,6 +23,9 @@ const store = useStore()
 const kycInfo = computed(() => store.getters.getKYCInfo)
 const kycState = computed(() => {
   return kycInfo.value ? kycInfo.value.State : State.NotVerified
+})
+const message = computed(() => {
+  return kycInfo.value ? kycInfo.value.Message : ''
 })
 
 onMounted(() => {
