@@ -323,21 +323,21 @@ interface UpdatePhoneResponse {
 }
 
 enum UserURLPath {
-  LOGIN = '/login-door/v1/login',
-  LOGOUT = '/login-door/v1/logout',
+  LOGIN = '/login-gateway/v1/login',
+  LOGOUT = '/login-gateway/v1/logout',
   GET_USER_INVITATION_CODE = '/cloud-hashing-inspire/v1/get/user/invitation/code/by/app/user',
   SIGN_UP = '/cloud-hashing-apis-v2/v1/signup',
-  CHANGE_PASSWORD = '/user-management/v1/change/password',
-  FORGET_PASSWORD = '/user-management/v1/forget/password',
-  GET_USER_DETAIL = '/user-management/v1/get/user/details',
-  UPDATE_USER = '/user-management/v1/update/user',
-  GET_USER_LOGIN_HISTORY = '/login-door/v1/get/user/login/records',
-  SET_GA_LOGIN_VERIFY = '/application-management/v1/set/ga/login',
-  UPDATE_USER_GA_STATUS = '/application-management/v1/update/user/ga/status',
-  ENABLE_EMAIL = '/user-management/v1/bind/email',
-  ENABLE_PHONE = '/user-management/v1/bind/phone',
-  UPDATE_EMAIL = '/user-management/v1/update/user/email',
-  UPDATE_PHONE = '/user-management/v1/update/user/phone'
+  CHANGE_PASSWORD = '/appuser-manager/v1/change/password',
+  FORGET_PASSWORD = '/appuser-manager/v1/forget/password',
+  GET_USER_DETAIL = '/appuser-manager/v1/get/user/details',
+  UPDATE_USER = '/appuser-manager/v1/update/user',
+  GET_USER_LOGIN_HISTORY = '/login-gateway/v1/get/login/histories',
+  SET_GA_LOGIN_VERIFY = '/appuser-manager/v1/set/ga/login',
+  UPDATE_USER_GA_STATUS = '/appuser-manager/v1/update/user/ga/status',
+  ENABLE_EMAIL = '/appuser-manager/v1/bind/email',
+  ENABLE_PHONE = '/appuser-manager/v1/bind/phone',
+  UPDATE_EMAIL = '/appuser-manager/v1/update/user/email',
+  UPDATE_PHONE = '/appuser-manager/v1/update/user/phone'
 }
 
 export {

@@ -88,10 +88,10 @@ export interface SendUserSiteContactEmailResponse {
 }
 
 export enum VerifyURLPath {
-  SEND_EMAIL = '/verification-door/v1/send/email',
-  GET_QRCODE_URL = '/verification-door/v1/get/qrcode/url',
-  SEND_SMS = '/verification-door/v1/send/sms',
-  VERIFY_CODE_WITH_USERID = '/verification-door/v1/verify/code/with/userid',
-  VERIFY_GOOGLE_AUTHENTICATION = '/verification-door/v1/verify/google/auth',
-  SEND_USER_SITE_CONTACT_EMAIL = '/verification-door/v1/send/user/site/contact/email'
+  SEND_EMAIL = '/third-gateway/v1/send/email/code',
+  GET_QRCODE_URL = '/third-gateway/v1/get/qrcode/url',
+  SEND_SMS = '/third-gateway/v1/send/sms/code',
+  VERIFY_CODE_WITH_USERID = '/third-gateway/v1/verify/code/with/userid',
+  VERIFY_GOOGLE_AUTHENTICATION = '/third-gateway/v1/verify/google/auth',
+  SEND_USER_SITE_CONTACT_EMAIL = '/third-gateway/v1/send/user/site/contact/email'
 }
