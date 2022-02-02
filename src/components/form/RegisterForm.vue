@@ -142,20 +142,33 @@ const agreeRules = ref([
 ])
 
 const register = throttle(() => {
-  if (showEmail.value) {
-    registerInput.phoneNumber = ''
-  }
+  let accountType = 'email'
+  let account = registerInput.emailAddress
 
   if (showPhone.value) {
-    registerInput.emailAddress = ''
+    account = formatPhoneNumber(registerInput.phoneNumber)
+    accountType = 'mobile'
+  }
+
+  if (account.length === 0) {
+    return
+  }
+  if (registerInput.password.length === 0) {
+    return
+  }
+  if (verifyCode.value.length === 0) {
+    return
+  }
+  if (!agree.value) {
+    return
   }
 
   const request: UserSignUpRequest = {
-    EmailAddress: registerInput.emailAddress,
-    Password: sha256Password(registerInput.password),
+    Account: account,
+    AccountType: accountType,
+    PasswordHash: sha256Password(registerInput.password),
     InvitationCode: registerInput.invitationCode,
-    VerificationCode: verifyCode.value,
-    PhoneNumber: formatPhoneNumber(registerInput.phoneNumber)
+    VerificationCode: verifyCode.value
   }
   store.dispatch(ActionTypes.UserSignUp, request)
 }, ThrottleDelay)

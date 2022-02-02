@@ -175,10 +175,9 @@ interface GetUserInvitationCodeResponse {
 }
 
 interface UserSignUpRequest {
-  Username?: string,
-  Password: string
-  EmailAddress: string
-  PhoneNumber: string
+  PasswordHash: string
+  Account: string
+  AccountType: string
   VerificationCode: string
   AppID?: string
   InvitationCode: string
