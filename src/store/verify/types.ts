@@ -3,16 +3,16 @@ export interface GoogleAuthenticationInfo {
   secret: string
 }
 
-export interface SendEmailRequest {
+export interface SendEmailCodeRequest {
   AppID?: string
-  Email: string
-  Intention?: string
-  Lang: string
-  Username?: string
-  ItemTarget: string
+  UserID?: string
+  LangID: string
+  EmailAddress: string
+  UsedFor: string
+  DisplayName?: string
 }
 
-export interface SendEmailResponse {
+export interface SendEmailCodeResponse {
   Info: string
 }
 

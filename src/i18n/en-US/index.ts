@@ -2,6 +2,8 @@
 // so you can safely delete all default props below
 
 export default {
+  MSG_GET_APP_LANG_INFOS_FAIL: 'Cannot get app lang infos',
+  MSG_SEND_CODE: 'Send Code',
   general: {
     KYCStatus: 'KYC Verification Status',
     NotVerified: 'Not Verified',

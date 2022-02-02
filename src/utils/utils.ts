@@ -4,7 +4,7 @@ import { SHA256 } from 'crypto-js'
 import { NotifyMessage } from 'src/store/notify/types'
 import { notifyType } from 'src/notify/notify'
 import { UserBasicInfo } from 'src/store/users/types'
-import { SendEmailRequest } from 'src/store/verify/types'
+import { SendEmailCodeRequest } from 'src/store/verify/types'
 import { Cookies, useQuasar } from 'quasar'
 import { useRouter } from 'src/router'
 
@@ -108,7 +108,7 @@ export const RequestMessageToNotifyMessage = (message: string, caption: string, 
   return notifyMessage
 }
 
-export const GenerateSendEmailRequest = (locale: string, userBasicInfo: UserBasicInfo, requestInput: SendEmailRequest): SendEmailRequest => {
+export const GenerateSendEmailRequest = (locale: string, userBasicInfo: UserBasicInfo, requestInput: SendEmailCodeRequest): SendEmailCodeRequest => {
   let username = ''
   if (locale === 'en-US') {
     if (userBasicInfo.FirstName !== '') {
@@ -120,7 +120,7 @@ export const GenerateSendEmailRequest = (locale: string, userBasicInfo: UserBasi
     }
   }
 
-  requestInput.Username = username
+  requestInput.DisplayName = username
   return requestInput
 }
 

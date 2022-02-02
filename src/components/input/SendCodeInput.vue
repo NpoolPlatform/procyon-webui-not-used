@@ -10,7 +10,10 @@
         :disable='sendDisable'
         @click='sendEmailCode'
       >
-        {{ sendCodeText }}
+        {{ t('MSG_SEND_CODE') }}
+        <template #loading>
+          {{ sendCodeText }}
+        </template>
       </q-btn
       >
       <q-btn
@@ -21,7 +24,10 @@
         :disable='sendDisable'
         @click='sendSmsCode'
       >
-        {{ sendCodeText }}
+        {{ t('MSG_SEND_CODE') }}
+        <template #loading>
+          {{ sendCodeText }}
+        </template>
       </q-btn
       >
     </template>
@@ -32,10 +38,9 @@
 import { computed, defineEmits, defineProps, onMounted, ref, toRef, watch, withDefaults } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'src/store'
-import { SendEmailRequest, SendSmsRequest } from 'src/store/verify/types'
-import { formatPhoneNumber, GenerateSendEmailRequest } from 'src/utils/utils'
+import { SendEmailCodeRequest, SendSmsRequest } from 'src/store/verify/types'
+import { formatPhoneNumber, GenerateSendEmailRequest, isValidEmail, isValidPhone } from 'src/utils/utils'
 import { ActionTypes } from 'src/store/verify/action-types'
-import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { MutationTypes as verifyMutation } from 'src/store/verify/mutation-types'
 
 const store = useStore()
@@ -72,37 +77,74 @@ const codeRules = ref([
   (val: string) => (val && val.length > 0) || t('input.VerifyCodeWarning')
 ])
 
-const sendDisable = computed(() => store.getters.getVerifyDisable.get(itemTarget.value))
-const innerLoading = computed(() => store.getters.getInnerLoading.get(itemTarget.value))
-const sendCodeText = computed(() => store.getters.getVerifySendCodeButtonText.get(itemTarget.value))
+const sendDisable = ref(false)
+const innerLoading = ref(false)
+const sendCodeText = ref('')
+const sendElapsed = ref(0)
+const sendTimer = ref()
+
 const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
 
-const sendEmailCode = () => {
-  store.commit(notifyMutation.SetInnerLoading, {
-    key: itemTarget.value,
-    value: true
+const langID = computed(() => {
+  let id = ''
+  store.getters.getLanguages.forEach((lang) => {
+    if (locale.value === lang.Lang) {
+      id = lang.ID
+    }
   })
+  return id
+})
 
-  let request: SendEmailRequest = {
-    Email: verifyParam.value,
-    Lang: locale.value,
-    ItemTarget: itemTarget.value
+const counter = () => {
+  if (sendTimer.value) {
+    clearTimeout(sendTimer.value)
+    sendTimer.value = undefined
+  }
+  if (sendElapsed.value >= 60) {
+    innerLoading.value = false
+    sendDisable.value = false
+    return
+  }
+  sendElapsed.value += 1
+  sendCodeText.value = (60 - sendElapsed.value).toString() + 's'
+  sendTimer.value = setInterval(() => counter(), 1000)
+}
+
+const sendEmailCode = () => {
+  if (!isValidEmail(verifyParam.value)) {
+    return
+  }
+  let request: SendEmailCodeRequest = {
+    EmailAddress: verifyParam.value,
+    LangID: langID.value,
+    UsedFor: 'SIGNUP'
   }
   request = GenerateSendEmailRequest(locale.value, userBasicInfo.value, request)
   store.dispatch(ActionTypes.SendEmail, request)
+
+  sendElapsed.value = 0
+  innerLoading.value = true
+  sendDisable.value = true
+
+  counter()
 }
 
 const sendSmsCode = () => {
-  store.commit(notifyMutation.SetInnerLoading, {
-    key: itemTarget.value,
-    value: true
-  })
+  if (!isValidPhone(formatPhoneNumber(verifyParam.value))) {
+    return
+  }
   const request: SendSmsRequest = {
     Lang: locale.value,
     Phone: formatPhoneNumber(verifyParam.value),
     ItemTarget: itemTarget.value
   }
   store.dispatch(ActionTypes.SendSMS, request)
+
+  sendElapsed.value = 0
+  innerLoading.value = true
+  sendDisable.value = true
+
+  counter()
 }
 
 watch(sendDisable, (n, o) => {

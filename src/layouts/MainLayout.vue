@@ -1,5 +1,6 @@
 <template>
   <q-layout class='main-body' :style='fontStyle'>
+    <LangLoader />
     <q-header reveal class='page-header'>
       <MainHeader />
     </q-header>
@@ -175,6 +176,9 @@ const MainDrawer = defineAsyncComponent(
 )
 const MainFooter = defineAsyncComponent(
   () => import('src/components/footer/MainFooter.vue')
+)
+const LangLoader = defineAsyncComponent(
+  () => import('src/components/lang/LangLoader.vue')
 )
 
 const userInvitationCode = computed(() => store.getters.getUserInvitationCode)

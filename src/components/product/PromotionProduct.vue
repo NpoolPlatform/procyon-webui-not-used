@@ -59,15 +59,11 @@ import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import { computed, onMounted } from 'vue'
 import { useStore } from 'src/store'
 import { ActionTypes as GoodActionTypes } from 'src/store/goods/action-types'
-import { GetGoodDetailsRequest } from 'src/store/goods/types'
 
 const store = useStore()
 
 const getPromotionProduct = () => {
-  const request: GetGoodDetailsRequest = {
-    AppID: ''
-  }
-  store.dispatch(GoodActionTypes.GetGoodDetails, request)
+  store.dispatch(GoodActionTypes.GetGoodDetails, {})
 }
 
 onMounted(() => {

@@ -2,6 +2,8 @@
 // so you can safely delete all default props below
 
 export default {
+  MSG_GET_APP_LANG_INFOS_FAIL: 'Cannot get app lang infos',
+  MSG_SEND_CODE: '送信コード',
   general: {
     KYCStatus: '身分証明の認証ステータス',
     NotVerified: '未登録',

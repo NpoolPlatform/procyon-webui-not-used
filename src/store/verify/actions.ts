@@ -1,4 +1,4 @@
-import { ActionTree, Commit } from 'vuex'
+import { ActionTree } from 'vuex'
 import { AugmentedActionContext, RootState } from '../index'
 import { ActionTypes } from './action-types'
 import { MutationTypes } from './mutation-types'
@@ -9,8 +9,8 @@ import {
   GetQRCodeURLRequest,
   GetQRCodeURLResponse,
   GoogleAuthenticationInfo,
-  SendEmailRequest,
-  SendEmailResponse,
+  SendEmailCodeRequest,
+  SendEmailCodeResponse,
   SendSmsRequest,
   SendSmsResponse,
   VerifyCodeWithUserIDRequest,
@@ -34,7 +34,7 @@ interface VerifyActions {
     commit
   }: AugmentedActionContext<VerifyState,
     RootState,
-    VerifyMutations<VerifyState>>, payload: SendEmailRequest): void
+    VerifyMutations<VerifyState>>, payload: SendEmailCodeRequest): void
 
   [ActionTypes.SendSMS] ({
     commit
@@ -68,69 +68,30 @@ interface VerifyActions {
     VerifyMutations<VerifyState>>, payload: SendUserSiteContactEmailRequest): void
 }
 
-const countInternal = (commit: Commit, target: string) => {
-  let count = 60
-  const countDown = setInterval(() => {
-    if (count < 1) {
-      commit(MutationTypes.SetDisable, {
-        key: target,
-        value: false
-      })
-      count = 60
-      clearInterval(countDown)
-    } else {
-      commit(MutationTypes.SetDisable, {
-        key: target,
-        value: true
-      })
-      commit(MutationTypes.SetSendCodeButtonText, {
-        key: target,
-        value: count.toString() + 's'
-      })
-      count--
-    }
-  }, 1000)
-}
-
 const actions: ActionTree<VerifyState, RootState> = {
-  [ActionTypes.SendEmail] ({ commit }, payload: SendEmailRequest) {
+  [ActionTypes.SendEmail] ({ commit }, payload: SendEmailCodeRequest) {
     const { t } = useI18n()
-    post<SendEmailRequest, SendEmailResponse>(VerifyURLPath.SEND_EMAIL, payload).then(() => {
-      commit(notifyMutation.SetInnerLoading, {
-        key: payload.ItemTarget,
-        value: false
-      })
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.SendEmail.Success.Words1') + '<' + payload.Email + '>, ' + t('notify.SendEmail.Success.Words2') + t('notify.SendEmail.Success.Check'), '', 'positive'))
-      countInternal(commit, payload.ItemTarget)
+    post<SendEmailCodeRequest, SendEmailCodeResponse>(VerifyURLPath.SEND_EMAIL, payload).then(() => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.SendEmail.Success.Words1') +
+        '<' +
+        payload.EmailAddress +
+        '>, ' +
+        t('notify.SendEmail.Success.Words2') +
+        t('notify.SendEmail.Success.Check'), '', 'positive'))
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.SendEmail.Fail'), err.message, 'negative'))
-      commit(notifyMutation.SetInnerLoading, {
-        key: payload.ItemTarget,
-        value: false
-      })
-      countInternal(commit, payload.ItemTarget)
     })
   },
   [ActionTypes.SendSMS] ({ commit }, payload: SendSmsRequest) {
     const { t } = useI18n()
     post<SendSmsRequest, SendSmsResponse>(VerifyURLPath.SEND_SMS, payload).then(() => {
-      commit(notifyMutation.SetInnerLoading, {
-        key: payload.ItemTarget,
-        value: false
-      })
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.SendPhone.Success.Words1') +
         ' <' +
         payload.Phone +
         '>, ' +
         t('notify.SendPhone.Success.Words2') +
         t('notify.SendPhone.Success.Check'), '', 'positive'))
-      countInternal(commit, payload.ItemTarget)
     }).catch((err: Error) => {
-      commit(notifyMutation.SetInnerLoading, {
-        key: payload.ItemTarget,
-        value: false
-      })
-      countInternal(commit, payload.ItemTarget)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.SendPhone.Fail'), err.message, 'negative'))
     })
   },
