@@ -67,9 +67,9 @@ import { formatPhoneNumber, isValidEmail, isValidPassword, sha256Password, Throt
 import { useI18n } from 'vue-i18n'
 import { throttle } from 'quasar'
 import { useStore } from 'src/store'
-import { UserForgetPasswordRequest } from 'src/store/users/types'
 import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
+import { UserUpdatePasswordRequest } from 'src/store/users/types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
 const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
@@ -118,11 +118,11 @@ const forget = throttle(() => {
     verifyParam = formatPhoneNumber(forgetInput.phoneNumber)
   }
 
-  const request: UserForgetPasswordRequest = {
-    VerifyParam: verifyParam,
-    VerifyType: type,
-    Password: sha256Password(forgetInput.password),
-    Code: verifyCode.value
+  const request: UserUpdatePasswordRequest = {
+    Account: verifyParam,
+    AccountType: type,
+    PasswordHash: sha256Password(forgetInput.password),
+    VerificationCode: verifyCode.value
   }
   store.dispatch(ActionTypes.UserForgetPassword, request)
 }, ThrottleDelay)

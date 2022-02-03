@@ -14,10 +14,6 @@ import {
   GetUserInvitationCodeRequest,
   GetUserInvitationCodeResponse,
   UserSignUpRequest,
-  UserForgetPasswordRequest,
-  UserChangePasswordRequest,
-  UserForgetPasswordResponse,
-  UserChangePasswordResponse,
   GetUserLoginHistoryRequest,
   GetUserLoginHistoryResponse,
   SetGALoginVerifyRequest,
@@ -26,7 +22,7 @@ import {
   UpdatePhoneResponse,
   UpdateEmailResponse,
   UpdateEmailRequest,
-  EnablePhoneRequest, EnablePhoneResponse, EnableEmailRequest, EnableEmailResponse, UserSignUpResponse, UpdateUserRequest, UpdateUserResponse, GetAppUserInfoRequest, GetAppUserInfoResponse
+  EnablePhoneRequest, EnablePhoneResponse, EnableEmailRequest, EnableEmailResponse, UserSignUpResponse, UpdateUserRequest, UpdateUserResponse, GetAppUserInfoRequest, GetAppUserInfoResponse, UserUpdatePasswordRequest, UserUpdatePasswordResponse, UserUpdatePasswordByAppUserRequest, UserUpdatePasswordByAppUserResponse
 } from './types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { loginVeiryConfirm, RequestMessageToNotifyMessage } from 'src/utils/utils'
@@ -57,11 +53,11 @@ interface UserActions {
 
   [ActionTypes.UserForgetPassword] ({
     commit
-  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: UserForgetPasswordRequest): void
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: UserUpdatePasswordRequest): void
 
   [ActionTypes.UserChangePassword] ({
     commit
-  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: UserChangePasswordRequest): void
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: UserUpdatePasswordByAppUserRequest): void
 
   [ActionTypes.GetAppUserInfo] ({
     commit
@@ -162,12 +158,12 @@ const actions: ActionTree<UserState, RootState> = {
       commit(notifyMutation.SetLoading, false)
     })
   },
-  [ActionTypes.UserChangePassword] ({ commit }, payload: UserChangePasswordRequest) {
+  [ActionTypes.UserChangePassword] ({ commit }, payload: UserUpdatePasswordByAppUserRequest) {
     const { t } = useI18n()
     const router = useRouter()
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, t('notify.ChangePassword.Load'))
-    post<UserChangePasswordRequest, UserChangePasswordResponse>(UserURLPath.CHANGE_PASSWORD, payload).then(() => {
+    post<UserUpdatePasswordByAppUserRequest, UserUpdatePasswordByAppUserResponse>(UserURLPath.UPDATE_PASSWORD_BY_APP_USER, payload).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.ChangePassword.Success'), '', 'positive'))
       commit(notifyMutation.SetLoading, false)
       commit(styleMutation.SetUserDialogShow, false)
@@ -177,12 +173,12 @@ const actions: ActionTree<UserState, RootState> = {
       commit(notifyMutation.SetLoading, false)
     })
   },
-  [ActionTypes.UserForgetPassword] ({ commit }, payload: UserForgetPasswordRequest) {
+  [ActionTypes.UserForgetPassword] ({ commit }, payload: UserUpdatePasswordRequest) {
     const { t } = useI18n()
     const router = useRouter()
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, t('notify.Forget.Load'))
-    post<UserForgetPasswordRequest, UserForgetPasswordResponse>(UserURLPath.FORGET_PASSWORD, payload).then(() => {
+    post<UserUpdatePasswordRequest, UserUpdatePasswordResponse>(UserURLPath.UPDATE_PASSWORD, payload).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Forget.Success'), '', 'positive'))
       commit(notifyMutation.SetLoading, false)
       void router.push('/login')

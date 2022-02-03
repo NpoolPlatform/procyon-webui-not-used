@@ -106,29 +106,25 @@ interface UserSignUpResponse {
   Info: AppUser
 }
 
-interface UserChangePasswordRequest {
-  UserID?: string
-  AppID?: string
-  VerifyParam: string
-  VerifyType: string
-  OldPassword: string
-  Password: string
-  Code: string
+interface UserUpdatePasswordByAppUserRequest {
+  Account: string
+  AccountType: string
+  PasswordHash: string
+  VerificationCode : string
 }
 
-interface UserChangePasswordResponse {
+interface UserUpdatePasswordByAppUserResponse {
   Info: string
 }
 
-interface UserForgetPasswordRequest {
-  VerifyParam: string
-  VerifyType: string
-  Password: string
-  Code: string
-  AppID?: string
+interface UserUpdatePasswordRequest {
+  Account: string
+  AccountType: string
+  PasswordHash: string
+  VerificationCode : string
 }
 
-interface UserForgetPasswordResponse {
+interface UserUpdatePasswordResponse {
   Info: string
 }
 
@@ -243,8 +239,8 @@ enum UserURLPath {
   LOGOUT = '/login-gateway/v1/logout',
   GET_USER_INVITATION_CODE = '/cloud-hashing-inspire/v1/get/user/invitation/code/by/app/user',
   SIGN_UP = '/cloud-hashing-apis-v2/v1/signup',
-  CHANGE_PASSWORD = '/appuser-manager/v1/change/password',
-  FORGET_PASSWORD = '/appuser-manager/v1/forget/password',
+  UPDATE_PASSWORD_BY_APP_USER = '/cloud-hashing-apis-v2/v1/update/password/by/app/user',
+  UPDATE_PASSWORD = '/cloud-hashing-apis-v2/v1/update/password',
   GET_APP_USER_INFO = '/appuser-manager/v1/get/app/userinfo',
   UPDATE_USER = '/appuser-manager/v1/update/user',
   GET_USER_LOGIN_HISTORY = '/login-gateway/v1/get/login/histories',
@@ -267,10 +263,10 @@ export {
   GetUserInvitationCodeResponse,
   UserSignUpRequest,
   UserSignUpResponse,
-  UserChangePasswordRequest,
-  UserChangePasswordResponse,
-  UserForgetPasswordRequest,
-  UserForgetPasswordResponse,
+  UserUpdatePasswordByAppUserRequest,
+  UserUpdatePasswordByAppUserResponse,
+  UserUpdatePasswordRequest,
+  UserUpdatePasswordResponse,
   GetAppUserInfoRequest,
   GetAppUserInfoResponse,
   UpdateUserRequest,

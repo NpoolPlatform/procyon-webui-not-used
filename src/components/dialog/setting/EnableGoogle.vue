@@ -13,11 +13,10 @@
       <q-card-section class='scroll' style='max-height: 750px;'>
         <div class='text-black'>
           <div style='text-align: center; margin-bottom: 10px;'>
-            <q-img class='img-style' :src='userGoogleInfo.qrCodeURL'></q-img>
-
+            <qrcode-vue :value='userGoogleInfo.OTPAuth' />
           </div>
           <div class='secret-style text-black'>
-            Google Secret: {{ userGoogleInfo.secret }}
+            Google Secret: {{ userGoogleInfo.Secret }}
           </div>
 
           <q-separator />
@@ -71,11 +70,13 @@
 </template>
 
 <script setup lang='ts'>
-import { defineEmits, defineProps, toRef, withDefaults, watch, computed, ref } from 'vue'
+import { defineEmits, defineProps, toRef, withDefaults, watch, computed, ref, defineAsyncComponent } from 'vue'
 import { useStore } from 'src/store'
 import { ActionTypes } from 'src/store/verify/action-types'
 import { useI18n } from 'vue-i18n'
 import { VerifyGoogleAuthenticationCodeRequest } from 'src/store/verify/types'
+
+const QrcodeVue = defineAsyncComponent(() => import('qrcode.vue'))
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
