@@ -9,18 +9,12 @@ metadata:
     kubernetes.io/ingress.class: "traefik-internet"
     traefik.ingress.kubernetes.io/router.entrypoints: websecure, web
     traefik.ingress.kubernetes.io/router.middlewares: kube-system-http-redirect-https@kubernetescrd,
-                                                      kube-system-http-redirect-https-testing@kubernetescrd
+                                                      kube-system-http-redirect-https-testing@kubernetescrd,
+                                                      kube-system-common-headers@kubernetescrd
 
 spec:
   tls:
-    - hosts:
-        - www.procyon.vip
-        - procyon.vip
-      secretName: procyon-vip-tls
-    - hosts:
-        - www.npool.top
-        - npool.top
-      secretName: npool-top-tls
+    - secretName: procyon-vip-tls
   rules:
     - host: www.procyon.vip
       http:
@@ -29,14 +23,14 @@ spec:
             backend:
               serviceName: procyon-webui
               servicePort: 80
-    - host: www.npool.top
+    - host: procyon.vip
       http:
         paths:
           - path: /
             backend:
               serviceName: procyon-webui
               servicePort: 80
-    - host: procyon.vip
+    - host: api.procyon.vip
       http:
         paths:
           - path: /
