@@ -66,9 +66,9 @@ import { formatPhoneNumber, isValidPassword, sha256Password, ThrottleDelay } fro
 import { useI18n } from 'vue-i18n'
 import { throttle } from 'quasar'
 import { useStore } from 'src/store'
-import { UserChangePasswordRequest } from 'src/store/users/types'
 import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
+import { UserUpdatePasswordByAppUserRequest } from 'src/store/users/types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
 // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -122,12 +122,12 @@ const changePassword = throttle(() => {
     verifyParam = formatPhoneNumber(userInfo.value.User.PhoneNO as string)
   }
 
-  const request: UserChangePasswordRequest = {
-    VerifyParam: verifyParam,
-    VerifyType: type,
-    OldPassword: sha256Password(changePasswordInput.oldPassword),
-    Password: sha256Password(changePasswordInput.password),
-    Code: verifyCode.value
+  const request: UserUpdatePasswordByAppUserRequest = {
+    Account: verifyParam,
+    AccountType: type,
+    OldPasswordHash: sha256Password(changePasswordInput.oldPassword),
+    PasswordHash: sha256Password(changePasswordInput.password),
+    VerificationCode: verifyCode.value
   }
   store.dispatch(ActionTypes.UserChangePassword, request)
 }, ThrottleDelay)

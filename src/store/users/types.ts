@@ -109,6 +109,7 @@ interface UserSignUpResponse {
 interface UserUpdatePasswordByAppUserRequest {
   Account: string
   AccountType: string
+  OldPasswordHash: string
   PasswordHash: string
   VerificationCode : string
 }

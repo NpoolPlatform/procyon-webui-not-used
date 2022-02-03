@@ -13,7 +13,7 @@
       <q-card-section class='scroll' style='max-height: 750px;'>
         <div class='text-black'>
           <div style='text-align: center; margin-bottom: 10px;'>
-            <qrcode-vue :value='userGoogleInfo.OTPAuth' />
+            <qrcode-vue :value='userGoogleInfo.OTPAuth' :size='250' />
           </div>
           <div class='secret-style text-black'>
             Google Secret: {{ userGoogleInfo.Secret }}
