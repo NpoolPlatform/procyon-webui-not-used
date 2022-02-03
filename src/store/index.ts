@@ -65,6 +65,14 @@ import {
   LanguageGetters
 } from './lang'
 
+import {
+  application,
+  ApplicationState,
+  ApplicationMutations,
+  ApplicationActions,
+  ApplicationGetters
+} from './application'
+
 // 2 combine your store to root store
 export interface RootState {
   user: UserState
@@ -76,13 +84,14 @@ export interface RootState {
   order: OrderState
   kyc: KYCState
   languages: LanguagesState
+  application: ApplicationState
 }
 
 // 3 combine your actions, mutations and getters to root, if have multi use & combin
 // for example a & b
-type Actions = UserActions & GoodActions & VerifyActions & AffiliateActions & OrderActions & KYCActions & LanguageActions
-type Mutations = UserMutations & StyleMutations & GoodMutations & NotifyMutations & VerifyMutations & AffiliateMutations & OrderMutations & KYCMutations & LanguageMutations
-type Getters = UserGetters & StyleGetters & GoodGetters & NotifyGetters & VerifyGetters & AffiliateGetters & OrderGetters & KYCGetters & LanguageGetters
+type Actions = UserActions & GoodActions & VerifyActions & AffiliateActions & OrderActions & KYCActions & LanguageActions & ApplicationActions
+type Mutations = UserMutations & StyleMutations & GoodMutations & NotifyMutations & VerifyMutations & AffiliateMutations & OrderMutations & KYCMutations & LanguageMutations & ApplicationMutations
+type Getters = UserGetters & StyleGetters & GoodGetters & NotifyGetters & VerifyGetters & AffiliateGetters & OrderGetters & KYCGetters & LanguageGetters & ApplicationGetters
 
 // 4 attach your module to root
 export default store(function (/* { ssrContext } */) {
@@ -96,7 +105,8 @@ export default store(function (/* { ssrContext } */) {
       affiliate,
       order,
       kyc,
-      languages
+      languages,
+      application
     },
 
     // enable strict mode (adds overhead!)

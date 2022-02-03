@@ -3,14 +3,10 @@
 </template>
 
 <script setup lang='ts'>
-import { defineAsyncComponent, onMounted } from 'vue'
-import { CheckLogined } from 'src/utils/utils'
+import { defineAsyncComponent } from 'vue'
 
 const Account = defineAsyncComponent(() => import('src/components/account/Account.vue'))
 
-onMounted(() => {
-  CheckLogined()
-})
 </script>
 
 <style scoped>

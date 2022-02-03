@@ -18,21 +18,15 @@ import {
   UserChangePasswordRequest,
   UserForgetPasswordResponse,
   UserChangePasswordResponse,
-  GetUserDetailRequest,
-  GetUserDetailResponse,
-  UpdateUserRequest,
-  UpdateUserResponse,
   GetUserLoginHistoryRequest,
   GetUserLoginHistoryResponse,
   SetGALoginVerifyRequest,
   SetGaLoginVerifyResponse,
-  UpdateUserGAStatusRequest,
-  UpdateUserGAStatusResponse,
   UpdatePhoneRequest,
   UpdatePhoneResponse,
   UpdateEmailResponse,
   UpdateEmailRequest,
-  EnablePhoneRequest, EnablePhoneResponse, EnableEmailRequest, EnableEmailResponse, UserSignUpResponse
+  EnablePhoneRequest, EnablePhoneResponse, EnableEmailRequest, EnableEmailResponse, UserSignUpResponse, UpdateUserRequest, UpdateUserResponse, GetAppUserInfoRequest, GetAppUserInfoResponse
 } from './types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { loginVeiryConfirm, RequestMessageToNotifyMessage } from 'src/utils/utils'
@@ -69,9 +63,9 @@ interface UserActions {
     commit
   }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: UserChangePasswordRequest): void
 
-  [ActionTypes.GetUserDetail] ({
+  [ActionTypes.GetAppUserInfo] ({
     commit
-  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: GetUserDetailRequest): void
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: GetAppUserInfoRequest): void
 
   [ActionTypes.UpdateUser] ({
     commit
@@ -84,10 +78,6 @@ interface UserActions {
   [ActionTypes.SetGALoginVerify] ({
     commit
   }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: SetGALoginVerifyRequest): void
-
-  [ActionTypes.UpdateUserGAStatus] ({
-    commit
-  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: UpdateUserGAStatusRequest): void
 
   [ActionTypes.EnableEmail] ({
     commit
@@ -134,7 +124,8 @@ const actions: ActionTree<UserState, RootState> = {
     commit(notifyMutation.SetLoadingContent, t('notify.Login.Load'))
     post<UserLoginRequest, UserLoginResponse>(UserURLPath.LOGIN, payload).then((resp: UserLoginResponse) => {
       const headers = api.defaults.headers as Record<string, string>
-      headers['X-User-ID'] = resp.Info.UserBasicInfo.UserID
+      headers['X-User-ID'] = resp.Info.User?.ID as string
+      headers['X-App-Login-Token'] = resp.Token
       commit(MutationTypes.SetUserInfo, resp.Info)
       commit(MutationTypes.SetUserLogined, true)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Login.Success'), '', 'positive'))
@@ -200,9 +191,9 @@ const actions: ActionTree<UserState, RootState> = {
       commit(notifyMutation.SetLoading, false)
     })
   },
-  [ActionTypes.GetUserDetail] ({ commit }, payload: GetUserDetailRequest) {
+  [ActionTypes.GetAppUserInfo] ({ commit }, payload: GetAppUserInfoRequest) {
     const { t } = useI18n()
-    post<GetUserDetailRequest, GetUserDetailResponse>(UserURLPath.GET_USER_DETAIL, payload).then((resp: GetUserDetailResponse) => {
+    post<GetAppUserInfoRequest, GetAppUserInfoResponse>(UserURLPath.GET_APP_USER_INFO, payload).then((resp: GetAppUserInfoResponse) => {
       commit(MutationTypes.SetUserInfo, resp.Info)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.GetUserDetail.Fail'), err.message, 'negative'))
@@ -240,21 +231,6 @@ const actions: ActionTree<UserState, RootState> = {
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.SetLoginVerify.Fail'), err.message, 'negative'))
       commit(MutationTypes.SetGoogleLoginVerify, !payload.Set)
-      commit(notifyMutation.SetLoading, false)
-    })
-  },
-  [ActionTypes.UpdateUserGAStatus] ({ commit }, payload: UpdateUserGAStatusRequest) {
-    const { t } = useI18n()
-    commit(notifyMutation.SetLoading, true)
-    commit(styleMutation.SetUserDialogShow, true)
-    commit(notifyMutation.SetLoadingContent, t('notify.UpdateGoogleStatus.Load'))
-    post<UpdateUserGAStatusRequest, UpdateUserGAStatusResponse>(UserURLPath.UPDATE_USER_GA_STATUS, payload).then(() => {
-      commit(MutationTypes.SetGoogleAuthenticator, payload.Status)
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.UpdateGoogleStatus.Success'), '', 'positive'))
-      commit(notifyMutation.SetLoading, false)
-      commit(styleMutation.SetUserDialogShow, false)
-    }).catch((err: Error) => {
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.UpdateGoogleStatus.Fail'), err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)
     })
   },

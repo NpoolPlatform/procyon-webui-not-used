@@ -203,62 +203,47 @@ const genderOptions: Array<option> = [
 
 const store = useStore()
 
+const userInfo = computed(() => store.getters.getUserInfo)
+
 const username = computed({
-  get: () => store.getters.getUserUsername,
+  get: () => userInfo.value.Extra ? userInfo.value.Extra.Username : '',
   set: (val) => {
     store.commit(MutationTypes.SetUsername, val)
   }
 })
 const gender = computed({
-  get: () => store.getters.getUserGender,
+  get: () => userInfo.value.Extra ? userInfo.value.Extra.Gender : '',
   set: (val) => {
     store.commit(MutationTypes.SetGender, val)
   }
 })
 const firstname = computed({
-  get: () => store.getters.getUserFirstName,
+  get: () => userInfo.value.Extra ? userInfo.value.Extra.FirstName : '',
   set: (val) => {
     store.commit(MutationTypes.SetFirstName, val)
   }
 })
 const lastname = computed({
-  get: () => store.getters.getUserLastName,
+  get: () => userInfo.value.Extra ? userInfo.value.Extra.LastName : '',
   set: (val) => {
     store.commit(MutationTypes.SetLastName, val)
   }
 })
-const street1 = computed({
-  get: () => store.getters.getUserStreetAddress1,
+const addressFields = computed({
+  get: () => userInfo.value.Extra && userInfo.value.Extra.AddressFields ? userInfo.value.Extra.AddressFields : [],
   set: (val) => {
-    store.commit(MutationTypes.SetStreetAddress1, val)
+    store.commit(MutationTypes.SetAddressFields, val)
   }
 })
-const street2 = computed({
-  get: () => store.getters.getUserStreetAddress2,
-  set: (val) => {
-    store.commit(MutationTypes.SetStreetAddress2, val)
-  }
-})
-const city = computed({
-  get: () => store.getters.getUserCity,
-  set: (val) => {
-    store.commit(MutationTypes.SetCity, val)
-  }
-})
-const province = computed({
-  get: () => store.getters.getUserProvince,
-  set: (val) => {
-    store.commit(MutationTypes.SetProvince, val)
-  }
-})
-const country = computed({
-  get: () => store.getters.getUserCountry,
-  set: (val) => {
-    store.commit(MutationTypes.SetCountry, val)
-  }
-})
+
+const country = computed(() => addressFields.value.length > 0 ? addressFields.value[0] : '')
+const province = computed(() => addressFields.value.length > 1 ? addressFields.value[1] : '')
+const city = computed(() => addressFields.value.length > 2 ? addressFields.value[2] : '')
+const street1 = computed(() => addressFields.value.length > 3 ? addressFields.value[3] : '')
+const street2 = computed(() => addressFields.value.length > 4 ? addressFields.value[4] : '')
+
 const postalCode = computed({
-  get: () => store.getters.getUserPostalCode,
+  get: () => userInfo.value.Extra ? userInfo.value.Extra.PostalCode : '',
   set: (val) => {
     store.commit(MutationTypes.SetPostalCode, val)
   }
@@ -268,26 +253,9 @@ const usernameRules = ref([
   (val: string) => isValidUsername(val) || t('input.UsernameWarning')
 ])
 
-const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
-
 const updateUser = () => {
   const request: UpdateUserRequest = {
-    Info: {
-      Username: username.value,
-      Gender: gender.value,
-      Country: country.value,
-      Province: province.value,
-      City: city.value,
-      FirstName: firstname.value,
-      LastName: lastname.value,
-      StreetAddress1: street1.value,
-      StreetAddress2: street2.value,
-      PostalCode: postalCode.value,
-      EmailAddress: '',
-      PhoneNumber: '',
-      Password: '',
-      UserID: userBasicInfo.value.UserID
-    }
+    Info: userInfo.value
   }
   store.dispatch(ActionTypes.UpdateUser, request)
 }

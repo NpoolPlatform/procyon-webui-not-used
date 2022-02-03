@@ -44,9 +44,9 @@ const cardTitle = toRef(props, 'title')
 const showLink = toRef(props, 'showLink')
 const alwaysSelectable = toRef(props, 'alwaysSelectable')
 
-const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
-const phoneNumber = computed(() => userBasicInfo.value.PhoneNumber)
-const emailAddress = computed(() => userBasicInfo.value.EmailAddress)
+const userInfo = computed(() => store.getters.getUserInfo)
+const phoneNumber = computed(() => userInfo.value.User.PhoneNO)
+const emailAddress = computed(() => userInfo.value.User.EmailAddress)
 
 const showEmail = computed({
   get: () => {

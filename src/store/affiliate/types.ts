@@ -1,9 +1,7 @@
+import { ReqMessage } from '../notifications/types'
+
 export interface GetDirectInvitationsRequest {
-  AppID: string
-  InviterID: string
-  Username: string
-  EmailAddress: string
-  Target?: string
+  Message: ReqMessage
 }
 
 export interface InvitationSummary {

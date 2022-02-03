@@ -25,7 +25,7 @@
           <span> USDT</span>
         </div>
       </div>
-      <q-inner-loading dark :showing='innerLoading' v-if='userBasicInfo.UserID === prop.node.UserID'>
+      <q-inner-loading dark :showing='innerLoading' v-if='userInfo.User.ID === prop.node.UserID'>
         <q-spinner-gears size='50px' color='primary' />
       </q-inner-loading>
     </template>
@@ -39,12 +39,14 @@ import { GetDirectInvitationsRequest, InvitationSummary, Invitation } from 'src/
 import { useQuasar } from 'quasar'
 import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/affiliate/action-types'
-import { ActionTypes as userActionTypes } from 'src/store/users/action-types'
 import { MutationTypes } from 'src/store/notify/mutation-types'
-import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
-import { GetUserDetailRequest } from 'src/store/users/types'
+import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
+import { useI18n } from 'vue-i18n'
 
 const q = useQuasar()
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const { t } = useI18n({ useScope: 'global' })
+
 const UserID = q.cookies.get('UserID')
 const target = ItemStateTarget.GetDirectInvitationList
 
@@ -55,12 +57,7 @@ type MyFunction = () => void
 const unsubscribe = ref<MyFunction>()
 
 onBeforeMount(() => {
-  getUserDetails()
-  unsubscribe.value = store.subscribe((mutation) => {
-    if (mutation.type === userMutation.SetUserInfo) {
-      getInvitationList()
-    }
-  })
+  getInvitationList()
 })
 
 onUnmounted(() => {
@@ -69,7 +66,7 @@ onUnmounted(() => {
 
 const store = useStore()
 const invitationList = computed(() => store.getters.getInvitationList)
-const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
+const userInfo = computed(() => store.getters.getUserInfo)
 
 const totalUnits = (summarys: Map<string, InvitationSummary>) => {
   let total = 0
@@ -118,18 +115,16 @@ const getInvitationList = () => {
   })
 
   const request: GetDirectInvitationsRequest = {
-    AppID: q.cookies.get('AppID'),
-    InviterID: q.cookies.get('UserID'),
-    Username: userBasicInfo.value.Username,
-    EmailAddress: userBasicInfo.value.EmailAddress,
-    Target: target
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_GET_MY_INVITATIONS_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
   }
   store.dispatch(ActionTypes.GetDirectInvitationList, request)
-}
-
-const getUserDetails = () => {
-  const request: GetUserDetailRequest = {}
-  store.dispatch(userActionTypes.GetUserDetail, request)
 }
 </script>
 

@@ -9,7 +9,6 @@
 
 <script setup lang='ts'>
 import { onMounted, computed, defineAsyncComponent } from 'vue'
-import { CheckLogined } from 'src/utils/utils'
 import { useStore } from 'src/store'
 import { ActionTypes as KYCActionTypes } from 'src/store/kycs/action-types'
 import { State } from 'src/store/kycs/const'
@@ -29,12 +28,10 @@ const message = computed(() => {
 })
 
 onMounted(() => {
-  if (CheckLogined()) {
-    store.commit(KYCMutationTypes.SetLocalKYCFrontImage, {})
-    store.commit(KYCMutationTypes.SetLocalKYCBackImage, {})
-    store.commit(KYCMutationTypes.SetLocalKYCHandingImage, {})
-    store.dispatch(KYCActionTypes.GetKYCInfo)
-  }
+  store.commit(KYCMutationTypes.SetLocalKYCFrontImage, {})
+  store.commit(KYCMutationTypes.SetLocalKYCBackImage, {})
+  store.commit(KYCMutationTypes.SetLocalKYCHandingImage, {})
+  store.dispatch(KYCActionTypes.GetKYCInfo)
 })
 
 </script>

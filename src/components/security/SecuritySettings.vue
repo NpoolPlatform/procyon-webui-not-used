@@ -157,17 +157,19 @@ const LoginHistoryTable = defineAsyncComponent(() => import('src/components/tabl
 
 const store = useStore()
 
-const emailAddress = computed(() => store.getters.getUserEmailAddress)
-const phoneNumber = computed(() => store.getters.getUserPhoneNumber)
-const googleVerify = computed(() => store.getters.getUserGoogleAuthenticator)
-const kycVerify = computed(() => store.state.user.info.UserAppInfo.UserApplicationInfo.KycVerify)
+const userInfo = computed(() => store.getters.getUserInfo)
+
+const emailAddress = computed(() => userInfo.value.User.EmailAddress)
+const phoneNumber = computed(() => userInfo.value.User.PhoneNO)
+const googleVerify = computed(() => userInfo.value.Ctrl && userInfo.value.Ctrl.SigninVerifyByGoogleAuthentication)
+const kycVerify = computed(() => false)
 
 const verifyMethodEmail = 'email-verification'
 const verifyMethodGoogle = 'google-verification'
 const verifyMethodUnknown = 'unknown-verification'
 
 const userGALogin = computed({
-  get: () => store.getters.getUserGoogleLoginVerify,
+  get: () => userInfo.value.Ctrl.SigninVerifyByGoogleAuthentication,
   set: (val) => {
     store.commit(MutationTypes.SetGoogleLoginVerify, val)
   }

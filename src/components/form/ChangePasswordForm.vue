@@ -77,14 +77,14 @@ const { t } = useI18n({ useScope: 'global' })
 const store = useStore()
 const showEmail = computed(() => store.getters.getShowEmail)
 const showPhone = computed(() => store.getters.getShowPhone)
-const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
+const userInfo = computed(() => store.getters.getUserInfo)
 
 const accountNumber = computed(() => {
   if (showEmail.value) {
-    return userBasicInfo.value.EmailAddress
+    return userInfo.value.User.EmailAddress
   }
   if (showPhone.value) {
-    return userBasicInfo.value.PhoneNumber
+    return userInfo.value.User.PhoneNO
   }
   return ''
 })
@@ -116,10 +116,10 @@ const changePassword = throttle(() => {
   let verifyParam = ''
   if (showEmail.value) {
     type = 'email'
-    verifyParam = userBasicInfo.value.EmailAddress
+    verifyParam = userInfo.value.User.EmailAddress as string
   } else if (showPhone.value) {
     type = 'phone'
-    verifyParam = formatPhoneNumber(userBasicInfo.value.PhoneNumber)
+    verifyParam = formatPhoneNumber(userInfo.value.User.PhoneNO as string)
   }
 
   const request: UserChangePasswordRequest = {

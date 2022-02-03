@@ -1,4 +1,4 @@
-import { LoginRecord, NilUserInfo, UserInfo } from './types'
+import { LoginRecord, UserInfo } from './types'
 
 interface UserState {
   info: UserInfo
@@ -10,9 +10,12 @@ interface UserState {
 }
 
 function state (): UserState {
-  const info: UserInfo = NilUserInfo
   return {
-    info: info,
+    info: {
+      User: {},
+      Extra: {},
+      Ctrl: {}
+    },
     logined: false,
     invitationCode: '',
     loginVerify: false,

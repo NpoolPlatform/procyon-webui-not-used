@@ -83,7 +83,7 @@ const sendCodeText = ref('')
 const sendElapsed = ref(0)
 const sendTimer = ref()
 
-const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
+const userInfo = computed(() => store.getters.getUserInfo)
 
 const langID = computed(() => {
   let id = ''
@@ -119,7 +119,7 @@ const sendEmailCode = () => {
     LangID: langID.value,
     UsedFor: 'SIGNUP'
   }
-  request = GenerateSendEmailRequest(locale.value, userBasicInfo.value, request)
+  request = GenerateSendEmailRequest(locale.value, userInfo.value, request)
   store.dispatch(ActionTypes.SendEmail, request)
 
   sendElapsed.value = 0

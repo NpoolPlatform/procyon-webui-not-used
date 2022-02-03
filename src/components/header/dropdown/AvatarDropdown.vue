@@ -56,7 +56,7 @@ import { defineProps, computed, toRef, withDefaults } from 'vue'
 import { useStore } from 'src/store'
 import { ActionTypes } from 'src/store/users/action-types'
 import { MutationTypes } from 'src/store/users/mutation-types'
-import { NilUserInfo, UserLogoutRequest } from 'src/store/users/types'
+import { UserLogoutRequest } from 'src/store/users/types'
 
 const store = useStore()
 
@@ -97,7 +97,11 @@ const userInfo = computed({
 const logout = () => {
   const request: UserLogoutRequest = {}
 
-  userInfo.value = NilUserInfo
+  userInfo.value = {
+    User: {},
+    Extra: {},
+    Ctrl: {}
+  }
   logined.value = false
   loginVerify.value = false
 

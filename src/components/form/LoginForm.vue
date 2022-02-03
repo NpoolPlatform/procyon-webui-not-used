@@ -2,7 +2,7 @@
   <q-form @submit='login'>
     <Vue3QTelInput
       v-if='showPhone'
-      v-model:tel='loginInput.Phone'
+      v-model:tel='loginInput.PhoneNO'
       bg-color='blue-grey-2'
       outlined
       :label="$t('input.PhoneNumber')"
@@ -12,7 +12,7 @@
       bg-color='blue-grey-2'
       class='common-input'
       outlined
-      v-model='loginInput.Username'
+      v-model='loginInput.EmailAddress'
       :label="$t('input.Login.Username')"
       lazy-rules
       :rules='usernameRule'
@@ -106,9 +106,9 @@ const { t } = useI18n({ useScope: 'global' })
 
 const isPwd = ref(true)
 
-const loginInput: UserLoginRequest = reactive({
-  Username: '',
-  Phone: '',
+const loginInput = reactive({
+  EmailAddress: '',
+  PhoneNO: '',
   Password: ''
 })
 
@@ -121,19 +121,26 @@ const passwordRule = ref([
 ])
 
 const login = throttle((): void => {
+  let accountType = 'email'
+  let account = loginInput.EmailAddress
+
   if (showPhone.value) {
-    loginInput.Username = ''
+    account = formatPhoneNumber(loginInput.PhoneNO)
+    accountType = 'mobile'
   }
 
-  if (showEmail.value) {
-    loginInput.Phone = ''
+  if (account.length === 0) {
+    return
+  }
+  if (loginInput.Password.length === 0) {
+    return
   }
 
   const request: UserLoginRequest = {
-    Username: loginInput.Username,
-    Password: sha256Password(loginInput.Password),
-    GoogleRecaptchaResponse: googleRecaptchaResponse.value,
-    Phone: formatPhoneNumber(loginInput.Phone)
+    Account: account,
+    AccountType: accountType,
+    PasswordHash: sha256Password(loginInput.Password),
+    GoogleRecaptchaResponse: googleRecaptchaResponse.value
   }
   store.dispatch(ActionTypes.UserLogin, request)
 }, ThrottleDelay)

@@ -13,13 +13,13 @@ import {
   SendEmailCodeResponse,
   SendSmsRequest,
   SendSmsResponse,
-  VerifyCodeWithUserIDRequest,
-  VerifyCodeWithUserIDResponse,
   VerifyGoogleAuthenticationCodeRequest,
   VerifyGoogleAuthenticationCodeResponse,
   VerifyURLPath,
   SendUserSiteContactEmailRequest,
-  SendUserSiteContactEmailResponse
+  SendUserSiteContactEmailResponse,
+  VerifyEmailCodeRequest,
+  VerifyEmailCodeResponse
 } from './types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { RequestMessageToNotifyMessage, setLoginVerify } from 'src/utils/utils'
@@ -48,11 +48,11 @@ interface VerifyActions {
     RootState,
     VerifyMutations<VerifyState>>, payload: GetQRCodeURLRequest): void
 
-  [ActionTypes.VerifyCodeWithUserID] ({
+  [ActionTypes.VerifyEmailCode] ({
     commit
   }: AugmentedActionContext<VerifyState,
     RootState,
-    VerifyMutations<VerifyState>>, payload: VerifyCodeWithUserIDRequest): void
+    VerifyMutations<VerifyState>>, payload: VerifyEmailCodeRequest): void
 
   [ActionTypes.VerifyGoogleAuthentication] ({
     commit,
@@ -114,11 +114,11 @@ const actions: ActionTree<VerifyState, RootState> = {
         commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.GetQRCodeURL.Fail'), err.message, 'negative'))
       })
   },
-  [ActionTypes.VerifyCodeWithUserID] ({ commit }, payload: VerifyCodeWithUserIDRequest) {
+  [ActionTypes.VerifyEmailCode] ({ commit }, payload: VerifyEmailCodeRequest) {
     const { t } = useI18n()
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, payload)
-    post<VerifyCodeWithUserIDRequest, VerifyCodeWithUserIDResponse>(VerifyURLPath.VERIFY_CODE_WITH_USERID, payload).then(() => {
+    post<VerifyEmailCodeRequest, VerifyEmailCodeResponse>(VerifyURLPath.VERIFY_EMAIL_CODE, payload).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.VerifyWithUserID.Success'), '', 'positive'))
       void setLoginVerify()
       commit(userMutation.SetLoginVerify, true)

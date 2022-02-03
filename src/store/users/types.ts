@@ -1,153 +1,72 @@
-interface UserBasicInfo {
-  UserID: string
-  Username: string
-  Password: string
-  Avatar?: string
+import { ReqMessage } from '../notifications/types'
+
+interface AppUser {
+  ID?: string
+  AppID?: string
+  EmailAddress?: string
+  PhoneNO?: string
+  ImportedFromApp?: string
+  CreateAt?: number
+}
+
+interface AppRole {
+  ID: string
+  AppID: string
+  CreatedBy: string
+  Role: string
+  Description: string
+  Default: boolean
+}
+
+interface AppUserExtra {
+  ID?: string
+  AppID?: string
+  UserID?: string
+  Username?: string
+  FirstName?: string
+  LastName?: string
+  AddressFields?: Array<string>
+  Gender?: string
+  PostalCode?: string
   Age?: number
-  Gender: string
-  Region?: string
-  Birthday?: string
-  Country: string
-  Province: string
-  City: string
-  PhoneNumber: string
-  Compony?: string
-  EmailAddress: string
-  SignupMethod?: string
-  Career?: string
-  DisplayName?: string
-  FirstName: string
-  LastName: string
-  StreetAddress1: string
-  StreetAddress2: string
-  PostalCode: string
+  Birthday?: number
+  Avatar?: string
+  Organization?: string
 }
 
-interface UserApplicationInfo {
+interface AppUserControl {
+  ID?: string
+  AppID?: string
+  UserID?: string
+  SigninVerifyByGoogleAuthentication?: boolean
+}
+
+interface BanAppUser {
   ID: string
   AppID: string
   UserID: string
-  Original: boolean
-  KycVerify: boolean
-  GAVerify: boolean
-  GALogin: boolean
-  LoginNumber: number
-  CreateAT: number
-}
-
-interface UserGroupInfo {
-  ID: string
-  GroupID: string
-  AppID: string
-  UserID: string
-  Annotation: string
-  CreateAT: number
-}
-
-interface UserRoleInfo {
-  ID: string
-  AppID: string
-  RoleName: string
-  Creator: string
-  CreateAT: number
-  UpdateAT: number
-  Annotation: string
-}
-
-interface UserRoleInfos {
-  UserID: string
-  AppID: string
-  Infos: Array<UserRoleInfo>
-}
-
-interface UserAppInfo {
-  UserApplicationInfo: UserApplicationInfo
-  UserGroupInfo: UserGroupInfo
-  UserRoleInfo: UserRoleInfos
+  Message: string
 }
 
 interface UserInfo {
-  UserBasicInfo: UserBasicInfo
-  UserAppInfo: UserAppInfo
-}
-
-export const NilUserInfo: UserInfo = {
-  UserBasicInfo: {
-    UserID: '',
-    Username: '',
-    Password: '',
-    Avatar: '',
-    Age: 0,
-    Gender: '',
-    Region: '',
-    Birthday: '',
-    Country: '',
-    Province: '',
-    City: '',
-    PhoneNumber: '',
-    Compony: '',
-    EmailAddress: '',
-    SignupMethod: '',
-    Career: '',
-    DisplayName: '',
-    FirstName: '',
-    LastName: '',
-    StreetAddress1: '',
-    StreetAddress2: '',
-    PostalCode: ''
-  },
-  UserAppInfo: {
-    UserApplicationInfo: {
-      ID: '',
-      AppID: '',
-      UserID: '',
-      Original: true,
-      KycVerify: false,
-      GAVerify: false,
-      GALogin: false,
-      LoginNumber: 0,
-      CreateAT: 0
-    },
-    UserRoleInfo: {
-      UserID: '',
-      AppID: '',
-      Infos: []
-    },
-    UserGroupInfo: {
-      ID: '',
-      GroupID: '',
-      AppID: '',
-      UserID: '',
-      Annotation: '',
-      CreateAT: 0
-    }
-  }
+  User: AppUser
+  Extra: AppUserExtra
+  Ctrl: AppUserControl
+  Ban?: BanAppUser
+  Roles?: Array<AppRole>
 }
 
 interface UserLoginRequest {
-  AppID?: string
-  Username?: string
-  Password: string
-  Email?: string
-  Phone: string
-  // email or phone verify code
-  VerifyCode?: string
+  Account: string
+  PasswordHash: string
+  AccountType: string
   // google recaptcha response
   GoogleRecaptchaResponse?: string
-  // Provider id
-  Provider?: string
-  // code is returned by provider after user authenticate from provider
-  Code?: string
-  // state is returned by provider after user authenticate from provider
-  State?: string
-  // redirect url tell provider which callback it need to return after get user info
-  RedirectURL?: string
-  Method?: string
 }
 
 interface UserLoginResponse {
   Info: UserInfo
-  RedirectURL?: string
+  Token: string
 }
 
 interface UserLogoutRequest {
@@ -184,7 +103,7 @@ interface UserSignUpRequest {
 }
 
 interface UserSignUpResponse {
-  Info: UserBasicInfo
+  Info: AppUser
 }
 
 interface UserChangePasswordRequest {
@@ -213,23 +132,21 @@ interface UserForgetPasswordResponse {
   Info: string
 }
 
-interface GetUserDetailRequest {
-  AppID?: string
-  UserID?: string
+interface GetAppUserInfoRequest {
+  ID: string
+  Message: ReqMessage
 }
 
-interface GetUserDetailResponse {
+interface GetAppUserInfoResponse {
   Info: UserInfo
 }
 
 interface UpdateUserRequest {
-  Info: UserBasicInfo
-  UserID?: string
-  AppID?: string
+  Info: UserInfo
 }
 
 interface UpdateUserResponse {
-  Info: UserBasicInfo
+  Info: UserInfo
 }
 
 interface LoginRecord {
@@ -328,7 +245,7 @@ enum UserURLPath {
   SIGN_UP = '/cloud-hashing-apis-v2/v1/signup',
   CHANGE_PASSWORD = '/appuser-manager/v1/change/password',
   FORGET_PASSWORD = '/appuser-manager/v1/forget/password',
-  GET_USER_DETAIL = '/appuser-manager/v1/get/user/details',
+  GET_APP_USER_INFO = '/appuser-manager/v1/get/app/userinfo',
   UPDATE_USER = '/appuser-manager/v1/update/user',
   GET_USER_LOGIN_HISTORY = '/login-gateway/v1/get/login/histories',
   SET_GA_LOGIN_VERIFY = '/appuser-manager/v1/set/ga/login',
@@ -341,8 +258,6 @@ enum UserURLPath {
 
 export {
   UserInfo,
-  UserBasicInfo,
-  UserRoleInfo,
   UserURLPath,
   UserLoginRequest,
   UserLoginResponse,
@@ -356,8 +271,8 @@ export {
   UserChangePasswordResponse,
   UserForgetPasswordRequest,
   UserForgetPasswordResponse,
-  GetUserDetailRequest,
-  GetUserDetailResponse,
+  GetAppUserInfoRequest,
+  GetAppUserInfoResponse,
   UpdateUserRequest,
   UpdateUserResponse,
   GetUserLoginHistoryRequest,

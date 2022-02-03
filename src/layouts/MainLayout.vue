@@ -32,12 +32,17 @@ import { notify } from 'src/notify/notify'
 import { useRouter } from 'vue-router'
 import { MutationTypes as styleMutation } from 'src/store/style/mutation-types'
 import { ActionTypes } from 'src/store/users/action-types'
-import { GetUserDetailRequest, GetUserInvitationCodeRequest } from 'src/store/users/types'
+import { GetUserInvitationCodeRequest } from 'src/store/users/types'
 import { useI18n } from 'vue-i18n'
 import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
 import { loginVeiryConfirm } from 'src/utils/utils'
+import { ActionTypes as ApplicationActionTypes } from 'src/store/application/action-types'
+import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
+import { AppID } from 'src/const/const'
 
 const store = useStore()
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const { t } = useI18n({ useScope: 'global' })
 
 const router = useRouter()
 const nowPath = computed(() => router.currentRoute.value.path)
@@ -86,10 +91,19 @@ const setShowDrawer = (path: string) => {
 }
 
 onBeforeMount(() => {
-  const appid = 'ff2c5d50-be56-413e-aba5-9c7ad888a769'
-  q.cookies.set('AppID', appid)
-
   setShowDrawer(nowPath.value)
+
+  store.dispatch(ApplicationActionTypes.GetApplication, {
+    ID: AppID,
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_GET_APP_LANG_INFOS_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
 
   const { locale } = useI18n({ useScope: 'global' })
   if (locale.value === 'en-US') {
@@ -109,11 +123,6 @@ onBeforeMount(() => {
     }
   })
 })
-
-const getUserDetails = () => {
-  const request: GetUserDetailRequest = {}
-  store.dispatch(ActionTypes.GetUserDetail, request)
-}
 
 const getUserInvitationCode = () => {
   const request: GetUserInvitationCodeRequest = {}
@@ -141,7 +150,6 @@ onMounted(() => {
   unsubscribe.value = store.subscribe((mutation) => {
     if (mutation.type === userMutation.SetUserLogined) {
       if (mutation.payload) {
-        getUserDetails()
         getUserInvitationCode()
       }
     }
@@ -149,7 +157,6 @@ onMounted(() => {
 
   if (q.cookies.has('UserID') && q.cookies.has('AppSession')) {
     if (q.cookies.has(loginVeiryConfirm)) {
-      getUserDetails()
       getUserInvitationCode()
       logined.value = true
       loginVerify.value = true

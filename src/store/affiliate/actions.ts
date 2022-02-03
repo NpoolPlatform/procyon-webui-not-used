@@ -18,22 +18,23 @@ import { useI18n } from 'boot/i18n'
 // use public api
 interface AffiliateActions {
   [ActionTypes.GetDirectInvitationList] ({
-    commit
+    commit, rootState
   }: AugmentedActionContext<AffiliateState,
     RootState,
     AffiliateMutations<AffiliateState>>, payload: GetDirectInvitationsRequest): void
 }
 
 const actions: ActionTree<AffiliateState, RootState> = {
-  [ActionTypes.GetDirectInvitationList] ({ commit }, payload: GetDirectInvitationsRequest) {
+  [ActionTypes.GetDirectInvitationList] ({ commit, rootState }, payload: GetDirectInvitationsRequest) {
     const { t } = useI18n()
+    const userInfo = rootState.user.info
+
     post<GetDirectInvitationsRequest, GetDirectInvitationsResponse>(AffiliateURLPath.GET_DIRECT_INVITATIONS, payload)
       .then((resp: GetDirectInvitationsResponse) => {
-        const userid = payload.InviterID
         const father: Invitation = {
-          UserID: userid,
-          Username: payload.Username,
-          EmailAddress: payload.EmailAddress,
+          UserID: userInfo.User.ID as string,
+          Username: userInfo.Extra.Username as string,
+          EmailAddress: userInfo.User.EmailAddress as string,
           Label: '',
           children: [],
           Kol: resp.MySelf.Kol,
@@ -43,7 +44,7 @@ const actions: ActionTree<AffiliateState, RootState> = {
           JoinDate: resp.MySelf.JoinDate
         }
         const infos = new Map<string, Invitees>(Object.entries(resp.Infos))
-        const lists = infos?.get(userid)?.Invitees
+        const lists = infos?.get(userInfo.User.ID as string)?.Invitees
         father.Label = lists ? '01(' + resp.MySelf.InvitedCount.toString() + ')' : '01(0)'
         lists?.forEach(list => {
           const childrenInvitation: Invitation = {
@@ -63,18 +64,10 @@ const actions: ActionTree<AffiliateState, RootState> = {
         const invitationList: Array<Invitation> = []
         invitationList.push(father)
         commit(MutationTypes.SetInvitationList, invitationList)
-        commit(notifyMutation.SetInnerLoading, {
-          key: payload.Target,
-          value: false
-        })
       })
       .catch((err: Error) => {
         commit(MutationTypes.SetInvitationList, [])
         commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.GetDirectAffiliate.Fail'), err.message, 'negative'))
-        commit(notifyMutation.SetInnerLoading, {
-          key: payload.Target,
-          value: false
-        })
       })
   }
 }

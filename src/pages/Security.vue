@@ -8,29 +8,21 @@
 
 <script setup lang='ts'>
 import { computed, defineAsyncComponent, onMounted } from 'vue'
-import { GetUserDetailRequest } from 'src/store/users/types'
-import { ActionTypes } from 'src/store/users/action-types'
 import { useStore } from 'src/store'
 import { GetQRCodeURLRequest } from 'src/store/verify/types'
 import { ActionTypes as verifyAction } from 'src/store/verify/action-types'
-import { CheckLogined } from 'src/utils/utils'
 
 const SecuritySettings = defineAsyncComponent(() => import('src/components/security/SecuritySettings.vue'))
 
 const store = useStore()
-const getUserDetail = () => {
-  const request: GetUserDetailRequest = {}
-  store.dispatch(ActionTypes.GetUserDetail, request)
-}
-
-const userBasicInfo = computed(() => store.getters.getUserBasicInfo)
+const userInfo = computed(() => store.getters.getUserInfo)
 
 const getUserGoogleAuthenticatorInfo = () => {
-  let username = userBasicInfo.value.Username
-  if (userBasicInfo.value.EmailAddress !== '') {
-    username = userBasicInfo.value.EmailAddress
-  } else if (userBasicInfo.value.PhoneNumber !== '') {
-    username = userBasicInfo.value.PhoneNumber
+  let username = ''
+  if (userInfo.value.User.EmailAddress !== '') {
+    username = userInfo.value.User.EmailAddress as string
+  } else if (userInfo.value.User.PhoneNO !== '') {
+    username = userInfo.value.User.PhoneNO as string
   }
   const request: GetQRCodeURLRequest = {
     Username: username
@@ -39,10 +31,7 @@ const getUserGoogleAuthenticatorInfo = () => {
 }
 
 onMounted(() => {
-  if (CheckLogined()) {
-    getUserDetail()
-    getUserGoogleAuthenticatorInfo()
-  }
+  getUserGoogleAuthenticatorInfo()
 })
 </script>
 

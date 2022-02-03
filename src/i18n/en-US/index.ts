@@ -4,6 +4,8 @@
 export default {
   MSG_GET_APP_LANG_INFOS_FAIL: 'Cannot get app lang infos',
   MSG_SEND_CODE: 'Send Code',
+  MSG_GET_APP_USER_INFO_FAIL: 'Cannot get app user info',
+  MSG_GET_MY_INVITATIONS_FAIL: 'Cannot get my invitations',
   general: {
     KYCStatus: 'KYC Verification Status',
     NotVerified: 'Not Verified',

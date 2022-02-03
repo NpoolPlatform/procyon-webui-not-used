@@ -3,10 +3,9 @@ import 'dayjs/locale/ja'
 import { SHA256 } from 'crypto-js'
 import { NotifyMessage } from 'src/store/notify/types'
 import { notifyType } from 'src/notify/notify'
-import { UserBasicInfo } from 'src/store/users/types'
+import { UserInfo } from 'src/store/users/types'
 import { SendEmailCodeRequest } from 'src/store/verify/types'
-import { Cookies, useQuasar } from 'quasar'
-import { useRouter } from 'src/router'
+import { Cookies } from 'quasar'
 
 export const loginVeiryConfirm = 'userLoginVerify'
 
@@ -108,15 +107,15 @@ export const RequestMessageToNotifyMessage = (message: string, caption: string, 
   return notifyMessage
 }
 
-export const GenerateSendEmailRequest = (locale: string, userBasicInfo: UserBasicInfo, requestInput: SendEmailCodeRequest): SendEmailCodeRequest => {
+export const GenerateSendEmailRequest = (locale: string, userBasicInfo: UserInfo, requestInput: SendEmailCodeRequest): SendEmailCodeRequest => {
   let username = ''
   if (locale === 'en-US') {
-    if (userBasicInfo.FirstName !== '') {
-      username = userBasicInfo.FirstName
+    if (userBasicInfo.Extra?.FirstName !== '') {
+      username = userBasicInfo.Extra?.FirstName as string
     }
   } else {
-    if (userBasicInfo.LastName !== '') {
-      username = userBasicInfo.LastName
+    if (userBasicInfo.Extra?.LastName !== '') {
+      username = userBasicInfo.Extra?.LastName as string
     }
   }
 
@@ -125,20 +124,6 @@ export const GenerateSendEmailRequest = (locale: string, userBasicInfo: UserBasi
 }
 
 export const ThrottleDelay = 1000
-
-export const CheckLogined = (): boolean => {
-  const q = useQuasar()
-  const router = useRouter()
-  if (!q.cookies.has('UserID') && !q.cookies.has('AppSession')) {
-    q.notify({
-      type: 'negative',
-      message: 'Please login firstly!'
-    })
-    void router.push('/')
-    return false
-  }
-  return true
-}
 
 export const setLoginVerify = () => {
   Cookies.set(loginVeiryConfirm, 'true')

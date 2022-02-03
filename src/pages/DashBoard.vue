@@ -23,7 +23,6 @@ import { computed, defineAsyncComponent, onMounted } from 'vue'
 import { useStore } from 'src/store'
 import { GetOrdersDetailByAppUserRequest } from 'src/store/order/types'
 import { ActionTypes } from 'src/store/order/action-types'
-import { CheckLogined } from 'src/utils/utils'
 
 const EarnBox = defineAsyncComponent(() => import('src/components/dashboard/EarnBox.vue'))
 const MiningSummary = defineAsyncComponent(() => import('src/components/dashboard/MiningSummary.vue'))
@@ -39,9 +38,7 @@ const getUserOrders = () => {
 }
 
 onMounted(() => {
-  if (CheckLogined()) {
-    getUserOrders()
-  }
+  getUserOrders()
 })
 </script>
 

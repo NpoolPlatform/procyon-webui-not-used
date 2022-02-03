@@ -1,5 +1,5 @@
 export enum ActionTypes {
-  GetUserDetail = 'USER_GET_USER_DETAIL',
+  GetAppUserInfo = 'USER_GET_APP_USER_INFO',
   UpdateUser = 'USER_UPDATE_USER',
   UserLogin = 'USER_LOGIN',
   UserLogout = 'USER_LOGOUT',

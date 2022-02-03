@@ -41,16 +41,14 @@ export interface GetQRCodeURLResponse {
   }
 }
 
-export interface VerifyCodeWithUserIDRequest {
-  UserID?: string
-  AppID?: string
-  Param: string
+export interface VerifyEmailCodeRequest {
+  UsedFor: string
   Code: string
-  VerifyType?: string
 }
 
-export interface VerifyCodeWithUserIDResponse {
-  Info: string
+export interface VerifyEmailCodeResponse {
+  Code: number
+  Message: string
 }
 
 export interface VerifyGoogleAuthenticationCodeRequest {
@@ -91,7 +89,7 @@ export enum VerifyURLPath {
   SEND_EMAIL = '/third-gateway/v1/send/email/code',
   GET_QRCODE_URL = '/third-gateway/v1/get/qrcode/url',
   SEND_SMS = '/third-gateway/v1/send/sms/code',
-  VERIFY_CODE_WITH_USERID = '/third-gateway/v1/verify/code/with/userid',
+  VERIFY_EMAIL_CODE = '/third-gateway/v1/verify/email/code',
   VERIFY_GOOGLE_AUTHENTICATION = '/third-gateway/v1/verify/google/auth',
   SEND_USER_SITE_CONTACT_EMAIL = '/third-gateway/v1/send/user/site/contact/email'
 }
