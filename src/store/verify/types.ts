@@ -1,6 +1,8 @@
+import { ReqMessage } from '../notifications/types'
+
 export interface GoogleAuthenticationInfo {
-  qrCodeURL: string
-  secret: string
+  OTPAuth?: string
+  Secret?: string
 }
 
 export interface SendEmailCodeRequest {
@@ -28,17 +30,13 @@ export interface SendSmsResponse {
   Info: string
 }
 
-export interface GetQRCodeURLRequest {
-  Username: string
-  UserID?: string
-  AppID?: string
+export interface SetupGoogleAuthenticationRequest {
+  Message: ReqMessage
 }
 
-export interface GetQRCodeURLResponse {
-  Info: {
-    CodeURL: string
-    Secret: string
-  }
+export interface SetupGoogleAuthenticationResponse {
+  OTPAuth: string
+  Secret: string
 }
 
 export interface VerifyEmailCodeRequest {
@@ -87,7 +85,7 @@ export interface SendUserSiteContactEmailResponse {
 
 export enum VerifyURLPath {
   SEND_EMAIL = '/third-gateway/v1/send/email/code',
-  GET_QRCODE_URL = '/third-gateway/v1/get/qrcode/url',
+  SETUP_GOOGLE_AUTHENTICATION = '/third-gateway/v1/setup/google/authentication',
   SEND_SMS = '/third-gateway/v1/send/sms/code',
   VERIFY_EMAIL_CODE = '/third-gateway/v1/verify/email/code',
   VERIFY_GOOGLE_AUTHENTICATION = '/third-gateway/v1/verify/google/auth',

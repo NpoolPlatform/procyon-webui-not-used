@@ -7,27 +7,31 @@
 </template>
 
 <script setup lang='ts'>
-import { computed, defineAsyncComponent, onMounted } from 'vue'
+import { defineAsyncComponent, onMounted } from 'vue'
 import { useStore } from 'src/store'
-import { GetQRCodeURLRequest } from 'src/store/verify/types'
 import { ActionTypes as verifyAction } from 'src/store/verify/action-types'
+import { SetupGoogleAuthenticationRequest } from 'src/store/verify/types'
+import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
+import { useI18n } from 'vue-i18n'
 
 const SecuritySettings = defineAsyncComponent(() => import('src/components/security/SecuritySettings.vue'))
 
 const store = useStore()
-const userInfo = computed(() => store.getters.getUserInfo)
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const { t } = useI18n({ useScope: 'global' })
 
 const getUserGoogleAuthenticatorInfo = () => {
-  let username = ''
-  if (userInfo.value.User.EmailAddress !== '') {
-    username = userInfo.value.User.EmailAddress as string
-  } else if (userInfo.value.User.PhoneNO !== '') {
-    username = userInfo.value.User.PhoneNO as string
+  const request: SetupGoogleAuthenticationRequest = {
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_SETUP_GOOGLE_AUTHENTICATION_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
   }
-  const request: GetQRCodeURLRequest = {
-    Username: username
-  }
-  store.dispatch(verifyAction.GetQRCodeURL, request)
+  store.dispatch(verifyAction.SetupGoogleAuthentication, request)
 }
 
 onMounted(() => {

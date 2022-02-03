@@ -47,7 +47,8 @@ export default route<RootState>(function ({ store /*, ssrContext */ }) {
   const myStore = store as Store
 
   myRouter.beforeEach((to, _, next) => {
-    if (!myStore.getters.getUserLogined && to.path !== '/login' && to.path !== '/') {
+    // eslint-disable-next-line dot-notation
+    if (!myStore.getters.getUserLogined && to.meta['needLogin']) {
       next({
         path: '/login',
         replace: true

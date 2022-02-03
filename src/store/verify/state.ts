@@ -12,16 +12,12 @@ interface VerifyState {
 }
 
 function state (): VerifyState {
-  const info: GoogleAuthenticationInfo = {
-    qrCodeURL: '',
-    secret: ''
-  }
   return {
     loginEmailVerifyDialog: false,
     loginGoogleAuthenticationVerifyDialog: false,
     loading: false,
     error: '',
-    googleAuthenticationInfo: info,
+    googleAuthenticationInfo: {},
     sendCodeButtonDisable: new Map<string, boolean>(),
     sendCodeButtonText: new Map<string, string>(),
     verifyMethod: 'unknown-verification'

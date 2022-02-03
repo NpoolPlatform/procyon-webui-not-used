@@ -31,19 +31,31 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'change/password',
-        component: () => import('pages/ChangePassword.vue')
+        component: () => import('pages/ChangePassword.vue'),
+        meta: {
+          needLogined: true
+        }
       },
       {
         path: 'dashboard',
-        component: () => import('pages/DashBoard.vue')
+        component: () => import('pages/DashBoard.vue'),
+        meta: {
+          needLogined: true
+        }
       },
       {
         path: 'account',
-        component: () => import('pages/Account.vue')
+        component: () => import('pages/Account.vue'),
+        meta: {
+          needLogined: true
+        }
       },
       {
         path: 'affiliate',
-        component: () => import('pages/Affiliate.vue')
+        component: () => import('pages/Affiliate.vue'),
+        meta: {
+          needLogined: true
+        }
       },
       {
         path: 'notice',
@@ -51,7 +63,10 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'security',
-        component: () => import('pages/Security.vue')
+        component: () => import('pages/Security.vue'),
+        meta: {
+          needLogined: true
+        }
       },
       {
         path: 'contact',
@@ -59,7 +74,10 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'kyc',
-        component: () => import('pages/KYC.vue')
+        component: () => import('pages/KYC.vue'),
+        meta: {
+          needLogined: true
+        }
       }
     ]
   },

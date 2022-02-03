@@ -6,6 +6,7 @@ export default {
   MSG_SEND_CODE: 'Send Code',
   MSG_GET_APP_USER_INFO_FAIL: 'Cannot get app user info',
   MSG_GET_MY_INVITATIONS_FAIL: 'Cannot get my invitations',
+  MSG_SETUP_GOOGLE_AUTHENTICATION_FAIL: 'Cannot setup google authentication',
   general: {
     KYCStatus: 'KYC Verification Status',
     NotVerified: 'Not Verified',

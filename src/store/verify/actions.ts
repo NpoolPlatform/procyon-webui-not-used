@@ -6,9 +6,6 @@ import { VerifyMutations } from './mutations'
 import { VerifyState } from './state'
 import { post } from 'src/boot/axios'
 import {
-  GetQRCodeURLRequest,
-  GetQRCodeURLResponse,
-  GoogleAuthenticationInfo,
   SendEmailCodeRequest,
   SendEmailCodeResponse,
   SendSmsRequest,
@@ -19,7 +16,9 @@ import {
   SendUserSiteContactEmailRequest,
   SendUserSiteContactEmailResponse,
   VerifyEmailCodeRequest,
-  VerifyEmailCodeResponse
+  VerifyEmailCodeResponse,
+  SetupGoogleAuthenticationRequest,
+  SetupGoogleAuthenticationResponse
 } from './types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { RequestMessageToNotifyMessage, setLoginVerify } from 'src/utils/utils'
@@ -42,11 +41,11 @@ interface VerifyActions {
     RootState,
     VerifyMutations<VerifyState>>, payload: SendSmsRequest): void
 
-  [ActionTypes.GetQRCodeURL] ({
+  [ActionTypes.SetupGoogleAuthentication] ({
     commit
   }: AugmentedActionContext<VerifyState,
     RootState,
-    VerifyMutations<VerifyState>>, payload: GetQRCodeURLRequest): void
+    VerifyMutations<VerifyState>>, payload: SetupGoogleAuthenticationRequest): void
 
   [ActionTypes.VerifyEmailCode] ({
     commit
@@ -95,22 +94,14 @@ const actions: ActionTree<VerifyState, RootState> = {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.SendPhone.Fail'), err.message, 'negative'))
     })
   },
-  [ActionTypes.GetQRCodeURL] ({ commit }, payload: GetQRCodeURLRequest) {
+  [ActionTypes.SetupGoogleAuthentication] ({ commit }, payload: SetupGoogleAuthenticationRequest) {
     const { t } = useI18n()
-    let info: GoogleAuthenticationInfo = {
-      qrCodeURL: '',
-      secret: ''
-    }
-    post<GetQRCodeURLRequest, GetQRCodeURLResponse>(VerifyURLPath.GET_QRCODE_URL, payload)
-      .then((resp: GetQRCodeURLResponse) => {
-        info = {
-          qrCodeURL: resp.Info.CodeURL,
-          secret: resp.Info.Secret
-        }
-        commit(MutationTypes.SetGoogleAuthenticationInfo, info)
+    post<SetupGoogleAuthenticationRequest, SetupGoogleAuthenticationResponse>(VerifyURLPath.SETUP_GOOGLE_AUTHENTICATION, payload)
+      .then((resp: SetupGoogleAuthenticationResponse) => {
+        commit(MutationTypes.SetGoogleAuthenticationInfo, resp)
       })
       .catch((err: Error) => {
-        commit(MutationTypes.SetGoogleAuthenticationInfo, info)
+        commit(MutationTypes.SetGoogleAuthenticationInfo, {})
         commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.GetQRCodeURL.Fail'), err.message, 'negative'))
       })
   },
