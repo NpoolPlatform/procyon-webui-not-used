@@ -116,6 +116,8 @@ const bindGoogleAuthenticator = () => {
     Code: googleVerifyCode.value
   }
   store.dispatch(ActionTypes.VerifyGoogleAuthentication, request)
+  showVerifyDialog.value = false
+  emit('update:showGoogle', false)
 }
 </script>
 

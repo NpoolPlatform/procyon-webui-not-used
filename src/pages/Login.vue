@@ -137,7 +137,6 @@ const verifyEmailCode = throttle((verifyCode: string): void => {
 
 const verifyGoogleCode = throttle((verifyCode: string): void => {
   const request: VerifyGoogleAuthenticationCodeRequest = {
-    UserID: '',
     Code: verifyCode
   }
   store.dispatch(ActionTypes.VerifyGoogleAuthentication, request)

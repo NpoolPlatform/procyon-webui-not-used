@@ -146,6 +146,7 @@ import { SetGALoginVerifyRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { MutationTypes } from 'src/store/users/mutation-types'
 import { MutationTypes as verifyMutationTypes } from 'src/store/verify/mutation-types'
+import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
 
 const SettingBox = defineAsyncComponent(() => import('components/box/SettingBox.vue'))
 const EnableEmailDialog = defineAsyncComponent(() => import('components/dialog/setting/EnableEmail.vue'))
@@ -188,6 +189,18 @@ type MyFunction = () => void
 const unsubscribe = ref<MyFunction>()
 
 onMounted(() => {
+  store.dispatch(ActionTypes.GetAppUserInfo, {
+    ID: userInfo.value.User.ID as string,
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_GET_APP_LANG_INFOS_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
+
   if (googleVerify.value && userGALogin.value) {
     verifyMethod.value = verifyMethodGoogle
   } else if (emailAddress.value && emailAddress.value !== '') {
