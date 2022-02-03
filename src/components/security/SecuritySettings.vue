@@ -142,7 +142,7 @@ import googleImg from 'assets/icon-authentication.svg'
 import kycImg from 'assets/icon-id.svg'
 import { useStore } from 'src/store'
 import { useI18n } from 'vue-i18n'
-import { SetGALoginVerifyRequest } from 'src/store/users/types'
+import { AppUserControl, SetGALoginVerifyRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { MutationTypes } from 'src/store/users/mutation-types'
 import { MutationTypes as verifyMutationTypes } from 'src/store/verify/mutation-types'
@@ -188,6 +188,17 @@ let lastVerifyMethod = verifyMethod.value
 type MyFunction = () => void
 const unsubscribe = ref<MyFunction>()
 
+const setVerifyMethod = () => {
+  if (googleVerify.value && userGALogin.value) {
+    verifyMethod.value = verifyMethodGoogle
+  } else if (emailAddress.value && emailAddress.value !== '') {
+    verifyMethod.value = verifyMethodEmail
+  } else {
+    verifyMethod.value = verifyMethodUnknown
+  }
+  lastVerifyMethod = verifyMethod.value
+}
+
 onMounted(() => {
   store.dispatch(ActionTypes.GetAppUserInfo, {
     ID: userInfo.value.User.ID as string,
@@ -201,20 +212,15 @@ onMounted(() => {
     }
   })
 
-  if (googleVerify.value && userGALogin.value) {
-    verifyMethod.value = verifyMethodGoogle
-  } else if (emailAddress.value && emailAddress.value !== '') {
-    verifyMethod.value = verifyMethodEmail
-  } else {
-    verifyMethod.value = verifyMethodUnknown
-  }
-  lastVerifyMethod = verifyMethod.value
+  setVerifyMethod()
 
   unsubscribe.value = store.subscribe((mutation) => {
     if (mutation.type === MutationTypes.SetEmailAddress) {
-      if (verifyMethod.value !== verifyMethodGoogle) {
-        verifyMethod.value = verifyMethodEmail
-      }
+      setVerifyMethod()
+    }
+
+    if (mutation.type === MutationTypes.SetUserInfo) {
+      setVerifyMethod()
     }
   })
 })
@@ -277,7 +283,13 @@ const showEnableGoogle = ref(false)
 
 const setLoginVerify = () => {
   const request: SetGALoginVerifyRequest = {
-    Set: verifyMethod.value === verifyMethodGoogle
+    Info: {
+      ID: userInfo.value.Ctrl.ID,
+      AppID: userInfo.value.Ctrl.AppID,
+      UserID: userInfo.value.Ctrl.UserID,
+      SigninVerifyByGoogleAuthentication: verifyMethod.value === verifyMethodGoogle,
+      GoogleAuthenticationVerified: userInfo.value.Ctrl.GoogleAuthenticationVerified
+    } as AppUserControl
   }
   store.dispatch(ActionTypes.SetGALoginVerify, request)
 }

@@ -1,7 +1,6 @@
 export enum MutationTypes {
   SetUserInfo = 'USER_SET_USER_INFO',
   SetUserLogined = 'USER_SET_USER_LOGINED',
-  SetUserBasicInfo = 'USER_SET_USER_BASIC_INFO',
   SetInvitationCode = 'USER_SET_INVITATION_CODE',
   SetLoginVerify = 'USER_SET_LOGIN_VERIFY',
   SetUsername = 'USER_SET_USERNAME',

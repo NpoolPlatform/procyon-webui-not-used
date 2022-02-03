@@ -169,13 +169,11 @@ interface GetUserLoginHistoryResponse {
 }
 
 interface SetGALoginVerifyRequest {
-  AppID?: string
-  UserID?: string
-  Set: boolean
+  Info: AppUserControl
 }
 
 interface SetGaLoginVerifyResponse {
-  Info: string
+  Info: AppUserControl
 }
 
 interface UpdateUserGAStatusRequest {
@@ -246,8 +244,7 @@ enum UserURLPath {
   GET_APP_USER_INFO = '/appuser-manager/v1/get/app/userinfo',
   UPDATE_USER = '/appuser-manager/v1/update/user',
   GET_USER_LOGIN_HISTORY = '/login-gateway/v1/get/login/histories',
-  SET_GA_LOGIN_VERIFY = '/appuser-manager/v1/set/ga/login',
-  UPDATE_USER_GA_STATUS = '/appuser-manager/v1/update/user/ga/status',
+  UPDATE_APP_USER_CONTROL = '/appuser-manager/v1/update/app/user/control',
   ENABLE_EMAIL = '/appuser-manager/v1/bind/email',
   ENABLE_PHONE = '/appuser-manager/v1/bind/phone',
   UPDATE_EMAIL = '/appuser-manager/v1/update/user/email',
@@ -256,6 +253,7 @@ enum UserURLPath {
 
 export {
   UserInfo,
+  AppUserControl,
   UserURLPath,
   UserLoginRequest,
   UserLoginResponse,
