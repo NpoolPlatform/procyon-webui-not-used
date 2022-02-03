@@ -161,7 +161,7 @@ const userInfo = computed(() => store.getters.getUserInfo)
 
 const emailAddress = computed(() => userInfo.value.User.EmailAddress)
 const phoneNumber = computed(() => userInfo.value.User.PhoneNO)
-const googleVerify = computed(() => userInfo.value.Ctrl && userInfo.value.Ctrl.SigninVerifyByGoogleAuthentication)
+const googleVerify = computed(() => userInfo.value.Ctrl && userInfo.value.Ctrl.GoogleAuthenticationVerified)
 const kycVerify = computed(() => false)
 
 const verifyMethodEmail = 'email-verification'
@@ -190,7 +190,7 @@ const unsubscribe = ref<MyFunction>()
 onMounted(() => {
   if (googleVerify.value && userGALogin.value) {
     verifyMethod.value = verifyMethodGoogle
-  } else if (emailAddress.value !== undefined && emailAddress.value !== '') {
+  } else if (emailAddress.value && emailAddress.value !== '') {
     verifyMethod.value = verifyMethodEmail
   } else {
     verifyMethod.value = verifyMethodUnknown
