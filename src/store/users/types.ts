@@ -39,6 +39,7 @@ interface AppUserControl {
   AppID?: string
   UserID?: string
   SigninVerifyByGoogleAuthentication?: boolean
+  GoogleAuthenticationVerified?: boolean
 }
 
 interface BanAppUser {

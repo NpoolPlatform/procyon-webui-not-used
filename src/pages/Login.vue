@@ -104,9 +104,12 @@ watch(logined, (newLogined, oldLogined) => {
   }
 
   if (newLogined && !oldLogined) {
-    if (userInfo.value.Ctrl && userInfo.value.Ctrl.SigninVerifyByGoogleAuthentication) {
+    if (userInfo.value.Ctrl &&
+      userInfo.value.Ctrl.SigninVerifyByGoogleAuthentication &&
+      userInfo.value.Ctrl.GoogleAuthenticationVerified) {
       showGoogleAuthenticationVerifyDialog.value = true
-    } else if (userInfo.value.User.EmailAddress && userInfo.value.User.EmailAddress?.length > 0) {
+    } else if (userInfo.value.User.EmailAddress &&
+      userInfo.value.User.EmailAddress?.length > 0) {
       let request: SendEmailCodeRequest = {
         EmailAddress: userInfo.value.User.EmailAddress,
         LangID: langID.value,
