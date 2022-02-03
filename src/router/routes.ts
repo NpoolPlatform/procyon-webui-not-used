@@ -2,7 +2,7 @@ import { RouteRecordRaw } from 'vue-router'
 
 declare module 'vue-router' {
   interface RouteMeta {
-    needLogin?: boolean
+    needLogined?: boolean
   }
 }
 

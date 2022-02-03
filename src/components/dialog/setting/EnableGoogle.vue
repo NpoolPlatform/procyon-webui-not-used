@@ -113,8 +113,7 @@ const verifyCodeRules = ref([
 
 const bindGoogleAuthenticator = () => {
   const request: VerifyGoogleAuthenticationCodeRequest = {
-    Code: googleVerifyCode.value,
-    Bind: true
+    Code: googleVerifyCode.value
   }
   store.dispatch(ActionTypes.VerifyGoogleAuthentication, request)
 }

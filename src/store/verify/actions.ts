@@ -23,8 +23,6 @@ import {
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { RequestMessageToNotifyMessage, setLoginVerify } from 'src/utils/utils'
 import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
-import { ActionTypes as userAction } from 'src/store/users/action-types'
-import { UpdateUserGAStatusRequest } from 'src/store/users/types'
 import { useI18n } from 'src/boot/i18n'
 
 // use public api
@@ -120,20 +118,13 @@ const actions: ActionTree<VerifyState, RootState> = {
     })
   },
   [ActionTypes.VerifyGoogleAuthentication] ({
-    commit,
-    dispatch
+    commit
   }, payload: VerifyGoogleAuthenticationCodeRequest) {
     const { t } = useI18n()
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, t('notify.VerifyGoogleAuthentication.Load'))
     post<VerifyGoogleAuthenticationCodeRequest, VerifyGoogleAuthenticationCodeResponse>(VerifyURLPath.VERIFY_GOOGLE_AUTHENTICATION, payload).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.VerifyGoogleAuthentication.Success'), '', 'positive'))
-      if (payload.Bind) {
-        const request: UpdateUserGAStatusRequest = {
-          Status: true
-        }
-        void dispatch(userAction.UpdateUserGAStatus, request)
-      }
       commit(userMutation.SetLoginVerify, true)
       void setLoginVerify()
       commit(notifyMutation.SetLoading, false)

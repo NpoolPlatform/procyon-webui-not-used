@@ -50,14 +50,12 @@ export interface VerifyEmailCodeResponse {
 }
 
 export interface VerifyGoogleAuthenticationCodeRequest {
-  UserID?: string
-  AppID?: string
   Code: string
-  Bind?: boolean
 }
 
 export interface VerifyGoogleAuthenticationCodeResponse {
-  Info: string
+  Code: number
+  Message: string
 }
 
 export interface DisableState {
@@ -88,6 +86,6 @@ export enum VerifyURLPath {
   SETUP_GOOGLE_AUTHENTICATION = '/third-gateway/v1/setup/google/authentication',
   SEND_SMS = '/third-gateway/v1/send/sms/code',
   VERIFY_EMAIL_CODE = '/third-gateway/v1/verify/email/code',
-  VERIFY_GOOGLE_AUTHENTICATION = '/third-gateway/v1/verify/google/auth',
+  VERIFY_GOOGLE_AUTHENTICATION = '/third-gateway/v1/verify/google/authentication',
   SEND_USER_SITE_CONTACT_EMAIL = '/third-gateway/v1/send/user/site/contact/email'
 }

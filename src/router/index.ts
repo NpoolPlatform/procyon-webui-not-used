@@ -47,7 +47,7 @@ export default route<RootState>(function ({ store /*, ssrContext */ }) {
   const myStore = store as Store
 
   myRouter.beforeEach((to, _, next) => {
-    if (!myStore.getters.getUserLogined && to.meta.needLogin) {
+    if (!myStore.getters.getUserLogined && to.meta && to.meta.needLogined) {
       next({
         path: '/login',
         replace: true
