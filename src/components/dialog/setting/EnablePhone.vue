@@ -15,7 +15,7 @@
           verifyType='phone'
           :item-target='ItemStateTarget.EnablePhoneSendCodeButton'
           v-model:verify-code='verifyCode'
-          used-for='BIND_PHONE'
+          used-for='UPDATE'
         ></send-code-input>
 
         <q-btn class='common-button dialog-button' type='submit'>{{
