@@ -1,7 +1,7 @@
 import { MutationTree } from 'vuex'
 import { MutationTypes } from './mutation-types'
 import { UserState } from './state'
-import { LoginRecord, UserInfo } from './types'
+import { AppUserExtra, LoginRecord, UserInfo } from './types'
 
 type UserMutations<S = UserState> = {
   [MutationTypes.SetUserInfo] (state: S, payload: UserInfo): void
@@ -20,6 +20,7 @@ type UserMutations<S = UserState> = {
   [MutationTypes.SetLoginHistory] (state: S, payload: Array<LoginRecord>): void
   [MutationTypes.ClearUserInfo] (state: S): void
   [MutationTypes.SetLoadGoogleRecaptcha] (state: S, payload: boolean): void
+  [MutationTypes.SetUserExtra] (state: S, payload: AppUserExtra): void
 }
 
 const mutations: MutationTree<UserState> & UserMutations = {
@@ -82,6 +83,9 @@ const mutations: MutationTree<UserState> & UserMutations = {
   },
   [MutationTypes.SetLoadGoogleRecaptcha] (state: UserState, payload: boolean) {
     state.loadGoogleRecaptcha = payload
+  },
+  [MutationTypes.SetUserExtra] (state: UserState, payload: AppUserExtra) {
+    state.info.Extra = payload
   }
 }
 

@@ -22,7 +22,19 @@ import {
   UpdatePhoneResponse,
   UpdateEmailResponse,
   UpdateEmailRequest,
-  EnablePhoneRequest, EnablePhoneResponse, EnableEmailRequest, EnableEmailResponse, UserSignUpResponse, UpdateUserRequest, UpdateUserResponse, GetAppUserInfoRequest, GetAppUserInfoResponse, UserUpdatePasswordRequest, UserUpdatePasswordResponse, UserUpdatePasswordByAppUserRequest, UserUpdatePasswordByAppUserResponse
+  EnablePhoneRequest,
+  EnablePhoneResponse,
+  EnableEmailRequest,
+  EnableEmailResponse,
+  UserSignUpResponse,
+  GetAppUserInfoRequest,
+  GetAppUserInfoResponse,
+  UserUpdatePasswordRequest,
+  UserUpdatePasswordResponse,
+  UserUpdatePasswordByAppUserRequest,
+  UserUpdatePasswordByAppUserResponse,
+  UpdateUserExtraRequest,
+  UpdateUserExtraResponse
 } from './types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { loginVeiryConfirm, RequestMessageToNotifyMessage } from 'src/utils/utils'
@@ -63,9 +75,9 @@ interface UserActions {
     commit
   }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: GetAppUserInfoRequest): void
 
-  [ActionTypes.UpdateUser] ({
+  [ActionTypes.UpdateUserExtra] ({
     commit
-  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: UpdateUserRequest): void
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: UpdateUserExtraRequest): void
 
   [ActionTypes.GetUserLoginHistory] ({
     commit
@@ -196,11 +208,11 @@ const actions: ActionTree<UserState, RootState> = {
       commit(notifyMutation.SetLoading, false)
     })
   },
-  [ActionTypes.UpdateUser] ({ commit }, payload: UpdateUserRequest) {
+  [ActionTypes.UpdateUserExtra] ({ commit }, payload: UpdateUserExtraRequest) {
     const { t } = useI18n()
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, t('notify.Update.Load'))
-    post<UpdateUserRequest, UpdateUserResponse>(UserURLPath.UPDATE_APP_USER, payload).then(() => {
+    post<UpdateUserExtraRequest, UpdateUserExtraResponse>(UserURLPath.UPDATE_APP_USER_EXTRA, payload).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Update.Success'), '', 'positive'))
       commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {

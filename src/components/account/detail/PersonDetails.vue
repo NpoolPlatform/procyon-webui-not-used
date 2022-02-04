@@ -174,7 +174,7 @@
 import { computed, ref } from 'vue'
 import { useStore } from 'src/store'
 import { MutationTypes } from 'src/store/users/mutation-types'
-import { UpdateUserRequest } from 'src/store/users/types'
+import { AppUserControl, UpdateUserRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { useI18n } from 'vue-i18n'
 import { isValidUsername } from 'src/utils/utils'
@@ -236,11 +236,36 @@ const addressFields = computed({
   }
 })
 
-const country = computed(() => addressFields.value.length > 0 ? addressFields.value[0] : '')
-const province = computed(() => addressFields.value.length > 1 ? addressFields.value[1] : '')
-const city = computed(() => addressFields.value.length > 2 ? addressFields.value[2] : '')
-const street1 = computed(() => addressFields.value.length > 3 ? addressFields.value[3] : '')
-const street2 = computed(() => addressFields.value.length > 4 ? addressFields.value[4] : '')
+const country = computed({
+  get: () => addressFields.value.length > 0 ? addressFields.value[0] : '',
+  set: (val) => {
+    addressFields.value = [val, province.value, city.value, street1.value, street2.value]
+  }
+})
+const province = computed({
+  get: () => addressFields.value.length > 1 ? addressFields.value[1] : '',
+  set: (val) => {
+    addressFields.value = [country.value, val, city.value, street1.value, street2.value]
+  }
+})
+const city = computed({
+  get: () => addressFields.value.length > 2 ? addressFields.value[2] : '',
+  set: (val) => {
+    addressFields.value = [country.value, province.value, val, street1.value, street2.value]
+  }
+})
+const street1 = computed({
+  get: () => addressFields.value.length > 3 ? addressFields.value[3] : '',
+  set: (val) => {
+    addressFields.value = [country.value, province.value, city.value, val, street2.value]
+  }
+})
+const street2 = computed({
+  get: () => addressFields.value.length > 4 ? addressFields.value[4] : '',
+  set: (val) => {
+    addressFields.value = [country.value, province.value, city.value, street1.value, val]
+  }
+})
 
 const postalCode = computed({
   get: () => userInfo.value.Extra ? userInfo.value.Extra.PostalCode : '',
@@ -255,9 +280,9 @@ const usernameRules = ref([
 
 const updateUser = () => {
   const request: UpdateUserRequest = {
-    Info: userInfo.value
+    Info: userInfo.value.Extra as AppUserControl
   }
-  store.dispatch(ActionTypes.UpdateUser, request)
+  store.dispatch(ActionTypes.UpdateUserExtra, request)
 }
 </script>
 
