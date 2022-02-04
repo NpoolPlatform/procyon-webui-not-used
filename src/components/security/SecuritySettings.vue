@@ -21,10 +21,8 @@
 
           <template v-slot:button>
             <div>
-              <q-btn class='common-button card-button' v-if='emailAddress !== ""'
+              <q-btn class='common-button card-button'
                     :label="$t('account.Setting.Email.UpdateButton')" @click='showUpdateEmail = true' />
-              <q-btn class='common-button card-button' v-if='emailAddress === ""'
-                    :label="$t('account.Setting.Email.EnableButton')" @click='showEnableEmail = true' />
             </div>
           </template>
         </SettingBox>
@@ -42,10 +40,8 @@
 
           <template v-slot:button>
             <div>
-              <q-btn class='common-button card-button' v-if='phoneNumber !== ""'
+              <q-btn class='common-button card-button'
                     :label="$t('account.Setting.Phone.UpdateButton')" @click='showUpdatePhone = true' />
-              <q-btn class='common-button card-button' v-if='phoneNumber === ""'
-                    :label="$t('account.Setting.Phone.EnableButton')" @click='showEnablePhone = true' />
             </div>
           </template>
         </SettingBox>
@@ -124,9 +120,7 @@
       <LoginHistoryTable />
     </div>
   </div>
-  <EnableEmailDialog v-model:show-enable-email='showEnableEmail' />
   <UpdateEmailDialog v-model:show-update-email='showUpdateEmail' :email-address='emailAddress' />
-  <EnablePhoneDialog v-model:show-enable-phone='showEnablePhone' />
   <UpdatePhoneDialog v-model:show-update-phone='showUpdatePhone' :phone='phoneNumber' />
   <EnableGoogleDialog v-model:show-google='showEnableGoogle' />
 </template>
@@ -149,9 +143,7 @@ import { MutationTypes as verifyMutationTypes } from 'src/store/verify/mutation-
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
 
 const SettingBox = defineAsyncComponent(() => import('components/box/SettingBox.vue'))
-const EnableEmailDialog = defineAsyncComponent(() => import('components/dialog/setting/EnableEmail.vue'))
 const UpdateEmailDialog = defineAsyncComponent(() => import('components/dialog/setting/UpdateEmail.vue'))
-const EnablePhoneDialog = defineAsyncComponent(() => import('components/dialog/setting/EnablePhone.vue'))
 const UpdatePhoneDialog = defineAsyncComponent(() => import('components/dialog/setting/UpdatePhone.vue'))
 const EnableGoogleDialog = defineAsyncComponent(() => import('components/dialog/setting/EnableGoogle.vue'))
 const LoginHistoryTable = defineAsyncComponent(() => import('src/components/table/LoginHistory.vue'))
@@ -275,8 +267,6 @@ const loginOptions = ref([
   }
 ])
 
-const showEnableEmail = ref(false)
-const showEnablePhone = ref(false)
 const showUpdateEmail = ref(false)
 const showUpdatePhone = ref(false)
 const showEnableGoogle = ref(false)

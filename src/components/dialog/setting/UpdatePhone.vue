@@ -12,14 +12,14 @@
           <div class='row send-hint'>
             <span>
               {{ $t('verificationCode.Hint.Words1') }}
-              <span class='send-number'>{{ oldPhone }}</span>
+              <span class='send-number'>{{ oldAccount }}</span>
               {{ $t('verificationCode.Hint.Words2') }}
             </span>
           </div>
 
           <send-code-input
-            :verifyParam='oldPhone'
-            verifyType='phone'
+            :verifyParam='oldAccount'
+            :verifyType='oldAccountType'
             :item-target='ItemStateTarget.UpdatePhoneSendCodeOldButton'
             v-model:verify-code='oldVerifyCode'
             used-for='UPDATE'
@@ -30,7 +30,7 @@
 
           <send-code-input
             :verifyParam='newPhone'
-            verifyType='phone'
+            verifyType='mobile'
             :item-target='ItemStateTarget.UpdatePhoneSendCodeButton'
             v-model:verify-code='verifyCode'
             used-for='UPDATE'
@@ -63,23 +63,34 @@ const { t } = useI18n({ useScope: 'global' })
 
 interface Props {
   showUpdatePhone: boolean
-  phone: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  showUpdatePhone: false,
-  phone: ''
+  showUpdatePhone: false
 })
 const show = toRef(props, 'showUpdatePhone')
-const oldPhone = toRef(props, 'phone')
 const emit = defineEmits<{(e: 'update:showUpdatePhone', value: boolean): void }>()
+
+const userInfo = computed(() => store.getters.getUserInfo)
+const oldAccount = computed(() => {
+  if (userInfo.value.User.EmailAddress !== '') {
+    return userInfo.value.User.EmailAddress
+  }
+  return userInfo.value.User.PhoneNO
+})
+const oldAccountType = computed(() => {
+  if (userInfo.value.User.EmailAddress === oldAccount.value) {
+    return 'email'
+  }
+  return 'mobile'
+})
 
 const newPhone = ref('')
 const verifyCode = ref('')
 const oldVerifyCode = ref('')
 const phoneRules = ref([
   (val: string) => (val && val.length > 0) || t('input.PhoneNumberWarning'),
-  (val: string) => (val && val !== oldPhone.value) || t('input.OldPhoneWarning')
+  (val: string) => (val && val !== oldAccount.value) || t('input.OldPhoneWarning')
 ])
 
 const store = useStore()
@@ -93,10 +104,11 @@ watch(userDialogShow, (n, o) => {
 
 const update = () => {
   const request: UpdatePhoneRequest = {
-    OldPhone: formatPhoneNumber(oldPhone.value),
-    OldCode: oldVerifyCode.value,
-    NewPhone: formatPhoneNumber(newPhone.value),
-    NewCode: verifyCode.value
+    OldAccount: formatPhoneNumber(oldAccount.value as string),
+    OldAccountType: oldAccountType.value,
+    OldVerificationCode: oldVerifyCode.value,
+    NewPhoneNO: formatPhoneNumber(newPhone.value),
+    NewPhoneVerificationCode: verifyCode.value
   }
   store.dispatch(ActionTypes.UpdatePhone, request)
 }

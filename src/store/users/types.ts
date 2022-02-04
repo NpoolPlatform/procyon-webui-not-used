@@ -194,52 +194,28 @@ interface UpdateUserGAStatusResponse {
   Info: string
 }
 
-interface EnableEmailRequest {
-  UserID?: string
-  EmailAddress: string
-  Code: string
-  AppID?: string
-}
-
-interface EnableEmailResponse {
-  Info: string
-}
-
-interface EnablePhoneRequest {
-  UserID?: string
-  AppID?: string
-  PhoneNumber: string
-  Code: string
-}
-
-interface EnablePhoneResponse {
-  Info: string
-}
-
 interface UpdateEmailRequest {
-  OldEmail: string
-  OldCode: string
-  NewEmail: string
-  NewCode: string
-  AppID?: string
-  UserID?: string
+  OldVerificationCode: string
+  OldAccount: string
+  OldAccountType: string
+  NewEmailAddress: string
+  NewEmailVerificationCode: string
 }
 
 interface UpdateEmailResponse {
-  Info: string
+  Info: UserInfo
 }
 
 interface UpdatePhoneRequest {
-  OldPhone: string
-  OldCode: string
-  NewPhone: string
-  NewCode: string
-  UserID?: string
-  AppID?: string
+  OldVerificationCode: string
+  OldAccount: string
+  OldAccountType: string
+  NewPhoneNO: string
+  NewPhoneVerificationCode: string
 }
 
 interface UpdatePhoneResponse {
-  Info: string
+  Info: UserInfo
 }
 
 enum UserURLPath {
@@ -254,10 +230,8 @@ enum UserURLPath {
   CREATE_APP_USER_EXTRA = '/appuser-manager/v1/create/app/user/extra',
   GET_USER_LOGIN_HISTORY = '/login-gateway/v1/get/login/histories',
   UPDATE_APP_USER_CONTROL = '/appuser-manager/v1/update/app/user/control',
-  ENABLE_EMAIL = '/appuser-manager/v1/bind/email',
-  ENABLE_PHONE = '/appuser-manager/v1/bind/phone',
-  UPDATE_EMAIL = '/appuser-manager/v1/update/user/email',
-  UPDATE_PHONE = '/appuser-manager/v1/update/user/phone'
+  UPDATE_EMAIL = '/cloud-hashing-apis-v2/v1/update/emailaddress',
+  UPDATE_PHONE = '/cloud-hashing-apis-v2/v1/update/phoneno'
 }
 
 export {
@@ -289,10 +263,6 @@ export {
   SetGaLoginVerifyResponse,
   UpdateUserGAStatusRequest,
   UpdateUserGAStatusResponse,
-  EnableEmailRequest,
-  EnableEmailResponse,
-  EnablePhoneRequest,
-  EnablePhoneResponse,
   UpdateEmailRequest,
   UpdateEmailResponse,
   UpdatePhoneRequest,

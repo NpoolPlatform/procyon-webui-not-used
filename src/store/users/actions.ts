@@ -22,10 +22,6 @@ import {
   UpdatePhoneResponse,
   UpdateEmailResponse,
   UpdateEmailRequest,
-  EnablePhoneRequest,
-  EnablePhoneResponse,
-  EnableEmailRequest,
-  EnableEmailResponse,
   UserSignUpResponse,
   GetAppUserInfoRequest,
   GetAppUserInfoResponse,
@@ -92,14 +88,6 @@ interface UserActions {
   [ActionTypes.SetGALoginVerify] ({
     commit
   }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: SetGALoginVerifyRequest): void
-
-  [ActionTypes.EnableEmail] ({
-    commit
-  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: EnableEmailRequest): void
-
-  [ActionTypes.EnablePhone] ({
-    commit
-  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: EnablePhoneRequest): void
 
   [ActionTypes.UpdateEmail] ({
     commit
@@ -259,43 +247,13 @@ const actions: ActionTree<UserState, RootState> = {
       commit(notifyMutation.SetLoading, false)
     })
   },
-  [ActionTypes.EnableEmail] ({ commit }, payload: EnableEmailRequest) {
-    const { t } = useI18n()
-    commit(notifyMutation.SetLoading, true)
-    commit(styleMutation.SetUserDialogShow, true)
-    commit(notifyMutation.SetLoadingContent, t('notify.EnableEmail.Load'))
-    post<EnableEmailRequest, EnableEmailResponse>(UserURLPath.ENABLE_EMAIL, payload).then(() => {
-      commit(MutationTypes.SetEmailAddress, payload.EmailAddress)
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.EnableEmail.Success'), '', 'positive'))
-      commit(notifyMutation.SetLoading, false)
-      commit(styleMutation.SetUserDialogShow, false)
-    }).catch((err: Error) => {
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.EnableEmail.Fail'), err.message, 'negative'))
-      commit(notifyMutation.SetLoading, false)
-    })
-  },
-  [ActionTypes.EnablePhone] ({ commit }, payload: EnablePhoneRequest) {
-    const { t } = useI18n()
-    commit(notifyMutation.SetLoading, true)
-    commit(styleMutation.SetUserDialogShow, true)
-    commit(notifyMutation.SetLoadingContent, t('notify.EnablePhone.Load'))
-    post<EnablePhoneRequest, EnablePhoneResponse>(UserURLPath.ENABLE_PHONE, payload).then(() => {
-      commit(MutationTypes.SetPhoneNumber, payload.PhoneNumber)
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.EnablePhone.Success'), '', 'positive'))
-      commit(notifyMutation.SetLoading, false)
-      commit(styleMutation.SetUserDialogShow, false)
-    }).catch((err: Error) => {
-      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.EnablePhone.Fail'), err.message, 'negative'))
-      commit(notifyMutation.SetLoading, false)
-    })
-  },
   [ActionTypes.UpdateEmail] ({ commit }, payload: UpdateEmailRequest) {
     const { t } = useI18n()
     commit(notifyMutation.SetLoading, true)
     commit(styleMutation.SetUserDialogShow, true)
     commit(notifyMutation.SetLoadingContent, t('notify.UpdateEmail.Load'))
     post<UpdateEmailRequest, UpdateEmailResponse>(UserURLPath.UPDATE_EMAIL, payload).then(() => {
-      commit(MutationTypes.SetEmailAddress, payload.NewEmail)
+      commit(MutationTypes.SetEmailAddress, payload.NewEmailAddress)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.UpdateEmail.Success'), '', 'positive'))
       commit(notifyMutation.SetLoading, false)
       commit(styleMutation.SetUserDialogShow, false)
@@ -310,7 +268,7 @@ const actions: ActionTree<UserState, RootState> = {
     commit(styleMutation.SetUserDialogShow, true)
     commit(notifyMutation.SetLoadingContent, t('notify.UpdatePhone.Load'))
     post<UpdatePhoneRequest, UpdatePhoneResponse>(UserURLPath.UPDATE_PHONE, payload).then(() => {
-      commit(MutationTypes.SetPhoneNumber, payload.NewPhone)
+      commit(MutationTypes.SetPhoneNumber, payload.NewPhoneNO)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.UpdatePhone.Success'), '', 'positive'))
       commit(notifyMutation.SetLoading, false)
       commit(styleMutation.SetUserDialogShow, false)

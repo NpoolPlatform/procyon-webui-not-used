@@ -12,14 +12,14 @@
           <div class='row send-hint'>
             <span>
               {{ $t('verificationCode.Hint.Words1') }}
-              <span class='send-number'>{{ oldEmail }}</span>
+              <span class='send-number'>{{ oldAccount }}</span>
               {{ $t('verificationCode.Hint.Words2') }}
             </span>
           </div>
 
           <send-code-input
-            :verifyParam='oldEmail'
-            verifyType='email'
+            :verifyParam='oldAccount'
+            :verifyType='oldAccountType'
             :item-target='ItemStateTarget.UpdateEmailSendCodeOldButton'
             v-model:verify-code='oldVerifyCode'
             used-for='UPDATE'
@@ -68,26 +68,37 @@ const { t } = useI18n({ useScope: 'global' })
 
 interface Props {
   showUpdateEmail: boolean
-  emailAddress: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  showUpdateEmail: false,
-  emailAddress: ''
+  showUpdateEmail: false
 })
 const show = toRef(props, 'showUpdateEmail')
-const oldEmail = toRef(props, 'emailAddress')
 const emit = defineEmits<{(e: 'update:showUpdateEmail', value: boolean): void }>()
+
+const store = useStore()
+
+const userInfo = computed(() => store.getters.getUserInfo)
+const oldAccount = computed(() => {
+  if (userInfo.value.User.EmailAddress !== '') {
+    return userInfo.value.User.EmailAddress
+  }
+  return userInfo.value.User.PhoneNO
+})
+const oldAccountType = computed(() => {
+  if (userInfo.value.User.EmailAddress === oldAccount.value) {
+    return 'email'
+  }
+  return 'mobile'
+})
 
 const email = ref('')
 const verifyCode = ref('')
 const oldVerifyCode = ref('')
 const emailRules = ref([
   (val: string) => isValidEmail(val) || t('input.EmailAddressWarning'),
-  (val: string) => (val && val !== oldEmail.value) || t('input.OldEmailWarning')
+  (val: string) => (val && val !== oldAccount.value) || t('input.OldEmailWarning')
 ])
-
-const store = useStore()
 
 const userDialogShow = computed(() => store.getters.getUserDialogShow)
 watch(userDialogShow, (n, o) => {
@@ -98,10 +109,11 @@ watch(userDialogShow, (n, o) => {
 
 const update = () => {
   const request: UpdateEmailRequest = {
-    OldEmail: oldEmail.value,
-    OldCode: oldVerifyCode.value,
-    NewEmail: email.value,
-    NewCode: verifyCode.value
+    OldAccount: oldAccount.value as string,
+    OldAccountType: oldAccountType.value,
+    OldVerificationCode: oldVerifyCode.value,
+    NewEmailAddress: email.value,
+    NewEmailVerificationCode: verifyCode.value
   }
   store.dispatch(ActionTypes.UpdateEmail, request)
 }

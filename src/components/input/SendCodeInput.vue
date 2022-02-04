@@ -17,7 +17,7 @@
       </q-btn
       >
       <q-btn
-        v-if="verifyType === 'phone'"
+        v-if="verifyType === 'mobile' || verifyType === 'phone'"
         flat
         rounded
         :loading='innerLoading'
