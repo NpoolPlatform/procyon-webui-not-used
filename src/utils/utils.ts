@@ -28,7 +28,7 @@ export const sha256Password = (password: string): string => {
 
 const numberRegex = /^[0-9]+.?[0-9]*$/
 const wordRegex = /^[a-zA-Z]+$/
-const phoneRegex = /^\d+$/
+const phoneRegex = /^[+\d]+$/
 const emailRegex = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
 
 export const isValidPassword = (password: string): boolean => {
@@ -87,11 +87,12 @@ export const isValidLoginUsername = (username: string): boolean => {
 }
 
 export const isValidPhone = (phone: string): boolean => {
-  if (phone.length > 11 || phone === '') {
+  if (phone.length > 14 || phone === '') {
     return false
   }
 
   if (!phoneRegex.test(phone)) {
+    console.log('invalid 2', phone)
     return false
   }
 
