@@ -174,7 +174,7 @@
 import { computed, ref } from 'vue'
 import { useStore } from 'src/store'
 import { MutationTypes } from 'src/store/users/mutation-types'
-import { AppUserControl, UpdateUserRequest } from 'src/store/users/types'
+import { AppUserControl, UpdateUserExtraRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { useI18n } from 'vue-i18n'
 import { isValidUsername } from 'src/utils/utils'
@@ -279,7 +279,7 @@ const usernameRules = ref([
 ])
 
 const updateUser = () => {
-  const request: UpdateUserRequest = {
+  const request: UpdateUserExtraRequest = {
     Info: userInfo.value.Extra as AppUserControl
   }
   store.dispatch(ActionTypes.UpdateUserExtra, request)
