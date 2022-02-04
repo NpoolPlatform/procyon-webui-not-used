@@ -22,6 +22,7 @@
             verifyType='email'
             :item-target='ItemStateTarget.UpdateEmailSendCodeOldButton'
             v-model:verify-code='oldVerifyCode'
+            used-for='SIGNIN'
           ></send-code-input>
 
           <q-input
@@ -38,6 +39,7 @@
             verifyType='email'
             :item-target='ItemStateTarget.UpdateEmailSendCodeButton'
             v-model:verify-code='verifyCode'
+            used-for='SIGNIN'
           ></send-code-input>
 
           <q-btn class='common-button dialog-button' type='submit'>{{

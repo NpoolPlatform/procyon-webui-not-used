@@ -19,10 +19,10 @@
     ></q-input>
 
     <SendCodeInput v-if='showEmail' verify-type='email' v-model:verify-code='verifyCode'
-                   :verify-param='registerInput.emailAddress'
+                   :verify-param='registerInput.emailAddress' used-for='SIGNUP'
                    :item-target='ItemStateTarget.RegisterEmailSendCodeButton' />
     <SendCodeInput v-if='showPhone' verify-type='phone' v-model:verify-code='verifyCode'
-                   :verify-param='registerInput.phoneNumber'
+                   :verify-param='registerInput.phoneNumber' used-for='SIGNUP'
                    :item-target='ItemStateTarget.RegisterPhoneSendCodeButton' />
     <q-input v-model='registerInput.password' :label="$t('input.Password')" bg-color='blue-grey-2'
              class='common-input'

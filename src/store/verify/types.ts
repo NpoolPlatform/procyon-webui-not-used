@@ -18,16 +18,15 @@ export interface SendEmailCodeResponse {
   Info: string
 }
 
-export interface SendSmsRequest {
-  AppID?: string
-  Phone: string
-  Lang?: string
-  Intention?: string
-  ItemTarget: string
+export interface SendSmsCodeRequest {
+  LangID: string
+  PhoneNO: string
+  UsedFor: string
 }
 
-export interface SendSmsResponse {
-  Info: string
+export interface SendSmsCodeResponse {
+  Code: number
+  Message: string
 }
 
 export interface SetupGoogleAuthenticationRequest {

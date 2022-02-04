@@ -22,6 +22,7 @@
             verifyType='phone'
             :item-target='ItemStateTarget.UpdatePhoneSendCodeOldButton'
             v-model:verify-code='oldVerifyCode'
+            used-for='SIGNIN'
           ></send-code-input>
 
           <Vue3QTelInput v-model:tel='newPhone' bg-color='blue-grey-2' outlined lazy-rules :rules='phoneRules'
@@ -32,6 +33,7 @@
             verifyType='phone'
             :item-target='ItemStateTarget.UpdatePhoneSendCodeButton'
             v-model:verify-code='verifyCode'
+            used-for='SIGNIN'
           ></send-code-input>
 
           <q-btn class='common-button dialog-button' type='submit'>{{

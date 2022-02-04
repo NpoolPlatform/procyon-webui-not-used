@@ -38,7 +38,7 @@
 import { computed, defineEmits, defineProps, onMounted, ref, toRef, watch, withDefaults } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'src/store'
-import { SendEmailCodeRequest, SendSmsRequest } from 'src/store/verify/types'
+import { SendEmailCodeRequest, SendSmsCodeRequest } from 'src/store/verify/types'
 import { formatPhoneNumber, GenerateSendEmailRequest, isValidEmail, isValidPhone } from 'src/utils/utils'
 import { ActionTypes } from 'src/store/verify/action-types'
 import { MutationTypes as verifyMutation } from 'src/store/verify/mutation-types'
@@ -49,6 +49,7 @@ interface Props {
   verifyParam: string
   verifyType: string
   itemTarget: string
+  usedFor: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -59,6 +60,7 @@ const props = withDefaults(defineProps<Props>(), {
 const verifyParam = toRef(props, 'verifyParam')
 const verifyType = toRef(props, 'verifyType')
 const itemTarget = toRef(props, 'itemTarget')
+const usedFor = toRef(props, 'usedFor')
 const code = ref('')
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -117,7 +119,7 @@ const sendEmailCode = () => {
   let request: SendEmailCodeRequest = {
     EmailAddress: verifyParam.value,
     LangID: langID.value,
-    UsedFor: 'SIGNUP'
+    UsedFor: usedFor.value
   }
   request = GenerateSendEmailRequest(locale.value, userInfo.value, request)
   store.dispatch(ActionTypes.SendEmail, request)
@@ -134,10 +136,10 @@ const sendSmsCode = () => {
     console.log(formatPhoneNumber(verifyParam.value))
     return
   }
-  const request: SendSmsRequest = {
-    Lang: locale.value,
-    Phone: formatPhoneNumber(verifyParam.value),
-    ItemTarget: itemTarget.value
+  const request: SendSmsCodeRequest = {
+    PhoneNO: formatPhoneNumber(verifyParam.value),
+    LangID: langID.value,
+    UsedFor: usedFor.value
   }
   store.dispatch(ActionTypes.SendSMS, request)
 

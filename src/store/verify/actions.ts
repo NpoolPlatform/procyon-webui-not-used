@@ -8,8 +8,6 @@ import { post } from 'src/boot/axios'
 import {
   SendEmailCodeRequest,
   SendEmailCodeResponse,
-  SendSmsRequest,
-  SendSmsResponse,
   VerifyGoogleAuthenticationCodeRequest,
   VerifyGoogleAuthenticationCodeResponse,
   VerifyURLPath,
@@ -18,7 +16,9 @@ import {
   VerifyEmailCodeRequest,
   VerifyEmailCodeResponse,
   SetupGoogleAuthenticationRequest,
-  SetupGoogleAuthenticationResponse
+  SetupGoogleAuthenticationResponse,
+  SendSmsCodeRequest,
+  SendSmsCodeResponse
 } from './types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { RequestMessageToNotifyMessage, setLoginVerify } from 'src/utils/utils'
@@ -37,7 +37,7 @@ interface VerifyActions {
     commit
   }: AugmentedActionContext<VerifyState,
     RootState,
-    VerifyMutations<VerifyState>>, payload: SendSmsRequest): void
+    VerifyMutations<VerifyState>>, payload: SendSmsCodeRequest): void
 
   [ActionTypes.SetupGoogleAuthentication] ({
     commit
@@ -79,12 +79,12 @@ const actions: ActionTree<VerifyState, RootState> = {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.SendEmail.Fail'), err.message, 'negative'))
     })
   },
-  [ActionTypes.SendSMS] ({ commit }, payload: SendSmsRequest) {
+  [ActionTypes.SendSMS] ({ commit }, payload: SendSmsCodeRequest) {
     const { t } = useI18n()
-    post<SendSmsRequest, SendSmsResponse>(VerifyURLPath.SEND_SMS, payload).then(() => {
+    post<SendSmsCodeRequest, SendSmsCodeResponse>(VerifyURLPath.SEND_SMS, payload).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.SendPhone.Success.Words1') +
         ' <' +
-        payload.Phone +
+        payload.PhoneNO +
         '>, ' +
         t('notify.SendPhone.Success.Words2') +
         t('notify.SendPhone.Success.Check'), '', 'positive'))
