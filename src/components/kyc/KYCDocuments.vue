@@ -89,7 +89,6 @@
 <script setup lang='ts'>
 import { ref, withDefaults, defineProps, toRef, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useQuasar, uid, throttle } from 'quasar'
 import Compressor from 'compressorjs'
 
 import { DocumentType, ImageType, State } from 'src/store/kycs/const'
@@ -103,6 +102,8 @@ import { MutationTypes as KYCMutationTypes } from 'src/store/kycs/mutation-types
 import { ActionTypes as KYCActionTypes } from 'src/store/kycs/action-types'
 import { ThrottleDelay, RequestMessageToNotifyMessage } from 'src/utils/utils'
 import { MutationTypes as NotifyMutationTypes } from 'src/store/notify/mutation-types'
+import { AppID } from 'src/const/const'
+import { throttle, uid } from 'quasar'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
@@ -287,14 +288,14 @@ const onBackImgClick = () => {
   selectBackImgFile.value?.click()
 }
 
-const q = useQuasar()
 const submitting = ref(false)
+const userInfo = computed(() => store.getters.getUserInfo)
 
 const onSubmit = throttle(() => {
   submitting.value = true
   store.dispatch(KYCActionTypes.UploadKYCImage, {
-    AppID: q.cookies.get('AppID'),
-    UserID: q.cookies.get('UserID'),
+    AppID: AppID,
+    UserID: userInfo.value.User.ID,
     ImageType: ImageType.Front,
     ImageBase64: frontImg.value.Base64 as string
   })
@@ -309,8 +310,8 @@ onMounted(() => {
       const imageType = documentType.value === DocumentType.IDCard ? ImageType.Back : ImageType.Handing
       const image = documentType.value === DocumentType.IDCard ? backImg : handingImg
       store.dispatch(KYCActionTypes.UploadKYCImage, {
-        AppID: q.cookies.get('AppID'),
-        UserID: q.cookies.get('UserID'),
+        AppID: AppID,
+        UserID: userInfo.value.User.ID,
         ImageType: imageType,
         ImageBase64: image.value.Base64 as string
       })
@@ -318,8 +319,8 @@ onMounted(() => {
 
     if (mutation.type === KYCMutationTypes.SetKYCBackImage) {
       store.dispatch(KYCActionTypes.UploadKYCImage, {
-        AppID: q.cookies.get('AppID'),
-        UserID: q.cookies.get('UserID'),
+        AppID: AppID,
+        UserID: userInfo.value.User.ID,
         ImageType: ImageType.Handing,
         ImageBase64: handingImg.value.Base64 as string
       })
@@ -329,8 +330,8 @@ onMounted(() => {
       if (kycState.value === State.NotVerified) {
         store.dispatch(KYCActionTypes.CreateKYC, {
           Info: {
-            AppID: q.cookies.get('AppID'),
-            UserID: q.cookies.get('UserID'),
+            AppID: AppID,
+            UserID: userInfo.value.User.ID,
             CardType: documentType.value,
             CardID: 'DONOTNEEDCARDIDINPUTFROMUSER-' + uid(),
             FrontCardImg: frontImg.value.URI,
@@ -342,8 +343,8 @@ onMounted(() => {
         store.dispatch(KYCActionTypes.UpdateKYC, {
           Info: {
             ID: kycInfo.value?.Kyc?.ID,
-            AppID: q.cookies.get('AppID'),
-            UserID: q.cookies.get('UserID'),
+            AppID: AppID,
+            UserID: userInfo.value.User.ID,
             CardType: documentType.value,
             CardID: kycInfo.value?.Kyc?.CardID,
             FrontCardImg: frontImg.value.URI,
