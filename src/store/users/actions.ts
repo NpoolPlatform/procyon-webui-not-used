@@ -200,7 +200,7 @@ const actions: ActionTree<UserState, RootState> = {
     const { t } = useI18n()
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, t('notify.Update.Load'))
-    post<UpdateUserRequest, UpdateUserResponse>(UserURLPath.UPDATE_USER, payload).then(() => {
+    post<UpdateUserRequest, UpdateUserResponse>(UserURLPath.UPDATE_APP_USER, payload).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Update.Success'), '', 'positive'))
       commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {

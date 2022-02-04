@@ -39,6 +39,7 @@ export interface SetupGoogleAuthenticationResponse {
 }
 
 export interface VerifyEmailCodeRequest {
+  EmailAddress: string
   UsedFor: string
   Code: string
 }
