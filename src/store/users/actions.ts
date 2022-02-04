@@ -34,7 +34,9 @@ import {
   UserUpdatePasswordByAppUserRequest,
   UserUpdatePasswordByAppUserResponse,
   UpdateUserExtraRequest,
-  UpdateUserExtraResponse
+  UpdateUserExtraResponse,
+  CreateUserExtraRequest,
+  CreateUserExtraResponse
 } from './types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { loginVeiryConfirm, RequestMessageToNotifyMessage } from 'src/utils/utils'
@@ -78,6 +80,10 @@ interface UserActions {
   [ActionTypes.UpdateUserExtra] ({
     commit
   }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: UpdateUserExtraRequest): void
+
+  [ActionTypes.CreateUserExtra] ({
+    commit
+  }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: CreateUserExtraRequest): void
 
   [ActionTypes.GetUserLoginHistory] ({
     commit
@@ -213,6 +219,18 @@ const actions: ActionTree<UserState, RootState> = {
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, t('notify.Update.Load'))
     post<UpdateUserExtraRequest, UpdateUserExtraResponse>(UserURLPath.UPDATE_APP_USER_EXTRA, payload).then(() => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Update.Success'), '', 'positive'))
+      commit(notifyMutation.SetLoading, false)
+    }).catch((err: Error) => {
+      commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Update.Fail'), err.message, 'negative'))
+      commit(notifyMutation.SetLoading, false)
+    })
+  },
+  [ActionTypes.CreateUserExtra] ({ commit }, payload: CreateUserExtraRequest) {
+    const { t } = useI18n()
+    commit(notifyMutation.SetLoading, true)
+    commit(notifyMutation.SetLoadingContent, t('notify.Update.Load'))
+    post<CreateUserExtraRequest, CreateUserExtraResponse>(UserURLPath.CREATE_APP_USER_EXTRA, payload).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Update.Success'), '', 'positive'))
       commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {

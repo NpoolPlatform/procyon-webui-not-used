@@ -147,6 +147,14 @@ interface UpdateUserExtraResponse {
   Info: AppUserExtra
 }
 
+interface CreateUserExtraRequest {
+  Info: AppUserExtra
+}
+
+interface CreateUserExtraResponse {
+  Info: AppUserExtra
+}
+
 interface LoginRecord {
   ID: string
   UserID: string
@@ -243,6 +251,7 @@ enum UserURLPath {
   UPDATE_PASSWORD = '/cloud-hashing-apis-v2/v1/update/password',
   GET_APP_USER_INFO = '/appuser-manager/v1/get/app/userinfo',
   UPDATE_APP_USER_EXTRA = '/appuser-manager/v1/update/app/user/extra',
+  CREATE_APP_USER_EXTRA = '/appuser-manager/v1/create/app/user/extra',
   GET_USER_LOGIN_HISTORY = '/login-gateway/v1/get/login/histories',
   UPDATE_APP_USER_CONTROL = '/appuser-manager/v1/update/app/user/control',
   ENABLE_EMAIL = '/appuser-manager/v1/bind/email',
@@ -272,6 +281,8 @@ export {
   GetAppUserInfoResponse,
   UpdateUserExtraRequest,
   UpdateUserExtraResponse,
+  CreateUserExtraRequest,
+  CreateUserExtraResponse,
   GetUserLoginHistoryRequest,
   GetUserLoginHistoryResponse,
   SetGALoginVerifyRequest,

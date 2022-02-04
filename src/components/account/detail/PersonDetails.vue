@@ -282,7 +282,11 @@ const updateUser = () => {
   const request: UpdateUserExtraRequest = {
     Info: userInfo.value.Extra as AppUserControl
   }
-  store.dispatch(ActionTypes.UpdateUserExtra, request)
+  if (userInfo.value.Extra.ID) {
+    store.dispatch(ActionTypes.UpdateUserExtra, request)
+  } else {
+    store.dispatch(ActionTypes.CreateUserExtra, request)
+  }
 }
 </script>
 

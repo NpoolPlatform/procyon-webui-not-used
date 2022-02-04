@@ -1,6 +1,7 @@
 export enum ActionTypes {
   GetAppUserInfo = 'USER_GET_APP_USER_INFO',
   UpdateUserExtra = 'USER_UPDATE_USER_EXTRA',
+  CreateUserExtra = 'USER_CREATE_USER_EXTRA',
   UserLogin = 'USER_LOGIN',
   UserLogout = 'USER_LOGOUT',
   GetUserInvitationCode = 'USER_GET_USER_INVITATION_CODE',

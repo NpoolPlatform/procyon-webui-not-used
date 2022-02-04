@@ -27,10 +27,16 @@ const mutations: MutationTree<UserState> & UserMutations = {
   [MutationTypes.SetUserInfo] (state: UserState, payload: UserInfo) {
     state.info = payload
     if (!state.info.Extra) {
-      state.info.Extra = {}
+      state.info.Extra = {
+        AppID: payload.User.AppID,
+        UserID: payload.User.ID
+      }
     }
     if (!state.info.Ctrl) {
-      state.info.Ctrl = {}
+      state.info.Ctrl = {
+        AppID: payload.User.AppID,
+        UserID: payload.User.ID
+      }
     }
   },
   [MutationTypes.SetUserLogined] (state: UserState, payload: boolean) {
