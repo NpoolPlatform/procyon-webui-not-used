@@ -25,6 +25,12 @@ type UserMutations<S = UserState> = {
 const mutations: MutationTree<UserState> & UserMutations = {
   [MutationTypes.SetUserInfo] (state: UserState, payload: UserInfo) {
     state.info = payload
+    if (!state.info.Extra) {
+      state.info.Extra = {}
+    }
+    if (!state.info.Ctrl) {
+      state.info.Ctrl = {}
+    }
   },
   [MutationTypes.SetUserLogined] (state: UserState, payload: boolean) {
     state.logined = payload
