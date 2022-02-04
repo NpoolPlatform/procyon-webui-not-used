@@ -24,10 +24,10 @@
     ></q-input>
 
     <SendCodeInput v-if='showEmail' verify-type='email' v-model:verify-code='verifyCode'
-                   :verify-param='forgetInput.emailAddress' used-for='SIGNUP'
+                   :verify-param='forgetInput.emailAddress' used-for='UPDATE'
                    :item-target='ItemStateTarget.ForgetPasswordEmailSendCodeButton' />
     <SendCodeInput v-if='showPhone' verify-type='phone' v-model:verify-code='verifyCode'
-                   :verify-param='forgetInput.phoneNumber' used-for='SIGNUP'
+                   :verify-param='forgetInput.phoneNumber' used-for='UPDATE'
                    :item-target='ItemStateTarget.ForgetPasswordPhoneSendCodeButton' />
     <q-input v-model='forgetInput.password' :label="$t('input.Password')" bg-color='blue-grey-2'
              class='common-input'

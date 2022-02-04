@@ -9,10 +9,10 @@
     </div>
 
     <SendCodeInput v-if='showEmail' verify-type='email' v-model:verify-code='verifyCode'
-                   :verify-param='accountNumber' used-for='SIGNIN'
+                   :verify-param='accountNumber' used-for='UPDATE'
                    :item-target='ItemStateTarget.ChangePasswordEmailSendCodeButton' />
     <SendCodeInput v-if='showPhone' verify-type='phone' v-model:verify-code='verifyCode'
-                   :verify-param='accountNumber' used-for='SIGNIN'
+                   :verify-param='accountNumber' used-for='UPDATE'
                    :item-target='ItemStateTarget.ChangePasswordPhoneSendCodeButton' />
     <q-input v-model='changePasswordInput.oldPassword' :label="$t('input.OldPassword')" bg-color='blue-grey-2'
              class='common-input'
