@@ -120,7 +120,7 @@ export const GenerateSendEmailRequest = (locale: string, userBasicInfo: UserInfo
     }
   }
 
-  requestInput.DisplayName = username
+  requestInput.ToUsername = username
   return requestInput
 }
 

@@ -11,7 +11,7 @@ export interface SendEmailCodeRequest {
   LangID: string
   EmailAddress: string
   UsedFor: string
-  DisplayName?: string
+  ToUsername?: string
 }
 
 export interface SendEmailCodeResponse {
