@@ -129,7 +129,6 @@ watch(logined, (newLogined, oldLogined) => {
 
 const verifyEmailCode = throttle((verifyCode: string): void => {
   const request: VerifyEmailCodeRequest = {
-    EmailAddress: userInfo.value.User.EmailAddress as string,
     UsedFor: 'SIGNIN',
     Code: verifyCode
   }

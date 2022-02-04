@@ -6,8 +6,6 @@ export interface GoogleAuthenticationInfo {
 }
 
 export interface SendEmailCodeRequest {
-  AppID?: string
-  UserID?: string
   LangID: string
   EmailAddress: string
   UsedFor: string
@@ -39,7 +37,6 @@ export interface SetupGoogleAuthenticationResponse {
 }
 
 export interface VerifyEmailCodeRequest {
-  EmailAddress: string
   UsedFor: string
   Code: string
 }
