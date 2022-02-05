@@ -114,7 +114,7 @@ const forget = throttle(() => {
     type = 'email'
     verifyParam = forgetInput.emailAddress
   } else if (showPhone.value) {
-    type = 'phone'
+    type = 'mobile'
     verifyParam = formatPhoneNumber(forgetInput.phoneNumber)
   }
 
