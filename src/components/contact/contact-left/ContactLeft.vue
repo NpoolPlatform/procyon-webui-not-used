@@ -19,7 +19,7 @@
 
         <q-item-label>{{ $t('input.Message') }}</q-item-label>
         <q-input class='common-input input-style input-textarea-style' bg-color='blue-grey-2' outlined
-                 v-model='messages' type='textarea' lazy-rules :rules='messageRules' />
+                 v-model='message' type='textarea' lazy-rules :rules='messageRules' />
 
         <q-btn class='common-button send-message' :label="$t('button.SendMessage')" type='submit'></q-btn>
       </q-form>
@@ -32,7 +32,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'src/store'
 import { ActionTypes } from 'src/store/verify/action-types'
-import { SendUserSiteContactEmailRequest } from 'src/store/verify/types'
+import { ContactByEmailRequest } from 'src/store/verify/types';
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n()
@@ -42,7 +42,7 @@ const store = useStore()
 const email = ref('')
 const name = ref('')
 const subject = ref('')
-const messages = ref('')
+const message = ref('')
 
 const emailRules = ref([
   (val: string) => (val && val.length > 0) || t('input.EmailAddressWarning')
@@ -58,14 +58,14 @@ const messageRules = ref([
 ])
 
 const sendMessage = () => {
-  const request: SendUserSiteContactEmailRequest = {
-    Username: name.value,
-    From: email.value,
-    To: 'support@procyon.vip',
+  const request: ContactByEmailRequest = {
+    UsedFor: 'CONTACT',
+    Sender: email.value,
+    SenderName: name.value,
     Subject: subject.value,
-    Text: messages.value
+    Body: message.value
   }
-  store.dispatch(ActionTypes.SendUserSiteContactEmail, request)
+  store.dispatch(ActionTypes.ContactByEmail, request)
 }
 </script>
 

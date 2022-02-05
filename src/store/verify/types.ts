@@ -65,16 +65,15 @@ export interface TextState {
   value: string
 }
 
-export interface SendUserSiteContactEmailRequest {
-  AppID?: string
-  From: string
-  To: string
-  Text: string
+export interface ContactByEmailRequest {
+  UsedFor: string
+  Sender: string
   Subject: string
-  Username: string
+  Body: string
+  SenderName: string
 }
 
-export interface SendUserSiteContactEmailResponse {
+export interface ContactByEmailResponse {
   Info: string
 }
 
@@ -84,5 +83,5 @@ export enum VerifyURLPath {
   SEND_SMS = '/third-gateway/v1/send/sms/code',
   VERIFY_EMAIL_CODE = '/third-gateway/v1/verify/email/code',
   VERIFY_GOOGLE_AUTHENTICATION = '/third-gateway/v1/verify/google/authentication',
-  SEND_USER_SITE_CONTACT_EMAIL = '/third-gateway/v1/send/user/site/contact/email'
+  CONTACT_BY_EMAIL = '/third-gateway/v1/contact/by/email'
 }

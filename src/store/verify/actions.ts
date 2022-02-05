@@ -11,14 +11,14 @@ import {
   VerifyGoogleAuthenticationCodeRequest,
   VerifyGoogleAuthenticationCodeResponse,
   VerifyURLPath,
-  SendUserSiteContactEmailRequest,
-  SendUserSiteContactEmailResponse,
   VerifyEmailCodeRequest,
   VerifyEmailCodeResponse,
   SetupGoogleAuthenticationRequest,
   SetupGoogleAuthenticationResponse,
   SendSmsCodeRequest,
-  SendSmsCodeResponse
+  SendSmsCodeResponse,
+  ContactByEmailRequest,
+  ContactByEmailResponse
 } from './types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { RequestMessageToNotifyMessage, setLoginVerify } from 'src/utils/utils'
@@ -58,11 +58,11 @@ interface VerifyActions {
     RootState,
     VerifyMutations<VerifyState>>, payload: VerifyGoogleAuthenticationCodeRequest): void
 
-  [ActionTypes.SendUserSiteContactEmail] ({
+  [ActionTypes.ContactByEmail] ({
     commit
   }: AugmentedActionContext<VerifyState,
     RootState,
-    VerifyMutations<VerifyState>>, payload: SendUserSiteContactEmailRequest): void
+    VerifyMutations<VerifyState>>, payload: ContactByEmailRequest): void
 }
 
 const actions: ActionTree<VerifyState, RootState> = {
@@ -133,12 +133,12 @@ const actions: ActionTree<VerifyState, RootState> = {
       commit(notifyMutation.SetLoading, false)
     })
   },
-  [ActionTypes.SendUserSiteContactEmail] ({
+  [ActionTypes.ContactByEmail] ({
     commit
-  }, payload: SendUserSiteContactEmailRequest) {
+  }, payload: ContactByEmailRequest) {
     const { t } = useI18n()
     commit(notifyMutation.SetLoading, true)
-    post<SendUserSiteContactEmailRequest, SendUserSiteContactEmailResponse>(VerifyURLPath.SEND_USER_SITE_CONTACT_EMAIL, payload).then(() => {
+    post<ContactByEmailRequest, ContactByEmailResponse>(VerifyURLPath.CONTACT_BY_EMAIL, payload).then(() => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.SendUserSiteContactEmail.Success'), '', 'positive'))
       commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {
