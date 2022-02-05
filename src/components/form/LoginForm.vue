@@ -140,7 +140,7 @@ const login = throttle((): void => {
     Account: account,
     AccountType: accountType,
     PasswordHash: sha256Password(loginInput.Password),
-    GoogleRecaptchaResponse: googleRecaptchaResponse.value
+    ManMachineSpec: googleRecaptchaResponse.value
   }
   store.dispatch(ActionTypes.UserLogin, request)
 }, ThrottleDelay)

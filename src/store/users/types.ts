@@ -62,7 +62,7 @@ interface UserLoginRequest {
   PasswordHash: string
   AccountType: string
   // google recaptcha response
-  GoogleRecaptchaResponse?: string
+  ManMachineSpec: string
 }
 
 interface UserLoginResponse {
