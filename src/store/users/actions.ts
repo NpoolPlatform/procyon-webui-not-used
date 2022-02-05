@@ -238,7 +238,13 @@ const actions: ActionTree<UserState, RootState> = {
     const { t } = useI18n()
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, t('notify.SetLoginVerify.Load'))
-    post<SetGALoginVerifyRequest, SetGaLoginVerifyResponse>(UserURLPath.UPDATE_APP_USER_CONTROL, payload).then(() => {
+
+    let url = UserURLPath.UPDATE_APP_USER_CONTROL
+    if (!payload.Info.ID || payload.Info.ID === '') {
+      url = UserURLPath.CREATE_APP_USER_CONTROL
+    }
+
+    post<SetGALoginVerifyRequest, SetGaLoginVerifyResponse>(url, payload).then(() => {
       commit(MutationTypes.SetGoogleLoginVerify, payload.Info.SigninVerifyByGoogleAuthentication)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.SetLoginVerify.Success'), '', 'positive'))
       commit(notifyMutation.SetLoading, false)

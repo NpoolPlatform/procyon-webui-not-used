@@ -226,6 +226,7 @@ enum UserURLPath {
   CREATE_APP_USER_EXTRA = '/appuser-manager/v1/create/app/user/extra',
   GET_USER_LOGIN_HISTORY = '/login-gateway/v1/get/login/histories',
   UPDATE_APP_USER_CONTROL = '/appuser-manager/v1/update/app/user/control',
+  CREATE_APP_USER_CONTROL = '/appuser-manager/v1/create/app/user/control',
   UPDATE_EMAIL = '/cloud-hashing-apis-v2/v1/update/emailaddress',
   UPDATE_PHONE = '/cloud-hashing-apis-v2/v1/update/phoneno'
 }
