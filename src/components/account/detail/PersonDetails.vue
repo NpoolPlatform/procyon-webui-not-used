@@ -174,7 +174,7 @@
 import { computed, ref } from 'vue'
 import { useStore } from 'src/store'
 import { MutationTypes } from 'src/store/users/mutation-types'
-import { AppUserControl, UpdateUserExtraRequest } from 'src/store/users/types'
+import { UpdateUserExtraRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { useI18n } from 'vue-i18n'
 import { isValidUsername } from 'src/utils/utils'
@@ -275,12 +275,12 @@ const postalCode = computed({
 })
 
 const usernameRules = ref([
-  (val: string) => isValidUsername(val) || t('input.UsernameWarning')
+  (val: string) => (isValidUsername(val)) || t('input.UsernameWarning')
 ])
 
 const updateUser = () => {
   const request: UpdateUserExtraRequest = {
-    Info: userInfo.value.Extra as AppUserControl
+    Info: userInfo.value.Extra
   }
   if (userInfo.value.Extra.ID) {
     store.dispatch(ActionTypes.UpdateUserExtra, request)
