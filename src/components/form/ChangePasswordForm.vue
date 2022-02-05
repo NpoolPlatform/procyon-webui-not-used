@@ -11,7 +11,7 @@
     <SendCodeInput v-if='showEmail' verify-type='email' v-model:verify-code='verifyCode'
                    :verify-param='accountNumber' used-for='UPDATE'
                    :item-target='ItemStateTarget.ChangePasswordEmailSendCodeButton' />
-    <SendCodeInput v-if='showPhone' verify-type='phone' v-model:verify-code='verifyCode'
+    <SendCodeInput v-if='showPhone' verify-type='mobile' v-model:verify-code='verifyCode'
                    :verify-param='accountNumber' used-for='UPDATE'
                    :item-target='ItemStateTarget.ChangePasswordPhoneSendCodeButton' />
     <q-input v-model='changePasswordInput.oldPassword' :label="$t('input.OldPassword')" bg-color='blue-grey-2'
@@ -118,7 +118,7 @@ const changePassword = throttle(() => {
     type = 'email'
     verifyParam = userInfo.value.User.EmailAddress as string
   } else if (showPhone.value) {
-    type = 'phone'
+    type = 'mobile'
     verifyParam = formatPhoneNumber(userInfo.value.User.PhoneNO as string)
   }
 

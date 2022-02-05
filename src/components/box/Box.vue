@@ -76,7 +76,7 @@ const showPhone = computed({
   }
 })
 
-const changePasswordMethodPhone = 'phone'
+const changePasswordMethodPhone = 'mobile'
 const changePasswordMethodEmail = 'email'
 
 function switchChangePasswordMethod (method: string) {
