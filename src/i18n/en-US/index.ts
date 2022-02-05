@@ -359,8 +359,8 @@ export default {
     CheckWarning: 'Please choose agree and then click "Register"',
     UsernameWarning: 'User name needs to be between 4 and 32 characters and cannot be a pure number, cannot contain spaces',
     Login: {
-      Username: 'Username / Email',
-      UsernameWarning: 'Please enter a legal username or email address'
+      Username: 'Email Address',
+      UsernameWarning: 'Please enter a legal email address'
     },
     Name: 'Name',
     NameWarning: 'Please enter your name',
