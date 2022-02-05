@@ -107,11 +107,17 @@ const actions: ActionTree<VerifyState, RootState> = {
     const { t } = useI18n()
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, payload)
-    post<VerifyEmailCodeRequest, VerifyEmailCodeResponse>(VerifyURLPath.VERIFY_EMAIL_CODE, payload).then(() => {
+    post<VerifyEmailCodeRequest, VerifyEmailCodeResponse>(VerifyURLPath.VERIFY_EMAIL_CODE, payload).then((resp: VerifyEmailCodeResponse) => {
+      commit(notifyMutation.SetLoading, false)
+
+      if (resp.Code < 0) {
+        commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.VerifyWithUserID.Fail'), resp.Message, 'negative'))
+        return
+      }
+
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.VerifyWithUserID.Success'), '', 'positive'))
       void setLoginVerify()
       commit(userMutation.SetLoginVerify, true)
-      commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.VerifyWithUserID.Fail'), err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)
@@ -123,11 +129,17 @@ const actions: ActionTree<VerifyState, RootState> = {
     const { t } = useI18n()
     commit(notifyMutation.SetLoading, true)
     commit(notifyMutation.SetLoadingContent, t('notify.VerifyGoogleAuthentication.Load'))
-    post<VerifyGoogleAuthenticationCodeRequest, VerifyGoogleAuthenticationCodeResponse>(VerifyURLPath.VERIFY_GOOGLE_AUTHENTICATION, payload).then(() => {
+    post<VerifyGoogleAuthenticationCodeRequest, VerifyGoogleAuthenticationCodeResponse>(VerifyURLPath.VERIFY_GOOGLE_AUTHENTICATION, payload).then((resp: VerifyGoogleAuthenticationCodeResponse) => {
+      commit(notifyMutation.SetLoading, false)
+
+      if (resp.Code < 0) {
+        commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.VerifyWithUserID.Fail'), resp.Message, 'negative'))
+        return
+      }
+
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.VerifyGoogleAuthentication.Success'), '', 'positive'))
       commit(userMutation.SetLoginVerify, true)
       void setLoginVerify()
-      commit(notifyMutation.SetLoading, false)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.VerifyGoogleAuthentication.Fail'), err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)
