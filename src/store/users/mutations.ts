@@ -1,7 +1,7 @@
 import { MutationTree } from 'vuex'
 import { MutationTypes } from './mutation-types'
 import { UserState } from './state'
-import { AppUserExtra, LoginRecord, UserInfo } from './types'
+import { AppUserExtra, LoginHistory, UserInfo } from './types'
 
 type UserMutations<S = UserState> = {
   [MutationTypes.SetUserInfo] (state: S, payload: UserInfo): void
@@ -17,7 +17,7 @@ type UserMutations<S = UserState> = {
   [MutationTypes.SetEmailAddress] (state: S, payload: string): void
   [MutationTypes.SetPhoneNumber] (state: S, payload: string): void
   [MutationTypes.SetGoogleLoginVerify] (state: S, payload: boolean): void
-  [MutationTypes.SetLoginHistory] (state: S, payload: Array<LoginRecord>): void
+  [MutationTypes.SetLoginHistories] (state: S, payload: Array<LoginHistory>): void
   [MutationTypes.ClearUserInfo] (state: S): void
   [MutationTypes.SetLoadGoogleRecaptcha] (state: S, payload: boolean): void
   [MutationTypes.SetUserExtra] (state: S, payload: AppUserExtra): void
@@ -75,8 +75,8 @@ const mutations: MutationTree<UserState> & UserMutations = {
   [MutationTypes.SetGoogleLoginVerify] (state: UserState, payload: boolean) {
     state.info.Ctrl.SigninVerifyByGoogleAuthentication = payload
   },
-  [MutationTypes.SetLoginHistory] (state: UserState, payload: Array<LoginRecord>) {
-    state.loginHistory = payload
+  [MutationTypes.SetLoginHistories] (state: UserState, payload: Array<LoginHistory>) {
+    state.loginHistories = payload
   },
   [MutationTypes.ClearUserInfo] (state: UserState) {
     state.info = {
@@ -85,7 +85,7 @@ const mutations: MutationTree<UserState> & UserMutations = {
       Ctrl: {}
     }
     state.invitationCode = ''
-    state.loginHistory = []
+    state.loginHistories = []
   },
   [MutationTypes.SetLoadGoogleRecaptcha] (state: UserState, payload: boolean) {
     state.loadGoogleRecaptcha = payload

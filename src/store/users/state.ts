@@ -1,11 +1,11 @@
-import { LoginRecord, UserInfo } from './types'
+import { LoginHistory, UserInfo } from './types'
 
 interface UserState {
   info: UserInfo
   logined: boolean
   invitationCode: string
   loginVerify: boolean
-  loginHistory: Array<LoginRecord>
+  loginHistories: Array<LoginHistory>
   loadGoogleRecaptcha: boolean
 }
 
@@ -19,7 +19,7 @@ function state (): UserState {
     logined: false,
     invitationCode: '',
     loginVerify: false,
-    loginHistory: [],
+    loginHistories: [],
     loadGoogleRecaptcha: true
   }
 }

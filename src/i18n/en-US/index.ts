@@ -7,6 +7,7 @@ export default {
   MSG_GET_APP_USER_INFO_FAIL: 'Cannot get app user info',
   MSG_GET_MY_INVITATIONS_FAIL: 'Cannot get my invitations',
   MSG_SETUP_GOOGLE_AUTHENTICATION_FAIL: 'Cannot setup google authentication',
+  MSG_GET_LOGIN_HISTORIES_FAIL: 'Cannot get login histories',
   general: {
     KYCStatus: 'KYC Verification Status',
     NotVerified: 'Not Verified',

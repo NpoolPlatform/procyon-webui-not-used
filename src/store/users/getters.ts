@@ -1,14 +1,14 @@
 import { GetterTree } from 'vuex'
 import { RootState } from '../index'
 import { UserState } from './state'
-import { LoginRecord, UserInfo } from './types'
+import { LoginHistory, UserInfo } from './types'
 
 type UserGetters = {
   getUserInfo(state: UserState): UserInfo
   getUserLogined(state: UserState): boolean
   getUserInvitationCode(state: UserState): string
   getLoginVerify(state: UserState): boolean
-  getUserLoginHistory(state: UserState): Array<LoginRecord>
+  getUserLoginHistories(state: UserState): Array<LoginHistory>
   getUserLoadGoogleRecaptcha(state: UserState): boolean
 }
 
@@ -17,7 +17,7 @@ const getters: GetterTree<UserState, RootState> & UserGetters = {
   getUserLogined: (state: UserState): boolean => state.logined,
   getUserInvitationCode: (state: UserState): string => state.invitationCode,
   getLoginVerify: (state: UserState): boolean => state.loginVerify,
-  getUserLoginHistory: (state: UserState): Array<LoginRecord> => state.loginHistory,
+  getUserLoginHistories: (state: UserState): Array<LoginHistory> => state.loginHistories,
   getUserLoadGoogleRecaptcha: (state: UserState): boolean => state.loadGoogleRecaptcha
 }
 

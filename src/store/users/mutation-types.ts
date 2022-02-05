@@ -12,7 +12,7 @@ export enum MutationTypes {
   SetEmailAddress = 'USER_SET_EMAIL_ADDRESS',
   SetPhoneNumber = 'USER_SET_PHONE_NUMBER',
   SetGoogleLoginVerify = 'USER_SET_GOOGLE_LOGIN_VERIFY',
-  SetLoginHistory = 'USER_SET_LOGIN_HISTORY',
+  SetLoginHistories = 'USER_SET_LOGIN_HISTORIES',
   ClearUserInfo = 'USER_CLEAR_USER_INFO',
   SetLoadGoogleRecaptcha = 'USER_SET_LOAD_GOOGLE_RECAPTCHA',
   SetUserExtra = 'USER_SET_USER_EXTRA'

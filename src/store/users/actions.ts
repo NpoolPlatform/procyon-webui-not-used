@@ -81,7 +81,7 @@ interface UserActions {
     commit
   }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: CreateUserExtraRequest): void
 
-  [ActionTypes.GetUserLoginHistory] ({
+  [ActionTypes.GetUserLoginHistories] ({
     commit
   }: AugmentedActionContext<UserState, RootState, UserMutations<UserState>>, payload: GetUserLoginHistoryRequest): void
 
@@ -226,10 +226,10 @@ const actions: ActionTree<UserState, RootState> = {
       commit(notifyMutation.SetLoading, false)
     })
   },
-  [ActionTypes.GetUserLoginHistory] ({ commit }, payload: GetUserLoginHistoryRequest) {
+  [ActionTypes.GetUserLoginHistories] ({ commit }, payload: GetUserLoginHistoryRequest) {
     const { t } = useI18n()
     post<GetUserLoginHistoryRequest, GetUserLoginHistoryResponse>(UserURLPath.GET_USER_LOGIN_HISTORY, payload).then((resp: GetUserLoginHistoryResponse) => {
-      commit(MutationTypes.SetLoginHistory, resp.Infos)
+      commit(MutationTypes.SetLoginHistories, resp.Infos)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.GetUserLoginHistory.Fail'), err.message, 'negative'))
     })

@@ -155,25 +155,21 @@ interface CreateUserExtraResponse {
   Info: AppUserExtra
 }
 
-interface LoginRecord {
+interface LoginHistory {
   ID: string
-  UserID: string
   AppID: string
-  LoginTime: number
-  IP: string
+  UserID: string
+  ClientIP: string
+  CreateAt: number
   Location: string
-  Lat: number
-  Lon: number
-  Timezone: string
 }
 
 interface GetUserLoginHistoryRequest {
-  UserID?: string
-  AppID?: string
+  Message: ReqMessage
 }
 
 interface GetUserLoginHistoryResponse {
-  Infos: Array<LoginRecord>
+  Infos: Array<LoginHistory>
 }
 
 interface SetGALoginVerifyRequest {
@@ -267,5 +263,5 @@ export {
   UpdateEmailResponse,
   UpdatePhoneRequest,
   UpdatePhoneResponse,
-  LoginRecord
+  LoginHistory
 }
