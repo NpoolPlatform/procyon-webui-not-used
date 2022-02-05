@@ -1,7 +1,7 @@
 <template>
   <div class='details-box'>
     <div class='common-card-title'>{{ $t('account.Account.PersonDetail.Title') }}</div>
-    <q-form @submit='updateUser'>
+    <q-form>
       <div class='detail-column'>
         <div class='input-style'>
           <q-item-label>{{
@@ -160,7 +160,7 @@
           <q-btn
             style='width: 90%; margin: 10px 20px 0 0'
             class='common-button save-button'
-            type='submit'
+            @click='updateUser'
           >{{ $t('button.Save') }}
           </q-btn>
         </div>
@@ -178,6 +178,7 @@ import { UpdateUserExtraRequest } from 'src/store/users/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { useI18n } from 'vue-i18n'
 import { isValidUsername } from 'src/utils/utils'
+import { QInput } from 'quasar'
 
 interface option {
   label: string
@@ -278,7 +279,13 @@ const usernameRules = ref([
   (val: string) => (isValidUsername(val)) || t('input.UsernameWarning')
 ])
 
+const usernameRef = ref<QInput>()
+
 const updateUser = () => {
+  if (!usernameRef.value?.validate()) {
+    return
+  }
+
   const request: UpdateUserExtraRequest = {
     Info: userInfo.value.Extra
   }
