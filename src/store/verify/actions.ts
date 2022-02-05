@@ -140,6 +140,7 @@ const actions: ActionTree<VerifyState, RootState> = {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.VerifyGoogleAuthentication.Success'), '', 'positive'))
       commit(userMutation.SetLoginVerify, true)
       void setLoginVerify()
+      commit(userMutation.SetGoogleAuthenticationVerified, true)
     }).catch((err: Error) => {
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.VerifyGoogleAuthentication.Fail'), err.message, 'negative'))
       commit(notifyMutation.SetLoading, false)
