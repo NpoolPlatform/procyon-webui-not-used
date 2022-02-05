@@ -32,7 +32,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'src/store'
 import { ActionTypes } from 'src/store/verify/action-types'
-import { ContactByEmailRequest } from 'src/store/verify/types';
+import { ContactByEmailRequest } from 'src/store/verify/types'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n()
