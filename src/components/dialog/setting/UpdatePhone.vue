@@ -73,10 +73,10 @@ const emit = defineEmits<{(e: 'update:showUpdatePhone', value: boolean): void }>
 
 const userInfo = computed(() => store.getters.getUserInfo)
 const oldAccount = computed(() => {
-  if (userInfo.value.User.EmailAddress !== '') {
-    return userInfo.value.User.EmailAddress
+  if (userInfo.value.User.PhoneNO !== '') {
+    return userInfo.value.User.PhoneNO
   }
-  return userInfo.value.User.PhoneNO
+  return userInfo.value.User.EmailAddress
 })
 const oldAccountType = computed(() => {
   if (userInfo.value.User.EmailAddress === oldAccount.value) {
