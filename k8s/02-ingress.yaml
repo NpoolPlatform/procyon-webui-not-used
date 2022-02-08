@@ -30,10 +30,3 @@ spec:
             backend:
               serviceName: procyon-webui
               servicePort: 80
-    - host: api.procyon.vip
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: procyon-webui
-              servicePort: 80
