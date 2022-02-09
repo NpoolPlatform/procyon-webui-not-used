@@ -1,0 +1,473 @@
+<template>
+  <q-page class='container'>
+    <q-btn class='back-button' @click='onBackClick'>⭠</q-btn>
+    <div class='content'>
+      <div class='product-container'>
+        <div class='product-title-section'>
+          <div class=product-page-icon><img :src='spacemeshImg'></div>
+          <h1>{{ t('MSG_SPACEMESH_MINING') }}</h1>
+        </div>
+        <div class='info'>
+          <h3 class='form-title'>
+            USDT-ERC20 | <strong>{{ t('MSG_ORDER_ID') }}: {{ query.orderId }}</strong>
+          </h3>
+          <div class='info-flex'>
+            <div class='three-section'>
+                <h4>{{ t('MSG_PURCHASE_UNITS') }}</h4>
+                <span class='number'>{{ order?.Order.Units }}</span>
+                <span class='unit'>{{ order?.Good.Good?.Unit }}</span>
+            </div>
+            <div class='three-section'>
+                <h4>{{ t('MSG_AMOUNT_DUE') }}</h4>
+                <span class='number'>{{ order?.Order.Payment.Amount }}</span>
+                <span class='unit'>{{ order?.Order.Payment.CoinInfo?.Unit }}</span>
+                <img class='copy-button' :src='iconCopy'>
+            </div>
+            <div class='three-section'>
+                <h4>{{ t('MSG_TIME_REMAINING') }}</h4>
+                <span class='number'>{{ remainTime }}</span>
+            </div>
+            <div class='full-section'>
+                <h4>{{ t('MSG_RECEIVING_ADDRESS') }}</h4>
+                <span class='wallet-type'>ERC20</span>
+                <span class='number'>{{ order?.Order.Payment.Account?.Address }}</span>
+                <img class='copy-button' src='icon-copy.svg'>
+            </div>
+          </div>
+          <div class='hr'></div>
+          <h4>{{ t('MSG_IMPORTANT_INFORMATION') }}</h4>
+          <p v-html='t("MSG_PAYMENT_HINT")' />
+        </div>
+        <div class='order-form'>
+          <h3 class='form-title'>{{ t('MSG_SCAN_QR_CODE_TO_PAY') }}</h3>
+          <div class='qr-code-container'>
+            <h5>ERC20 ADDRESS</h5>
+            <img src='line-qr.png'>
+          </div>
+          <div class='hr'></div>
+          <button>Payment Complete</button>
+          <button class='alt'>Pay Later</button>
+        </div>
+      </div>
+      <div class='hr'></div>
+    </div>
+  </q-page>
+</template>
+
+<script setup lang='ts'>
+import { useStore } from 'src/store'
+import { computed, onBeforeMount, onMounted, onUnmounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
+import { useI18n } from 'vue-i18n'
+import { MutationTypes as NotificationMutationTypes } from 'src/store/notifications/mutation-types'
+import { notificationPop, notify } from 'src/store/notifications/helper'
+import { useRouter } from 'src/router'
+import { ActionTypes } from 'src/store/orders/action-types'
+
+import spacemeshImg from 'src/assets/product-spacemesh.svg'
+import iconCopy from 'src/assets/icon-copy.svg'
+
+const router = useRouter()
+const route = useRoute()
+const store = useStore()
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const { t } = useI18n({ useScope: 'global' })
+
+interface myQuery {
+  orderId: string
+}
+const query = computed(() => route.query as unknown as myQuery)
+const order = computed(() => store.getters.getOrderByID(query.value.orderId))
+
+const onBackClick = () => {
+  router.back()
+}
+
+const remainTime = ref('06:00:00')
+let remainInterval: any = undefined
+let paymentChecker: any = undefined
+
+const timeRemaining = () => {
+  if (!order.value) {
+    remainTime.value = '00:00:00'
+    if (remainInterval) {
+      clearInterval(remainInterval)
+    }
+    return
+  }
+  const now = Math.floor(new Date().getTime() / 1000)
+  const total = 6 * 60 * 60
+  const elapsed = now - (order.value.Order.Payment.CreateAt ? order.value.Order.Payment.CreateAt : 0)
+  if (elapsed >= total) {
+    void router.push({
+      path: '/dashboard'
+    })
+    remainTime.value = '00:00:00'
+    if (remainInterval) {
+      clearInterval(remainInterval)
+    }
+    return
+  }
+
+  const remain = total - elapsed
+  const hours = Math.floor(remain / 60 / 60)
+  const minutes = Math.floor((remain - (hours * 60 * 60)) / 60)
+  const seconds = Math.floor(remain - (hours * 60 * 60) - minutes * 60)
+
+  const hour = '0' + hours.toString()
+  const minute = minutes > 9 ? minutes.toString() : '0' + minutes.toString()
+  const second = seconds > 9 ? seconds.toString() : '0' + seconds.toString()
+
+  remainTime.value = hour + ':' + minute + ':' + second
+}
+
+onBeforeMount(() => {
+  if (!order.value) {
+    store.dispatch(ActionTypes.GetOrder, {
+      ID: query.value.orderId,
+      Message: {
+        ModuleKey: ModuleKey.ModuleApplications,
+        Error: {
+          Title: t('MSG_GET_ORDER_FAIL'),
+          Popup: true,
+          Type: NotificationType.Error
+        }
+      }
+    })
+  }
+})
+
+type MyFunction = () => void
+const unsubscribe = ref<MyFunction>()
+
+onMounted(() => {
+  unsubscribe.value = store.subscribe((mutation) => {
+    if (mutation.type === NotificationMutationTypes.Push) {
+      const notification = store.getters.peekNotification(ModuleKey.ModuleApplications)
+      if (notification) {
+        notify(notification)
+        store.commit(NotificationMutationTypes.Pop, notificationPop(notification))
+      }
+    }
+  })
+
+  remainInterval = setInterval(timeRemaining, 1000)
+  paymentChecker = setInterval(() => {
+    store.dispatch(ActionTypes.GetOrder, {
+      ID: query.value.orderId,
+      Message: {
+        ModuleKey: ModuleKey.ModuleApplications,
+        Error: {
+          Title: t('MSG_GET_ORDER_FAIL'),
+          Popup: true,
+          Type: NotificationType.Error
+        }
+      }
+    })
+  }, 5000)
+})
+
+onUnmounted(() => {
+  unsubscribe.value?.()
+  if (remainInterval) {
+    clearInterval(remainInterval)
+  }
+  if (paymentChecker) {
+    clearInterval(paymentChecker)
+  }
+})
+
+</script>
+
+<style lang='sass' scoped>
+.back-button
+  background: linear-gradient(to bottom right, rgba(225, 238, 239, 0.2) 0, rgba(161, 208, 208, 0.2) 100%)
+  box-shadow: 16px 16px 20px 0 #23292b
+  border-radius: 0 12px 12px 0
+  cursor: pointer
+  display: inline-block
+  font-size: 24px
+  line-height: 30px
+  margin: 0
+  opacity: .7
+  padding: 16px 24px
+  position: absolute
+  text-transform: uppercase
+  transition: all ease-in-out .2s
+
+.back-button:hover
+  opacity: 1
+
+.container
+  margin-top: 48px
+
+.product-container
+  background: linear-gradient(to bottom right, rgba(225, 238, 239, 0.2) 0, rgba(161, 208, 208, 0.2) 100%)
+  box-shadow: 16px 16px 20px 0 #23292b
+  border-radius: 12px
+  color: #e1eeef
+  display: flex
+  flex-wrap: wrap
+  padding: 48px
+  margin: 48px auto
+  min-width: 360px
+
+.product-title-section
+  margin: 0 0 24px 0
+  width: 100%
+
+.product-page-icon
+  background: linear-gradient(to bottom right, #54e280 0, #1ec498 100%)
+  border-radius: 4px
+  box-shadow: 2px 2px 4px #23292b88
+  display: inline-block
+  margin: 0 8px 0 0
+  padding: 10px
+  text-align: center
+  transition: all ease-in-out .1s
+  height: 60px
+  width: 60px
+
+.product-page-icon img
+  filter: saturate(0) contrast(100) opacity(0.7)
+  vertical-align: middle
+  height: 40px
+  width: 40px
+
+.product-container h1
+  display: inline-block
+  margin: 0
+  vertical-align: middle
+
+.product-container .info
+  padding: 0 5% 0 0
+  width: 75%
+
+.product-container .info-flex
+  display: flex
+  flex-wrap: wrap
+
+.product-container h1
+  display: inline-block
+  margin: 0
+  vertical-align: middle
+
+.product-title-section
+  margin: 0 0 24px 0
+  width: 100%
+
+.product-container .info
+  padding: 0 5% 0 0
+  width: 75%
+
+.product-container .info-flex
+  display: flex
+  flex-wrap: wrap
+
+.product-container .three-section
+  margin: 0 3% 12px 0
+  width: 30%
+
+.product-container .full-section
+  margin: 12px 0
+  width: 100%
+
+.product-detail-text h3
+  margin: 24px 0
+
+.product-detail-text h3::after
+  width: 60%
+
+.product-container h4
+  font-size: 18px
+  font-weight: 400
+  margin: 12px 0
+  text-transform: unset
+
+.product-container p:not([class])
+  font-size: 16px
+  line-height: 28px
+  margin: 0 0 16px 0
+
+.product-container ul
+  font-size: 16px
+
+.product-container span
+  font-size: 28px
+
+.product-container .number
+  background: linear-gradient(to bottom right, #ffe91d -50%, #ce5417 150%)
+  background-clip: border-box
+  filter: contrast(1.5)
+  overflow-wrap: anywhere
+  -webkit-background-clip: text
+  -webkit-box-decoration-break: clone
+  -webkit-text-fill-color: transparent
+
+.product-container .unit,
+.product-container .wallet-type
+  color: #e4f4f0
+  filter: contrast(1.5)
+  font-size: 16px
+  font-weight: 700
+
+.product-container .hr
+  background: linear-gradient(to right, transparent 0, #e1eeef 10%, transparent 100%)
+  height: 1px
+  margin: 24px 0
+
+.product-container button
+  margin: 0 0 24px 0
+  width: 100%
+
+.product-container .coupon-error
+  color: #fc4468
+  font-size: 14px
+  margin-top: -18px
+
+h3.form-title
+  color: #e1eeef
+  font-size: 24px
+  font-weight: 200
+  position: relative
+  margin: 0 0 24px 0
+  padding: 0 0 24px 0
+
+h3.form-title::after
+  background: linear-gradient(to right, transparent 0, #e1eeef 10%, transparent 100%)
+  display: block
+  content: ''
+  position: absolute
+  left: 0
+  bottom: 0
+  height: 1px
+  width: 100%
+
+.product-detail-text h3
+  margin: 24px 0
+
+.product-detail-text h3::after
+  width: 60%
+
+.order-form
+  width: 25%
+
+.submit-btn
+  margin: 36px 0 0 0
+  width: 100%
+  line-height: 24px
+  margin: 24px 0 24px 0 !important
+
+.content-image
+  border-radius: 24px
+  box-shadow: 4px 4px 20px 0 #1f293a
+  width: 100%
+
+.product-container .coupon-error
+  color: #fc4468
+  font-size: 14px
+  margin-top: -18px
+
+button,
+input[type='submit']
+  background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%)
+  border: 0
+  border-radius: 18px
+  color: #e4f4f0
+  cursor: pointer
+  font-family: 'Barlow', sans-serif
+  font-size: 18px
+  font-weight: 600
+  height: 48px
+  margin: 24px 24px 24px 0
+  padding: 12px 24px
+  text-shadow: 1px 1px 1px #ce5417
+  transition: all ease-in-out .1s
+
+button.alt,
+input[type='submit'].send-code
+  background: none
+  border: 1px solid #ff964a
+  color: #ff964a
+  text-shadow: 1px 1px 1px #27424c
+
+button:hover,
+input[type='submit']:hover
+  border-radius: 4px
+  filter: contrast(1.5)
+
+.nav button
+  font-size: 16px
+  height: auto
+  margin: 0
+  padding: 12px 20px
+  text-transform: uppercase
+
+button.in-active
+  filter: saturate(0) contrast(.7)
+
+input[type='text'],
+input[type='number']
+  background: #e1eeef
+  border: none
+  border-radius: 12px
+  box-shadow: 2px 2px 4px 0 #27424c
+  color: #27424c
+  font-size: 14px
+  margin: 8px 0 24px 0
+  padding: 12px
+  width: 100%
+
+input[type='text']:active,
+input[type='text']:focus
+input[type='number']:active,
+input[type='number']:focus
+  outline: 2px solid #1ec498
+
+input.error
+  outline: 2px solid #e85f1a
+
+.payment-select
+  border: solid 2px transparent
+  border-radius: 12px
+  width: 240px
+  font-size: 14px
+  font-weight: 400
+  margin: 8px 0 24px 0
+  color: #23292b
+  padding-left: 10px
+  background: #e1eeef
+  text-shadow: none
+  padding: 0 10px 0 5px
+
+.payment-select-item
+  color: #23292b
+  line-height: 20px
+
+.payment-select:hover
+  border: solid 2px #1ec498
+  border-radius: 12px
+
+.qr-code-container
+  margin: 24px 0
+  text-align: center
+  width: 100%
+
+.qr-code-container img
+  border-radius: 0 0 12px 12px
+  width: 100%
+
+.form-container .hr
+  height: 1px
+  margin: 24px 0
+
+.qr-code-container h5
+  background: #fc4468
+  border-radius: 12px 12px 0 0
+  font-size: 20px
+  font-weight: 400
+  margin: 0
+  padding: 4px
+  text-transform: uppercase
+</style>

@@ -60,7 +60,7 @@
         <div class='order-form'>
           <h3 class='form-title'>{{ t('MSG_MINING_PURCHASE') }}</h3>
           <div>
-            <h4>{{ t('MSG_PURCHASE_UNITS') }}</h4>
+            <h4>{{ t('MSG_PURCHASE_UNITS') }} ({{ good?.Good.Unit }}s)</h4>
             <input v-model='purchaseUnits' type='number' />
             <h4>{{ t('MSG_PAYMENT_METHOD') }}</h4>
             <q-btn-dropdown
@@ -71,6 +71,7 @@
               unelevated
               align='between'
               auto-close
+              ref='paymentMethod'
               :label='selectedCoinName'
             >
               <q-list>
@@ -118,6 +119,7 @@ import { useRouter } from 'src/router'
 import { ActionTypes } from 'src/store/orders/action-types'
 import { MutationTypes } from 'src/store/orders/mutation-types'
 import { Order } from 'src/store/orders/types'
+import { QBtnDropdown } from 'quasar'
 
 const router = useRouter()
 const route = useRoute()
@@ -141,6 +143,12 @@ const onCoinSelected = (coin: Coin) => {
   selectedCoin.value = coin
 }
 
+watch(coins, () => {
+  if (!selectedCoin.value && coins.value && coins.value.length > 0) {
+    selectedCoin.value = coins.value[0]
+  }
+})
+
 const effectiveDate = computed(() => {
   const date = new Date()
   return date.getFullYear().toString() + '-' + date.getMonth().toString() + '-' + (date.getDate() + 1).toString()
@@ -155,7 +163,13 @@ const onBackClick = () => {
   router.back()
 }
 
+const paymentMethod = ref<QBtnDropdown>()
+
 const onSubmit = () => {
+  if (!selectedCoin.value) {
+    return
+  }
+
   store.dispatch(ActionTypes.SubmitOrder, {
     GoodID: good.value?.Good.ID as string,
     Units: purchaseUnits.value,
@@ -227,6 +241,16 @@ onMounted(() => {
             Popup: true,
             Type: NotificationType.Error
           }
+        }
+      })
+    }
+
+    if (mutation.type === MutationTypes.SetOrderPayment) {
+      const order = mutation.payload as Order
+      void router.push({
+        path: '/payment',
+        query: {
+          orderId: order.Order.ID
         }
       })
     }

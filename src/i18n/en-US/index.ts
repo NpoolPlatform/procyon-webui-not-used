@@ -48,7 +48,7 @@ export default {
   MSG_SPECS_TITLE: 'Official Spacemesh Specs',
   MSG_SPACEMESH_HOMEPAGE: 'Spacemesh Homepage',
   MSG_MINING_PURCHASE: 'Mining Purchase',
-  MSG_PURCHASE_UNITS: 'Purchase Amount (TBs)',
+  MSG_PURCHASE_UNITS: 'Purchase Amount',
   MSG_PAYMENT_METHOD: 'Payment Method',
   MSG_COUPON_CODE: 'Coupon Code',
   MSG_INCORRECT_COUPON_CODE: 'Incorrect Coupon Code',
@@ -56,6 +56,21 @@ export default {
   MSG_GET_GOODS_FAIL: 'Cannot get goods',
   MSG_SUBMIT_ORDER_FAIL: 'Cannot submit order',
   MSG_CREATE_ORDER_PAYMENT_FAIL: 'Cannot create order payment',
+  MSG_GET_ORDER_FAIL: 'Cannot get order',
+  MSG_ORDER_ID: 'Order ID',
+  MSG_AMOUNT_DUE: 'Amount Due',
+  MSG_TIME_REMAINING: 'Time Remaining',
+  MSG_RECEIVING_ADDRESS: 'Receiving Address',
+  MSG_IMPORTANT_INFORMATION: 'Important Information',
+  MSG_PAYMENT_HINT: '<ul>' +
+                       '<li>Make sure to use the correct blockchain. The above address is an <strong>ERC20</strong> address. ' +
+                       'If you do not use <strong>ERC20</strong>, your payment will be lost and <strong>CANNOT BE RECOVERED' +
+                       '</strong>.</li>' +
+                       '<li>You must send the exact, correct amount of USDT in a <strong>SINGLE PAYMENT</strong></li>' +
+                       '<li>Overpayment or underpayment will not count towards your order. Instead the amount will be added to your wallet balance.</li>' +
+                       '<li>The transaction can take up to 10 minutes to validate.</li>' +
+                     '</ul>',
+  MSG_SCAN_QR_CODE_TO_PAY: 'Scan QR Code to Pay',
 
   general: {
     KYCStatus: 'KYC Verification Status',

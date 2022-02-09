@@ -27,6 +27,7 @@ interface Payment {
   State: string,
   ChainTransactionID: string,
   PlatformTransactionID: string
+  CreateAt: number
 }
 
 export interface OrderBase {
@@ -65,7 +66,6 @@ interface UserSpecialReduction {
 }
 
 export interface Order {
-  ID: string
   Good: Good
   Order: OrderBase
   UserSpecialReduction: UserSpecialReduction
@@ -115,8 +115,18 @@ export interface CreateOrderPaymentResponse {
   Info: Order
 }
 
+export interface GetOrderRequest {
+  ID: string
+  Message: ReqMessage
+}
+
+export interface GetOrderResponse {
+  Info: Order
+}
+
 export enum OrderURLPath {
   GET_ORDERS_BY_APP_USER = '/cloud-hashing-apis-v2/v1/get/orders/by/app/user',
   SUBMIT_ORDER = '/cloud-hashing-apis-v2/v1/submit/order',
-  CREATE_ORDER_PAYMENT = '/cloud-hashing-apis-v2/v1/create/order/payment'
+  CREATE_ORDER_PAYMENT = '/cloud-hashing-apis-v2/v1/create/order/payment',
+  GET_ORDER = '/cloud-hashing-apis-v2/v1/get/order'
 }

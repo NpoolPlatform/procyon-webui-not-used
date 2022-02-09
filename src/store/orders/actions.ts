@@ -8,6 +8,8 @@ import { post } from 'src/boot/axios'
 import {
   CreateOrderPaymentRequest,
   CreateOrderPaymentResponse,
+  GetOrderRequest,
+  GetOrderResponse,
   GetOrdersByAppUserRequest,
   GetOrdersByAppUserResponse,
   OrderURLPath,
@@ -38,6 +40,12 @@ interface OrderActions {
   }: AugmentedActionContext<OrderState,
     RootState,
     OrderMutations<OrderState>>, payload: CreateOrderPaymentRequest): void
+
+  [ActionTypes.GetOrder] ({
+    commit
+  }: AugmentedActionContext<OrderState,
+    RootState,
+    OrderMutations<OrderState>>, payload: GetOrderRequest): void
 }
 
 const actions: ActionTree<OrderState, RootState> = {
@@ -78,6 +86,21 @@ const actions: ActionTree<OrderState, RootState> = {
       req,
       req.Message,
       (resp: CreateOrderPaymentResponse): void => {
+        commit(MutationTypes.SetOrderPayment, resp.Info)
+      })
+  },
+
+  [ActionTypes.GetOrder] ({
+    commit
+  }: AugmentedActionContext<OrderState,
+    RootState,
+    OrderMutations<OrderState>>, req: GetOrderRequest): void {
+    doAction<GetOrderRequest, GetOrderResponse>(
+      commit,
+      OrderURLPath.GET_ORDER,
+      req,
+      req.Message,
+      (resp: GetOrderResponse): void => {
         commit(MutationTypes.SetOrderPayment, resp.Info)
       })
   }
