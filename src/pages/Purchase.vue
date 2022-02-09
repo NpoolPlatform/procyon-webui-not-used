@@ -90,7 +90,7 @@
             </q-btn-dropdown>
             <h4>{{ t('MSG_COUPON_CODE') }}</h4>
             <input type='text'>
-            <div class='coupon-error'>{{ t('MSG_INCORRECT_COUPON_CODE') }}</div>
+            <!-- div class='coupon-error'>{{ t('MSG_INCORRECT_COUPON_CODE') }}</div -->
             <q-btn no-caps :label='t("MSG_PURCHASE")' class='submit-btn' @click='onSubmit' />
           </div>
         </div>
