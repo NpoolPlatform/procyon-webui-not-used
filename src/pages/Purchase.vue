@@ -127,7 +127,7 @@ interface myQuery {
 }
 const query = computed(() => route.query as unknown as myQuery)
 const good = computed(() => store.getters.getGoodByID(query.value.goodId))
-const coins = computed(() => store.getters.getCoins)
+const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSale))
 const selectedCoin = ref(undefined as unknown as Coin)
 
 const selectedCoinName = computed(() => {
