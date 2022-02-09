@@ -1,4 +1,5 @@
 import { Good } from '../goods/types'
+import { ReqMessage } from '../notifications/types'
 
 export interface GetOrdersByAppUserRequest {
   AppID?: string
@@ -42,7 +43,7 @@ export interface OrderBase {
   Payment: Payment
 }
 
-export interface Feess {
+export interface Fees {
   ID: string,
   AppID: string,
   Fee: {
@@ -74,6 +75,19 @@ export interface GetOrdersByAppUserResponse {
   Infos: Array<Order>
 }
 
+export interface SubmitOrderRequest {
+  GoodID: string
+  Units: number
+  CouponID?: string
+  DiscountCouponID?: string
+  UserSpecialReductionID?: string
+  Message: ReqMessage
+}
+
+export interface SubmitOrderResponse {
+  Info: Order
+}
+
 export interface UserOrder {
   Date: string
   Product: string
@@ -85,6 +99,24 @@ export interface UserOrder {
   Total: string
 }
 
+export interface Fee {
+  ID: string
+  DurationDays: number
+}
+
+export interface CreateOrderPaymentRequest {
+  OrderID: string
+  PaymentCoinTypeID: string
+  Fees: Array<Fee>
+  Message: ReqMessage
+}
+
+export interface CreateOrderPaymentResponse {
+  Info: Order
+}
+
 export enum OrderURLPath {
-  GET_ORDERS_BY_APP_USER = '/cloud-hashing-apis-v2/v1/get/orders/by/app/user'
+  GET_ORDERS_BY_APP_USER = '/cloud-hashing-apis-v2/v1/get/orders/by/app/user',
+  SUBMIT_ORDER = '/cloud-hashing-apis-v2/v1/submit/order',
+  CREATE_ORDER_PAYMENT = '/cloud-hashing-apis-v2/v1/create/order/payment'
 }

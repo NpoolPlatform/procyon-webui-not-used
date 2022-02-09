@@ -60,8 +60,8 @@
         <div class='order-form'>
           <h3 class='form-title'>{{ t('MSG_MINING_PURCHASE') }}</h3>
           <div>
-            <h4>{{ t('MSG_PURCHASE_AMOUNT') }}</h4>
-            <input v-model='purchaseAmount' type='number' />
+            <h4>{{ t('MSG_PURCHASE_UNITS') }}</h4>
+            <input v-model='purchaseUnits' type='number' />
             <h4>{{ t('MSG_PAYMENT_METHOD') }}</h4>
             <q-btn-dropdown
               class='payment-select'
@@ -115,6 +115,9 @@ import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import spacemeshInfo from 'src/assets/spacemesh-info.png'
 import { Coin } from 'src/store/coins/types'
 import { useRouter } from 'src/router'
+import { ActionTypes } from 'src/store/orders/action-types'
+import { MutationTypes } from 'src/store/orders/mutation-types'
+import { Order } from 'src/store/orders/types'
 
 const router = useRouter()
 const route = useRoute()
@@ -143,9 +146,9 @@ const effectiveDate = computed(() => {
   return date.getFullYear().toString() + '-' + date.getMonth().toString() + '-' + (date.getDate() + 1).toString()
 })
 
-const purchaseAmount = ref(1)
-watch(purchaseAmount, () => {
-  purchaseAmount.value = purchaseAmount.value < 0 ? 0 : purchaseAmount.value
+const purchaseUnits = ref(1)
+watch(purchaseUnits, () => {
+  purchaseUnits.value = purchaseUnits.value < 0 ? 0 : purchaseUnits.value
 })
 
 const onBackClick = () => {
@@ -153,7 +156,18 @@ const onBackClick = () => {
 }
 
 const onSubmit = () => {
-  console.log('click submit')
+  store.dispatch(ActionTypes.SubmitOrder, {
+    GoodID: good.value?.Good.ID as string,
+    Units: purchaseUnits.value,
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_SUBMIT_ORDER_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
 }
 
 onBeforeMount(() => {
@@ -198,6 +212,23 @@ onMounted(() => {
         notify(notification)
         store.commit(NotificationMutationTypes.Pop, notificationPop(notification))
       }
+    }
+
+    if (mutation.type === MutationTypes.SetOrder) {
+      const order = mutation.payload as Order
+      store.dispatch(ActionTypes.CreateOrderPayment, {
+        OrderID: order.Order.ID,
+        PaymentCoinTypeID: selectedCoin.value.ID as string,
+        Fees: [],
+        Message: {
+          ModuleKey: ModuleKey.ModuleApplications,
+          Error: {
+            Title: t('MSG_CREATE_ORDER_PAYMENT_FAIL'),
+            Popup: true,
+            Type: NotificationType.Error
+          }
+        }
+      })
     }
   })
 })

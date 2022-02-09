@@ -61,12 +61,25 @@ import { useStore } from 'src/store'
 import { ActionTypes as GoodActionTypes } from 'src/store/goods/action-types'
 import { Good } from 'src/store/goods/types'
 import { useRouter } from 'src/router'
+import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
+import { useI18n } from 'vue-i18n'
 
 const store = useStore()
 const router = useRouter()
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const { t } = useI18n({ useScope: 'global' })
 
 const getPromotionProduct = () => {
-  store.dispatch(GoodActionTypes.GetGoods, {})
+  store.dispatch(GoodActionTypes.GetGoods, {
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_GET_MY_INVITATIONS_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
 }
 
 onMounted(() => {

@@ -48,11 +48,14 @@ export default {
   MSG_SPECS_TITLE: 'Official Spacemesh Specs',
   MSG_SPACEMESH_HOMEPAGE: 'Spacemesh Homepage',
   MSG_MINING_PURCHASE: 'Mining Purchase',
-  MSG_PURCHASE_AMOUNT: 'Purchase Amount (TBs)',
+  MSG_PURCHASE_UNITS: 'Purchase Amount (TBs)',
   MSG_PAYMENT_METHOD: 'Payment Method',
   MSG_COUPON_CODE: 'Coupon Code',
   MSG_INCORRECT_COUPON_CODE: 'Incorrect Coupon Code',
   MSG_PURCHASE: 'Purchase',
+  MSG_GET_GOODS_FAIL: 'Cannot get goods',
+  MSG_SUBMIT_ORDER_FAIL: 'Cannot submit order',
+  MSG_CREATE_ORDER_PAYMENT_FAIL: 'Cannot create order payment',
 
   general: {
     KYCStatus: 'KYC Verification Status',

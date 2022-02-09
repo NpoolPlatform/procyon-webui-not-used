@@ -22,7 +22,7 @@
 
 <script setup lang='ts'>
 import { defineProps, toRef } from 'vue'
-import { UserOrder } from 'src/store/order/types'
+import { UserOrder } from 'src/store/orders/types'
 import { useI18n } from 'vue-i18n'
 
 interface Props {

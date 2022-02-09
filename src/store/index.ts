@@ -34,7 +34,7 @@ import {
   OrderActions,
   OrderGetters,
   OrderMutations
-} from './order'
+} from './orders'
 
 import {
   kyc,
