@@ -73,6 +73,7 @@ export default {
   MSG_SCAN_QR_CODE_TO_PAY: 'Scan QR Code to Pay',
   MSG_PAYMENT_COMPLETE: 'Payment Complete',
   MSG_PAY_LATER: 'Pay Later',
+  MSG_PAID: 'Paid',
 
   general: {
     KYCStatus: 'KYC Verification Status',

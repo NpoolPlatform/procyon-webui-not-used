@@ -86,6 +86,7 @@ export interface SubmitOrderResponse {
 }
 
 export interface UserOrder {
+  ID: string
   Date: string
   Product: string
   Amount: string
@@ -94,6 +95,8 @@ export interface UserOrder {
   TechFee: string
   Period: string
   Total: string
+  Paid: boolean
+  PayCoinUnit: string
 }
 
 export interface Fee {

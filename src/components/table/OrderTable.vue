@@ -7,6 +7,7 @@
     row-key='name'
     color='#e1eeef'
     :no-data-label="$t('NoData')"
+    @row-click='(evt, row, index) => onRowClick(row as UserOrder)'
   >
   </q-table>
 
@@ -24,6 +25,7 @@
 import { defineProps, toRef } from 'vue'
 import { UserOrder } from 'src/store/orders/types'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'src/router'
 
 interface Props {
   orders: Array<UserOrder>
@@ -83,9 +85,30 @@ const orderTableColumns = [
     name: 'Total',
     label: t('dashboard.Column3.Total'),
     align: 'center',
-    field: (row: UserOrder) => row.Total + 'USDT'
+    field: (row: UserOrder) => row.Total + row.PayCoinUnit
+  },
+  {
+    name: 'Paid',
+    label: t('MSG_PAID'),
+    align: 'center',
+    field: 'Paid'
   }
 ]
+
+const router = useRouter()
+
+const onRowClick = (order: UserOrder) => {
+  if (order.Paid) {
+    return
+  }
+  void router.push({
+    path: '/payment',
+    query: {
+      orderId: order.ID
+    }
+  })
+}
+
 </script>
 
 <style scoped>
