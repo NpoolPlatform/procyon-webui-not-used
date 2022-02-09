@@ -94,14 +94,15 @@ const onBackClick = () => {
 const qrCodeContainer = ref<HTMLDivElement>()
 
 const remainTime = ref('06:00:00')
-let remainInterval: unknown
-let paymentChecker: unknown
+let remainInterval = -1
+let paymentChecker = -1
 
 const timeRemaining = () => {
   if (!order.value) {
     remainTime.value = '00:00:00'
-    if (remainInterval) {
-      clearInterval(remainInterval as any)
+    if (remainInterval >= 0) {
+      clearInterval(remainInterval)
+      remainInterval = -1
     }
     return
   }
@@ -113,8 +114,9 @@ const timeRemaining = () => {
       path: '/dashboard'
     })
     remainTime.value = '00:00:00'
-    if (remainInterval) {
-      clearInterval(remainInterval as any)
+    if (remainInterval >= 0) {
+      clearInterval(remainInterval)
+      remainInterval = -1
     }
     return
   }
@@ -161,7 +163,7 @@ onMounted(() => {
     }
   })
 
-  remainInterval = setInterval(timeRemaining, 1000)
+  remainInterval = setInterval(timeRemaining, 1000) as unknown as number
   paymentChecker = setInterval(() => {
     store.dispatch(ActionTypes.GetOrder, {
       ID: query.value.orderId,
@@ -174,16 +176,16 @@ onMounted(() => {
         }
       }
     })
-  }, 5000)
+  }, 5000) as unknown as number
 })
 
 onUnmounted(() => {
   unsubscribe.value?.()
-  if (remainInterval) {
-    clearInterval(remainInterval as any)
+  if (remainInterval >= 0) {
+    clearInterval(remainInterval)
   }
-  if (paymentChecker) {
-    clearInterval(paymentChecker as any)
+  if (paymentChecker >= 0) {
+    clearInterval(paymentChecker)
   }
 })
 
