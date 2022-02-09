@@ -1,6 +1,6 @@
 <template>
   <q-page class='container'>
-    <q-btn class='back-button'>⭠</q-btn>
+    <q-btn class='back-button' @click='onBackClick'>⭠</q-btn>
     <div class='content'>
       <div class='product-container'>
         <div class='product-title-section'>
@@ -59,7 +59,7 @@
         </div>
         <div class='order-form'>
           <h3 class='form-title'>{{ t('MSG_MINING_PURCHASE') }}</h3>
-          <form action=''>
+          <div>
             <h4>{{ t('MSG_PURCHASE_AMOUNT') }}</h4>
             <input v-model='purchaseAmount' type='number' />
             <h4>{{ t('MSG_PAYMENT_METHOD') }}</h4>
@@ -91,8 +91,8 @@
             <h4>{{ t('MSG_COUPON_CODE') }}</h4>
             <input type='text'>
             <div class='coupon-error'>{{ t('MSG_INCORRECT_COUPON_CODE') }}</div>
-            <input type='submit' value='Purchase' class='submit'>
-          </form>
+            <q-btn no-caps :label='t("MSG_PURCHASE")' class='submit-btn' @click='onSubmit' />
+          </div>
         </div>
       </div>
       <div class='hr'></div>
@@ -114,7 +114,9 @@ import { notificationPop, notify } from 'src/store/notifications/helper'
 import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import spacemeshInfo from 'src/assets/spacemesh-info.png'
 import { Coin } from 'src/store/coins/types'
+import { useRouter } from 'src/router'
 
+const router = useRouter()
 const route = useRoute()
 const store = useStore()
 // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -145,6 +147,14 @@ const purchaseAmount = ref(1)
 watch(purchaseAmount, () => {
   purchaseAmount.value = purchaseAmount.value < 0 ? 0 : purchaseAmount.value
 })
+
+const onBackClick = () => {
+  router.back()
+}
+
+const onSubmit = () => {
+  console.log('click submit')
+}
 
 onBeforeMount(() => {
   if (!good.value) {
@@ -206,6 +216,7 @@ onUnmounted(() => {
   cursor: pointer
   display: inline-block
   font-size: 24px
+  line-height: 30px
   margin: 0
   opacity: .7
   padding: 16px 24px
@@ -370,9 +381,11 @@ h3.form-title::after
 .order-form
   width: 25%
 
-.submit
+.submit-btn
   margin: 36px 0 0 0
   width: 100%
+  line-height: 24px
+  margin: 24px 0 24px 0 !important
 
 .content-image
   border-radius: 24px

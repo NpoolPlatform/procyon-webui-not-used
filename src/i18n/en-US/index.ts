@@ -52,6 +52,7 @@ export default {
   MSG_PAYMENT_METHOD: 'Payment Method',
   MSG_COUPON_CODE: 'Coupon Code',
   MSG_INCORRECT_COUPON_CODE: 'Incorrect Coupon Code',
+  MSG_PURCHASE: 'Purchase',
 
   general: {
     KYCStatus: 'KYC Verification Status',
