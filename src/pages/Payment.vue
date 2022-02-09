@@ -20,7 +20,7 @@
             <div class='three-section'>
                 <h4>{{ t('MSG_AMOUNT_DUE') }}</h4>
                 <span class='number'>{{ order?.Order.Payment.Amount }}</span>
-                <span class='unit'>{{ order?.Order.Payment.CoinInfo?.Unit }}</span>
+                <span class='unit'>{{ order?.PayWithCoin.Unit }}</span>
                 <img class='copy-button' :src='iconCopy'>
             </div>
             <div class='three-section'>
@@ -30,8 +30,8 @@
             <div class='full-section'>
                 <h4>{{ t('MSG_RECEIVING_ADDRESS') }}</h4>
                 <span class='wallet-type'>ERC20</span>
-                <span class='number'>{{ order?.Order.Payment.Account?.Address }}</span>
-                <img class='copy-button' src='icon-copy.svg'>
+                <span class='number'>{{ order?.PayToAccount.Address }}</span>
+                <img class='copy-button' :src='iconCopy'>
             </div>
           </div>
           <div class='hr'></div>
@@ -40,13 +40,18 @@
         </div>
         <div class='order-form'>
           <h3 class='form-title'>{{ t('MSG_SCAN_QR_CODE_TO_PAY') }}</h3>
-          <div class='qr-code-container'>
+          <div class='qr-code-container' ref='qrCodeContainer'>
             <h5>ERC20 ADDRESS</h5>
-            <img src='line-qr.png'>
+            <qrcode-vue
+              :value='order?.PayToAccount.Address'
+              :size='qrCodeContainer?.clientWidth as number - 1'
+              :margin='3'
+              class='qr-code'
+            />
           </div>
           <div class='hr'></div>
-          <button>Payment Complete</button>
-          <button class='alt'>Pay Later</button>
+          <button>{{ t('MSG_PAYMENT_COMPLETE') }}</button>
+          <button class='alt'>{{ t('MSG_PAY_LATER') }}</button>
         </div>
       </div>
       <div class='hr'></div>
@@ -56,7 +61,7 @@
 
 <script setup lang='ts'>
 import { useStore } from 'src/store'
-import { computed, onBeforeMount, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onBeforeMount, onMounted, onUnmounted, ref, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
 import { useI18n } from 'vue-i18n'
@@ -67,6 +72,8 @@ import { ActionTypes } from 'src/store/orders/action-types'
 
 import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import iconCopy from 'src/assets/icon-copy.svg'
+
+const QrcodeVue = defineAsyncComponent(() => import('qrcode.vue'))
 
 const router = useRouter()
 const route = useRoute()
@@ -84,9 +91,13 @@ const onBackClick = () => {
   router.back()
 }
 
+const qrCodeContainer = ref<HTMLDivElement>()
+
 const remainTime = ref('06:00:00')
-let remainInterval: any = undefined
-let paymentChecker: any = undefined
+// @typescript-eslint/no-explicit-any
+let remainInterval: any
+// @typescript-eslint/no-explicit-any
+let paymentChecker: any
 
 const timeRemaining = () => {
   if (!order.value) {
@@ -454,7 +465,7 @@ input.error
   text-align: center
   width: 100%
 
-.qr-code-container img
+.qr-code
   border-radius: 0 0 12px 12px
   width: 100%
 
@@ -470,4 +481,14 @@ input.error
   margin: 0
   padding: 4px
   text-transform: uppercase
+
+img.copy-button
+  cursor: pointer
+  margin: 0 0 0 4px
+  opacity: .7
+  width: 24px
+  transition: all ease-in-out .1s
+
+img.copy-button:hover
+  filter: contrast(1.5)
 </style>

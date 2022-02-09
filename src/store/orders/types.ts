@@ -1,3 +1,4 @@
+import { Coin } from '../coins/types'
 import { Good } from '../goods/types'
 import { ReqMessage } from '../notifications/types'
 
@@ -9,21 +10,9 @@ export interface GetOrdersByAppUserRequest {
 interface Payment {
   ID: string,
   OrderID: string,
-  Account: {
-    ID: string,
-    CoinTypeID: string,
-    Address: string,
-    AppID: string,
-    UserID: string
-  },
+  AccountID: string
   Amount: number,
-  CoinInfo: {
-    ID: string,
-    PreSale: boolean,
-    Name: string,
-    Unit: string,
-    Logo: string
-  },
+  CoinInfoID: string
   State: string,
   ChainTransactionID: string,
   PlatformTransactionID: string
@@ -65,10 +54,18 @@ interface UserSpecialReduction {
   Start: number
 }
 
+export interface Account {
+  ID: string
+  CoinTypeID: string
+  Address: string
+}
+
 export interface Order {
   Good: Good
   Order: OrderBase
   UserSpecialReduction: UserSpecialReduction
+  PayWithCoin: Coin
+  PayToAccount: Account
 }
 
 export interface GetOrdersByAppUserResponse {

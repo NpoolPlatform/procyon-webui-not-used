@@ -71,6 +71,8 @@ export default {
                        '<li>The transaction can take up to 10 minutes to validate.</li>' +
                      '</ul>',
   MSG_SCAN_QR_CODE_TO_PAY: 'Scan QR Code to Pay',
+  MSG_PAYMENT_COMPLETE: 'Payment Complete',
+  MSG_PAY_LATER: 'Pay Later',
 
   general: {
     KYCStatus: 'KYC Verification Status',
