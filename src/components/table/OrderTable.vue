@@ -22,11 +22,11 @@
 
 <script setup lang='ts'>
 import { defineProps, toRef } from 'vue'
-import { UserOrderDetail } from 'src/store/order/types'
+import { UserOrder } from 'src/store/order/types'
 import { useI18n } from 'vue-i18n'
 
 interface Props {
-  orders: Array<UserOrderDetail>
+  orders: Array<UserOrder>
 }
 
 const props = defineProps<Props>()
@@ -77,13 +77,13 @@ const orderTableColumns = [
     name: 'Period',
     label: t('dashboard.Column3.Period'),
     align: 'center',
-    field: (row: UserOrderDetail) => row.Period + t('dashboard.Day')
+    field: (row: UserOrder) => row.Period + t('dashboard.Day')
   },
   {
     name: 'Total',
     label: t('dashboard.Column3.Total'),
     align: 'center',
-    field: (row: UserOrderDetail) => row.Total + 'USDT'
+    field: (row: UserOrder) => row.Total + 'USDT'
   }
 ]
 </script>

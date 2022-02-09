@@ -1,7 +1,7 @@
-import { UserOrderDetail } from './types'
+import { UserOrder } from './types'
 
 interface OrderState {
-  userOrderDetails: Array<UserOrderDetail>
+  userOrders: Array<UserOrder>
   totalAmount: number
   totalCapacity: number
   durationDays: number
@@ -9,7 +9,7 @@ interface OrderState {
 
 function state (): OrderState {
   return {
-    userOrderDetails: [],
+    userOrders: [],
     totalAmount: 0,
     totalCapacity: 0,
     durationDays: 0

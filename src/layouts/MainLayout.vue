@@ -14,7 +14,14 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <q-transition
+        appear
+        enter-active-class='animated fadeIn bounceInLeft'
+        leave-active-class='animated fadeOut bounceOutRight'
+        :duration='900'
+      >
+        <router-view />
+      </q-transition>
     </q-page-container>
 
     <q-footer class='page-footer'>

@@ -9,10 +9,10 @@ function doAction<MyRequest, MyResponse> (
   commit: Commit,
   url: string,
   req: MyRequest,
-  message: ReqMessage,
+  message: ReqMessage | undefined,
   success: (resp: MyResponse) => void) {
   let waitingNotification: MyNotification
-  if (message.Waiting) {
+  if (message && message.Waiting) {
     waitingNotification = notificationPush(message.ModuleKey, message.Waiting)
     commit(NotificationMutationTypes.Push, waitingNotification)
   }
@@ -25,10 +25,9 @@ function doAction<MyRequest, MyResponse> (
       }
     })
     .catch((err: Error) => {
-      const error = message.Error
-      if (error) {
-        error.Description = err.message
-        const errorNotification = notificationPush(message.ModuleKey, error)
+      if (message && message.Error) {
+        message.Error.Description = err.message
+        const errorNotification = notificationPush(message.ModuleKey, message.Error)
         commit(NotificationMutationTypes.Push, errorNotification)
       }
     })

@@ -1,3 +1,3 @@
 export enum ActionTypes {
-  GetUserOrderDetails = 'ORDER_GET_USER_ORDER_DETAILS'
+  GetUserOrders = 'ORDER_GET_USER_ORDERS'
 }

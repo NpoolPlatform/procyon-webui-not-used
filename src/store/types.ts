@@ -13,5 +13,5 @@ export enum ItemStateTarget {
   UpdatePhoneSendCodeButton = 'UPDATE_PHONE_SEND_CODE_BUTTON',
   GetPromotionProduct = 'GET_PROMOTION_PRODUCT',
   GetDirectInvitationList = 'GET_DIRECT_INVITATION_LIST',
-  GetUserOrderDetail = 'GET_USER_ORDER_DETAIL'
+  GetUserOrder = 'GET_USER_ORDER'
 }

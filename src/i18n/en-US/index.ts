@@ -8,6 +8,51 @@ export default {
   MSG_GET_MY_INVITATIONS_FAIL: 'Cannot get my invitations',
   MSG_SETUP_GOOGLE_AUTHENTICATION_FAIL: 'Cannot setup google authentication',
   MSG_GET_LOGIN_HISTORIES_FAIL: 'Cannot get login histories',
+  MSG_GET_GOOD_FAIL: 'Cannot get good',
+  MSG_GET_COINS_FAIL: 'Cannot get coins',
+
+  MSG_SPACEMESH_MINING: 'Spacemesh Mining',
+  MSG_PRODUCT_DETAILS: 'Product Details',
+
+  MSG_DAILY_MINING_REWARDS: 'Daily Mining Rewards',
+  MSG_SMH_PER_DAY: 'SMH / day',
+  MSG_SERVICE_PERIOD: 'Service Period',
+  MSG_DAYS: 'days',
+  MSG_TECHNICAL_SERVICE_FEE: 'Technical Service Fee',
+  MSG_MAINTENANCE_FEE: 'Maintenance Fee',
+  MSG_USDT_PER_DAY: 'USDT / day',
+  MSG_ORDER_EFFECTIVE: 'Order Effective',
+
+  MSG_WHY_PROCYON_TITLE: 'Why Procyon?',
+  MSG_WHY_PROCYON_BODY: '<p>As our mission, Procyon aims to provide investors with a one-stop inclusive digital currency mining solution, ' +
+                        'with a R&amp;D, testing and an O&amp;M team composed of software engineers with 10 years of work experience from ' +
+                        'top chip companies, communication companies, and Internet companies.</p>' +
+                        '<p>The Procyon platform is based on the microservices system of a cloud-based trading platform and the elastic ' +
+                        'scaling capacity brought by kubernetes to ensure the transaction security and account security of the private ' +
+                        'trading network. Our perfect cloud-based operation and maintenance architecture ensures the smooth delivery of ' +
+                        'services and while mitigating the risk of the whole chain, ensuring the safety of your assets.</p>',
+
+  MSG_SPACEMESH_DESCRIPTION_TITLE: 'Spacemesh is the Future',
+  MSG_SPAECEMSH_DESCRIPTION_BODY: '<p>Spacemesh aims to build a true peer-to-peer electronic cash network on a truly public blockchain. ' +
+                                  'Spacemesh is built on a block mesh operating system that will improve blockchain technology through the ' +
+                                  'use of innovative consensus protocols called ' +
+                                  '<a target="_blank" ' +
+                                  'href="https://procyon-vip.medium.com/spacemesh%E3%81%AEdag%E6%A7%8B%E9%80%A0%E3%81%AF%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E3%83%81%E3%82%A7%E3%83%BC%E3%83%B3%E3%82%92%E4%BB%A3%E6%9B%BF%E3%81%99%E3%82%8B%E3%81%AE%E3%81%8B-11a0b3a79ffb?p=11a0b3a79ffb">' +
+                                  'Directed Acyclic Graphs (DAGs)' +
+                                  '</a>.</p>' +
+                                  '<p>Based in Israel, the Spacemesh team closed an $18.5 million investment led by Polychain Capital back in September 2018, ' +
+                                  'bringing the total funding to over $22.5 million. In addition to the capital investments showing Spacemesh’s potential, ' +
+                                  'Procyon believes that Spacemesh has a winning formula as a new technology in the blockchain/crypto space. Thus, it is our ' +
+                                  'pleasure to introduce it as our flagship product.</p>',
+
+  MSG_SPECS_TITLE: 'Official Spacemesh Specs',
+  MSG_SPACEMESH_HOMEPAGE: 'Spacemesh Homepage',
+  MSG_MINING_PURCHASE: 'Mining Purchase',
+  MSG_PURCHASE_AMOUNT: 'Purchase Amount (TBs)',
+  MSG_PAYMENT_METHOD: 'Payment Method',
+  MSG_COUPON_CODE: 'Coupon Code',
+  MSG_INCORRECT_COUPON_CODE: 'Incorrect Coupon Code',
+
   general: {
     KYCStatus: 'KYC Verification Status',
     NotVerified: 'Not Verified',

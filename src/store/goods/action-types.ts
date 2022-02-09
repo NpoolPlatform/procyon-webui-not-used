@@ -1,3 +1,4 @@
 export enum ActionTypes {
-  GetGoodDetails = 'GET_GOOD_DETAILS'
+  GetGoods = 'GET_GOODS',
+  GetGood = 'GET_GOOD'
 }

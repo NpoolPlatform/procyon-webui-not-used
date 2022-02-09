@@ -1,6 +1,6 @@
-import { GoodDetail } from '../goods/types'
+import { Good } from '../goods/types'
 
-export interface GetOrdersDetailByAppUserRequest {
+export interface GetOrdersByAppUserRequest {
   AppID?: string
   UserID?: string
 }
@@ -28,7 +28,7 @@ interface Payment {
   PlatformTransactionID: string
 }
 
-export interface Order {
+export interface OrderBase {
   ID: string
   AppID: string
   CouponID: string
@@ -42,7 +42,7 @@ export interface Order {
   Payment: Payment
 }
 
-export interface FeesDetails {
+export interface Feess {
   ID: string,
   AppID: string,
   Fee: {
@@ -63,18 +63,18 @@ interface UserSpecialReduction {
   Start: number
 }
 
-export interface OrderDetail {
+export interface Order {
   ID: string
-  Good: GoodDetail
-  Order: Order
+  Good: Good
+  Order: OrderBase
   UserSpecialReduction: UserSpecialReduction
 }
 
-export interface GetOrdersDetailByAppUserResponse {
-  Infos: Array<OrderDetail>
+export interface GetOrdersByAppUserResponse {
+  Infos: Array<Order>
 }
 
-export interface UserOrderDetail {
+export interface UserOrder {
   Date: string
   Product: string
   Amount: string
@@ -86,5 +86,5 @@ export interface UserOrderDetail {
 }
 
 export enum OrderURLPath {
-  GET_ORDERS_DETAIL_BY_APP_USER = '/cloud-hashing-apis-v2/v1/get/orders/by/app/user'
+  GET_ORDERS_BY_APP_USER = '/cloud-hashing-apis-v2/v1/get/orders/by/app/user'
 }

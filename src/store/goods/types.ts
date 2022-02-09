@@ -1,3 +1,5 @@
+import { ReqMessage } from '../notifications/types'
+
 interface DeviceInfo {
   ID?: string
   Manufacturer: string
@@ -54,7 +56,7 @@ interface Fee {
   Value: number
 }
 
-export interface Good extends GoodBase {
+export interface GoodExtend extends GoodBase {
   DeviceInfo: DeviceInfo
   VendorLocation: VendorLocation
   Fees: Array<Fee>
@@ -70,30 +72,31 @@ interface Coin {
   Logo: string
 }
 
-export interface GoodDetail {
-  Good: Good
+export interface Good {
+  Good: GoodExtend
   Main?: Coin
   SupportCoins?: Array<Coin>
 }
 
-export interface GetGoodDetailsRequest {
-  AppID?: string
+export interface GetGoodsRequest {
+  Message: ReqMessage
 }
 
-export interface GetGoodDetailsResponse {
-  Infos: Array<GoodDetail>
+export interface GetGoodsResponse {
+  Infos: Array<Good>
   Total: number
 }
 
-export interface GetGoodDetailRequest {
+export interface GetGoodRequest {
   ID: string
+  Message?: ReqMessage
 }
 
-export interface GetGoodDetailResponse {
-  Info: GoodDetail
+export interface GetGoodResponse {
+  Info: Good
 }
 
 export enum GoodURLPath {
-  GET_GOOD_DETAILS = '/cloud-hashing-apis-v2/v1/get/goods',
-  GET_GOOD_DETAIL = '/cloud-hashing-apis-v2/v1/get/good'
+  GET_GOODS = '/cloud-hashing-apis-v2/v1/get/goods',
+  GET_GOOD = '/cloud-hashing-apis-v2/v1/get/good'
 }

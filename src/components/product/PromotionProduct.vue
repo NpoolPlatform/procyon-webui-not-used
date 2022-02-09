@@ -59,14 +59,14 @@ import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import { computed, onMounted } from 'vue'
 import { useStore } from 'src/store'
 import { ActionTypes as GoodActionTypes } from 'src/store/goods/action-types'
-import { GoodDetail } from 'src/store/goods/types'
+import { Good } from 'src/store/goods/types'
 import { useRouter } from 'src/router'
 
 const store = useStore()
 const router = useRouter()
 
 const getPromotionProduct = () => {
-  store.dispatch(GoodActionTypes.GetGoodDetails, {})
+  store.dispatch(GoodActionTypes.GetGoods, {})
 }
 
 onMounted(() => {
@@ -74,12 +74,12 @@ onMounted(() => {
 })
 
 const myGoods = computed(() => {
-  return store.getters.getGoodDetails.filter((good, index) => {
+  return store.getters.getGoods.filter((good, index) => {
     return index < 3
   })
 })
 
-const onStartMiningClick = (good: GoodDetail) => {
+const onStartMiningClick = (good: Good) => {
   void router.push({
     path: '/purchase',
     query: {

@@ -1,18 +1,18 @@
 import { MutationTree } from 'vuex'
 import { MutationTypes } from './mutation-types'
 import { OrderState } from './state'
-import { UserOrderDetail } from './types'
+import { UserOrder } from './types'
 
 type OrderMutations<S = OrderState> = {
-  [MutationTypes.SetUserOrderDetails] (state: S, payload: Array<UserOrderDetail>): void
+  [MutationTypes.SetUserOrders] (state: S, payload: Array<UserOrder>): void
   [MutationTypes.SetTotalAmount] (state: S, payload: number): void
   [MutationTypes.SetDurationDays] (state: S, payload: number): void
   [MutationTypes.SetTotalCapacity] (state: S, payload: number): void
 }
 
 const mutations: MutationTree<OrderState> & OrderMutations = {
-  [MutationTypes.SetUserOrderDetails] (state: OrderState, payload: Array<UserOrderDetail>) {
-    state.userOrderDetails = payload
+  [MutationTypes.SetUserOrders] (state: OrderState, payload: Array<UserOrder>) {
+    state.userOrders = payload
   },
   [MutationTypes.SetTotalAmount] (state: OrderState, payload: number) {
     state.totalAmount = payload

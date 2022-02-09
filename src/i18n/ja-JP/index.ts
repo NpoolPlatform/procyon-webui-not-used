@@ -3,8 +3,16 @@
 
 export default {
   MSG_GET_APP_LANG_INFOS_FAIL: 'Cannot get app lang infos',
-  MSG_SEND_CODE: '送信コード',
-  MSG_GET_APP_USER_INFO_FAIL: 'Fail get app user info',
+  MSG_SEND_CODE: 'Send Code',
+  MSG_GET_APP_USER_INFO_FAIL: 'Cannot get app user info',
+  MSG_GET_MY_INVITATIONS_FAIL: 'Cannot get my invitations',
+  MSG_SETUP_GOOGLE_AUTHENTICATION_FAIL: 'Cannot setup google authentication',
+  MSG_GET_LOGIN_HISTORIES_FAIL: 'Cannot get login histories',
+  MSG_GET_GOOD_FAIL: 'Cannot get good',
+
+  MSG_SPACEMESH_MINING: 'Spacemesh Mining',
+  MSG_PRODUCT_DETAILS: 'Product Details',
+
   general: {
     KYCStatus: '身分証明の認証ステータス',
     NotVerified: '未登録',

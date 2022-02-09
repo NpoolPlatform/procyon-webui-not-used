@@ -21,7 +21,7 @@
 <script setup lang='ts'>
 import { computed, defineAsyncComponent, onMounted } from 'vue'
 import { useStore } from 'src/store'
-import { GetOrdersDetailByAppUserRequest } from 'src/store/order/types'
+import { GetOrdersByAppUserRequest } from 'src/store/order/types'
 import { ActionTypes } from 'src/store/order/action-types'
 
 const EarnBox = defineAsyncComponent(() => import('src/components/dashboard/EarnBox.vue'))
@@ -30,11 +30,11 @@ const OrderTable = defineAsyncComponent(() => import('components/table/OrderTabl
 
 const store = useStore()
 
-const orders = computed(() => store.getters.getUserOrderDetails)
+const orders = computed(() => store.getters.getUserOrders)
 
 const getUserOrders = () => {
-  const request: GetOrdersDetailByAppUserRequest = {}
-  store.dispatch(ActionTypes.GetUserOrderDetails, request)
+  const request: GetOrdersByAppUserRequest = {}
+  store.dispatch(ActionTypes.GetUserOrders, request)
 }
 
 onMounted(() => {

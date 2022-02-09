@@ -1,3 +1,4 @@
 export enum MutationTypes {
-  SetGoodDetails = 'GOODS_SET_GOOD_DETAILS',
+  SetGoods = 'GOODS_SET_GOODS',
+  SetGood = 'GOODS_SET_GOOD'
 }

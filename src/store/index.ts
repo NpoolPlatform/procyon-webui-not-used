@@ -45,7 +45,6 @@ import {
 } from './kycs'
 
 import { style, StyleState, StyleMutations, StyleGetters } from './style'
-
 import { notify, NotifyState, NotifyMutations, NotifyGetters } from './notify'
 import { verify, VerifyActions, VerifyGetters, VerifyMutations, VerifyState } from 'src/store/verify'
 
@@ -73,6 +72,21 @@ import {
   ApplicationGetters
 } from './application'
 
+import {
+  notifications,
+  NotificationState,
+  NotificationMutations,
+  NotificationGetters
+} from './notifications'
+
+import {
+  coins,
+  CoinsState,
+  CoinMutations,
+  CoinGetters,
+  CoinActions
+} from './coins'
+
 // 2 combine your store to root store
 export interface RootState {
   user: UserState
@@ -85,13 +99,48 @@ export interface RootState {
   kyc: KYCState
   languages: LanguagesState
   application: ApplicationState
+  notifications: NotificationState
+  coins: CoinsState
 }
 
 // 3 combine your actions, mutations and getters to root, if have multi use & combin
 // for example a & b
-type Actions = UserActions & GoodActions & VerifyActions & AffiliateActions & OrderActions & KYCActions & LanguageActions & ApplicationActions
-type Mutations = UserMutations & StyleMutations & GoodMutations & NotifyMutations & VerifyMutations & AffiliateMutations & OrderMutations & KYCMutations & LanguageMutations & ApplicationMutations
-type Getters = UserGetters & StyleGetters & GoodGetters & NotifyGetters & VerifyGetters & AffiliateGetters & OrderGetters & KYCGetters & LanguageGetters & ApplicationGetters
+type Actions =
+  UserActions &
+  GoodActions &
+  VerifyActions &
+  AffiliateActions &
+  OrderActions &
+  KYCActions &
+  LanguageActions &
+  ApplicationActions &
+  CoinActions
+type Mutations =
+  UserMutations &
+  StyleMutations &
+  GoodMutations &
+  NotifyMutations &
+  VerifyMutations &
+  AffiliateMutations &
+  OrderMutations &
+  KYCMutations &
+  LanguageMutations &
+  ApplicationMutations &
+  NotificationMutations &
+  CoinMutations
+type Getters =
+  UserGetters &
+  StyleGetters &
+  GoodGetters &
+  NotifyGetters &
+  VerifyGetters &
+  AffiliateGetters &
+  OrderGetters &
+  KYCGetters &
+  LanguageGetters &
+  ApplicationGetters &
+  NotificationGetters &
+  CoinGetters
 
 // 4 attach your module to root
 export default store(function (/* { ssrContext } */) {
@@ -106,7 +155,9 @@ export default store(function (/* { ssrContext } */) {
       order,
       kyc,
       languages,
-      application
+      application,
+      notifications,
+      coins
     },
 
     // enable strict mode (adds overhead!)
