@@ -94,16 +94,14 @@ const onBackClick = () => {
 const qrCodeContainer = ref<HTMLDivElement>()
 
 const remainTime = ref('06:00:00')
-// @typescript-eslint/no-explicit-any
-let remainInterval: any
-// @typescript-eslint/no-explicit-any
-let paymentChecker: any
+let remainInterval: unknown
+let paymentChecker: unknown
 
 const timeRemaining = () => {
   if (!order.value) {
     remainTime.value = '00:00:00'
     if (remainInterval) {
-      clearInterval(remainInterval)
+      clearInterval(remainInterval as any)
     }
     return
   }
@@ -116,7 +114,7 @@ const timeRemaining = () => {
     })
     remainTime.value = '00:00:00'
     if (remainInterval) {
-      clearInterval(remainInterval)
+      clearInterval(remainInterval as any)
     }
     return
   }
@@ -182,10 +180,10 @@ onMounted(() => {
 onUnmounted(() => {
   unsubscribe.value?.()
   if (remainInterval) {
-    clearInterval(remainInterval)
+    clearInterval(remainInterval as any)
   }
   if (paymentChecker) {
-    clearInterval(paymentChecker)
+    clearInterval(paymentChecker as any)
   }
 })
 
