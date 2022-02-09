@@ -13,12 +13,12 @@
             <div class="three-section">
               <h4>{{ t('MSG_DAILY_MINING_REWARDS') }}</h4>
               <span class="number">*</span>
-              <span class="unit">{{ t('MSG_SMH_PER_DAY') }}</span>
+              <span class="unit">{{ t('MSG_SMH_PER_DAY').toUpperCase() }}</span>
             </div>
             <div class="three-section">
               <h4>{{ t('MSG_SERVICE_PERIOD') }}</h4>
               <span class="number">{{ good?.Good.DurationDays }}</span>
-              <span class="unit">{{ t('MSG_DAYS') }}</span>
+              <span class="unit">{{ t('MSG_DAYS').toUpperCase() }}</span>
             </div>
             <div class="three-section">
               <h4>{{ t('MSG_TECHNICAL_SERVICE_FEE') }}</h4>
@@ -28,7 +28,7 @@
             <div class="three-section">
               <h4>{{ t('MSG_MAINTENANCE_FEE') }}</h4>
               <span class="number">*</span>
-              <span class="unit">{{ t('MSG_USDT_PER_DAY') }}</span>
+              <span class="unit">{{ t('MSG_USDT_PER_DAY').toUpperCase() }}</span>
             </div>
             <div class="three-section">
               <h4>{{ t('MSG_ORDER_EFFECTIVE') }}</h4>
