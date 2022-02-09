@@ -84,6 +84,20 @@ const routes: RouteRecordRaw[] = [
         meta: {
           needLogined: true
         }
+      },
+      {
+        path: 'purchase',
+        component: () => import('pages/Purchase.vue'),
+        meta: {
+          needLogined: true
+        }
+      },
+      {
+        path: 'payment',
+        component: () => import('pages/Payment.vue'),
+        meta: {
+          needLogined: true
+        }
       }
     ]
   },

@@ -2,7 +2,7 @@
   <div class='product-card' v-for='(good, index) in myGoods' :key='index'>
     <div class='card-header'>
       <q-img :src='spacemeshImg' class='header-img'></q-img>
-      <h3 class='header-title'>{{ good.Main.Name }}</h3>
+      <h3 class='header-title'>{{ good.Main?.Name }}</h3>
     </div>
 
     <div class='product-price'>
@@ -46,7 +46,7 @@
     </div>
 
     <div>
-      <q-btn disable color='grey' class='common-button product-btn'>{{
+      <q-btn class='common-button product-btn' @click='onStartMiningClick(good)'>{{
           $t('button.StartMining')
         }}
       </q-btn>
@@ -59,8 +59,11 @@ import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import { computed, onMounted } from 'vue'
 import { useStore } from 'src/store'
 import { ActionTypes as GoodActionTypes } from 'src/store/goods/action-types'
+import { GoodDetail } from 'src/store/goods/types'
+import { useRouter } from 'src/router'
 
 const store = useStore()
+const router = useRouter()
 
 const getPromotionProduct = () => {
   store.dispatch(GoodActionTypes.GetGoodDetails, {})
@@ -75,6 +78,15 @@ const myGoods = computed(() => {
     return index < 3
   })
 })
+
+const onStartMiningClick = (good: GoodDetail) => {
+  void router.push({
+    path: '/purchase',
+    query: {
+      goodId: good.Good.ID
+    }
+  })
+}
 </script>
 
 <style scoped>
