@@ -31,6 +31,7 @@ export interface OrderBase {
   UserID: string
   UserSpecialReductionID: string
   Payment: Payment
+  CreateAt: number
 }
 
 export interface Fees {

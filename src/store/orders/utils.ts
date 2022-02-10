@@ -8,7 +8,7 @@ export const orderToUserOrder = (order: Order): UserOrder => {
   }
   return {
     ID: order.Order.ID,
-    Date: TimeStampToDate(order.Order.Start, 'YYYY-MM-DD HH:mm:ss'),
+    Date: TimeStampToDate(order.Order.CreateAt, 'YYYY-MM-DD HH:mm:ss'),
     Product: order.Good.Main?.Name as string,
     Amount: order.Order.Units.toString() + order.Good.Good.Unit,
     Price: order.Good.Good.Price.toString() + order.Good.Good.PriceCurrency.Unit + '/' + order.Good.Good.Unit,
