@@ -73,6 +73,7 @@ import { ActionTypes } from 'src/store/orders/action-types'
 import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import iconCopy from 'src/assets/icon-copy.svg'
 import copy from 'copy-to-clipboard'
+import { RemainMax, remainPayTime, RemainZero } from 'src/store/orders/utils'
 
 const QrcodeVue = defineAsyncComponent(() => import('qrcode.vue'))
 
@@ -94,44 +95,30 @@ const onBackClick = () => {
 
 const qrCodeContainer = ref<HTMLDivElement>()
 
-const remainTime = ref('06:00:00')
+const remainTime = ref(RemainMax)
 let remainInterval = -1
 let paymentChecker = -1
 
 const timeRemaining = () => {
   if (!order.value) {
-    remainTime.value = '00:00:00'
+    remainTime.value = RemainZero
     if (remainInterval >= 0) {
       clearInterval(remainInterval)
       remainInterval = -1
     }
     return
   }
-  const now = Math.floor(new Date().getTime() / 1000)
-  const total = 6 * 60 * 60
-  const elapsed = now - (order.value.Order.Payment ? order.value.Order.Payment.CreateAt : 0)
-  if (elapsed >= total) {
+
+  remainTime.value = remainPayTime(order.value.Order.Payment ? order.value.Order.Payment.CreateAt : 0)
+  if (remainTime.value === RemainZero) {
     void router.push({
       path: '/dashboard'
     })
-    remainTime.value = '00:00:00'
     if (remainInterval >= 0) {
       clearInterval(remainInterval)
       remainInterval = -1
     }
-    return
   }
-
-  const remain = total - elapsed
-  const hours = Math.floor(remain / 60 / 60)
-  const minutes = Math.floor((remain - (hours * 60 * 60)) / 60)
-  const seconds = Math.floor(remain - (hours * 60 * 60) - minutes * 60)
-
-  const hour = '0' + hours.toString()
-  const minute = minutes > 9 ? minutes.toString() : '0' + minutes.toString()
-  const second = seconds > 9 ? seconds.toString() : '0' + seconds.toString()
-
-  remainTime.value = hour + ':' + minute + ':' + second
 }
 
 const onPaymentCompleteClick = () => {

@@ -18,6 +18,29 @@ export const orderToUserOrder = (order: Order): UserOrder => {
     Total: order.Order.Payment ? order.Order.Payment.Amount.toString() : '0',
     Paid: order.Order.Payment ? order.Order.Payment.State === 'done' : false,
     PayCoinUnit: order.PayWithCoin ? order.PayWithCoin.Unit : 'NaN',
-    CreateAt: order.Order.Payment?.CreateAt
+    CreateAt: order.Order.Payment ? order.Order.Payment.CreateAt : 0
   }
+}
+
+export const RemainZero = '00:00:00'
+export const RemainMax = '06:00:00'
+
+export const remainPayTime = (createAt: number): string => {
+  const now = Math.floor(new Date().getTime() / 1000)
+  const total = 6 * 60 * 60
+  const elapsed = now - createAt
+  if (elapsed >= total) {
+    return RemainZero
+  }
+
+  const remain = total - elapsed
+  const hours = Math.floor(remain / 60 / 60)
+  const minutes = Math.floor((remain - (hours * 60 * 60)) / 60)
+  const seconds = Math.floor(remain - (hours * 60 * 60) - minutes * 60)
+
+  const hour = '0' + hours.toString()
+  const minute = minutes > 9 ? minutes.toString() : '0' + minutes.toString()
+  const second = seconds > 9 ? seconds.toString() : '0' + seconds.toString()
+
+  return hour + ':' + minute + ':' + second
 }

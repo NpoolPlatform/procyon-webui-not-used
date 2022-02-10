@@ -22,11 +22,12 @@
 </template>
 
 <script setup lang='ts'>
-import { defineProps, toRef, computed } from 'vue'
+import { defineProps, toRef, computed, ref, onMounted, onUnmounted } from 'vue'
 import { UserOrder } from 'src/store/orders/types'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'src/router'
 import { OrderTimeoutSeconds } from 'src/store/orders/const'
+import { remainPayTime, RemainZero } from 'src/store/orders/utils'
 
 interface Props {
   orders: Array<UserOrder>
@@ -39,12 +40,36 @@ const orders = toRef(props, 'orders')
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
 
+const remainTime = ref<Map<string, string>>()
+let remainInterval = -1
+
+const timeRemaining = () => {
+  let allTimeout = true
+  remainTime.value = new Map<string, string>()
+
+  for (let i = 0; i < orders.value.length; i++) {
+    const remain = remainPayTime(orders.value[i].CreateAt)
+    if (remain !== RemainZero) {
+      allTimeout = false
+      remainTime.value.set(orders.value[i].ID, remain)
+    }
+  }
+
+  if (allTimeout) {
+    clearInterval(remainInterval)
+    remainInterval = -1
+  }
+}
+
 const orderState = (order: UserOrder) => {
   if (order.Paid) {
     return t('MSG_PAID')
   }
   if (Math.floor(new Date().getTime() / 1000) - order.CreateAt > OrderTimeoutSeconds) {
     return t('MSG_CANCELED_BY_TIMEOUT')
+  }
+  if (!order.Paid) {
+    return remainTime.value?.get(order.ID)
   }
   return t('MSG_IN_SERVICE')
 }
@@ -122,6 +147,16 @@ const onRowClick = (order: UserOrder) => {
     }
   })
 }
+
+onMounted(() => {
+  remainInterval = setInterval(timeRemaining, 1000) as unknown as number
+})
+
+onUnmounted(() => {
+  if (remainInterval >= 0) {
+    clearInterval(remainInterval)
+  }
+})
 
 </script>
 
