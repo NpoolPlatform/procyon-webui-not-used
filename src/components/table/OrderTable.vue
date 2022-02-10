@@ -4,7 +4,7 @@
     class='table-box'
     :rows='orders'
     :columns='orderTableColumns'
-    row-key='name'
+    row-key='ID'
     color='#e1eeef'
     :no-data-label="$t('NoData')"
     @row-click='(evt, row, index) => onRowClick(row as UserOrder)'
@@ -22,10 +22,11 @@
 </template>
 
 <script setup lang='ts'>
-import { defineProps, toRef } from 'vue'
+import { defineProps, toRef, computed } from 'vue'
 import { UserOrder } from 'src/store/orders/types'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'src/router'
+import { OrderTimeoutSeconds } from 'src/store/orders/const'
 
 interface Props {
   orders: Array<UserOrder>
@@ -38,7 +39,17 @@ const orders = toRef(props, 'orders')
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
 
-const orderTableColumns = [
+const orderState = (order: UserOrder) => {
+  if (order.Paid) {
+    return t('MSG_PAID')
+  }
+  if (Math.floor(new Date().getTime() / 1000) - order.CreateAt > OrderTimeoutSeconds) {
+    return t('MSG_CANCELED_BY_TIMEOUT')
+  }
+  return t('MSG_IN_SERVICE')
+}
+
+const orderTableColumns = computed(() => [
   {
     name: 'Date',
     label: t('dashboard.Column3.Date'),
@@ -88,17 +99,20 @@ const orderTableColumns = [
     field: (row: UserOrder) => row.Total + row.PayCoinUnit
   },
   {
-    name: 'Paid',
-    label: t('MSG_PAID'),
+    name: 'State',
+    label: t('MSG_STATE'),
     align: 'center',
-    field: 'Paid'
+    field: (row: UserOrder) => orderState(row)
   }
-]
+])
 
 const router = useRouter()
 
 const onRowClick = (order: UserOrder) => {
   if (order.Paid) {
+    return
+  }
+  if (Math.floor(new Date().getTime() / 1000) - order.CreateAt > OrderTimeoutSeconds) {
     return
   }
   void router.push({

@@ -17,6 +17,7 @@ export const orderToUserOrder = (order: Order): UserOrder => {
     Period: order.Good.Good.DurationDays.toString(),
     Total: order.Order.Payment ? order.Order.Payment.Amount.toString() : '0',
     Paid: order.Order.Payment ? order.Order.Payment.State === 'done' : false,
-    PayCoinUnit: order.PayWithCoin ? order.PayWithCoin.Unit : 'NaN'
+    PayCoinUnit: order.PayWithCoin ? order.PayWithCoin.Unit : 'NaN',
+    CreateAt: order.Order.Payment?.CreateAt
   }
 }

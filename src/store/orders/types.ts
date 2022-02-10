@@ -97,6 +97,7 @@ export interface UserOrder {
   Total: string
   Paid: boolean
   PayCoinUnit: string
+  CreateAt: number
 }
 
 export interface Fee {

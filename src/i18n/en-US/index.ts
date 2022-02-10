@@ -74,6 +74,9 @@ export default {
   MSG_PAYMENT_COMPLETE: 'Payment Complete',
   MSG_PAY_LATER: 'Pay Later',
   MSG_PAID: 'Paid',
+  MSG_STATE: 'State',
+  MSG_CANCELED_BY_TIMEOUT: 'Canceled by Timeout',
+  MSG_IN_SERVICE: 'In Service',
 
   general: {
     KYCStatus: 'KYC Verification Status',
