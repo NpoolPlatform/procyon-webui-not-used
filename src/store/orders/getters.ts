@@ -2,6 +2,7 @@ import { GetterTree } from 'vuex'
 import { RootState } from '../index'
 import { OrderState } from './state'
 import { Order } from './types'
+import { orderPaid } from './utils'
 
 type OrderGetters = {
   getOrders (state: OrderState): Array<Order>
@@ -26,6 +27,9 @@ const getters: GetterTree<OrderState, RootState> & OrderGetters = {
   getTotalAmount: (state: OrderState): number => {
     let total = 0
     state.orders.forEach((order) => {
+      if (!orderPaid(order)) {
+        return
+      }
       total += order.Order.Payment.Amount
     })
     return total
@@ -39,6 +43,9 @@ const getters: GetterTree<OrderState, RootState> & OrderGetters = {
   getTotalCapacity: (state: OrderState): number => {
     let total = 0
     state.orders.forEach((order) => {
+      if (!orderPaid(order)) {
+        return
+      }
       total += order.Order.Units
     })
     return total

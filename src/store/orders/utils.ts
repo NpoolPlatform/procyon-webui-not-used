@@ -22,6 +22,8 @@ export const orderToUserOrder = (order: Order): UserOrder => {
   }
 }
 
+export const orderPaid = (order: Order): boolean => order.Order.Payment ? order.Order.Payment.State === 'done' : false
+
 export const RemainZero = '00:00:00'
 export const RemainMax = '06:00:00'
 
