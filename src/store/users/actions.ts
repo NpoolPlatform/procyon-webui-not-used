@@ -40,6 +40,7 @@ import { MutationTypes as styleMutation } from 'src/store/style/mutation-types'
 import { useRouter } from 'src/router/index'
 import { useI18n } from 'boot/i18n'
 import { Cookies } from 'quasar'
+import { AppID } from 'src/const/const'
 
 // use public api
 interface UserActions {
@@ -128,6 +129,9 @@ const actions: ActionTree<UserState, RootState> = {
       const headers = api.defaults.headers as Record<string, string>
       headers['X-User-ID'] = resp.Info.User?.ID as string
       headers['X-App-Login-Token'] = resp.Token
+      Cookies.set('X-App-ID', AppID)
+      Cookies.set('X-User-ID', resp.Info.User?.ID as string, { expires: '4h', secure: true })
+      Cookies.set('X-App-Login-Token', resp.Token, { expires: '4h', secure: true })
       commit(MutationTypes.SetUserInfo, resp.Info)
       commit(MutationTypes.SetUserLogined, true)
       commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.Login.Success'), '', 'positive'))

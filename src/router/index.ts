@@ -8,6 +8,11 @@ import {
 } from 'vue-router'
 import { RootState, Store } from '../store'
 import routes from './routes'
+import { Cookies } from 'quasar'
+import { api } from 'src/boot/axios'
+import { LoginedResponse, UserURLPath } from 'src/store/users/types'
+import { MutationTypes as UserMutationTypes } from 'src/store/users/mutation-types'
+import { AxiosResponse } from 'axios'
 
 /*
  * If not building with SSR mode, you can
@@ -45,13 +50,34 @@ export default route<RootState>(function ({ store /*, ssrContext */ }) {
   })
 
   const myStore = store as Store
-
   myRouter.beforeEach((to, _, next) => {
-    if (!myStore.getters.getUserLogined && to.meta && to.meta.needLogined) {
-      next({
-        path: '/login',
-        replace: true
-      })
+    if (!to.meta || !to.meta.needLogined) {
+      next()
+    }
+
+    if (!myStore.getters.getUserLogined) {
+      const userID = Cookies.get('X-User-ID')
+      const token = Cookies.get('X-App-Login-Token')
+
+      console.log(userID, token)
+
+      if (userID && token) {
+        const headers = api.defaults.headers as Record<string, string>
+        headers['X-User-ID'] = userID
+        headers['X-App-Login-Token'] = token
+        api.post<unknown, AxiosResponse<LoginedResponse>>(UserURLPath.LOGINED)
+          .then((resp: AxiosResponse<LoginedResponse>) => {
+            myStore.commit(UserMutationTypes.SetUserInfo, resp.data.Info)
+            myStore.commit(UserMutationTypes.SetUserLogined, true)
+            myStore.commit(UserMutationTypes.SetLoginVerify, true)
+            next()
+          }).catch(() => {
+            next({ path: '/login', replace: true })
+          })
+        return
+      }
+
+      next({ path: '/login', replace: true })
       return
     }
 

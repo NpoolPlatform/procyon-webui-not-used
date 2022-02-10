@@ -214,9 +214,14 @@ interface UpdatePhoneResponse {
   Info: UserInfo
 }
 
+interface LoginedResponse {
+  Info: UserInfo
+}
+
 enum UserURLPath {
   LOGIN = '/login-gateway/v1/login',
   LOGOUT = '/login-gateway/v1/logout',
+  LOGINED = '/login-gateway/v1/logined',
   GET_USER_INVITATION_CODE = '/cloud-hashing-inspire/v1/get/user/invitation/code/by/app/user',
   SIGN_UP = '/cloud-hashing-apis-v2/v1/signup',
   UPDATE_PASSWORD_BY_APP_USER = '/cloud-hashing-apis-v2/v1/update/password/by/app/user',
@@ -264,5 +269,6 @@ export {
   UpdateEmailResponse,
   UpdatePhoneRequest,
   UpdatePhoneResponse,
-  LoginHistory
+  LoginHistory,
+  LoginedResponse
 }
