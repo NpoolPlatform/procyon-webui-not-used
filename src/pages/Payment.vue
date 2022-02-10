@@ -19,9 +19,9 @@
             </div>
             <div class='three-section'>
                 <h4>{{ t('MSG_AMOUNT_DUE') }}</h4>
-                <span class='number'>{{ order?.Order.Payment.Amount }}</span>
-                <span class='unit'>{{ order?.PayWithCoin.Unit }}</span>
-                <img class='copy-button' :src='iconCopy'>
+                <span class='number'>{{ order?.Order.Payment?.Amount }}</span>
+                <span class='unit'>{{ order?.PayWithCoin?.Unit }}</span>
+                <img class='copy-button' :src='iconCopy' @click='onCopyAmountClick'>
             </div>
             <div class='three-section'>
                 <h4>{{ t('MSG_TIME_REMAINING') }}</h4>
@@ -30,8 +30,8 @@
             <div class='full-section'>
                 <h4>{{ t('MSG_RECEIVING_ADDRESS') }}</h4>
                 <span class='wallet-type'>ERC20</span>
-                <span class='number'>{{ order?.PayToAccount.Address }}</span>
-                <img class='copy-button' :src='iconCopy'>
+                <span class='number'>{{ order?.PayToAccount?.Address }}</span>
+                <img class='copy-button' :src='iconCopy' @click='onCopyAddressClick'>
             </div>
           </div>
           <div class='hr'></div>
@@ -43,15 +43,15 @@
           <div class='qr-code-container' ref='qrCodeContainer'>
             <h5>ERC20 ADDRESS</h5>
             <qrcode-vue
-              :value='order?.PayToAccount.Address'
+              :value='order?.PayToAccount?.Address'
               :size='qrCodeContainer?.clientWidth as number - 1'
               :margin='3'
               class='qr-code'
             />
           </div>
           <div class='hr'></div>
-          <button>{{ t('MSG_PAYMENT_COMPLETE') }}</button>
-          <button class='alt'>{{ t('MSG_PAY_LATER') }}</button>
+          <button @click='onPaymentCompleteClick'>{{ t('MSG_PAYMENT_COMPLETE') }}</button>
+          <button class='alt' @click='onPayLaterClick'>{{ t('MSG_PAY_LATER') }}</button>
         </div>
       </div>
       <div class='hr'></div>
@@ -72,6 +72,7 @@ import { ActionTypes } from 'src/store/orders/action-types'
 
 import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import iconCopy from 'src/assets/icon-copy.svg'
+import copy from 'copy-to-clipboard'
 
 const QrcodeVue = defineAsyncComponent(() => import('qrcode.vue'))
 
@@ -108,7 +109,7 @@ const timeRemaining = () => {
   }
   const now = Math.floor(new Date().getTime() / 1000)
   const total = 6 * 60 * 60
-  const elapsed = now - (order.value.Order.Payment.CreateAt ? order.value.Order.Payment.CreateAt : 0)
+  const elapsed = now - (order.value.Order.Payment ? order.value.Order.Payment.CreateAt : 0)
   if (elapsed >= total) {
     void router.push({
       path: '/dashboard'
@@ -131,6 +132,18 @@ const timeRemaining = () => {
   const second = seconds > 9 ? seconds.toString() : '0' + seconds.toString()
 
   remainTime.value = hour + ':' + minute + ':' + second
+}
+
+const onPaymentCompleteClick = () => {
+  void router.push({
+    path: '/dashboard'
+  })
+}
+
+const onPayLaterClick = () => {
+  void router.push({
+    path: '/dashboard'
+  })
 }
 
 onBeforeMount(() => {
@@ -188,6 +201,14 @@ onUnmounted(() => {
     clearInterval(paymentChecker)
   }
 })
+
+const onCopyAmountClick = () => {
+  copy(order.value?.Order.Payment?.Amount.toString() as string)
+}
+
+const onCopyAddressClick = () => {
+  copy(order.value?.PayToAccount?.Address as string)
+}
 
 </script>
 
@@ -430,8 +451,6 @@ input[type='number']
   padding: 12px
   width: 100%
 
-input[type='text']:active,
-input[type='text']:focus
 input[type='number']:active,
 input[type='number']:focus
   outline: 2px solid #1ec498
