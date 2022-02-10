@@ -44,6 +44,10 @@ const remainTime = ref<Map<string, string>>()
 let remainInterval = -1
 
 const timeRemaining = () => {
+  if (orders.value.length === 0) {
+    return
+  }
+
   let allTimeout = true
   remainTime.value = new Map<string, string>()
 
