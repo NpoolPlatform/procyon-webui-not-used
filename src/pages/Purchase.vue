@@ -119,7 +119,8 @@ import { useRouter } from 'src/router'
 import { ActionTypes } from 'src/store/orders/action-types'
 import { MutationTypes } from 'src/store/orders/mutation-types'
 import { Order } from 'src/store/orders/types'
-import { QBtnDropdown } from 'quasar'
+import { QBtnDropdown, throttle } from 'quasar'
+import { ThrottleDelay } from 'src/utils/utils'
 
 const router = useRouter()
 const route = useRoute()
@@ -165,7 +166,7 @@ const onBackClick = () => {
 
 const paymentMethod = ref<QBtnDropdown>()
 
-const onSubmit = () => {
+const onSubmit = throttle(() => {
   if (!selectedCoin.value) {
     return
   }
@@ -182,7 +183,7 @@ const onSubmit = () => {
       }
     }
   })
-}
+}, ThrottleDelay)
 
 onBeforeMount(() => {
   if (!good.value) {
