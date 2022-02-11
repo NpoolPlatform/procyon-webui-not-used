@@ -59,8 +59,6 @@ export default route<RootState>(function ({ store /*, ssrContext */ }) {
       const userID = Cookies.get('X-User-ID')
       const token = Cookies.get('X-App-Login-Token')
 
-      console.log(userID, token)
-
       if (userID && token) {
         const headers = api.defaults.headers as Record<string, string>
         headers['X-User-ID'] = userID
