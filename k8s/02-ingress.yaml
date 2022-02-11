@@ -37,3 +37,17 @@ spec:
             backend:
               serviceName: procyon-webui
               servicePort: 80
+    - host: www.npool.top
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: procyon-webui
+              servicePort: 80
+    - host: npool.top
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: procyon-webui
+              servicePort: 80
