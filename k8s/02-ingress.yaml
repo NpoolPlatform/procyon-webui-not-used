@@ -14,7 +14,14 @@ metadata:
 
 spec:
   tls:
-    - secretName: procyon-vip-cert
+    - hosts:
+        - www.procyon.vip
+        - procyon.vip
+      secretName: procyon-vip-cert
+    - hosts:
+        - www.npool.top
+        - npool.top
+      secretName: npool-top-cert
   rules:
     - host: www.procyon.vip
       http:

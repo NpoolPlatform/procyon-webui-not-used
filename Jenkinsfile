@@ -255,12 +255,18 @@ pipeline {
         }
         sh(returnStdout: false, script: '''
           set +e
-          certname=`echo $ROOT_DOMAIN | sed 's/\\./-/g'`-cert
-          kubectl get secret -n kube-system | grep $certname
+          kubectl get secret -n kube-system | grep procyon-vip-cert
           rc=$?
           set -e
           if [ ! 0 -eq $rc ]; then
-            kubectl create secret tls $certname --cert=.server-https-ca/$ROOT_DOMAIN/tls.crt --key=.server-https-ca/$ROOT_DOMAIN/tls.key -n kube-system
+            kubectl create secret tls procyon-vip-cert --cert=.server-https-ca/procyon-vip-cert/tls.crt --key=.server-https-ca/procyon-vip-cert/tls.key -n kube-system
+          fi
+          set +e
+          kubectl get secret -n kube-system | grep npool-top-cert
+          rc=$?
+          set -e
+          if [ ! 0 -eq $rc ]; then
+            kubectl create secret tls npool-top-cert --cert=.server-https-ca/npool-top-cert/tls.crt --key=.server-https-ca/npool-top-cert/tls.key -n kube-system
           fi
           rm .server-https-ca -rf
         '''.stripIndent())
