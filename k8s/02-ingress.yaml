@@ -14,7 +14,14 @@ metadata:
 
 spec:
   tls:
-    - secretName: procyon-vip-cert
+    - hosts:
+        - www.procyon.vip
+        - procyon.vip
+      secretName: procyon-vip-cert
+    - hosts:
+        - www.npool.top
+        - npool.top
+      secretName: npool-top-cert
   rules:
     - host: www.procyon.vip
       http:
@@ -24,6 +31,20 @@ spec:
               serviceName: procyon-webui
               servicePort: 80
     - host: procyon.vip
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: procyon-webui
+              servicePort: 80
+    - host: www.npool.top
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: procyon-webui
+              servicePort: 80
+    - host: npool.top
       http:
         paths:
           - path: /
