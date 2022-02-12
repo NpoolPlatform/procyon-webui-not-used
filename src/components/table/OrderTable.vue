@@ -67,6 +67,9 @@ const timeRemaining = () => {
 
 const orderState = (order: UserOrder) => {
   if (order.Paid) {
+    if (new Date().getTime() / 1000 > order.StartAt) {
+      return t('MSG_IN_SERVICE')
+    }
     return t('MSG_PAID')
   }
   if (Math.floor(new Date().getTime() / 1000) - order.CreateAt > OrderTimeoutSeconds) {

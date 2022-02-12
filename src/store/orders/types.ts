@@ -99,6 +99,7 @@ export interface UserOrder {
   Paid: boolean
   PayCoinUnit: string
   CreateAt: number
+  StartAt: number
 }
 
 export interface Fee {

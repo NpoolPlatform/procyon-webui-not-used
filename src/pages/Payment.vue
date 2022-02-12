@@ -73,7 +73,7 @@ import { ActionTypes } from 'src/store/orders/action-types'
 import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import iconCopy from 'src/assets/icon-copy.svg'
 import copy from 'copy-to-clipboard'
-import { RemainMax, remainPayTime, RemainZero } from 'src/store/orders/utils'
+import { orderToUserOrder, RemainMax, remainPayTime, RemainZero } from 'src/store/orders/utils'
 
 const QrcodeVue = defineAsyncComponent(() => import('qrcode.vue'))
 
@@ -102,6 +102,18 @@ let paymentChecker = -1
 const timeRemaining = () => {
   if (!order.value) {
     remainTime.value = RemainZero
+    if (remainInterval >= 0) {
+      clearInterval(remainInterval)
+      remainInterval = -1
+    }
+    return
+  }
+
+  const myOrder = orderToUserOrder(order.value)
+  if (myOrder.Paid) {
+    void router.push({
+      path: '/dashboard'
+    })
     if (remainInterval >= 0) {
       clearInterval(remainInterval)
       remainInterval = -1
