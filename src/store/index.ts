@@ -87,6 +87,14 @@ import {
   CoinActions
 } from './coins'
 
+import {
+  benefits,
+  BenefitsState,
+  BenefitMutations,
+  BenefitGetters,
+  BenefitActions
+} from './benefits'
+
 // 2 combine your store to root store
 export interface RootState {
   user: UserState
@@ -101,6 +109,7 @@ export interface RootState {
   application: ApplicationState
   notifications: NotificationState
   coins: CoinsState
+  benefits: BenefitsState
 }
 
 // 3 combine your actions, mutations and getters to root, if have multi use & combin
@@ -114,7 +123,8 @@ type Actions =
   KYCActions &
   LanguageActions &
   ApplicationActions &
-  CoinActions
+  CoinActions &
+  BenefitActions
 type Mutations =
   UserMutations &
   StyleMutations &
@@ -127,7 +137,8 @@ type Mutations =
   LanguageMutations &
   ApplicationMutations &
   NotificationMutations &
-  CoinMutations
+  CoinMutations &
+  BenefitMutations
 type Getters =
   UserGetters &
   StyleGetters &
@@ -140,7 +151,8 @@ type Getters =
   LanguageGetters &
   ApplicationGetters &
   NotificationGetters &
-  CoinGetters
+  CoinGetters &
+  BenefitGetters
 
 // 4 attach your module to root
 export default store(function (/* { ssrContext } */) {
@@ -157,7 +169,8 @@ export default store(function (/* { ssrContext } */) {
       languages,
       application,
       notifications,
-      coins
+      coins,
+      benefits
     },
 
     // enable strict mode (adds overhead!)

@@ -47,6 +47,7 @@ interface GoodBase {
   Title: string
   Total: number
   Unit: string
+  StartAt: number
 }
 
 interface Fee {

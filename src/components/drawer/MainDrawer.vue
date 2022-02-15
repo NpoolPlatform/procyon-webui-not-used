@@ -12,7 +12,7 @@
         <span class='drawer-item-span'>{{ $t('drawer.Dashboard') }}</span>
       </router-link>
 
-      <router-link v-show='false' class='drawer-item' :to="{ path: '/wallet' }">
+      <router-link class='drawer-item' :to="{ path: '/wallet' }">
         <q-img
           fit='none'
           :src='walletImg'

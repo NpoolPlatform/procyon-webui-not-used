@@ -50,6 +50,13 @@ const routes: RouteRecordRaw[] = [
         }
       },
       {
+        path: 'wallet',
+        component: () => import('pages/Wallet.vue'),
+        meta: {
+          needLogined: true
+        }
+      },
+      {
         path: 'account',
         component: () => import('pages/Account.vue'),
         meta: {

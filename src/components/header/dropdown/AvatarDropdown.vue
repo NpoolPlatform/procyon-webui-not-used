@@ -5,7 +5,7 @@
     dense
     no-icon-animation
     dropdown-icon='img:icons/icon-user.svg'
-    :size='avatarSize'
+    class='avatar-icon'
     v-if='logined'
     content-style='{width: 150px;background: linear-gradient(to bottom right,rgba(225, 238, 239, 0.2) 0, rgba(161, 208, 208, 0.2) 100%);box-shadow: 16px 16px 20px 0 #23292b;border-radius: 12px;color: #e1eeef;overflow: hidden;}'
   >
@@ -16,7 +16,7 @@
             <q-item-label>{{ $t('menuList.Dashboard') }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item v-if='false' clickable v-close-popup @click='$router.push("/wallet")'>
+        <q-item clickable v-close-popup @click='$router.push("/wallet")'>
           <q-item-section>
             <q-item-label>{{ $t('menuList.Wallet') }}</q-item-label>
           </q-item-section>
@@ -61,16 +61,13 @@ import { UserLogoutRequest } from 'src/store/users/types'
 const store = useStore()
 
 interface Props {
-  avatarSize?: string
   hasInvitationCode: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  avatarSize: '28px',
   hasInvitationCode: false
 })
 
-const avatarSize = toRef(props, 'avatarSize')
 const showAffiliate = toRef(props, 'hasInvitationCode')
 
 const logined = computed({
@@ -113,5 +110,10 @@ const logout = () => {
 .avatar-dropdown {
   color: white;
   width: 160px;
+}
+
+.avatar-icon {
+  width: 32px;
+  height: 32px;
 }
 </style>

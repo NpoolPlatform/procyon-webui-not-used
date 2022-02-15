@@ -91,6 +91,7 @@ const setShowDrawer = (path: string) => {
     case '/affiliate':
     case '/kyc':
     case '/security':
+    case '/wallet':
       showDrawer.value = true
       return
   }
