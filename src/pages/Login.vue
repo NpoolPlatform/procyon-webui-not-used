@@ -4,7 +4,7 @@
   </LoginBox>
 
   <q-dialog v-model='showVerify'>
-    <CodeVerifier :verify-by='verifyBy' v-model:verify-code='verifyCode' @verify='onVerify' />
+    <CodeVerifier v-model:verify-by='verifyBy' v-model:verify-code='verifyCode' @verify='onVerify' />
   </q-dialog>
 </template>
 

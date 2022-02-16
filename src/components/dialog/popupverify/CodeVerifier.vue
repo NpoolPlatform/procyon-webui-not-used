@@ -65,8 +65,9 @@ const verifyBy = toRef(props, 'verifyBy')
 const myVerifyCode = ref(verifyCode.value)
 
 const emit = defineEmits<{(e: 'update:verifyCode', verifyCode: string): void,
-  (e: 'verify', value: string): void }
->()
+  (e: 'verify', value: string): void,
+  (e: 'update:verifyBy', verifyBy: string): void
+}>()
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
@@ -108,6 +109,9 @@ const verifyCodeRules = ref([
 
 watch(myVerifyCode, () => {
   emit('update:verifyCode', myVerifyCode.value)
+})
+watch(verifyMethod, () => {
+  emit('update:verifyBy', verifyMethod.value)
 })
 
 onMounted(() => {

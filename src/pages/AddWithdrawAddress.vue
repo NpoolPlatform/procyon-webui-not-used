@@ -1,42 +1,45 @@
 <template>
-  <Box :title="$t('MSG_WALLET_REGISTRATION')" :always-selectable="true" :show-link='false'>
-    <h4>{{ t('MSG_BLOCKCHAIN') }}:</h4>
-    <q-btn-dropdown
-      class='coin-select'
-      flat
-      dense
-      no-caps
-      unelevated
-      align='between'
-      auto-close
-      :label='selectedCoinName'
-    >
-      <q-list>
-        <q-item
-          dense
-          class='coin-select-item'
-          clickable
-          v-for='coin in coins'
-          :key='coin.ID'
-          @click="() => onCoinSelected(coin)"
-        >
-          <q-item-section>
-            <q-item-label>{{ coin.Name }}</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-btn-dropdown>
-    <h4>{{ t('MSG_YOUR_WALLET_ADDRESS') }}:</h4>
-    <input type='text' class='common-input' v-model='walletAddress' />
-    <q-btn class='common-button submit-button' type='submit' @click='onAddressSubmit'>
-      {{ $t('MSG_REGISTER_ADDRESS') }}
-    </q-btn>
-    <h3>Caution</h3>
-    <p v-html='t("MSG_REGISTER_ADDRESS_CAUTION")' />
-  </Box>
+  <q-btn class='back-button' @click='onBackClick'>⭠</q-btn>
+  <div class='content'>
+    <Box :title="$t('MSG_WALLET_REGISTRATION')" :always-selectable="true" :show-link='false'>
+      <h4>{{ t('MSG_BLOCKCHAIN') }}:</h4>
+      <q-btn-dropdown
+        class='coin-select'
+        flat
+        dense
+        no-caps
+        unelevated
+        align='between'
+        auto-close
+        :label='selectedCoinName'
+      >
+        <q-list>
+          <q-item
+            dense
+            class='coin-select-item'
+            clickable
+            v-for='coin in coins'
+            :key='coin.ID'
+            @click="() => onCoinSelected(coin)"
+          >
+            <q-item-section>
+              <q-item-label>{{ coin.Name }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-btn-dropdown>
+      <h4>{{ t('MSG_YOUR_WALLET_ADDRESS') }}:</h4>
+      <input type='text' class='common-input' v-model='walletAddress' />
+      <q-btn class='common-button submit-button' type='submit' @click='onAddressSubmit'>
+        {{ $t('MSG_REGISTER_ADDRESS') }}
+      </q-btn>
+      <h3>Caution</h3>
+      <p v-html='t("MSG_REGISTER_ADDRESS_CAUTION")' />
+    </Box>
+  </div>
 
   <q-dialog v-model='showVerify'>
-    <CodeVerifier :verify-by='verifyBy' v-model:verify-code='verifyCode' />
+    <CodeVerifier v-model:verify-by='verifyBy' v-model:verify-code='verifyCode' />
   </q-dialog>
 </template>
 
@@ -48,10 +51,14 @@ import { ModuleKey, Type as NotificationType } from 'src/store/notifications/con
 import { Coin } from 'src/store/coins/types'
 import { VerifyMethod } from 'src/store/users/const'
 import { ActionTypes as CoinActionTypes } from 'src/store/coins/action-types'
+import { useRouter } from 'src/router'
+import { GenerateSendEmailRequest } from 'src/utils/utils'
+import { ActionTypes as VerifyActionTypes } from 'src/store/verify/action-types'
+import { SendEmailCodeRequest } from 'src/store/verify/types'
 
 const store = useStore()
 // eslint-disable-next-line @typescript-eslint/unbound-method
-const { t } = useI18n({ useScope: 'global' })
+const { t, locale } = useI18n({ useScope: 'global' })
 
 const Box = defineAsyncComponent(() => import('src/components/box/Box.vue'))
 const CodeVerifier = defineAsyncComponent(() => import('src/components/dialog/popupverify/CodeVerifier.vue'))
@@ -59,9 +66,47 @@ const CodeVerifier = defineAsyncComponent(() => import('src/components/dialog/po
 const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSale && !coin.ForPay))
 const selectedCoin = ref(undefined as unknown as Coin)
 const walletAddress = ref('')
+const userInfo = computed(() => store.getters.getUserInfo)
+
+const langID = computed(() => {
+  let id = ''
+  store.getters.getLanguages.forEach((lang) => {
+    if (locale.value === lang.Lang) {
+      id = lang.ID
+    }
+  })
+  return id
+})
+
+const verifyBy = ref(VerifyMethod.VerifyNone)
+const verifyCode = ref('')
+const showVerify = ref(false)
 
 const onAddressSubmit = () => {
-  console.log('submit')
+  verifyBy.value = VerifyMethod.VerifyNone
+  showVerify.value = true
+}
+
+watch(verifyBy, () => {
+  let request: SendEmailCodeRequest = {
+    EmailAddress: userInfo.value.User.EmailAddress as string,
+    LangID: langID.value,
+    UsedFor: 'SETWITHDRAWADDRESS'
+  }
+  console.log(verifyBy.value)
+  switch (verifyBy.value) {
+    case VerifyMethod.VerifyByEmail:
+      request = GenerateSendEmailRequest(locale.value, userInfo.value, request)
+      store.dispatch(VerifyActionTypes.SendEmail, request)
+      break
+    case VerifyMethod.VerifyByGoogle:
+      break
+  }
+})
+
+const router = useRouter()
+const onBackClick = () => {
+  router.back()
 }
 
 const selectedCoinName = ref(t('MSG_PAYMENT_METHOD'))
@@ -75,10 +120,6 @@ watch(coins, () => {
 watch(selectedCoin, () => {
   selectedCoinName.value = selectedCoin.value ? selectedCoin.value.Name : t('MSG_PAYMENT_METHOD')
 })
-
-const verifyBy = ref(VerifyMethod.VerifyNone)
-const verifyCode = ref('')
-const showVerify = ref(false)
 
 onMounted(() => {
   store.dispatch(CoinActionTypes.GetCoins, {
@@ -96,6 +137,24 @@ onMounted(() => {
 </script>
 
 <style lang='sass' scoped>
+.content
+  margin-top: 72px
+
+.back-button
+  background: linear-gradient(to bottom right, rgba(225, 238, 239, 0.2) 0, rgba(161, 208, 208, 0.2) 100%)
+  box-shadow: 16px 16px 20px 0 #23292b
+  border-radius: 0 12px 12px 0
+  cursor: pointer
+  display: inline-block
+  font-size: 24px
+  line-height: 30px
+  margin: 0
+  opacity: .7
+  padding: 16px 24px
+  position: absolute
+  text-transform: uppercase
+  transition: all ease-in-out .2s
+
 .coin-select
   border: solid 2px transparent
   border-radius: 12px
