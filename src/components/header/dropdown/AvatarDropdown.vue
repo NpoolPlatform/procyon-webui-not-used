@@ -5,7 +5,7 @@
     dense
     no-icon-animation
     dropdown-icon='img:icons/icon-user.svg'
-    class='avatar-icon'
+    size='1.3rem'
     v-if='logined'
     content-style='{width: 150px;background: linear-gradient(to bottom right,rgba(225, 238, 239, 0.2) 0, rgba(161, 208, 208, 0.2) 100%);box-shadow: 16px 16px 20px 0 #23292b;border-radius: 12px;color: #e1eeef;overflow: hidden;}'
   >
@@ -110,10 +110,5 @@ const logout = () => {
 .avatar-dropdown {
   color: white;
   width: 160px;
-}
-
-.avatar-icon {
-  width: 32px;
-  height: 32px;
 }
 </style>
