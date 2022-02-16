@@ -1,3 +1,4 @@
+import { Account } from '../accounts/types'
 import { Coin } from '../coins/types'
 import { Good } from '../goods/types'
 import { ReqMessage } from '../notifications/types'
@@ -53,12 +54,6 @@ interface UserSpecialReduction {
   DurationDays: number
   Message: string
   Start: number
-}
-
-export interface Account {
-  ID: string
-  CoinTypeID: string
-  Address: string
 }
 
 export interface Order {

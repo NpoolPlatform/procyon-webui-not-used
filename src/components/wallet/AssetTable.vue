@@ -14,16 +14,13 @@
 <script setup lang='ts'>
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-// import { useStore } from 'src/store'
+import { useStore } from 'src/store'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
 
-// const store = useStore()
-
-// const orders = computed(() => store.getters.getOrders)
-// const goods = computed(() => store.getters.getGoods)
-// const benefits = computed(() => store.getters.getBenefits)
+const store = useStore()
+const benefits = computed(() => store.getters.getBenefits)
 
 interface Asset {
   Name: string
@@ -33,8 +30,22 @@ interface Asset {
   JPYValue: number
 }
 
+// TODO: get market value of different coin type
 const assets = computed(() => {
-  return [] as Array<Asset>
+  const myAssets = new Map<string, Asset>()
+  benefits.value.forEach((benefit) => {
+    const good = store.getters.getGoodByID(benefit.GoodID)
+    let asset = myAssets.get(good?.Main?.ID as string)
+    if (!asset) {
+      asset = {} as Asset
+    }
+    asset.Balance += benefit.Amount
+    if (new Date().getTime() / 1000 < benefit.CreateAt + 24 * 60 * 60) {
+      asset.Last24HoursIncoming += benefit.Amount
+    }
+    myAssets.set(good?.Main?.ID as string, asset)
+  })
+  return Array.from(myAssets).map(([, value]) => value)
 })
 
 const assetTable = computed(() => [

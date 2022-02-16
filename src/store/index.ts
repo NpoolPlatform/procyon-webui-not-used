@@ -103,6 +103,14 @@ import {
   TransactionActions
 } from './transactions'
 
+import {
+  accounts,
+  AccountsState,
+  AccountMutations,
+  AccountGetters,
+  AccountActions
+} from './accounts'
+
 // 2 combine your store to root store
 export interface RootState {
   user: UserState
@@ -119,6 +127,7 @@ export interface RootState {
   coins: CoinsState
   benefits: BenefitsState
   transactions: TransactionsState
+  accounts: AccountsState
 }
 
 // 3 combine your actions, mutations and getters to root, if have multi use & combin
@@ -134,7 +143,8 @@ type Actions =
   ApplicationActions &
   CoinActions &
   BenefitActions &
-  TransactionActions
+  TransactionActions &
+  AccountActions
 type Mutations =
   UserMutations &
   StyleMutations &
@@ -149,7 +159,8 @@ type Mutations =
   NotificationMutations &
   CoinMutations &
   BenefitMutations &
-  TransactionMutations
+  TransactionMutations &
+  AccountMutations
 type Getters =
   UserGetters &
   StyleGetters &
@@ -164,7 +175,8 @@ type Getters =
   NotificationGetters &
   CoinGetters &
   BenefitGetters &
-  TransactionGetters
+  TransactionGetters &
+  AccountGetters
 
 // 4 attach your module to root
 export default store(function (/* { ssrContext } */) {
@@ -183,7 +195,8 @@ export default store(function (/* { ssrContext } */) {
       notifications,
       coins,
       benefits,
-      transactions
+      transactions,
+      accounts
     },
 
     // enable strict mode (adds overhead!)

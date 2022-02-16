@@ -15,9 +15,11 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'src/store'
+import { Transaction } from 'src/store/transactions/types'
+import { TimeStampToDate } from 'src/utils/utils'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
-const { t } = useI18n({ useScope: 'global' })
+const { t, locale } = useI18n({ useScope: 'global' })
 const store = useStore()
 
 const transactions = computed(() => store.getters.getTransactions)
@@ -27,13 +29,13 @@ const transactionTable = computed(() => [
     name: 'Name',
     label: t('MSG_NAME'),
     align: 'left',
-    field: 'Date'
+    field: (row: Transaction) => store.getters.getCoinByID(row.CoinTypeID).Name
   },
   {
     name: 'Date',
     label: t('MSG_DATE'),
     align: 'center',
-    field: 'CreateAt'
+    field: (row: Transaction) => TimeStampToDate(row.CreateAt, 'YYYY-MM-DD HH:mm', locale.value)
   },
   {
     name: 'Amount',
@@ -51,7 +53,7 @@ const transactionTable = computed(() => [
     name: 'Type',
     label: t('MSG_TYPE'),
     align: 'center',
-    field: 'Type'
+    field: () => 'Withdrawal'
   }
 ])
 

@@ -2,8 +2,8 @@
   <q-table
     flat
     class='table-box'
-    :rows='transactions'
-    :columns='transactionTable'
+    :rows='accounts'
+    :columns='accountTable'
     row-key='ID'
     color='#e1eeef'
     :no-data-label="$t('NoData')"
@@ -14,20 +14,22 @@
 <script setup lang='ts'>
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useStore } from 'src/store'
+import { useStore } from '../../store'
+import { WithdrawAccount } from '../../store/accounts/types'
+import { TimeStampToDate } from '../../utils/utils'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
-const { t } = useI18n({ useScope: 'global' })
+const { t, locale } = useI18n({ useScope: 'global' })
 const store = useStore()
 
-const transactions = computed(() => store.getters.getTransactions)
+const accounts = computed(() => store.getters.getWithdrawAccounts)
 
-const transactionTable = computed(() => [
+const accountTable = computed(() => [
   {
     name: 'Blockchain',
     label: t('MSG_BLOCKCHAIN'),
     align: 'left',
-    field: 'Date'
+    field: (row: WithdrawAccount) => store.getters.getCoinByID(row.Account.CoinTypeID).Name
   },
   {
     name: 'Address',
@@ -39,7 +41,7 @@ const transactionTable = computed(() => [
     name: 'Date Added',
     label: t('MSG_DATE_ADDED'),
     align: 'center',
-    field: 'Amount'
+    field: (row: WithdrawAccount) => TimeStampToDate(row.Withdraw.CreateAt, 'YYYY-MM-DD HH:mm', locale.value)
   }
 ])
 

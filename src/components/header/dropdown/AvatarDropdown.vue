@@ -16,7 +16,7 @@
             <q-item-label>{{ $t('menuList.Dashboard') }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item v-if='false' clickable v-close-popup @click='$router.push("/wallet")'>
+        <q-item clickable v-close-popup @click='$router.push("/wallet")'>
           <q-item-section>
             <q-item-label>{{ $t('menuList.Wallet') }}</q-item-label>
           </q-item-section>

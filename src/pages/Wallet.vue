@@ -9,7 +9,7 @@
       <div class='section-part-title row'>
         {{ $t('MSG_ASSETS') }}
         <q-space />
-        <q-btn dense flat class='common-button export-button l-section-part-title'>
+        <q-btn disable dense flat class='common-button export-button l-section-part-title'>
           {{ $t('MSG_EXPORT_HISTORY') }}
         </q-btn>
       </div>
