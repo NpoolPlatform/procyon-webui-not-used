@@ -101,6 +101,16 @@ export default {
   MSG_ADD_NEW_ADDRESS: 'Add New Address',
   MSG_WALLET_REGISTRATION: 'Wallet Registration',
   MSG_YOUR_WALLET_ADDRESS: 'Your Wallet Address',
+  MSG_REGISTER_ADDRESS: 'Register Address',
+  MSG_CAUTION: 'Caution',
+  MSG_REGISTER_ADDRESS_CAUTION: '<ul>' +
+                                  '<li>Make sure you enter the correct address. ' +
+                                  '<strong>Using an incorrect address will result in the loss of assets.</strong></li>' +
+                                  '<li>Make sure that <strong>the address matches the selected blockchain</strong>. ' +
+                                  'If the address does not match, your assets will be permanently lost!</li>' +
+                                  '<li>After registering your address <strong>the approval process may take up to 24 hours</strong>. ' +
+                                  'This is a security measure in place to safeguard your assets!</li>' +
+                                '</ul>',
 
   general: {
     KYCStatus: 'KYC Verification Status',

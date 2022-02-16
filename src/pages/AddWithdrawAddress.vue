@@ -27,7 +27,12 @@
       </q-list>
     </q-btn-dropdown>
     <h4>{{ t('MSG_YOUR_WALLET_ADDRESS') }}:</h4>
-    <input type='text'>
+    <input type='text' class='common-input' v-model='walletAddress' />
+    <q-btn class='common-button submit-button' type='submit' @click='onAddressSubmit'>
+      {{ $t('MSG_REGISTER_ADDRESS') }}
+    </q-btn>
+    <h3>Caution</h3>
+    <p v-html='t("MSG_REGISTER_ADDRESS_CAUTION")' />
   </Box>
 
   <q-dialog v-model='showVerify'>
@@ -53,6 +58,11 @@ const CodeVerifier = defineAsyncComponent(() => import('src/components/dialog/po
 
 const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSale && !coin.ForPay))
 const selectedCoin = ref(undefined as unknown as Coin)
+const walletAddress = ref('')
+
+const onAddressSubmit = () => {
+  console.log('submit')
+}
 
 const selectedCoinName = ref(t('MSG_PAYMENT_METHOD'))
 
@@ -130,4 +140,28 @@ h4
   font-size: 18px
   font-weight: 400
   margin: 12px 0
+
+.submit-button
+  background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%)
+  border: 1px solid #ff964a
+  margin: 0 0 10px 0
+  width: 100%
+
+::v-deep ul
+  font-size: 18px
+  font-weight: 300
+  line-height: 36px
+  list-style: none
+
+::v-deep ul li::before
+  color: #1ec498
+  content: "\2727" /* hollow star */
+  /* content: "\2726"; /*filled star*/
+  /* content: "\21e2"; /*dashed arrow*/
+  display: inline-block
+  margin-left: -32px
+  width: 32px
+
+::v-deep ul strong
+  font-weight: 700
 </style>
