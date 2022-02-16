@@ -24,34 +24,22 @@ const transactions = computed(() => store.getters.getTransactions)
 
 const transactionTable = computed(() => [
   {
-    name: 'Name',
-    label: t('MSG_NAME'),
+    name: 'Blockchain',
+    label: t('MSG_BLOCKCHAIN'),
     align: 'left',
     field: 'Date'
   },
   {
-    name: 'Date',
-    label: t('MSG_DATE'),
+    name: 'Address',
+    label: t('MSG_ADDRESS'),
     align: 'center',
     field: 'CreateAt'
   },
   {
-    name: 'Amount',
-    label: t('MSG_AMOUNT'),
+    name: 'Date Added',
+    label: t('MSG_DATE_ADDED'),
     align: 'center',
     field: 'Amount'
-  },
-  {
-    name: 'Status',
-    label: t('MSG_STATUS'),
-    align: 'center',
-    field: 'State'
-  },
-  {
-    name: 'Type',
-    label: t('MSG_TYPE'),
-    align: 'center',
-    field: 'Type'
   }
 ])
 

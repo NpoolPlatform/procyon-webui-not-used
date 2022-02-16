@@ -90,6 +90,14 @@ export default {
   MSG_24_HOUR_CHANGE: '24 Hour Change',
   MSG_MARKET_VALUE_USDT: 'Market Value (USDT)',
   MSG_MARKET_VALUE_JPY: 'Market Value (JPY)',
+  MSG_DATE: 'Date',
+  MSG_AMOUNT: 'Amount',
+  MSG_STATUS: 'Status',
+  MSG_TYPE: 'Type',
+  MSG_APPROVED_ADDRESSES: 'Approved Addresses',
+  MSG_BLOCKCHAIN: 'Blockchain',
+  MSG_ADDRESS: 'Address',
+  MSG_DATE_ADDED: 'Date Added',
 
   general: {
     KYCStatus: 'KYC Verification Status',

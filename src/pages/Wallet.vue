@@ -17,25 +17,13 @@
     </div>
     <div class='hr-t'></div>
     <div>
-      <div class='section-part-title row'>
-        {{ $t('MSG_TRANSACTIONS') }}
-        <q-space />
-        <q-btn dense flat class='common-button export-button l-section-part-title'>
-          {{ $t('MSG_EXPORT_HISTORY') }}
-        </q-btn>
-      </div>
+      <div class='section-part-title row'>{{ $t('MSG_TRANSACTIONS') }}</div>
       <TransactionTable />
     </div>
     <div class='hr-t'></div>
     <div>
-      <div class='section-part-title row'>
-        {{ $t('MSG_BENEFITS') }}
-        <q-space />
-        <q-btn dense flat class='common-button export-button l-section-part-title'>
-          {{ $t('MSG_EXPORT_HISTORY') }}
-        </q-btn>
-      </div>
-      <BenefitTable />
+      <div class='section-part-title row'>{{ $t('MSG_APPROVED_ADDRESSES') }}</div>
+      <ApprovedAddressTable />
     </div>
     <div class='hr-t'></div>
   </div>
@@ -53,7 +41,7 @@ import { useI18n } from 'vue-i18n'
 const BalanceBox = defineAsyncComponent(() => import('src/components/wallet/BalanceBox.vue'))
 const AssetTable = defineAsyncComponent(() => import('src/components/wallet/AssetTable.vue'))
 const TransactionTable = defineAsyncComponent(() => import('components/wallet/TransactionTable.vue'))
-const BenefitTable = defineAsyncComponent(() => import('components/wallet/BenefitTable.vue'))
+const ApprovedAddressTable = defineAsyncComponent(() => import('src/components/wallet/ApprovedAddressTable.vue'))
 
 const store = useStore()
 // eslint-disable-next-line @typescript-eslint/unbound-method
