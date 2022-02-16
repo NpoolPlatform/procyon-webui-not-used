@@ -98,6 +98,7 @@ export default {
   MSG_BLOCKCHAIN: 'Blockchain',
   MSG_ADDRESS: 'Address',
   MSG_DATE_ADDED: 'Date Added',
+  MSG_ADD_NEW_ADDRESS: 'Add New Address',
 
   general: {
     KYCStatus: 'KYC Verification Status',

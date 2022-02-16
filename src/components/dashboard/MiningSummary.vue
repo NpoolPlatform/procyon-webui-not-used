@@ -31,9 +31,9 @@
       </div>
 
       <div class='line'>
-            <span class='label'>{{
-                $t('dashboard.Column2.TechnicalServiceFee')
-              }}</span>
+        <span class='label'>{{
+          $t('dashboard.Column2.TechnicalServiceFee')
+        }}</span>
         <span class='value'>* SMH (20%)</span>
       </div>
 
@@ -43,9 +43,9 @@
       </div>
 
       <div class='line'>
-            <span class='label'>{{
-                $t('dashboard.Column2.TotalDaysMining')
-              }}</span>
+        <span class='label'>{{
+          $t('dashboard.Column2.TotalDaysMining')
+        }}</span>
         <span class='value'>{{ durationDays }} {{ $t('dashboard.Day') }}</span>
       </div>
 
@@ -55,9 +55,9 @@
       </div>
 
       <div class='line'>
-            <span class='label'>{{
-                $t('dashboard.Column2.NetworkDailyOutput')
-              }}</span>
+        <span class='label'>{{
+          $t('dashboard.Column2.NetworkDailyOutput')
+        }}</span>
         <span class='value'>* SMH</span>
       </div>
     </div>

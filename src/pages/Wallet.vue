@@ -9,7 +9,7 @@
       <div class='section-part-title row'>
         {{ $t('MSG_ASSETS') }}
         <q-space />
-        <q-btn disable dense flat class='common-button export-button l-section-part-title'>
+        <q-btn disable flat class='common-button export-button l-section-part-title'>
           {{ $t('MSG_EXPORT_HISTORY') }}
         </q-btn>
       </div>
@@ -91,7 +91,7 @@ onMounted(() => {
 
 .export-button {
   border: 1px solid #ff964a;
-  color: #ff964a;
+  color: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
   text-shadow: 1px 1px 1px #27424c;
   height: 36px;
   line-height: 20px;

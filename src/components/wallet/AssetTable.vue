@@ -100,23 +100,4 @@ const assetTable = computed(() => [
 .table-box >>> th {
   font-size: 16px !important;
 }
-
-.buttons {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 24px 30px 24px;
-}
-
-.export-button {
-  border: 1px solid #ff964a;
-  color: #ff964a;;
-  text-shadow: 1px 1px 1px #27424c;
-}
-
-.purchase-button {
-  background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
-  border: 0;
-  color: #e4f4f0;
-  text-shadow: 1px 1px 1px #ce5417;
-}
 </style>

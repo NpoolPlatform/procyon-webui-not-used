@@ -1,14 +1,20 @@
 <template>
-  <q-table
-    flat
-    class='table-box'
-    :rows='accounts'
-    :columns='accountTable'
-    row-key='ID'
-    color='#e1eeef'
-    :no-data-label="$t('NoData')"
-  >
-  </q-table>
+  <div class='container'>
+    <q-table
+      flat
+      :rows='accounts'
+      class='table-box'
+      :columns='accountTable'
+      row-key='ID'
+      color='#e1eeef'
+      :no-data-label="$t('NoData')"
+      :hide-bottom='false'
+    >
+    </q-table>
+    <q-btn class='common-button filled-button small-button' @click='onAddNewAddressClick'>
+      {{ t('MSG_ADD_NEW_ADDRESS') }}
+    </q-btn>
+  </div>
 </template>
 
 <script setup lang='ts'>
@@ -45,10 +51,14 @@ const accountTable = computed(() => [
   }
 ])
 
+const onAddNewAddressClick = () => {
+  console.log('click')
+}
+
 </script>
 
 <style scoped>
-.table-box {
+.container {
   background: linear-gradient(
     to bottom right,
     rgba(225, 238, 239, 0.2) 0,
@@ -56,31 +66,28 @@ const accountTable = computed(() => [
   );
   box-shadow: 16px 16px 20px 0 #23292b;
   border-radius: 12px;
-  color: #e1eeef;
   padding: 24px;
   margin: 24px;
+}
+
+.table-box {
+  background: transparent;
+  color: #e1eeef;
+  margin-bottom: 16px;
 }
 
 .table-box >>> th {
   font-size: 16px !important;
 }
 
-.buttons {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 24px 30px 24px;
-}
-
-.export-button {
-  border: 1px solid #ff964a;
-  color: #ff964a;;
-  text-shadow: 1px 1px 1px #27424c;
-}
-
-.purchase-button {
+.filled-button {
   background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
   border: 0;
   color: #e4f4f0;
   text-shadow: 1px 1px 1px #ce5417;
+}
+
+.small-button {
+  font-size: 10px;
 }
 </style>
