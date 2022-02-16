@@ -11,6 +11,7 @@
       :hide-bottom='false'
     >
     </q-table>
+    <div>{{ accounts }}</div>
     <q-btn class='common-button filled-button small-button' @click='onAddNewAddressClick'>
       {{ t('MSG_ADD_NEW_ADDRESS') }}
     </q-btn>
@@ -18,12 +19,17 @@
 </template>
 
 <script setup lang='ts'>
-import { computed } from 'vue'
+import { computed, onMounted, ref, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from '../../store'
 import { WithdrawAccount } from '../../store/accounts/types'
 import { TimeStampToDate } from '../../utils/utils'
 import { useRouter } from '../../router'
+import { ActionTypes as AccountActionTypes } from '../../store/accounts/action-types'
+import { MutationTypes as NotificationMutationTypes } from '../..//store/notifications/mutation-types'
+import { notificationPop, notify } from '../..//store/notifications/helper'
+import { ModuleKey, Type as NotificationType } from '../../store/notifications/const'
+import { ActionTypes as CoinActionTypes } from '../../store/coins/action-types'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t, locale } = useI18n({ useScope: 'global' })
@@ -42,13 +48,13 @@ const accountTable = computed(() => [
     name: 'Address',
     label: t('MSG_ADDRESS'),
     align: 'center',
-    field: 'CreateAt'
+    field: (row: WithdrawAccount) => row.Account.Address
   },
   {
     name: 'Date Added',
     label: t('MSG_DATE_ADDED'),
     align: 'center',
-    field: (row: WithdrawAccount) => TimeStampToDate(row.Withdraw.CreateAt, 'YYYY-MM-DD HH:mm', locale.value)
+    field: (row: WithdrawAccount) => TimeStampToDate(row.Withdraw?.CreateAt, 'YYYY-MM-DD HH:mm', locale.value)
   }
 ])
 
@@ -57,6 +63,47 @@ const router = useRouter()
 const onAddNewAddressClick = () => {
   void router.push({ path: '/add/withdraw/address' })
 }
+
+type MyFunction = () => void
+const unsubscribe = ref<MyFunction>()
+
+onMounted(() => {
+  unsubscribe.value = store.subscribe((mutation) => {
+    if (mutation.type === NotificationMutationTypes.Push) {
+      const notification = store.getters.peekNotification(ModuleKey.ModuleApplications)
+      if (notification) {
+        notify(notification)
+        store.commit(NotificationMutationTypes.Pop, notificationPop(notification))
+      }
+    }
+  })
+
+  store.dispatch(CoinActionTypes.GetCoins, {
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_GET_COINS_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
+
+  store.dispatch(AccountActionTypes.GetUserWithdrawAccountsByAppUser, {
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_SET_WITHDRAW_ADDRESS_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
+})
+
+onUnmounted(() => {
+  unsubscribe.value?.()
+})
 
 </script>
 

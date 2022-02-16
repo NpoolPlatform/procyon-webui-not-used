@@ -111,6 +111,7 @@ export default {
                                   '<li>After registering your address <strong>the approval process may take up to 24 hours</strong>. ' +
                                   'This is a security measure in place to safeguard your assets!</li>' +
                                 '</ul>',
+  MSG_SET_WITHDRAW_ADDRESS_FAIL: 'Cannot set withdraw address',
 
   general: {
     KYCStatus: 'KYC Verification Status',

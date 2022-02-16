@@ -39,12 +39,12 @@
   </div>
 
   <q-dialog v-model='showVerify'>
-    <CodeVerifier v-model:verify-by='verifyBy' v-model:verify-code='verifyCode' />
+    <CodeVerifier v-model:verify-by='verifyBy' v-model:verify-code='verifyCode' @verify='onVerify' />
   </q-dialog>
 </template>
 
 <script setup lang='ts'>
-import { computed, defineAsyncComponent, onMounted, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, onMounted, ref, watch, onUnmounted } from 'vue'
 import { useStore } from 'src/store'
 import { useI18n } from 'vue-i18n'
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
@@ -55,6 +55,10 @@ import { useRouter } from 'src/router'
 import { GenerateSendEmailRequest } from 'src/utils/utils'
 import { ActionTypes as VerifyActionTypes } from 'src/store/verify/action-types'
 import { SendEmailCodeRequest } from 'src/store/verify/types'
+import { ActionTypes as AccountActionTypes } from 'src/store/accounts/action-types'
+import { MutationTypes as NotificationMutationTypes } from 'src/store/notifications/mutation-types'
+import { notificationPop, notify } from 'src/store/notifications/helper'
+import { MutationTypes as AccountMutationTypes } from 'src/store/accounts/mutation-types'
 
 const store = useStore()
 // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -84,6 +88,7 @@ const showVerify = ref(false)
 
 const onAddressSubmit = () => {
   verifyBy.value = VerifyMethod.VerifyNone
+  verifyCode.value = ''
   showVerify.value = true
 }
 
@@ -93,7 +98,6 @@ watch(verifyBy, () => {
     LangID: langID.value,
     UsedFor: 'SETWITHDRAWADDRESS'
   }
-  console.log(verifyBy.value)
   switch (verifyBy.value) {
     case VerifyMethod.VerifyByEmail:
       request = GenerateSendEmailRequest(locale.value, userInfo.value, request)
@@ -103,6 +107,39 @@ watch(verifyBy, () => {
       break
   }
 })
+const onVerify = () => {
+  showVerify.value = false
+
+  if (!selectedCoin.value) {
+    return
+  }
+
+  let account = ''
+  if (verifyBy.value === VerifyMethod.VerifyByEmail) {
+    account = userInfo.value.User.EmailAddress as string
+  } else if (verifyBy.value === VerifyMethod.VerifyByMobile) {
+    account = userInfo.value.User.PhoneNO as string
+  } else if (verifyBy.value === VerifyMethod.VerifyByGoogle) {
+    // DO NOTHING
+  } else {
+    return
+  }
+  store.dispatch(AccountActionTypes.SetWithdrawAddress, {
+    CoinTypeID: selectedCoin.value.ID as string,
+    Address: walletAddress.value,
+    Account: account,
+    AccountType: verifyBy.value,
+    VerificationCode: verifyCode.value,
+    NotifyMessage: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_SET_WITHDRAW_ADDRESS_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
+}
 
 const router = useRouter()
 const onBackClick = () => {
@@ -121,7 +158,24 @@ watch(selectedCoin, () => {
   selectedCoinName.value = selectedCoin.value ? selectedCoin.value.Name : t('MSG_PAYMENT_METHOD')
 })
 
+type MyFunction = () => void
+const unsubscribe = ref<MyFunction>()
+
 onMounted(() => {
+  unsubscribe.value = store.subscribe((mutation) => {
+    if (mutation.type === NotificationMutationTypes.Push) {
+      const notification = store.getters.peekNotification(ModuleKey.ModuleApplications)
+      if (notification) {
+        notify(notification)
+        store.commit(NotificationMutationTypes.Pop, notificationPop(notification))
+      }
+    }
+
+    if (mutation.type === AccountMutationTypes.SetWithdrawAccount) {
+      router.back()
+    }
+  })
+
   store.dispatch(CoinActionTypes.GetCoins, {
     Message: {
       ModuleKey: ModuleKey.ModuleApplications,
@@ -132,6 +186,10 @@ onMounted(() => {
       }
     }
   })
+})
+
+onUnmounted(() => {
+  unsubscribe.value?.()
 })
 
 </script>

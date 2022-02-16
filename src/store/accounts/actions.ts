@@ -6,7 +6,7 @@ import { AugmentedActionContext, RootState } from '../index'
 import { AccountMutations } from './mutations'
 import { API } from './const'
 import { doAction } from '../action'
-import { GetWithdrawAccountsRequest, GetWithdrawAccountsResponse } from './types'
+import { GetWithdrawAccountsRequest, GetWithdrawAccountsResponse, SetWithdrawAddressRequest, SetWithdrawAddressResponse } from './types'
 
 interface AccountActions {
   [ActionTypes.GetUserWithdrawAccountsByAppUser]({
@@ -16,6 +16,14 @@ interface AccountActions {
     RootState,
     AccountMutations<AccountsState>>,
     req: GetWithdrawAccountsRequest): void
+
+  [ActionTypes.SetWithdrawAddress]({
+    commit
+  }: AugmentedActionContext<
+    AccountsState,
+    RootState,
+    AccountMutations<AccountsState>>,
+    req: SetWithdrawAddressRequest): void
 }
 
 const actions: ActionTree<AccountsState, RootState> = {
@@ -27,6 +35,17 @@ const actions: ActionTree<AccountsState, RootState> = {
       req.Message,
       (resp: GetWithdrawAccountsResponse): void => {
         commit(MutationTypes.SetWithdrawAccounts, resp.Infos)
+      })
+  },
+
+  [ActionTypes.SetWithdrawAddress] ({ commit }, req: SetWithdrawAddressRequest) {
+    doAction<SetWithdrawAddressRequest, SetWithdrawAddressResponse>(
+      commit,
+      API.SET_WITHDRAW_ADDRESS,
+      req,
+      req.NotifyMessage,
+      (resp: SetWithdrawAddressResponse): void => {
+        commit(MutationTypes.SetWithdrawAccount, resp.Info)
       })
   }
 }

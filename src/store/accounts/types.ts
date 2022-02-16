@@ -4,6 +4,8 @@ interface Withdraw {
   ID: string
   CoinTypeID: string
   AccountID: string
+  Name: string
+  Message: string
   CreateAt: number
 }
 
@@ -16,6 +18,8 @@ interface Account {
 
 interface WithdrawAccount {
   Withdraw: Withdraw
+  State: string
+  Message: string
   Account: Account
 }
 
@@ -27,9 +31,26 @@ interface GetWithdrawAccountsResponse {
   Infos: ReadonlyArray<WithdrawAccount>
 }
 
+interface SetWithdrawAddressRequest {
+  CoinTypeID: string
+  Address: string
+  Name?: string
+  Message?: string
+  Account: string
+  AccountType: string
+  VerificationCode: string
+  NotifyMessage: ReqMessage
+}
+
+interface SetWithdrawAddressResponse {
+  Info: WithdrawAccount
+}
+
 export {
   Account,
   WithdrawAccount,
   GetWithdrawAccountsRequest,
-  GetWithdrawAccountsResponse
+  GetWithdrawAccountsResponse,
+  SetWithdrawAddressRequest,
+  SetWithdrawAddressResponse
 }

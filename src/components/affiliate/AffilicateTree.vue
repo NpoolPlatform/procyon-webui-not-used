@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang='ts'>
-import { computed, onBeforeMount, ref, onUnmounted } from 'vue'
+import { computed, onBeforeMount } from 'vue'
 import { useStore } from 'src/store'
 import { GetDirectInvitationsRequest, InvitationSummary, Invitation } from 'src/store/affiliate/types'
 import { useQuasar } from 'quasar'
@@ -52,16 +52,8 @@ const target = ItemStateTarget.GetDirectInvitationList
 
 const innerLoading = computed(() => store.getters.getInnerLoading.get(target))
 
-type MyFunction = () => void
-
-const unsubscribe = ref<MyFunction>()
-
 onBeforeMount(() => {
   getInvitationList()
-})
-
-onUnmounted(() => {
-  unsubscribe.value?.()
 })
 
 const store = useStore()
