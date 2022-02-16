@@ -46,7 +46,7 @@
     </div>
 
     <div>
-      <q-btn disable class='common-button product-btn' @click='onStartMiningClick(good)'>{{
+      <q-btn class='common-button product-btn' @click='onStartMiningClick(good)'>{{
           $t('button.StartMining')
         }}
       </q-btn>
