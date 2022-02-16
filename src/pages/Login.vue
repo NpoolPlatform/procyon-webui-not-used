@@ -3,34 +3,9 @@
     <LoginForm />
   </LoginBox>
 
-  <VerifyDialog :dialog-title="$t('dialog.EmailVerify.Title')" v-model:show-dialog='showEmailVerifyDialog'
-                @verify='verifyEmailCode'>
-    <template v-slot:content>
-      <q-card-section>
-        {{ $t('dialog.EmailVerify.Content1')
-        }}<span style='font-weight: bolder'>{{ userInfo.User.EmailAddress
-        }}</span>, {{ $t('dialog.EmailVerify.Content3')
-        }}
-      </q-card-section>
-    </template>
-
-    <template v-slot:email-input>
-      <q-input
-        disable
-        bg-color='blue-grey-2'
-        class='common-input'
-        outlined
-        :label='$t("input.EmailAddress")'
-        v-model='userInfo.User.EmailAddress'>
-      </q-input>
-    </template>
-  </VerifyDialog>
-  <VerifyDialog :dialog-title="$t('dialog.GoogleVerify.Title')"
-                v-model:show-dialog='showGoogleAuthenticationVerifyDialog' @verify='verifyGoogleCode'>
-    <template v-slot:content>
-      <q-card-section>{{ $t('login.GoogleVerifyContent') }}</q-card-section>
-    </template>
-  </VerifyDialog>
+  <q-dialog v-model='showVerify'>
+    <CodeVerifier :verify-by='verifyBy' v-model:verify-code='verifyCode' @verify='onVerify' />
+  </q-dialog>
 </template>
 
 <script setup lang='ts'>
@@ -50,6 +25,7 @@ import { throttle, useQuasar } from 'quasar'
 import { ActionTypes as ApplicationActionTypes } from 'src/store/application/action-types'
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
 import { AppID } from 'src/const/const'
+import { VerifyMethod } from 'src/store/users/const'
 
 const store = useStore()
 const router = useRouter()
@@ -62,10 +38,15 @@ const { locale } = useI18n({ useScope: 'global' })
 
 const LoginBox = defineAsyncComponent(() => import('src/components/box/Box.vue'))
 const LoginForm = defineAsyncComponent(() => import('src/components/form/LoginForm.vue'))
-const VerifyDialog = defineAsyncComponent(() => import('src/components/dialog/login-verify/VerifyDialog.vue'))
+const CodeVerifier = defineAsyncComponent(() => import('src/components/dialog/popupverify/CodeVerifier.vue'))
 
-const showGoogleAuthenticationVerifyDialog = ref(false)
-const showEmailVerifyDialog = ref(false)
+const verifyBy = ref(VerifyMethod.VerifyNone)
+const verifyCode = ref('')
+const showVerify = ref(false)
+watch(verifyBy, () => {
+  console.log(verifyBy.value)
+  showVerify.value = verifyBy.value !== VerifyMethod.VerifyNone
+})
 
 const logined = computed({
   get: () => store.getters.getUserLogined,
@@ -93,8 +74,7 @@ const langID = computed(() => {
   return id
 })
 
-watch(logined, (newLogined, oldLogined) => {
-  // TODO: create app control
+watch(logined, () => {
   if (!application.value.Ctrl || !application.value.Ctrl?.SigninVerifyEnable) {
     q.cookies.set(loginVeiryConfirm, 'true')
     logined.value = true
@@ -103,11 +83,11 @@ watch(logined, (newLogined, oldLogined) => {
     return
   }
 
-  if (newLogined && !oldLogined) {
+  if (logined.value) {
     if (userInfo.value.Ctrl &&
       userInfo.value.Ctrl.SigninVerifyByGoogleAuthentication &&
       userInfo.value.Ctrl.GoogleAuthenticationVerified) {
-      showGoogleAuthenticationVerifyDialog.value = true
+      verifyBy.value = VerifyMethod.VerifyByGoogle
     } else if (userInfo.value.User.EmailAddress &&
       userInfo.value.User.EmailAddress?.length > 0) {
       let request: SendEmailCodeRequest = {
@@ -117,7 +97,7 @@ watch(logined, (newLogined, oldLogined) => {
       }
       request = GenerateSendEmailRequest(locale.value, userInfo.value, request)
       store.dispatch(verifyAction.SendEmail, request)
-      showEmailVerifyDialog.value = true
+      verifyBy.value = VerifyMethod.VerifyByEmail
     } else {
       q.cookies.set(loginVeiryConfirm, 'true')
       logined.value = true
@@ -141,6 +121,19 @@ const verifyGoogleCode = throttle((verifyCode: string): void => {
   }
   store.dispatch(ActionTypes.VerifyGoogleAuthentication, request)
 }, ThrottleDelay)
+
+const onVerify = throttle((verifyCode: string): void => {
+  if (verifyBy.value === VerifyMethod.VerifyByGoogle) {
+    verifyGoogleCode(verifyCode)
+  } else if (verifyBy.value === VerifyMethod.VerifyByEmail) {
+    verifyEmailCode(verifyCode)
+  }
+}, ThrottleDelay)
+
+watch(loginVerify, () => {
+  verifyBy.value = VerifyMethod.VerifyNone
+  void router.push({ path: '/dashboard' })
+})
 
 onMounted(() => {
   store.dispatch(ApplicationActionTypes.GetApplication, {

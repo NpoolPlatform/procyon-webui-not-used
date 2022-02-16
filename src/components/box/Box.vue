@@ -1,7 +1,7 @@
 <template>
   <q-card class='common-card-container'>
-    <q-card-section class='common-card-title'>
-      <span>{{ cardTitle }}</span>
+    <q-card-section class='common-card-title section-part-title'>
+      <div class='title'>{{ cardTitle }}</div>
 
       <div v-if='showLink'>
         <a
@@ -116,6 +116,10 @@ onMounted(() => {
   font-weight: 200;
   margin-right: 10px;
   cursor: pointer;
+}
+
+.title {
+  font-weight: 400;
 }
 
 .form-container.q-card__section--vert {

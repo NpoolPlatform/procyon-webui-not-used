@@ -23,6 +23,7 @@ import { useI18n } from 'vue-i18n'
 import { useStore } from '../../store'
 import { WithdrawAccount } from '../../store/accounts/types'
 import { TimeStampToDate } from '../../utils/utils'
+import { useRouter } from '../../router'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t, locale } = useI18n({ useScope: 'global' })
@@ -51,8 +52,10 @@ const accountTable = computed(() => [
   }
 ])
 
+const router = useRouter()
+
 const onAddNewAddressClick = () => {
-  console.log('click')
+  void router.push({ path: '/add/withdraw/address' })
 }
 
 </script>

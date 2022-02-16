@@ -99,6 +99,7 @@ export default {
   MSG_ADDRESS: 'Address',
   MSG_DATE_ADDED: 'Date Added',
   MSG_ADD_NEW_ADDRESS: 'Add New Address',
+  MSG_WALLET_REGISTRATION: 'Wallet Registration',
 
   general: {
     KYCStatus: 'KYC Verification Status',

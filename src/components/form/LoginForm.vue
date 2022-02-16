@@ -119,10 +119,25 @@ const usernameRule = ref([
 const passwordRule = ref([
   (val: string) => isValidPassword(val) || t('input.PasswordWarning')
 ])
+const logined = computed({
+  get: () => store.getters.getUserLogined,
+  set: (val) => {
+    store.commit(MutationTypes.SetUserLogined, val)
+  }
+})
+const loginVerify = computed({
+  get: () => store.getters.getLoginVerify,
+  set: (val) => {
+    store.commit(MutationTypes.SetLoginVerify, val)
+  }
+})
 
 const login = throttle((): void => {
   let accountType = 'email'
   let account = loginInput.EmailAddress
+
+  logined.value = false
+  loginVerify.value = false
 
   if (showPhone.value) {
     account = formatPhoneNumber(loginInput.PhoneNO)

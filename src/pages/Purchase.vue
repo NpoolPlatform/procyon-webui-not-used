@@ -71,7 +71,6 @@
               unelevated
               align='between'
               auto-close
-              ref='paymentMethod'
               :label='selectedCoinName'
             >
               <q-list>
@@ -133,7 +132,7 @@ interface myQuery {
 }
 const query = computed(() => route.query as unknown as myQuery)
 const good = computed(() => store.getters.getGoodByID(query.value.goodId))
-const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSale))
+const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSale && !coin.ForPay))
 const selectedCoin = ref(undefined as unknown as Coin)
 
 const selectedCoinName = computed(() => {
@@ -163,8 +162,6 @@ watch(purchaseUnits, () => {
 const onBackClick = () => {
   router.back()
 }
-
-const paymentMethod = ref<QBtnDropdown>()
 
 const onSubmit = throttle(() => {
   if (!selectedCoin.value) {

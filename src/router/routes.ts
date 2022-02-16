@@ -105,6 +105,13 @@ const routes: RouteRecordRaw[] = [
         meta: {
           needLogined: true
         }
+      },
+      {
+        path: 'add/withdraw/address',
+        component: () => import('pages/AddWithdrawAddress.vue'),
+        meta: {
+          needLogined: true
+        }
       }
     ]
   },

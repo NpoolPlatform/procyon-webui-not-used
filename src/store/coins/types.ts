@@ -4,6 +4,7 @@ interface Coin {
   ID?: string
   Name: string
   PreSale: boolean
+  ForPay: boolean
   Unit: string
   Logo: string
 }
