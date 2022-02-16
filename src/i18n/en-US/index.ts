@@ -112,6 +112,7 @@ export default {
                                   'This is a security measure in place to safeguard your assets!</li>' +
                                 '</ul>',
   MSG_SET_WITHDRAW_ADDRESS_FAIL: 'Cannot set withdraw address',
+  MSG_GET_WITHDRAW_ADDRESSES_FAIL: 'Cannot get withdraw addresses',
 
   general: {
     KYCStatus: 'KYC Verification Status',

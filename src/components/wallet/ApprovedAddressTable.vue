@@ -11,7 +11,6 @@
       :hide-bottom='false'
     >
     </q-table>
-    <div>{{ accounts }}</div>
     <q-btn class='common-button filled-button small-button' @click='onAddNewAddressClick'>
       {{ t('MSG_ADD_NEW_ADDRESS') }}
     </q-btn>
@@ -54,7 +53,7 @@ const accountTable = computed(() => [
     name: 'Date Added',
     label: t('MSG_DATE_ADDED'),
     align: 'center',
-    field: (row: WithdrawAccount) => TimeStampToDate(row.Withdraw?.CreateAt, 'YYYY-MM-DD HH:mm', locale.value)
+    field: (row: WithdrawAccount) => TimeStampToDate(row.Address?.CreateAt, 'YYYY-MM-DD HH:mm', locale.value)
   }
 ])
 
@@ -93,7 +92,7 @@ onMounted(() => {
     Message: {
       ModuleKey: ModuleKey.ModuleApplications,
       Error: {
-        Title: t('MSG_SET_WITHDRAW_ADDRESS_FAIL'),
+        Title: t('MSG_GET_WITHDRAW_ADDRESSES_FAIL'),
         Popup: true,
         Type: NotificationType.Error
       }

@@ -17,7 +17,7 @@ interface Account {
 }
 
 interface WithdrawAccount {
-  Withdraw: Withdraw
+  Address: Withdraw
   State: string
   Message: string
   Account: Account
