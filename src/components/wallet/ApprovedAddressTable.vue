@@ -29,13 +29,13 @@ import { MutationTypes as NotificationMutationTypes } from '../..//store/notific
 import { notificationPop, notify } from '../..//store/notifications/helper'
 import { ModuleKey, Type as NotificationType } from '../../store/notifications/const'
 import { ActionTypes as CoinActionTypes } from '../../store/coins/action-types'
-import { State } from 'src/store/kycs/const'
+import { State } from '../../store/kycs/const'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t, locale } = useI18n({ useScope: 'global' })
 const store = useStore()
 
-const accounts = computed(() => store.getters.getWithdrawAccounts.filter((address: WithdrawAccount) => address.State === State.Approved))
+const accounts = computed(() => store.getters.getWithdrawAccounts.filter((address: WithdrawAccount) => address.State === State.Verified))
 
 const accountTable = computed(() => [
   {
