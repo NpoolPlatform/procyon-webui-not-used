@@ -98,6 +98,14 @@ onMounted(() => {
 })
 
 const myGoods = computed(() => {
+  const goods = [] as Array<Good>
+  if (store.getters.getRecommends.length > 0) {
+    for (let i = 0; i < 3 && i < store.getters.getRecommends.length; i++) {
+      goods.push(store.getters.getRecommends[i].Good)
+    }
+    return goods
+  }
+
   return store.getters.getGoods.filter((good, index) => {
     return index < 3
   })
