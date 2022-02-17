@@ -36,7 +36,7 @@ const getters: GetterTree<OrderState, RootState> & OrderGetters = {
   },
   getDurationDays: (state: OrderState): number => {
     if (state.orders.length > 0) {
-      return state.orders[0].Good.Good.DurationDays
+      return state.orders[0].Good.Good.Good.DurationDays
     }
     return 0
   },

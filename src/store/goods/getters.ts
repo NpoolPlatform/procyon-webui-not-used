@@ -13,7 +13,7 @@ const getters: GetterTree<GoodState, RootState> & GoodGetters = {
   getGoodByID: (state: GoodState): (goodID: string) => Good | undefined => {
     return (goodID: string) => {
       for (let i = 0; i < state.goods.length; i++) {
-        if (goodID === state.goods[i].Good.ID) {
+        if (goodID === state.goods[i].Good.Good.ID) {
           return state.goods[i]
         }
       }

@@ -6,7 +6,7 @@
     </div>
 
     <div class='product-price'>
-      <span>{{ good.Good.Price }}</span
+      <span>{{ good.Good.Good.Price }}</span
       >USDT / TB
     </div>
 
@@ -22,7 +22,7 @@
     <div class='product-line'>
       <span class='line-label'>{{ $t('product.ServicePeriodLabel') }}</span>
       <span class='line-value'
-      >{{ good.Good.DurationDays }} {{ $t('product.ServicePeriodValue') }}</span
+      >{{ good.Good.Good.DurationDays }} {{ $t('product.ServicePeriodValue') }}</span
       >
     </div>
 
@@ -96,7 +96,7 @@ const onStartMiningClick = (good: Good) => {
   void router.push({
     path: '/purchase',
     query: {
-      goodId: good.Good.ID
+      goodId: good.Good.Good.ID
     }
   })
 }

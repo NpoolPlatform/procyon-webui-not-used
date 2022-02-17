@@ -17,7 +17,7 @@
             </div>
             <div class="three-section">
               <h4>{{ t('MSG_SERVICE_PERIOD') }}</h4>
-              <span class="number">{{ good?.Good.DurationDays }}</span>
+              <span class="number">{{ good?.Good.Good.DurationDays }}</span>
               <span class="unit">{{ t('MSG_DAYS').toUpperCase() }}</span>
             </div>
             <div class="three-section">
@@ -60,7 +60,7 @@
         <div class='order-form'>
           <h3 class='form-title'>{{ t('MSG_MINING_PURCHASE') }}</h3>
           <div>
-            <h4>{{ t('MSG_PURCHASE_UNITS') }} ({{ good?.Good.Unit }}s)</h4>
+            <h4>{{ t('MSG_PURCHASE_UNITS') }} ({{ good?.Good.Good.Unit }}s)</h4>
             <input v-model='purchaseUnits' type='number' />
             <h4>{{ t('MSG_PAYMENT_METHOD') }}</h4>
             <q-btn-dropdown
@@ -169,7 +169,7 @@ const onSubmit = throttle(() => {
   }
 
   store.dispatch(ActionTypes.SubmitOrder, {
-    GoodID: good.value?.Good.ID as string,
+    GoodID: good.value?.Good.Good.ID as string,
     Units: purchaseUnits.value,
     Message: {
       ModuleKey: ModuleKey.ModuleApplications,

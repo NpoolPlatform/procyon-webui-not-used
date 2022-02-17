@@ -57,7 +57,8 @@ interface Fee {
   Value: number
 }
 
-export interface GoodExtend extends GoodBase {
+export interface GoodExtend {
+  Good: GoodBase
   DeviceInfo: DeviceInfo
   VendorLocation: VendorLocation
   Fees: Array<Fee>
