@@ -34,7 +34,7 @@ import { ActionTypes as CoinActionTypes } from '../../store/coins/action-types'
 const { t, locale } = useI18n({ useScope: 'global' })
 const store = useStore()
 
-const accounts = computed(() => store.getters.getWithdrawAccounts)
+const accounts = computed(() => store.getters.getWithdrawAccounts.filter((address: WithdrawAccount) => address.State === 'approved'))
 
 const accountTable = computed(() => [
   {
