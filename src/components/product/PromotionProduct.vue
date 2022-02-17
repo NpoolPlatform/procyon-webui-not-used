@@ -80,6 +80,17 @@ const getPromotionProduct = () => {
       }
     }
   })
+
+  store.dispatch(GoodActionTypes.GetRecommendGoods, {
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_GET_MY_INVITATIONS_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
 }
 
 onMounted(() => {

@@ -8,6 +8,8 @@ import {
   GetGoodResponse,
   GetGoodsRequest,
   GetGoodsResponse,
+  GetRecommendGoodsRequest,
+  GetRecommendGoodsResponse,
   GoodURLPath
 } from './types'
 import { doAction } from '../action'
@@ -20,6 +22,12 @@ interface GoodActions {
   }: AugmentedActionContext<GoodState,
     RootState,
     GoodMutations<GoodState>>, payload: GetGoodsRequest): void
+
+  [ActionTypes.GetRecommendGoods] ({
+    commit
+  }: AugmentedActionContext<GoodState,
+    RootState,
+    GoodMutations<GoodState>>, payload: GetRecommendGoodsRequest): void
 
   [ActionTypes.GetGood] ({
     commit
@@ -37,6 +45,17 @@ const actions: ActionTree<GoodState, RootState> = {
       req.Message,
       (resp: GetGoodsResponse): void => {
         commit(MutationTypes.SetGoods, resp.Infos)
+      })
+  },
+
+  [ActionTypes.GetRecommendGoods] ({ commit }, req: GetRecommendGoodsRequest) {
+    doAction<GetRecommendGoodsRequest, GetRecommendGoodsResponse>(
+      commit,
+      GoodURLPath.GET_RECOMMEND_GOODS,
+      req,
+      req.Message,
+      (resp: GetRecommendGoodsResponse): void => {
+        commit(MutationTypes.SetRecommendGoods, resp.Infos)
       })
   },
 

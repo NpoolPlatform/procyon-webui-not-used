@@ -98,7 +98,29 @@ export interface GetGoodResponse {
   Info: Good
 }
 
+export interface Recommend {
+  ID: string
+  GoodID: string
+  RecommenderID: string
+  Message: string
+}
+
+export interface RecommendGood {
+  Recommend: Recommend
+  Good: Good
+}
+
+export interface GetRecommendGoodsRequest {
+  Message: ReqMessage
+}
+
+export interface GetRecommendGoodsResponse {
+  Infos: Array<RecommendGood>
+  Total: number
+}
+
 export enum GoodURLPath {
-  GET_GOODS = '/cloud-hashing-apis-v2/v1/get/goods',
+  GET_GOODS = '/cloud-hashing-apis-v2/v1/get/goods/by/app',
+  GET_RECOMMEND_GOODS = '/cloud-hashing-apis-v2/v1/get/recommend/goods/by/app',
   GET_GOOD = '/cloud-hashing-apis-v2/v1/get/good'
 }
