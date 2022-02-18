@@ -103,12 +103,26 @@ const myGoods = computed(() => {
     for (let i = 0; i < 3 && i < store.getters.getRecommends.length; i++) {
       goods.push(store.getters.getRecommends[i].Good)
     }
-    return goods
+    if (goods.length >= 3) {
+      return goods
+    }
   }
 
-  return store.getters.getGoods.filter((good, index) => {
-    return index < 3
-  })
+  for (let i = goods.length; i < 3 && i < store.getters.getGoods.length + goods.length; i++) {
+    let found = false
+    for (let j = 0; j < goods.length; j++) {
+      if (goods[j].Good.Good.ID === store.getters.getGoods[i - goods.length].Good.Good.ID) {
+        found = true
+        break
+      }
+    }
+    if (found) {
+      continue
+    }
+    goods.push(store.getters.getGoods[i - goods.length])
+  }
+
+  return goods
 })
 
 const onStartMiningClick = (good: Good) => {
