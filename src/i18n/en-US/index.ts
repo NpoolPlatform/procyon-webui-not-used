@@ -113,6 +113,7 @@ export default {
                                 '</ul>',
   MSG_SET_WITHDRAW_ADDRESS_FAIL: 'Cannot set withdraw address',
   MSG_GET_WITHDRAW_ADDRESSES_FAIL: 'Cannot get withdraw addresses',
+  MSG_GET_TRANSACTIONS_FAIL: 'Cannot get transactions',
 
   general: {
     KYCStatus: 'KYC Verification Status',

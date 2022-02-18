@@ -12,11 +12,13 @@
 </template>
 
 <script setup lang='ts'>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from 'src/store'
 import { Transaction } from 'src/store/transactions/types'
 import { TimeStampToDate } from 'src/utils/utils'
+import { ActionTypes as TransactionActionTypes } from 'src/store/transactions/action-types'
+import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t, locale } = useI18n({ useScope: 'global' })
@@ -56,6 +58,19 @@ const transactionTable = computed(() => [
     field: () => 'Withdrawal'
   }
 ])
+
+onMounted(() => {
+  store.dispatch(TransactionActionTypes.GetUserTransactionsByAppUser, {
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_GET_TRANSACTIONS_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
+})
 
 </script>
 
