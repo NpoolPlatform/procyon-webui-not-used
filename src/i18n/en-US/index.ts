@@ -143,6 +143,7 @@ export default {
                                           '<li>Be sure to <strong>use a Spacemesh wallet address</strong> to transfer your funds.</li>' +
                                           '<li>Using an incorrect address will <strong>result in a loss of your SMH!</strong></li>' +
                                         '</ul>',
+  MSG_INVALID_AMOUNT: 'Invalid amount',
 
   general: {
     KYCStatus: 'KYC Verification Status',

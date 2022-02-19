@@ -18,6 +18,7 @@
             <div class='full-section'>
               <h4>{{ t('MSG_AMOUNT_TO_WITHDRAW') }} ({{ coin?.Unit }}}):</h4>
               <input type='number' v-model='withdrawAmount' class='action-width'>
+              <div v-if='withdrawAmount <= 0 || withdrawAmount > query.totalAmount' class='coupon-error'>{{ t('MSG_INVALID_AMOUNT') }}</div>
             </div>
             <div class='full-section'>
               <h4>{{ t('MSG_SELECT_WITHDRAW_ADDRESS') }}:</h4>
@@ -115,6 +116,10 @@ const verifyCode = ref('')
 const showVerify = ref(false)
 
 const onSubmit = () => {
+  if (!coin.value || !withdrawAddress.value || withdrawAmount.value <= 0 || withdrawAmount.value >= query.value.totalAmount) {
+    return
+  }
+
   verifyBy.value = VerifyMethod.VerifyNone
   verifyCode.value = ''
   showVerify.value = true
@@ -138,7 +143,7 @@ watch(verifyBy, () => {
 const onVerify = () => {
   showVerify.value = false
 
-  if (!coin.value) {
+  if (!coin.value || !withdrawAddress.value || withdrawAmount.value <= 0 || withdrawAmount.value >= query.value.totalAmount) {
     return
   }
 
