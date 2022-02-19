@@ -1,12 +1,14 @@
-import { Transaction } from './types'
+import { Transaction, UserWithdrawState } from './types'
 
 interface TransactionsState {
   Transactions: Array<Transaction>
+  Withdraws: Array<UserWithdrawState>
 }
 
 function state (): TransactionsState {
   return {
-    Transactions: []
+    Transactions: [],
+    Withdraws: []
   }
 }
 

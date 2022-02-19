@@ -45,12 +45,14 @@ import { useStore } from 'src/store'
 import { ActionTypes as BenefitActionTypes } from 'src/store/benefits/action-types'
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
 import { ActionTypes as CoinActionTypes } from 'src/store/coins/action-types'
+import { useRouter } from 'src/router'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
 
 const store = useStore()
 const benefits = computed(() => store.getters.getBenefits)
+const coinsCurrencies = computed(() => store.getters.getCoinsCurrencies)
 
 interface Asset {
   Name: string
@@ -121,11 +123,24 @@ const assetTable = computed(() => [
     label: t('MSG_MARKET_VALUE_JPY'),
     align: 'center',
     field: 'JPYValue'
+  },
+  {
+    name: 'ActionButtons',
+    label: '',
+    align: 'center'
   }
 ])
 
+const router = useRouter()
+
 const onWithdrawClick = (asset: Asset) => {
-  console.log(asset)
+  void router.push({
+    path: '/withdraw',
+    query: {
+      coinTypeID: asset.CoinTypeID,
+      totalAmount: asset.Balance
+    }
+  })
 }
 
 onMounted(() => {
@@ -140,16 +155,18 @@ onMounted(() => {
     }
   })
 
-  store.dispatch(CoinActionTypes.GetCoinsCurrencies, {
-    Message: {
-      ModuleKey: ModuleKey.ModuleApplications,
-      Error: {
-        Title: t('MSG_GET_COINS_CURRENCIES_FAIL'),
-        Popup: true,
-        Type: NotificationType.Error
+  if (!coinsCurrencies.value) {
+    store.dispatch(CoinActionTypes.GetCoinsCurrencies, {
+      Message: {
+        ModuleKey: ModuleKey.ModuleApplications,
+        Error: {
+          Title: t('MSG_GET_COINS_CURRENCIES_FAIL'),
+          Popup: true,
+          Type: NotificationType.Error
+        }
       }
-    }
-  })
+    })
+  }
 })
 
 </script>

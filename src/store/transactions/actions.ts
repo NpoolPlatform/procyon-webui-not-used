@@ -6,7 +6,12 @@ import { AugmentedActionContext, RootState } from '../index'
 import { TransactionMutations } from './mutations'
 import { API } from './const'
 import { doAction } from '../action'
-import { GetTransactionsRequest, GetTransactionsResponse } from './types'
+import {
+  GetTransactionsRequest,
+  GetTransactionsResponse,
+  SubmitUserWithdrawRequest,
+  SubmitUserWithdrawResponse
+} from './types'
 
 interface TransactionActions {
   [ActionTypes.GetUserTransactionsByAppUser]({
@@ -16,6 +21,14 @@ interface TransactionActions {
     RootState,
     TransactionMutations<TransactionsState>>,
     req: GetTransactionsRequest): void
+
+  [ActionTypes.SubmitUserWithdraw]({
+    commit
+  }: AugmentedActionContext<
+    TransactionsState,
+    RootState,
+    TransactionMutations<TransactionsState>>,
+    req: SubmitUserWithdrawRequest): void
 }
 
 const actions: ActionTree<TransactionsState, RootState> = {
@@ -27,6 +40,17 @@ const actions: ActionTree<TransactionsState, RootState> = {
       req.Message,
       (resp: GetTransactionsResponse): void => {
         commit(MutationTypes.SetTransactions, resp.Infos)
+      })
+  },
+
+  [ActionTypes.SubmitUserWithdraw] ({ commit }, req: SubmitUserWithdrawRequest) {
+    doAction<SubmitUserWithdrawRequest, SubmitUserWithdrawResponse>(
+      commit,
+      API.SUBMIT_USER_WITHDRAW,
+      req,
+      req.Message,
+      (resp: SubmitUserWithdrawResponse): void => {
+        commit(MutationTypes.SetWithdraws, [resp.Info])
       })
   }
 }

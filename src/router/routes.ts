@@ -112,6 +112,13 @@ const routes: RouteRecordRaw[] = [
         meta: {
           needLogined: true
         }
+      },
+      {
+        path: 'withdraw',
+        component: () => import('pages/Withdraw.vue'),
+        meta: {
+          needLogined: true
+        }
       }
     ]
   },

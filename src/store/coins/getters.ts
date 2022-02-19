@@ -7,6 +7,7 @@ type CoinGetters = {
   getCoinByID (state: CoinsState): (id: string) => Coin
   getCoins (state: CoinsState): Array<Coin>
   getCoinCurrency (state: CoinsState): (id: string, currency: string) => number
+  getCoinsCurrencies (state: CoinsState): Record<string, Record<string, number>>
 }
 
 const getters: GetterTree<CoinsState, RootState> & CoinGetters = {
@@ -42,7 +43,8 @@ const getters: GetterTree<CoinsState, RootState> & CoinGetters = {
       }
       return coinCurrency[currency]
     }
-  }
+  },
+  getCoinsCurrencies: (state: CoinsState): Record<string, Record<string, number>> => state.CoinsCurrencies as Record<string, Record<string, number>>
 }
 
 export { CoinGetters, getters }

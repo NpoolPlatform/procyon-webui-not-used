@@ -22,8 +22,37 @@ interface GetTransactionsResponse {
   Infos: ReadonlyArray<Transaction>
 }
 
+interface UserWithdraw {
+  ID?: string
+  CoinTypeID: string
+  WithdrawToAccountID: string
+  Amount: number
+}
+
+interface SubmitUserWithdrawRequest {
+  Info: UserWithdraw
+  Account: string
+  AccountType: string
+  VerificationCode: string
+  Message: ReqMessage
+}
+
+interface UserWithdrawState {
+  Withdraw: UserWithdraw
+  State: string
+  Message: UserWithdrawState
+}
+
+interface SubmitUserWithdrawResponse {
+  Info: UserWithdrawState
+}
+
 export {
   Transaction,
   GetTransactionsRequest,
-  GetTransactionsResponse
+  GetTransactionsResponse,
+  UserWithdraw,
+  UserWithdrawState,
+  SubmitUserWithdrawRequest,
+  SubmitUserWithdrawResponse
 }
