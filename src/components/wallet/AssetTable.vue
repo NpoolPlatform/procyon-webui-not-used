@@ -4,10 +4,37 @@
     class='table-box'
     :rows='assets'
     :columns='assetTable'
-    row-key='ID'
+    row-key='Name'
     color='#e1eeef'
     :no-data-label="$t('NoData')"
   >
+    <template #body='props'>
+      <q-tr :props='props'>
+        <q-td key='Name' :props='props'>
+          {{ props.row.Name }}
+        </q-td>
+        <q-td key='Balance' :props='props'>
+          {{ props.row.Balance }}
+        </q-td>
+        <q-td key='Last24HoursIncoming' :props='props'>
+          {{ props.row.Last24HoursIncoming }}
+        </q-td>
+        <q-td key='USDTValue' :props='props'>
+          {{ props.row.USDTValue }}
+        </q-td>
+        <q-td key='JPYValue' :props='props'>
+          {{ props.row.JPYValue }}
+        </q-td>
+        <q-td>
+          <q-btn
+            no-caps
+            :label='t("MSG_WITHDRAW")'
+            class='filled-button small-button'
+            @click='() => onWithdrawClick(props.row)'
+          />
+        </q-td>
+      </q-tr>
+    </template>
   </q-table>
 </template>
 
@@ -31,6 +58,7 @@ interface Asset {
   Last24HoursIncoming: number
   USDTValue: number
   JPYValue: number
+  CoinTypeID: string
 }
 
 // TODO: get market value of different coin type
@@ -45,7 +73,8 @@ const assets = computed(() => {
         Balance: 0,
         Last24HoursIncoming: 0,
         USDTValue: 0,
-        JPYValue: 0
+        JPYValue: 0,
+        CoinTypeID: store.getters.getGoodByID(benefit.GoodID)?.Main?.ID
       } as Asset
     }
 
@@ -76,24 +105,28 @@ const assetTable = computed(() => [
     field: 'Balance'
   },
   {
-    name: '24 Hour Change',
+    name: 'Last24HoursIncoming',
     label: t('MSG_24_HOUR_CHANGE'),
     align: 'center',
     field: 'Last24HoursIncoming'
   },
   {
-    name: 'Market Value (USDT)',
+    name: 'USDTValue',
     label: t('MSG_MARKET_VALUE_USDT'),
     align: 'center',
     field: 'USDTValue'
   },
   {
-    name: 'Market Value (JPY)',
+    name: 'JPYValue',
     label: t('MSG_MARKET_VALUE_JPY'),
     align: 'center',
     field: 'JPYValue'
   }
 ])
+
+const onWithdrawClick = (asset: Asset) => {
+  console.log(asset)
+}
 
 onMounted(() => {
   store.dispatch(BenefitActionTypes.GetUserBenefitsByAppUser, {
@@ -137,5 +170,16 @@ onMounted(() => {
 
 .table-box >>> th {
   font-size: 16px !important;
+}
+
+.filled-button {
+  background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
+  border: 0;
+  color: #e4f4f0;
+  text-shadow: 1px 1px 1px #ce5417;
+}
+
+.small-button {
+  font-size: 10px;
 }
 </style>

@@ -115,6 +115,7 @@ export default {
   MSG_GET_WITHDRAW_ADDRESSES_FAIL: 'Cannot get withdraw addresses',
   MSG_GET_TRANSACTIONS_FAIL: 'Cannot get transactions',
   MSG_GET_COINS_CURRENCIES_FAIL: 'Cannot get coins currencies',
+  MSG_WITHDRAW: 'Withdraw',
 
   general: {
     KYCStatus: 'KYC Verification Status',
