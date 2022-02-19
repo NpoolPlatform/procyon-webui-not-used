@@ -35,6 +35,7 @@ import { useStore } from 'src/store'
 import { ActionTypes as OrderActionTypes } from 'src/store/orders/action-types'
 import { ActionTypes as GoodActionTypes } from 'src/store/goods/action-types'
 import { ActionTypes as BenefitActionTypes } from 'src/store/benefits/action-types'
+import { ActionTypes as CoinActionTypes } from 'src/store/coins/action-types'
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
 import { useI18n } from 'vue-i18n'
 
@@ -79,6 +80,17 @@ onMounted(() => {
       }
     })
   }
+
+  store.dispatch(CoinActionTypes.GetCoinsCurrencies, {
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_GET_COINS_CURRENCIES_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
 })
 </script>
 

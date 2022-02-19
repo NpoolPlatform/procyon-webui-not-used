@@ -17,6 +17,7 @@ import { useI18n } from 'vue-i18n'
 import { useStore } from 'src/store'
 import { ActionTypes as BenefitActionTypes } from 'src/store/benefits/action-types'
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
+import { ActionTypes as CoinActionTypes } from 'src/store/coins/action-types'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
@@ -42,15 +43,22 @@ const assets = computed(() => {
       asset = {
         Name: store.getters.getGoodByID(benefit.GoodID)?.Main?.Name,
         Balance: 0,
-        Last24HoursIncoming: 0
+        Last24HoursIncoming: 0,
+        USDTValue: 0,
+        JPYValue: 0
       } as Asset
     }
+
     asset.Balance += benefit.Amount
+    asset.USDTValue += store.getters.getCoinCurrency(store.getters.getGoodByID(benefit.GoodID)?.Main?.ID as string, 'usd')
+    asset.JPYValue += store.getters.getCoinCurrency(store.getters.getGoodByID(benefit.GoodID)?.Main?.ID as string, 'jpy')
+
     if (new Date().getTime() / 1000 < benefit.CreateAt + 24 * 60 * 60) {
       asset.Last24HoursIncoming += benefit.Amount
     }
     myAssets.set(good?.Main?.ID as string, asset)
   })
+
   return Array.from(myAssets).map(([, value]) => value)
 })
 
@@ -93,6 +101,17 @@ onMounted(() => {
       ModuleKey: ModuleKey.ModuleApplications,
       Error: {
         Title: t('MSG_GET_BENEFITS_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
+
+  store.dispatch(CoinActionTypes.GetCoinsCurrencies, {
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_GET_COINS_CURRENCIES_FAIL'),
         Popup: true,
         Type: NotificationType.Error
       }

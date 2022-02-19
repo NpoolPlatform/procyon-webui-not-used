@@ -25,10 +25,15 @@ interface CreateCoinResponse {
   Info: Coin
 }
 
+interface GetCoinsCurrenciesRequest {
+  Message: ReqMessage
+}
+
 export {
   Coin,
   GetCoinsRequest,
   GetCoinsResponse,
   CreateCoinRequest,
-  CreateCoinResponse
+  CreateCoinResponse,
+  GetCoinsCurrenciesRequest
 }

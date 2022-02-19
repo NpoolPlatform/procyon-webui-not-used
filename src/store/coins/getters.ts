@@ -6,6 +6,7 @@ import { Coin } from './types'
 type CoinGetters = {
   getCoinByID (state: CoinsState): (id: string) => Coin
   getCoins (state: CoinsState): Array<Coin>
+  getCoinCurrency (state: CoinsState): (id: string, currency: string) => number
 }
 
 const getters: GetterTree<CoinsState, RootState> & CoinGetters = {
@@ -18,6 +19,29 @@ const getters: GetterTree<CoinsState, RootState> & CoinGetters = {
       Coins.push(val)
     })
     return Coins
+  },
+  getCoinCurrency: (state: CoinsState): (id: string, currency: string) => number => {
+    return (id: string, currency: string) => {
+      const coin = state.Coins.get(id)
+      if (!coin) {
+        return 0
+      }
+
+      if (!state.CoinsCurrencies) {
+        return 0
+      }
+
+      const coinCurrencyMap = new Map<string, string>()
+      coinCurrencyMap.set('FIL', 'filecoin')
+      coinCurrencyMap.set('BTC', 'bitcoin')
+      coinCurrencyMap.set('ETH', 'ethereum')
+
+      const coinCurrency = state.CoinsCurrencies[coinCurrencyMap.get(coin.Name) as string]
+      if (!coinCurrency) {
+        return 0
+      }
+      return coinCurrency[currency]
+    }
   }
 }
 

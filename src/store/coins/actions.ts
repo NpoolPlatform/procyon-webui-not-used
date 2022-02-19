@@ -1,12 +1,18 @@
 import { ActionTypes } from './action-types'
 import { MutationTypes } from './mutation-types'
-import { CreateCoinRequest, CreateCoinResponse, GetCoinsRequest, GetCoinsResponse } from './types'
+import {
+  CreateCoinRequest,
+  CreateCoinResponse,
+  GetCoinsCurrenciesRequest,
+  GetCoinsRequest,
+  GetCoinsResponse
+} from './types'
 import { CoinsState } from './state'
 import { ActionTree } from 'vuex'
 import { AugmentedActionContext, RootState } from '../index'
 import { CoinMutations } from './mutations'
 import { API } from './const'
-import { doAction } from '../action'
+import { doAction, doGet } from '../action'
 
 interface CoinActions {
   [ActionTypes.GetCoins]({
@@ -24,6 +30,14 @@ interface CoinActions {
     RootState,
     CoinMutations<CoinsState>>,
     req: CreateCoinRequest): void
+
+  [ActionTypes.GetCoinsCurrencies]({
+    commit
+  }: AugmentedActionContext<
+    CoinsState,
+    RootState,
+    CoinMutations<CoinsState>>,
+    req: GetCoinsCurrenciesRequest): void
 }
 
 const actions: ActionTree<CoinsState, RootState> = {
@@ -46,6 +60,18 @@ const actions: ActionTree<CoinsState, RootState> = {
       req.Message,
       (resp: CreateCoinResponse): void => {
         commit(MutationTypes.SetCoins, [resp.Info])
+      })
+  },
+
+  [ActionTypes.GetCoinsCurrencies] ({ commit }, req: GetCoinsCurrenciesRequest) {
+    const url = API.GET_COINS_CURRENCIES + '?ids=bitcoin,ethereum,filecoin&vs_currencies=usd,jpy'
+    doGet<GetCoinsCurrenciesRequest, Map<string, Map<string, number>>>(
+      commit,
+      url,
+      req,
+      req.Message,
+      (resp: Map<string, Map<string, number>>): void => {
+        commit(MutationTypes.SetCoinsCurrencies, resp)
       })
   }
 }
