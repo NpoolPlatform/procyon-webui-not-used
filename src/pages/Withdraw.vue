@@ -53,7 +53,7 @@ import { useI18n } from 'vue-i18n'
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
 import { MutationTypes as NotificationMutationTypes } from 'src/store/notifications/mutation-types'
 import { notificationPop, notify } from 'src/store/notifications/helper'
-import { MutationTypes as AccountMutationTypes } from 'src/store/accounts/mutation-types'
+import { MutationTypes as TransactionMutationTypes } from 'src/store/transactions/mutation-types'
 import { ActionTypes as CoinActionTypes } from 'src/store/coins/action-types'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'src/router'
@@ -68,6 +68,7 @@ import iconCheckmark from 'src/assets/icon-checkmark.svg'
 import { WithdrawAccount } from 'src/store/accounts/types'
 import { SendEmailCodeRequest } from 'src/store/verify/types'
 import { GenerateSendEmailRequest } from 'src/utils/utils'
+import { State } from 'src/store/kycs/const'
 
 const store = useStore()
 // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -84,7 +85,7 @@ interface myQuery {
 }
 const query = computed(() => route.query as unknown as myQuery)
 const coin = computed(() => store.getters.getCoinByID(query.value.coinTypeID))
-const addresses = computed(() => store.getters.getWithdrawAccountsByCoin(query.value.coinTypeID))
+const addresses = computed(() => store.getters.getWithdrawAccountsByCoin(query.value.coinTypeID).filter((account) => account.State === State.Verified))
 const withdrawAmount = ref(0)
 watch(withdrawAmount, () => {
   withdrawAmount.value = withdrawAmount.value < 0 || withdrawAmount.value > query.value.totalAmount ? 0 : withdrawAmount.value
@@ -198,7 +199,7 @@ onMounted(() => {
       }
     }
 
-    if (mutation.type === AccountMutationTypes.SetWithdrawAccount) {
+    if (mutation.type === TransactionMutationTypes.SetWithdraws) {
       router.back()
     }
   })
