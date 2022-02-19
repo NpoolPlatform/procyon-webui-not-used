@@ -80,16 +80,34 @@ const assets = computed(() => {
     }
 
     asset.Balance += benefit.Amount
-    asset.USDTValue += store.getters.getCoinCurrency(store.getters.getGoodByID(benefit.GoodID)?.Main?.ID as string, 'usd')
-    asset.JPYValue += store.getters.getCoinCurrency(store.getters.getGoodByID(benefit.GoodID)?.Main?.ID as string, 'jpy')
-
     if (new Date().getTime() / 1000 < benefit.CreateAt + 24 * 60 * 60) {
       asset.Last24HoursIncoming += benefit.Amount
     }
     myAssets.set(good?.Main?.ID as string, asset)
   })
 
-  return Array.from(myAssets).map(([, value]) => value)
+  const remainAssets = new Map<string, Asset>()
+  myAssets.forEach((asset) => {
+    const txs = store.getters.getTransactionsByCoin(asset.CoinTypeID)
+    const accounts = store.getters.getWithdrawAccountsByCoin(asset.CoinTypeID)
+    let outcoming = 0
+    txs.forEach((tx) => {
+      for (let i = 0; i < accounts.length; i++) {
+        if (accounts[i].Account.ID === tx.ToAddressID) {
+          outcoming += tx.Amount
+          return
+        }
+      }
+    })
+    asset.Balance -= outcoming
+
+    asset.USDTValue = asset.Balance * store.getters.getCoinCurrency(asset.CoinTypeID, 'usd')
+    asset.JPYValue = asset.Balance * store.getters.getCoinCurrency(asset.CoinTypeID, 'jpy')
+
+    remainAssets.set(asset.CoinTypeID, asset)
+  })
+
+  return Array.from(remainAssets).map(([, value]) => value)
 })
 
 const assetTable = computed(() => [

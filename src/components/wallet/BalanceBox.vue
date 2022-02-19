@@ -26,20 +26,37 @@ import { useStore } from 'src/store'
 
 const store = useStore()
 const benefits = computed(() => store.getters.getBenefits)
+const accounts = computed(() => store.getters.getWithdrawAccounts)
+const transactions = computed(() => store.getters.getTransactions)
 
 const usdtAmount = computed(() => {
   let amount = 0
+
   benefits.value.forEach((benefit) => {
-    amount += store.getters.getCoinCurrency(store.getters.getGoodByID(benefit.GoodID)?.Main?.ID as string, 'usd')
+    amount += benefit.Amount * store.getters.getCoinCurrency(store.getters.getGoodByID(benefit.GoodID)?.Main?.ID as string, 'usd')
   })
-  return amount
+  transactions.value.forEach((tx) => {
+    accounts.value.forEach((account) => {
+      if (account.Account.CoinTypeID === tx.CoinTypeID && account.Account.ID === tx.ToAddressID) {
+        amount -= tx.Amount * store.getters.getCoinCurrency(tx.CoinTypeID, 'usd')
+      }
+    })
+  })
+  return amount.toFixed(2)
 })
 const jpyAmount = computed(() => {
   let amount = 0
   benefits.value.forEach((benefit) => {
-    amount += store.getters.getCoinCurrency(store.getters.getGoodByID(benefit.GoodID)?.Main?.ID as string, 'jpy')
+    amount += benefit.Amount * store.getters.getCoinCurrency(store.getters.getGoodByID(benefit.GoodID)?.Main?.ID as string, 'jpy')
   })
-  return amount
+  transactions.value.forEach((tx) => {
+    accounts.value.forEach((account) => {
+      if (account.Account.CoinTypeID === tx.CoinTypeID && account.Account.ID === tx.ToAddressID) {
+        amount -= tx.Amount * store.getters.getCoinCurrency(tx.CoinTypeID, 'jpy')
+      }
+    })
+  })
+  return amount.toFixed(2)
 })
 
 </script>
