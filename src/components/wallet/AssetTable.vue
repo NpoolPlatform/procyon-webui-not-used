@@ -63,7 +63,6 @@ interface Asset {
   CoinTypeID: string
 }
 
-// TODO: get market value of different coin type
 const assets = computed(() => {
   const myAssets = new Map<string, Asset>()
   benefits.value.forEach((benefit) => {

@@ -31,7 +31,7 @@ const transactionTable = computed(() => [
     name: 'Name',
     label: t('MSG_NAME'),
     align: 'left',
-    field: (row: Transaction) => store.getters.getCoinByID(row.CoinTypeID).Name
+    field: (row: Transaction) => store.getters.getCoinByID(row.CoinTypeID)?.Name
   },
   {
     name: 'Date',

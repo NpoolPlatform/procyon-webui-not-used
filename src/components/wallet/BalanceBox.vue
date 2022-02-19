@@ -2,7 +2,7 @@
   <div class='earn-box'>
     <div class='earn-box-item'>
       <div>
-        <span class='price'>*</span>
+        <span class='price'>{{ usdtAmount }}</span>
         <span class='unit'> USDT</span>
       </div>
       <div class='hr sub-hr'></div>
@@ -11,7 +11,7 @@
 
     <div class='earn-box-item'>
       <div>
-        <span class='price'>*</span>
+        <span class='price'>{{ jpyAmount }}</span>
         <span class='unit'> JPY</span>
       </div>
       <div class='hr sub-hr'></div>
@@ -21,6 +21,27 @@
 </template>
 
 <script setup lang='ts'>
+import { computed } from 'vue'
+import { useStore } from 'src/store'
+
+const store = useStore()
+const benefits = computed(() => store.getters.getBenefits)
+
+const usdtAmount = computed(() => {
+  let amount = 0
+  benefits.value.forEach((benefit) => {
+    amount += store.getters.getCoinCurrency(store.getters.getGoodByID(benefit.GoodID)?.Main?.ID as string, 'usd')
+  })
+  return amount
+})
+const jpyAmount = computed(() => {
+  let amount = 0
+  benefits.value.forEach((benefit) => {
+    amount += store.getters.getCoinCurrency(store.getters.getGoodByID(benefit.GoodID)?.Main?.ID as string, 'jpy')
+  })
+  return amount
+})
+
 </script>
 
 <style scoped>
