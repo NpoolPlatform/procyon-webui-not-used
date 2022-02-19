@@ -8,7 +8,7 @@
       row-key='ID'
       color='#e1eeef'
       :no-data-label="$t('NoData')"
-      :hide-bottom='false'
+      :hide-bottom='true'
     >
     </q-table>
     <q-btn class='common-button filled-button small-button' @click='onAddNewAddressClick'>
@@ -124,6 +124,8 @@ onUnmounted(() => {
   background: transparent;
   color: #e1eeef;
   margin-bottom: 16px;
+  border-radius: 0px;
+  border-bottom: 1px solid rgb(95, 99, 99);
 }
 
 .table-box >>> th {
