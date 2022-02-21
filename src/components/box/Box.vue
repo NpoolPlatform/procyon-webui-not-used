@@ -45,8 +45,8 @@ const showLink = toRef(props, 'showLink')
 const alwaysSelectable = toRef(props, 'alwaysSelectable')
 
 const userInfo = computed(() => store.getters.getUserInfo)
-const phoneNumber = computed(() => userInfo.value.User.PhoneNO)
-const emailAddress = computed(() => userInfo.value.User.EmailAddress)
+const phoneNumber = computed(() => userInfo.value?.User.PhoneNO)
+const emailAddress = computed(() => userInfo.value?.User.EmailAddress)
 
 const showEmail = computed({
   get: () => {
