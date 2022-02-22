@@ -110,13 +110,15 @@ export const RequestMessageToNotifyMessage = (message: string, caption: string, 
 
 export const GenerateSendEmailRequest = (locale: string, userBasicInfo: UserInfo, requestInput: SendEmailCodeRequest): SendEmailCodeRequest => {
   let username = ''
-  if (locale === 'en-US') {
-    if (userBasicInfo.Extra?.FirstName !== '') {
-      username = userBasicInfo.Extra?.FirstName as string
-    }
-  } else {
-    if (userBasicInfo.Extra?.LastName !== '') {
-      username = userBasicInfo.Extra?.LastName as string
+  if (userBasicInfo && userBasicInfo.Extra) {
+    if (locale === 'en-US') {
+      if (userBasicInfo.Extra?.FirstName !== '') {
+        username = userBasicInfo.Extra?.FirstName as string
+      }
+    } else {
+      if (userBasicInfo.Extra?.LastName !== '') {
+        username = userBasicInfo.Extra?.LastName as string
+      }
     }
   }
 
