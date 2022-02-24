@@ -17,7 +17,7 @@ const getters: GetterTree<OrderState, RootState> & OrderGetters = {
   getOrderByID: (state: OrderState): (orderID: string) => Order | undefined => {
     return (orderID: string) => {
       for (let i = 0; i < state.orders.length; i++) {
-        if (orderID === state.orders[i].Order.ID) {
+        if (orderID === state.orders[i].Order.Order.ID) {
           return state.orders[i]
         }
       }
@@ -46,7 +46,7 @@ const getters: GetterTree<OrderState, RootState> & OrderGetters = {
       if (!orderPaid(order)) {
         return
       }
-      total += order.Order.Units
+      total += order.Order.Order.Units
     })
     return total
   }

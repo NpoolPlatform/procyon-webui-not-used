@@ -31,8 +31,8 @@ export interface OrderBase {
   Units: number
   UserID: string
   UserSpecialReductionID: string
-  Payment: Payment
   CreateAt: number
+  PromotionID: string
 }
 
 export interface Fees {
@@ -56,9 +56,14 @@ interface UserSpecialReduction {
   Start: number
 }
 
+interface MyOrder {
+  Order: OrderBase
+  Payment: Payment
+}
+
 export interface Order {
   Good: Good
-  Order: OrderBase
+  Order: MyOrder
   UserSpecialReduction: UserSpecialReduction
   PayWithCoin: Coin
   PayToAccount: Account

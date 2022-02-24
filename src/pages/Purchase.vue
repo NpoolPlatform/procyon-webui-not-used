@@ -229,7 +229,7 @@ onMounted(() => {
     if (mutation.type === MutationTypes.SetOrder) {
       const order = mutation.payload as Order
       store.dispatch(ActionTypes.CreateOrderPayment, {
-        OrderID: order.Order.ID,
+        OrderID: order.Order.Order.ID,
         PaymentCoinTypeID: selectedCoin.value.ID as string,
         Fees: [],
         Message: {
@@ -248,7 +248,7 @@ onMounted(() => {
       void router.push({
         path: '/payment',
         query: {
-          orderId: order.Order.ID
+          orderId: order.Order.Order.ID
         }
       })
     }

@@ -12,7 +12,7 @@ type OrderMutations<S = OrderState> = {
 const setOrder = (state: OrderState, payload: Order) => {
   let pos = -1
   for (let i = 0; i < state.orders.length; i++) {
-    if (state.orders[i].Order.ID === payload.Order.ID) {
+    if (state.orders[i].Order.Order.ID === payload.Order.Order.ID) {
       pos = i
       break
     }
