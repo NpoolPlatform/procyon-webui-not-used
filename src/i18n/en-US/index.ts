@@ -144,6 +144,9 @@ export default {
                                           '<li>Using an incorrect address will <strong>result in a loss of your SMH!</strong></li>' +
                                         '</ul>',
   MSG_INVALID_AMOUNT: 'Invalid amount',
+  MSG_GET_APPLICATIONS_FAIL: 'Cannot get goods',
+  MSG_GET_RECOMMENDS_FAIL: 'Cannot get recommend goods',
+  MSG_GET_PROMOTIONS_FAIL: 'Cannot get promotion goods',
 
   general: {
     KYCStatus: 'KYC Verification Status',

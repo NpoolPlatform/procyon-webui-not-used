@@ -119,8 +119,27 @@ export interface GetRecommendGoodsResponse {
   Total: number
 }
 
+export interface Promotion {
+  ID?: string
+  AppID: string
+  GoodID: string
+  Message: string
+  Start: number
+  End: number
+  Price: number
+}
+
+export interface GetPromotionsRequest {
+  Message: ReqMessage
+}
+
+export interface GetPromotionsResponse {
+  Infos: Array<Promotion>
+}
+
 export enum GoodURLPath {
   GET_GOODS = '/cloud-hashing-apis-v2/v1/get/goods/by/app',
   GET_RECOMMEND_GOODS = '/cloud-hashing-apis-v2/v1/get/recommend/goods/by/app',
+  GET_PROMOTIONS = '/cloud-hashing-goods/v1/get/app/good/promotions/by/app',
   GET_GOOD = '/cloud-hashing-apis-v2/v1/get/good'
 }

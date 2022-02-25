@@ -6,7 +6,7 @@
     </div>
 
     <div class='product-price'>
-      <span>{{ good.Good.Good.Price }}</span
+      <span>{{ goodPrice(good) }}</span
       >USDT / TB
     </div>
 
@@ -60,6 +60,7 @@ import { computed, onMounted } from 'vue'
 import { useStore } from 'src/store'
 import { ActionTypes as GoodActionTypes } from 'src/store/goods/action-types'
 import { Good } from 'src/store/goods/types'
+import { goodPrice } from 'src/store/goods/utils'
 import { useRouter } from 'src/router'
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
 import { useI18n } from 'vue-i18n'
@@ -74,7 +75,7 @@ const getPromotionProduct = () => {
     Message: {
       ModuleKey: ModuleKey.ModuleApplications,
       Error: {
-        Title: t('MSG_GET_MY_INVITATIONS_FAIL'),
+        Title: t('MSG_GET_APPLICATIONS_FAIL'),
         Popup: true,
         Type: NotificationType.Error
       }
@@ -85,7 +86,18 @@ const getPromotionProduct = () => {
     Message: {
       ModuleKey: ModuleKey.ModuleApplications,
       Error: {
-        Title: t('MSG_GET_MY_INVITATIONS_FAIL'),
+        Title: t('MSG_GET_RECOMMENDS_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
+
+  store.dispatch(GoodActionTypes.GetPromotions, {
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_GET_PROMOTIONS_FAIL'),
         Popup: true,
         Type: NotificationType.Error
       }
