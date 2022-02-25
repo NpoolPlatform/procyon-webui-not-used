@@ -78,17 +78,11 @@ import accountImg from 'src/assets/icon-account.svg'
 import securityImg from 'src/assets/icon-security.svg'
 import kycImg from 'src/assets/icon-kyc.svg'
 
-import { defineProps, withDefaults, toRef } from 'vue'
+import { computed } from 'vue'
+import { useStore } from 'src/store'
 
-interface Props {
-  hasInvitationCode: boolean
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  hasInvitationCode: false
-})
-
-const showAffiliate = toRef(props, 'hasInvitationCode')
+const store = useStore()
+const showAffiliate = computed(() => store.getters.getUserInvitationCode !== '')
 </script>
 
 <style scoped>

@@ -163,7 +163,7 @@ onMounted(() => {
     }
   })
 
-  if (q.cookies.has('UserID') && q.cookies.has('AppSession')) {
+  if (q.cookies.has('X-App-ID') && q.cookies.has('X-App-ID') && q.cookies.has('X-App-Login-Token')) {
     if (q.cookies.has(loginVeiryConfirm)) {
       getUserInvitationCode()
       logined.value = true
