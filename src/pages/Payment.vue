@@ -9,12 +9,12 @@
         </div>
         <div class='info'>
           <h3 class='form-title'>
-            USDT-ERC20 | <strong>{{ t('MSG_ORDER_ID') }}: {{ query.orderId }}</strong>
+            {{ order?.PayWithCoin?.Unit }} | <strong>{{ t('MSG_ORDER_ID') }}: {{ query.orderId }}</strong>
           </h3>
           <div class='info-flex'>
             <div class='three-section'>
                 <h4>{{ t('MSG_PURCHASE_UNITS') }}</h4>
-                <span class='number'>{{ order?.Order.Units }}</span>
+                <span class='number'>{{ order?.Order.Order.Units }}</span>
                 <span class='unit'>{{ order?.Good.Good?.Good.Unit }}</span>
             </div>
             <div class='three-section'>
@@ -29,19 +29,19 @@
             </div>
             <div class='full-section'>
                 <h4>{{ t('MSG_RECEIVING_ADDRESS') }}</h4>
-                <span class='wallet-type'>ERC20</span>
+                <span class='wallet-type'>{{ order?.PayWithCoin?.Unit }}</span>
                 <span class='number'>{{ order?.PayToAccount?.Address }}</span>
                 <img class='copy-button' :src='iconCopy' @click='onCopyAddressClick'>
             </div>
           </div>
           <div class='hr'></div>
           <h4>{{ t('MSG_IMPORTANT_INFORMATION') }}</h4>
-          <p v-html='t("MSG_PAYMENT_HINT")' />
+          <p v-html='paymentHint' />
         </div>
         <div class='order-form'>
           <h3 class='form-title'>{{ t('MSG_SCAN_QR_CODE_TO_PAY') }}</h3>
           <div class='qr-code-container' ref='qrCodeContainer'>
-            <h5>ERC20 ADDRESS</h5>
+            <h5>{{ order?.PayWithCoin?.Unit }} ADDRESS</h5>
             <qrcode-vue
               :value='order?.PayToAccount?.Address'
               :size='qrCodeContainer?.clientWidth as number - 1'
@@ -92,6 +92,8 @@ const order = computed(() => store.getters.getOrderByID(query.value.orderId))
 const onBackClick = () => {
   router.back()
 }
+
+const paymentHint = t('MSG_PAYMENT_HINT').replace(/{{ COIN_TYPE }}/g, order.value?.PayWithCoin?.Unit as string)
 
 const qrCodeContainer = ref<HTMLDivElement>()
 
@@ -342,6 +344,7 @@ const onCopyAddressClick = () => {
   filter: contrast(1.5)
   font-size: 16px
   font-weight: 700
+  margin-right: 5px
 
 .product-container .hr
   background: linear-gradient(to right, transparent 0, #e1eeef 10%, transparent 100%)

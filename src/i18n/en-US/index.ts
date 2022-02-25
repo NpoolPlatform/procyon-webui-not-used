@@ -64,8 +64,8 @@ export default {
   MSG_RECEIVING_ADDRESS: 'Receiving Address',
   MSG_IMPORTANT_INFORMATION: 'Important Information',
   MSG_PAYMENT_HINT: '<ul>' +
-                       '<li>Make sure to use the correct blockchain. The above address is an <strong>ERC20</strong> address. ' +
-                       'If you do not use <strong>ERC20</strong>, your payment will be lost and <strong>CANNOT BE RECOVERED' +
+                       '<li>Make sure to use the correct blockchain. The above address is an <strong>{{ COIN_TYPE }}</strong> address. ' +
+                       'If you do not use <strong>{{ COIN_TYPE }}</strong>, your payment will be lost and <strong>CANNOT BE RECOVERED' +
                        '</strong>.</li>' +
                        '<li>You must send the exact, correct amount of USDT in a <strong>SINGLE PAYMENT</strong></li>' +
                        '<li>Overpayment or underpayment will not count towards your order. Instead the amount will be added to your wallet balance.</li>' +
