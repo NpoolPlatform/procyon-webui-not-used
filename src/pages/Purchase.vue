@@ -83,13 +83,13 @@
                   @click="() => onCoinSelected(coin)"
                 >
                   <q-item-section>
-                    <q-item-label>{{ coin.Name }}</q-item-label>
+                    <q-item-label>{{ coin.Unit }}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
             </q-btn-dropdown>
-            <h4>{{ t('MSG_COUPON_CODE') }}</h4>
-            <input type='text'>
+            <h4 v-if='false'>{{ t('MSG_COUPON_CODE') }}</h4>
+            <input v-if='false' type='text'>
             <!-- div class='coupon-error'>{{ t('MSG_INCORRECT_COUPON_CODE') }}</div -->
             <q-btn no-caps :label='t("MSG_PURCHASE")' class='submit-btn' @click='onSubmit' />
           </div>
@@ -136,7 +136,7 @@ const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSa
 const selectedCoin = ref(undefined as unknown as Coin)
 
 const selectedCoinName = computed(() => {
-  return selectedCoin.value ? selectedCoin.value.Name : t('MSG_PAYMENT_METHOD')
+  return selectedCoin.value ? selectedCoin.value.Unit : t('MSG_PAYMENT_METHOD')
 })
 
 const onCoinSelected = (coin: Coin) => {
