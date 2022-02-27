@@ -1,6 +1,4 @@
 <template>
-  <div>{{ order }}</div>
-  <div>{{ query }}</div>
   <q-page class='container'>
     <q-btn class='back-button' @click='onBackClick'>⭠</q-btn>
     <div class='content'>
@@ -95,7 +93,7 @@ const onBackClick = () => {
   router.back()
 }
 
-const paymentHint = t('MSG_PAYMENT_HINT').replace(/{{ COIN_TYPE }}/g, order.value?.PayWithCoin?.Unit as string)
+const paymentHint = t('MSG_PAYMENT_HINT').replace(/--BEGIN COIN_TYPE END--/g, order.value?.PayWithCoin?.Unit as string)
 
 const qrCodeContainer = ref<HTMLDivElement>()
 
