@@ -19,6 +19,7 @@ function doAction<MyRequest, MyResponse> (
   api
     .post<MyRequest, AxiosResponse<MyResponse>>(url, req)
     .then((response: AxiosResponse<MyResponse>) => {
+      console.log(url, req, response)
       success(response.data)
       if (waitingNotification) {
         commit(NotificationMutationTypes.Pop, notificationPop(waitingNotification))
