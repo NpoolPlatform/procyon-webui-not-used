@@ -29,8 +29,7 @@ const mutations: MutationTree<OrderState> & OrderMutations = {
     setOrder(state, payload)
   },
   [MutationTypes.SetOrderPayment] (state: OrderState, payload: Order) {
-    console.log(state, payload)
-    // setOrder(state, payload)
+    setOrder(state, payload)
   },
   [MutationTypes.SetOrders] (state: OrderState, payload: Array<Order>) {
     state.orders = payload

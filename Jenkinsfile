@@ -175,8 +175,8 @@ pipeline {
           fi
           sed -i "s#https://www.procyon.vip/#$WEB_DOMAIN#g" ./src/index.template.html
           PATH=/usr/local/bin:$PATH:./node_modules/@quasar/app/bin yarn install --registry https://registry.npm.taobao.org/
-          PATH=/usr/local/bin:$PATH:./node_modules/@quasar/app/bin quasar build
-          PATH=/usr/local/bin:$PATH:./node_modules/@quasar/app/bin quasar build
+          PATH=/usr/local/bin:$PATH:./node_modules/@quasar/app/bin quasar build --debug
+          PATH=/usr/local/bin:$PATH:./node_modules/@quasar/app/bin quasar build --debug
           docker build -t $DOCKER_REGISTRY/entropypool/procyon-webui:$tag .
         '''.stripIndent())
       }
