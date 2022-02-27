@@ -93,7 +93,7 @@ const onBackClick = () => {
   router.back()
 }
 
-const paymentHint = t('MSG_PAYMENT_HINT').replace(/--BEGIN COIN_TYPE END--/g, order.value?.PayWithCoin?.Unit as string)
+const paymentHint = computed(() => t('MSG_PAYMENT_HINT').replace(/--BEGIN COIN_TYPE END--/g, order.value?.PayWithCoin?.Unit as string))
 
 const qrCodeContainer = ref<HTMLDivElement>()
 
