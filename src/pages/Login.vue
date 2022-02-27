@@ -44,7 +44,6 @@ const verifyBy = ref(VerifyMethod.VerifyNone)
 const verifyCode = ref('')
 const showVerify = ref(false)
 watch(verifyBy, () => {
-  console.log(verifyBy.value)
   showVerify.value = verifyBy.value !== VerifyMethod.VerifyNone
 })
 

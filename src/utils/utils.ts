@@ -92,7 +92,6 @@ export const isValidPhone = (phone: string): boolean => {
   }
 
   if (!phoneRegex.test(phone)) {
-    console.log('invalid 2', phone)
     return false
   }
 

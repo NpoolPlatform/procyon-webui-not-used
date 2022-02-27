@@ -133,7 +133,6 @@ const sendEmailCode = () => {
 
 const sendSmsCode = () => {
   if (!isValidPhone(formatPhoneNumber(verifyParam.value))) {
-    console.log(formatPhoneNumber(verifyParam.value))
     return
   }
   const request: SendSmsCodeRequest = {
