@@ -1,4 +1,6 @@
 <template>
+  <div>{{ order }}</div>
+  <div>{{ query }}</div>
   <q-page class='container'>
     <q-btn class='back-button' @click='onBackClick'>⭠</q-btn>
     <div class='content'>
