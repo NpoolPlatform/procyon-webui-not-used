@@ -1,14 +1,14 @@
-import { Benefit } from './types'
+import { Benefit, Commission } from './types'
 
 interface BenefitsState {
   Benefits: Array<Benefit>
-  Commission: number
+  Commission: Commission
 }
 
 function state (): BenefitsState {
   return {
     Benefits: [],
-    Commission: 0
+    Commission: {} as Commission
   }
 }
 

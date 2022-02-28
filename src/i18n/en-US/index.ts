@@ -81,6 +81,8 @@ export default {
   MSG_WALLET: 'Wallet',
   MSG_CURRENT_BALANCE: 'Current Balance',
   MSG_ACCOUNT_BALANCE: 'Account Balance',
+  MSG_COMMISSION_BALANCE: 'Commission Balance',
+  MSG_TOTAL: 'Total',
   MSG_ASSETS: 'Assets',
   MSG_TRANSACTIONS: 'Transactions',
   MSG_BENEFITS: 'Benefits',
@@ -147,6 +149,7 @@ export default {
   MSG_GET_APPLICATIONS_FAIL: 'Cannot get goods',
   MSG_GET_RECOMMENDS_FAIL: 'Cannot get recommend goods',
   MSG_GET_PROMOTIONS_FAIL: 'Cannot get promotion goods',
+  MSG_GET_COMMISSION_FAIL: 'Cannot get commissions',
 
   general: {
     KYCStatus: 'KYC Verification Status',

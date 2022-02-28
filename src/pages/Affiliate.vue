@@ -1,5 +1,7 @@
 <template>
   <div class='content'>
+    <div class='section-part-title'>{{ $t('MSG_COMMISSION_BALANCE') }}</div>
+    <CommissionBox />
     <div class='section-part-title'>{{ $t('affiliate.ReferralCode') }}</div>
     <ReferralCode />
     <div class='hr' />
@@ -17,6 +19,7 @@
 <script setup lang='ts'>
 import { defineAsyncComponent } from 'vue'
 
+const CommissionBox = defineAsyncComponent(() => import('src/components/affiliate/CommissionBox.vue'))
 const AffiliateTree = defineAsyncComponent(() => import('src/components/affiliate/AffilicateTree.vue'))
 const ReferralCode = defineAsyncComponent(() => import('src/components/affiliate/ReferralCode.vue'))
 const AffiliateTable = defineAsyncComponent(() => import('src/components/affiliate/AffiliateTable.vue'))

@@ -13,7 +13,7 @@ const mutations: MutationTree<BenefitsState> & BenefitMutations = {
     state.Benefits = payload
   },
   [MutationTypes.SetCommission] (state: BenefitsState, payload: Commission) {
-    state.Commission = payload.Amount
+    state.Commission = payload
   }
 }
 

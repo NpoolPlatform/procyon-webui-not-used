@@ -21,7 +21,8 @@ interface GetCommissionRequest {
 }
 
 interface Commission {
-  Amount: number
+  Total: number
+  Balance: number
 }
 
 interface GetCommissionResponse {

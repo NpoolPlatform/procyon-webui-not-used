@@ -33,27 +33,39 @@
 </template>
 
 <script setup lang='ts'>
-import { computed, onBeforeMount } from 'vue'
+import { computed, onBeforeMount, ref, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'src/store'
 import { GetDirectInvitationsRequest, InvitationSummary, Invitation } from 'src/store/affiliate/types'
 import { useQuasar } from 'quasar'
-import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/affiliate/action-types'
-import { MutationTypes } from 'src/store/notify/mutation-types'
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
 import { useI18n } from 'vue-i18n'
+import { MutationTypes } from 'src/store/affiliate/mutation-types'
 
 const q = useQuasar()
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
-
 const UserID = q.cookies.get('UserID')
-const target = ItemStateTarget.GetDirectInvitationList
 
-const innerLoading = computed(() => store.getters.getInnerLoading.get(target))
+const innerLoading = ref(false)
+
+type FunctionVoid = () => void
+const unsubscribe = ref<FunctionVoid>()
 
 onBeforeMount(() => {
   getInvitationList()
+})
+
+onMounted(() => {
+  unsubscribe.value = store.subscribe((mutation) => {
+    if (mutation.type === MutationTypes.SetInvitationList) {
+      innerLoading.value = false
+    }
+  })
+})
+
+onUnmounted(() => {
+  unsubscribe.value?.()
 })
 
 const store = useStore()
@@ -101,10 +113,7 @@ const kolList = computed(() => {
 })
 
 const getInvitationList = () => {
-  store.commit(MutationTypes.SetInnerLoading, {
-    key: target,
-    value: true
-  })
+  innerLoading.value = true
 
   const request: GetDirectInvitationsRequest = {
     Message: {
