@@ -3,6 +3,12 @@ enum API {
   SUBMIT_USER_WITHDRAW = '/cloud-hashing-apis-v2/v1/submit/user/withdraw'
 }
 
+enum WithdrawType {
+  Benefit = 'benefit',
+  Commission = 'commission'
+}
+
 export {
-  API
+  API,
+  WithdrawType
 }

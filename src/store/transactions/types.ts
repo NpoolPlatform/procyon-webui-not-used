@@ -1,4 +1,5 @@
 import { ReqMessage } from '../notifications/types'
+import { WithdrawType } from './const'
 
 interface Transaction {
   ID: string
@@ -27,6 +28,7 @@ interface UserWithdraw {
   CoinTypeID: string
   WithdrawToAccountID: string
   Amount: number
+  WithdrawType: WithdrawType
 }
 
 interface SubmitUserWithdrawRequest {

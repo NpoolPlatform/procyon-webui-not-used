@@ -69,6 +69,7 @@ import { WithdrawAccount } from 'src/store/accounts/types'
 import { SendEmailCodeRequest } from 'src/store/verify/types'
 import { GenerateSendEmailRequest } from 'src/utils/utils'
 import { State } from 'src/store/kycs/const'
+import { WithdrawType } from 'src/store/transactions/const'
 
 const store = useStore()
 // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -162,7 +163,8 @@ const onVerify = () => {
     Info: {
       CoinTypeID: query.value.coinTypeID,
       WithdrawToAccountID: withdrawAddress.value.Account.ID,
-      Amount: withdrawAmount.value
+      Amount: withdrawAmount.value,
+      WithdrawType: WithdrawType.Benefit
     },
     Account: account,
     AccountType: verifyBy.value,
