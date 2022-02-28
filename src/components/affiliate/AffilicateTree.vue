@@ -85,7 +85,7 @@ const totalAmount = (summarys: Map<string, InvitationSummary>) => {
   for (const [, summary] of summarys) {
     total += summary.Amount
   }
-  return total
+  return Math.floor(total)
 }
 
 const kolList = computed(() => {
