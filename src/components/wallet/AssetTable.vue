@@ -70,7 +70,7 @@ const assets = computed(() => {
     let asset = myAssets.get(good?.Main?.ID as string)
     if (!asset) {
       asset = {
-        Name: store.getters.getGoodByID(benefit.GoodID)?.Main?.Name,
+        Name: store.getters.getGoodByID(benefit.GoodID)?.Main?.Unit,
         Balance: 0,
         Last24HoursIncoming: 0,
         USDTValue: 0,
