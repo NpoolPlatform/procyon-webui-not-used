@@ -1,10 +1,11 @@
 import { GetterTree } from 'vuex'
 import { RootState } from '../index'
 import { CoinsState } from './state'
-import { Coin } from './types'
+import { Coin, CommissionCoin } from './types'
 
 type CoinGetters = {
   getCoinByID (state: CoinsState): (id: string) => Coin
+  getCommissionCoins (state: CoinsState): Array<CommissionCoin>
   getCoins (state: CoinsState): Array<Coin>
   getCoinCurrency (state: CoinsState): (id: string, currency: string) => number
   getCoinsCurrencies (state: CoinsState): Record<string, Record<string, number>>
@@ -14,6 +15,7 @@ const getters: GetterTree<CoinsState, RootState> & CoinGetters = {
   getCoinByID: (state: CoinsState): (id: string) => Coin => {
     return (id: string) => state.Coins.get(id) as Coin
   },
+  getCommissionCoins: (state: CoinsState): Array<CommissionCoin> => state.CommissionCoins,
   getCoins: (state: CoinsState): Array<Coin> => {
     const Coins: Array<Coin> = []
     state.Coins.forEach((val) => {

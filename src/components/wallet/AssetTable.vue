@@ -53,6 +53,8 @@ const { t } = useI18n({ useScope: 'global' })
 const store = useStore()
 const benefits = computed(() => store.getters.getBenefits)
 const coinsCurrencies = computed(() => store.getters.getCoinsCurrencies)
+const commission = computed(() => store.getters.getCommission)
+const commissionCoins = computed(() => store.getters.getCommissionCoins)
 
 interface Asset {
   Name: string
@@ -105,6 +107,25 @@ const assets = computed(() => {
     asset.JPYValue = asset.Balance * store.getters.getCoinCurrency(asset.CoinTypeID, 'jpy')
 
     remainAssets.set(asset.CoinTypeID, asset)
+  })
+
+  commissionCoins.value.forEach((coin) => {
+    if (!coin.Using) {
+      return
+    }
+
+    if (commission.value.Balance > 0) {
+      const myCoin = store.getters.getCoinByID(coin.CoinTypeID)
+      const asset = {
+        Name: myCoin.Unit,
+        Balance: commission.value.Balance,
+        Last24HoursIncoming: 0,
+        USDTValue: commission.value.Balance,
+        JPYValue: commission.value.Balance * store.getters.getCoinCurrency(myCoin.ID as string, 'jpy'),
+        CoinTypeID: myCoin.ID
+      } as Asset
+      myAssets.set(myCoin.ID as string, asset)
+    }
   })
 
   return Array.from(remainAssets).map(([, value]) => value)
@@ -161,6 +182,17 @@ const onWithdrawClick = (asset: Asset) => {
 }
 
 onMounted(() => {
+  store.dispatch(BenefitActionTypes.GetCommissionByAppUser, {
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_GET_COMMISSION_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
+
   store.dispatch(BenefitActionTypes.GetUserBenefitsByAppUser, {
     Message: {
       ModuleKey: ModuleKey.ModuleApplications,
