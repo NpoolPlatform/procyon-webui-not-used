@@ -5,10 +5,12 @@ import { Benefit } from './types'
 
 type BenefitGetters = {
   getBenefits (state: BenefitsState): Array<Benefit>
+  getCommission (state: BenefitsState): number
 }
 
 const getters: GetterTree<BenefitsState, RootState> & BenefitGetters = {
-  getBenefits: (state: BenefitsState): Array<Benefit> => state.Benefits
+  getBenefits: (state: BenefitsState): Array<Benefit> => state.Benefits,
+  getCommission: (state: BenefitsState): number => state.Commission
 }
 
 export { BenefitGetters, getters }

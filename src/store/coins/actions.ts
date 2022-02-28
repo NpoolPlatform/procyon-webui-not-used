@@ -5,7 +5,9 @@ import {
   CreateCoinResponse,
   GetCoinsCurrenciesRequest,
   GetCoinsRequest,
-  GetCoinsResponse
+  GetCoinsResponse,
+  GetCommissionCoinsRequest,
+  GetCommissionCoinsResponse
 } from './types'
 import { CoinsState } from './state'
 import { ActionTree } from 'vuex'
@@ -38,6 +40,14 @@ interface CoinActions {
     RootState,
     CoinMutations<CoinsState>>,
     req: GetCoinsCurrenciesRequest): void
+
+  [ActionTypes.GetCommissionCoinSettings]({
+    commit
+  }: AugmentedActionContext<
+    CoinsState,
+    RootState,
+    CoinMutations<CoinsState>>,
+    req: GetCommissionCoinsRequest): void
 }
 
 const actions: ActionTree<CoinsState, RootState> = {
@@ -72,6 +82,17 @@ const actions: ActionTree<CoinsState, RootState> = {
       req.Message,
       (resp: Map<string, Map<string, number>>): void => {
         commit(MutationTypes.SetCoinsCurrencies, resp)
+      })
+  },
+
+  [ActionTypes.GetCommissionCoinSettings] ({ commit }, req: GetCoinsCurrenciesRequest) {
+    doAction<GetCoinsCurrenciesRequest, GetCommissionCoinsResponse>(
+      commit,
+      API.CREATE_COIN,
+      req,
+      req.Message,
+      (resp: GetCommissionCoinsResponse): void => {
+        commit(MutationTypes.SetCoins, resp.Infos)
       })
   }
 }

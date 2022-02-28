@@ -16,8 +16,23 @@ interface GetBenefitsResponse {
   Infos: ReadonlyArray<Benefit>
 }
 
+interface GetCommissionRequest {
+  Message: ReqMessage
+}
+
+interface Commission {
+  Amount: number
+}
+
+interface GetCommissionResponse {
+  Info: Commission
+}
+
 export {
   Benefit,
   GetBenefitsRequest,
-  GetBenefitsResponse
+  GetBenefitsResponse,
+  Commission,
+  GetCommissionRequest,
+  GetCommissionResponse
 }

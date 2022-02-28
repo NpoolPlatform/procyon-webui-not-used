@@ -6,7 +6,7 @@ import { AugmentedActionContext, RootState } from '../index'
 import { BenefitMutations } from './mutations'
 import { API } from './const'
 import { doAction } from '../action'
-import { GetBenefitsRequest, GetBenefitsResponse } from './types'
+import { GetBenefitsRequest, GetBenefitsResponse, GetCommissionRequest, GetCommissionResponse } from './types'
 
 interface BenefitActions {
   [ActionTypes.GetUserBenefitsByAppUser]({
@@ -16,6 +16,14 @@ interface BenefitActions {
     RootState,
     BenefitMutations<BenefitsState>>,
     req: GetBenefitsRequest): void
+
+  [ActionTypes.GetCommissionByAppUser]({
+    commit
+  }: AugmentedActionContext<
+    BenefitsState,
+    RootState,
+    BenefitMutations<BenefitsState>>,
+    req: GetCommissionRequest): void
 }
 
 const actions: ActionTree<BenefitsState, RootState> = {
@@ -27,6 +35,17 @@ const actions: ActionTree<BenefitsState, RootState> = {
       req.Message,
       (resp: GetBenefitsResponse): void => {
         commit(MutationTypes.SetBenefits, resp.Infos)
+      })
+  },
+
+  [ActionTypes.GetCommissionByAppUser] ({ commit }, req: GetCommissionRequest) {
+    doAction<GetCommissionRequest, GetCommissionResponse>(
+      commit,
+      API.GET_COMMISSION_BY_APP_USER,
+      req,
+      req.Message,
+      (resp: GetCommissionResponse): void => {
+        commit(MutationTypes.SetCommission, resp.Info)
       })
   }
 }

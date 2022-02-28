@@ -29,11 +29,28 @@ interface GetCoinsCurrenciesRequest {
   Message: ReqMessage
 }
 
+interface CommissionCoin {
+  ID: string
+  CoinTypeID: string
+  Using: boolean
+}
+
+interface GetCommissionCoinsRequest {
+  Message: ReqMessage
+}
+
+interface GetCommissionCoinsResponse {
+  Infos: Array<CommissionCoin>
+}
+
 export {
   Coin,
   GetCoinsRequest,
   GetCoinsResponse,
   CreateCoinRequest,
   CreateCoinResponse,
-  GetCoinsCurrenciesRequest
+  GetCoinsCurrenciesRequest,
+  CommissionCoin,
+  GetCommissionCoinsRequest,
+  GetCommissionCoinsResponse
 }
