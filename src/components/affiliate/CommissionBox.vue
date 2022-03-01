@@ -2,7 +2,7 @@
   <div class='earn-box'>
     <div class='earn-box-item'>
       <div>
-        <span class='price'>{{ commission.Total ? commission.Total : 0 }}</span>
+        <span class='price'>{{ commission.Total ? commission.Total.toFixed(2) : 0 }}</span>
         <span class='unit'> USDT</span>
       </div>
       <div class='hr sub-hr'></div>
@@ -11,7 +11,7 @@
 
     <div class='earn-box-item'>
       <div>
-        <span class='price'>{{ commission.Balance ? commission.Balance : 0 }}</span>
+        <span class='price'>{{ commission.Balance ? commission.Balance.toFixed(2) : 0 }}</span>
         <span class='unit'> USDT</span>
       </div>
       <div class='hr sub-hr'></div>
