@@ -9,44 +9,42 @@
     v-if='logined'
     content-style='{width: 150px;background: linear-gradient(to bottom right,rgba(225, 238, 239, 0.2) 0, rgba(161, 208, 208, 0.2) 100%);box-shadow: 16px 16px 20px 0 #23292b;border-radius: 12px;color: #e1eeef;overflow: hidden;}'
   >
-    <q-list class='dropdown-list'>
-      <div class='avatar-dropdown'>
-        <q-item clickable v-close-popup @click='$router.push("/dashboard")'>
-          <q-item-section>
-            <q-item-label>{{ $t('menuList.Dashboard') }}</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable v-close-popup @click='$router.push("/wallet")'>
-          <q-item-section>
-            <q-item-label>{{ $t('menuList.Wallet') }}</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item v-if='showAffiliate' clickable v-close-popup @click='$router.push("/affiliate")'>
-          <q-item-section>
-            <q-item-label>{{ $t('menuList.Affiliates') }}</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable v-close-popup @click='$router.push("/security")'>
-          <q-item-section>
-            <q-item-label>{{ $t('menuList.Security') }}</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable v-close-popup @click='$router.push("/account")'>
-          <q-item-section>
-            <q-item-label>{{ $t('menuList.Account') }}</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable v-close-popup @click='$router.push("/kyc")'>
-          <q-item-section>
-            <q-item-label>{{ $t('menuList.KYC') }}</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable v-close-popup @click='logout'>
-          <q-item-section>
-            <q-item-label>{{ $t('menuList.Logout') }}</q-item-label>
-          </q-item-section>
-        </q-item>
-      </div>
+    <q-list class='avatar-dropdown'>
+      <q-item clickable v-close-popup @click='$router.push("/dashboard")'>
+        <q-item-section>
+          <q-item-label>{{ $t('menuList.Dashboard') }}</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item clickable v-close-popup @click='$router.push("/wallet")'>
+        <q-item-section>
+          <q-item-label>{{ $t('menuList.Wallet') }}</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item v-if='showAffiliate' clickable v-close-popup @click='$router.push("/affiliate")'>
+        <q-item-section>
+          <q-item-label>{{ $t('menuList.Affiliates') }}</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item clickable v-close-popup @click='$router.push("/security")'>
+        <q-item-section>
+          <q-item-label>{{ $t('menuList.Security') }}</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item clickable v-close-popup @click='$router.push("/account")'>
+        <q-item-section>
+          <q-item-label>{{ $t('menuList.Account') }}</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item clickable v-close-popup @click='$router.push("/kyc")'>
+        <q-item-section>
+          <q-item-label>{{ $t('menuList.KYC') }}</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item clickable v-close-popup @click='logout'>
+        <q-item-section>
+          <q-item-label>{{ $t('menuList.Logout') }}</q-item-label>
+        </q-item-section>
+      </q-item>
     </q-list>
   </q-btn-dropdown>
 </template>
@@ -110,9 +108,5 @@ const logout = () => {
 .avatar-dropdown {
   color: white;
   width: 160px;
-}
-
-.dropdown-list {
-  max-height: auto;
 }
 </style>
