@@ -33,7 +33,7 @@ const actions: ActionTree<AffiliateState, RootState> = {
       .then((resp: GetDirectInvitationsResponse) => {
         const father: Invitation = {
           UserID: userInfo.User.ID as string,
-          Username: userInfo.Extra.Username as string,
+          Username: resp.MySelf.Username,
           EmailAddress: userInfo.User.EmailAddress as string,
           Label: '',
           children: [],
