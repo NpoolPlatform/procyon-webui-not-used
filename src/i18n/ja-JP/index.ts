@@ -588,23 +588,23 @@ export default {
   },
 
   contact: {
-    Title: 'プロキオンサポートに連絡',
+    Title: 'カスタマーサポートへのお問い合わせ',
     Left: {
-      Title: 'プロキオンにメールで問い合わせる'
+      Title: 'メールでのお問い合わせ'
     },
     Right: {
-      Title: 'プロキオンにLINEで問い合わせる',
+      Title: 'LINEでのお問い合わせ',
       Box1Content: {
-        Word1: '下のQRコードを読み取るには、スマートフォンで',
-        StrongWord1: 'LINE',
-        Word2: 'を開き、',
+        Word1: 'スマートフォンのカメラを開きQRコードを読み込み',
+        StrongWord1: 'Procyonサポート',
+        Word2: 'をLINEで',
         StrongWord2: '「友だち追加」',
-        Word3: 'アイコンをタップしてください。その後、上部にある',
-        StrongWord3: '「QRコード」',
-        Word4: 'を選択します。'
+        Word3: 'してください。',
+        StrongWord3: '',
+        Word4: ''
       },
-      Content: 'プラットフォームに関するご質問、サポートに関する問題、またはご挨拶など、お気軽にお問い合わせください。ご連絡をお待ちしております。',
-      Signature: '—Procyon Support Team'
+      Content: 'プラットフォームに関するご質問など、お気軽にお問い合わせください。ご連絡をお待ちしております。',
+      Signature: 'Procyon カスタマーサポートチーム'
     }
   },
 

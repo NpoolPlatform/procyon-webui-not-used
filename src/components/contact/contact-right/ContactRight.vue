@@ -15,7 +15,7 @@
     </q-card-section>
     <q-card-section>
       <p class='qr-code-text'>{{ $t('contact.Right.Content') }}</p>
-      <h4 class='signature'>—Procyon Support Team</h4>
+      <h4 class='signature'>{{ $t('contact.Right.Signature') }}</h4>
     </q-card-section>
   </q-card>
 </template>
