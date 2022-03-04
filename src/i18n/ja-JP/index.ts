@@ -97,52 +97,54 @@ export default {
   MSG_ADDRESS: '送金先アドレス',
   MSG_DATE_ADDED: '登録日',
   MSG_ADD_NEW_ADDRESS: '送金先アドレスを追加',
-  MSG_WALLET_REGISTRATION: 'Wallet Registration',
-  MSG_WALLET_ADDRESS: 'Wallet Address',
-  MSG_WALLET_LABEL: 'Wallet Label',
-  MSG_WALLET_LABEL_TIP: '(e.g. name, exchange, etc.)',
-  MSG_REGISTER_ADDRESS: 'Register Address',
-  MSG_CAUTION: 'Caution',
+  MSG_WALLET_REGISTRATION: '【新規】送金アドレスを登録',
+  MSG_WALLET_ADDRESS: '送金先アドレス',
+  MSG_WALLET_LABEL: '登録名',
+  MSG_WALLET_LABEL_TIP: '(氏名、取引所名、ウォレット名 等)',
+  MSG_REGISTER_ADDRESS: '新規登録アドレス',
+  MSG_CAUTION: '注意事項',
   MSG_REGISTER_ADDRESS_CAUTION: '<ul>' +
-                                  '<li>Make sure you enter the correct address. ' +
-                                  '<strong>Using an incorrect address will result in the loss of assets.</strong></li>' +
-                                  '<li>Make sure that <strong>the address matches the selected blockchain</strong>. ' +
-                                  'If the address does not match, your assets will be permanently lost!</li>' +
-                                  '<li>After registering your address <strong>the approval process may take up to 24 hours</strong>. ' +
-                                  'This is a security measure in place to safeguard your assets!</li>' +
+                                  '<li>登録する送金先アドレスは必ず正しく入力してください。' +
+                                  '<strong>誤った送金先アドレスを取引で使用した場合、資産を失うことになります。</strong></li>' +
+                                  '<li><strong>送金先アドレスとブロックチェーンネットワークが、一致していることをご確認ください。</strong>. ' +
+                                  '一致しない場合、取引の際で資産を失うことになりますので、ご注意ください。</li>' +
+                                  '<li>新規送金先アドレスを登録後、承認プロセスに<strong>最大24時間かかる場合があります。</strong>. ' +
+                                  '承認プロセスは、ユーザーの資産を保護するためのセキュリティ対策の一環です。ご理解のほどお願いします。</li>' +
                                 '</ul>',
   MSG_SET_WITHDRAW_ADDRESS_FAIL: 'Cannot set withdraw address',
   MSG_GET_WITHDRAW_ADDRESSES_FAIL: 'Cannot get withdraw addresses',
   MSG_GET_TRANSACTIONS_FAIL: 'Cannot get transactions',
   MSG_GET_COINS_CURRENCIES_FAIL: 'Cannot get coins currencies',
-  MSG_WITHDRAW: 'Withdraw',
+  MSG_WITHDRAW: '送金',
   MSG_SUBMIT_WITHDRAW_FAIL: 'Cannot submit withdraw',
   MSG_ASSET_WITHDRAWAL: 'Asset Withdrawal',
-  MSG_AVAILABLE_WITHDRAWAL: 'Available for Withdrawal',
-  MSG_AMOUNT_TO_WITHDRAW: 'Amount to Withdraw',
-  MSG_SELECT_WITHDRAW_ADDRESS: 'Select Recipient Address',
-  MSG_GUIDE_AND_FAQ: 'Guide & FAQ',
-  MSG_WITHDRAW_GUIDE_AND_FAQ_CONTENT: '<h4>How can I withdraw my assets?</h4>' +
+  MSG_AVAILABLE_WITHDRAWAL: '出金可能な残高',
+  MSG_AMOUNT_TO_WITHDRAW: '{UNIT}出金額',
+  MSG_SELECT_WITHDRAW_ADDRESS: '送金先アドレス',
+  MSG_GUIDE_AND_FAQ: '出金マニュアル & FAQ',
+  MSG_WITHDRAW_GUIDE_AND_FAQ_CONTENT: '<h4>資産を出金するにはどうしたらよいですか？</h4>' +
                                         '<ul>' +
-                                          '<li>Enter the amount you would like to transfer and select the address you would like to transfer to.</li>' +
-                                          '<li>To add another address, please see the <a href="">Dashboard page</a>.</li>' +
-                                          '<li><strong>Entering an invalid address will result in the permanent loss of your funds.</strong></li>' +
+                                          '<li>「{UNIT}出金額」に出金希望額を入力し、「送金先アドレス」を選択してください。</li>' +
+                                          '<li>新規の送金先アドレスを追加する場合、<a href="">ダッシュボード</a>から操作をしてください。</li>' +
+                                          '<li><strong>無効および誤った送金先アドレスを入力した場合、相手に着金されず送金額は失われます。' +
+                                          '予め送金先アドレスに不備がないことをご確認ください。</strong></li>' +
                                         '</ul>' +
-                                        '<h4>How long does a transaction take?</h4>' +
+                                        '<h4>取引完了および着金には、どれくらい時間がかかりますか？</h4>' +
                                         '<ul>' +
-                                          '<li>For small amounts (as determined by the network) the transaction is approved automatically ' +
-                                          'and should take a few minutes but <strong>can take a much as 24 hours</strong>, depending on network ' +
-                                          'congestion and gas fees.</li>' +
-                                          '<li>Large amounts <strong>(as determined by the network) will require manual processing</strong>, ' +
-                                          'which takes up to 24 hours or more depending on the amount of transactions at the moment.</li>' +
+                                          '<li>少額 (ネットワーク判断) の場合、取引は自動的に承認され、数分で着金確認ができます。ただし、' +
+                                          'ネットワークの混雑状況やガス料金（取引手数料）により、着金さるまでに<strong>24時間かかる場合もございます。</strong></li>' +
+                                          '<li><strong>高額 (ネットワーク判断 )の場合は、手動での処理が必要</strong>, ' +
+                                          'となり、その時点の取引量に応じて最大24時間以上かかることもあります。' +
+                                          '予め送金時間も考慮してご対応いただくことをお願いします。</li>' +
                                         '</ul>' +
-                                        '<h4>Where can I get a Spacemesh wallet?</h4>' +
+                                        '<h4>{COIN_NAME}を取り扱う取引所はどこですか？</h4>' +
                                         '<ul>' +
-                                          '<li>Spacemesh will listed on big exchanges such as Coinbase and Binance.</li>' +
-                                          '<li>Be sure to <strong>use a Spacemesh wallet address</strong> to transfer your funds.</li>' +
-                                          '<li>Using an incorrect address will <strong>result in a loss of your SMH!</strong></li>' +
+                                          '<li>{COIN_NAME}は、CoinbaseやBinanceに上場されると予想されています。</li>' +
+                                          '<li>{COIN_NAME}の取引には、<strong>{COIN_NAME}の送金先アドレス</strong>をご利用ください。</li>' +
+                                          '<li>無効および誤った送金先アドレスを入力した場合、<strong>送金額({UNIT})は失われます。</strong>' +
+                                          '予め送金先アドレスに不備がないことをご確認ください。</li>' +
                                         '</ul>',
-  MSG_INVALID_AMOUNT: 'Invalid amount',
+  MSG_INVALID_AMOUNT: 'スペースメッシュの公式スペック',
   MSG_GET_APPLICATIONS_FAIL: 'Cannot get goods',
   MSG_GET_RECOMMENDS_FAIL: 'Cannot get recommend goods',
   MSG_GET_PROMOTIONS_FAIL: 'Cannot get promotion goods',

@@ -16,7 +16,7 @@
               <span class='unit'>{{ coin?.Unit }}</span>
             </div>
             <div class='full-section'>
-              <h4>{{ t('MSG_AMOUNT_TO_WITHDRAW') }} ({{ coin?.Unit }}}):</h4>
+              <h4>{{ t('MSG_AMOUNT_TO_WITHDRAW', {UNIT: coin?.Unit}) }}:</h4>
               <input type='number' v-model='withdrawAmount' class='action-width'>
               <div v-if='withdrawAmount <= 0 || withdrawAmount > query.totalAmount' class='coupon-error'>{{ t('MSG_INVALID_AMOUNT') }}</div>
             </div>
@@ -35,7 +35,7 @@
           </div>
           <q-btn no-caps :label='t("MSG_WITHDRAW")' class='submit-btn submit' @click='onSubmit' />
           <h3>{{ t('MSG_GUIDE_AND_FAQ') }}</h3>
-          <p v-html='t("MSG_WITHDRAW_GUIDE_AND_FAQ_CONTENT")' />
+          <p v-html='t("MSG_WITHDRAW_GUIDE_AND_FAQ_CONTENT", {UNIT: coin?.Unit, COIN_TYPE: coin.Name})' />
         </div>
       </div>
     </div>

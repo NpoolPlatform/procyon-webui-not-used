@@ -102,7 +102,7 @@ export default {
   MSG_ADDRESS: 'Address',
   MSG_DATE_ADDED: 'Date Added',
   MSG_ADD_NEW_ADDRESS: 'Add New Address',
-  MSG_WALLET_REGISTRATION: 'Wallet Registration',
+  MSG_WALLET_REGISTRATION: 'New Wallet Registration',
   MSG_WALLET_ADDRESS: 'Wallet Address',
   MSG_WALLET_LABEL: 'Wallet Label',
   MSG_WALLET_LABEL_TIP: '(e.g. name, exchange, etc.)',
@@ -124,7 +124,7 @@ export default {
   MSG_SUBMIT_WITHDRAW_FAIL: 'Cannot submit withdraw',
   MSG_ASSET_WITHDRAWAL: 'Asset Withdrawal',
   MSG_AVAILABLE_WITHDRAWAL: 'Available for Withdrawal',
-  MSG_AMOUNT_TO_WITHDRAW: 'Amount to Withdraw',
+  MSG_AMOUNT_TO_WITHDRAW: 'Amount to Withdraw ({UNIT})',
   MSG_SELECT_WITHDRAW_ADDRESS: 'Select Recipient Address',
   MSG_GUIDE_AND_FAQ: 'Guide & FAQ',
   MSG_WITHDRAW_GUIDE_AND_FAQ_CONTENT: '<h4>How can I withdraw my assets?</h4>' +
@@ -141,11 +141,11 @@ export default {
                                           '<li>Large amounts <strong>(as determined by the network) will require manual processing</strong>, ' +
                                           'which takes up to 24 hours or more depending on the amount of transactions at the moment.</li>' +
                                         '</ul>' +
-                                        '<h4>Where can I get a Spacemesh wallet?</h4>' +
+                                        '<h4>Where can I get a {COIN_NAME} wallet?</h4>' +
                                         '<ul>' +
-                                          '<li>Spacemesh will listed on big exchanges such as Coinbase and Binance.</li>' +
-                                          '<li>Be sure to <strong>use a Spacemesh wallet address</strong> to transfer your funds.</li>' +
-                                          '<li>Using an incorrect address will <strong>result in a loss of your SMH!</strong></li>' +
+                                          '<li>{COIN_NAME} will listed on big exchanges such as Coinbase and Binance.</li>' +
+                                          '<li>Be sure to <strong>use a {COIN_NAME} wallet address</strong> to transfer your funds.</li>' +
+                                          '<li>Using an incorrect address will <strong>result in a loss of your {UNIT}!</strong></li>' +
                                         '</ul>',
   MSG_INVALID_AMOUNT: 'Invalid amount',
   MSG_GET_APPLICATIONS_FAIL: 'Cannot get goods',
