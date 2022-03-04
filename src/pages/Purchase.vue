@@ -60,7 +60,7 @@
         <div class='order-form'>
           <h3 class='form-title'>{{ t('MSG_MINING_PURCHASE') }}</h3>
           <div>
-            <h4>{{ t('MSG_PURCHASE_UNITS') }} ({{ good?.Good.Good.Unit }}s)</h4>
+            <h4>{{ t('MSG_PURCHASE_UNITS', {UNIT: good?.Good.Good.Unit}) }}</h4>
             <input v-model='purchaseUnits' type='number' />
             <h4>{{ t('MSG_PAYMENT_METHOD') }}</h4>
             <q-btn-dropdown

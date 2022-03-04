@@ -49,7 +49,7 @@ export default {
   MSG_SPECS_TITLE: 'Official Spacemesh Specs',
   MSG_SPACEMESH_HOMEPAGE: 'Spacemesh Homepage',
   MSG_MINING_PURCHASE: 'Mining Purchase',
-  MSG_PURCHASE_UNITS: 'Purchase Amount',
+  MSG_PURCHASE_UNITS: 'Purchase Amount ({UNIT}s)',
   MSG_PAYMENT_METHOD: 'Payment Method',
   MSG_COUPON_CODE: 'Coupon Code',
   MSG_INCORRECT_COUPON_CODE: 'Incorrect Coupon Code',
@@ -64,8 +64,8 @@ export default {
   MSG_RECEIVING_ADDRESS: 'Receiving Address',
   MSG_IMPORTANT_INFORMATION: 'Important Information',
   MSG_PAYMENT_HINT: '<ul>' +
-                       '<li>Make sure to use the correct blockchain. The above address is an <strong>--BEGIN COIN_TYPE END--</strong> address. ' +
-                       'If you do not use <strong>--BEGIN COIN_TYPE END--</strong>, your payment will be lost and <strong>CANNOT BE RECOVERED' +
+                       '<li>Make sure to use the correct blockchain. The above address is an <strong>{COIN_TYPE}</strong> address. ' +
+                       'If you do not use <strong>{COIN_TYPE}</strong>, your payment will be lost and <strong>CANNOT BE RECOVERED' +
                        '</strong>.</li>' +
                        '<li>You must send the exact, correct amount of USDT in a <strong>SINGLE PAYMENT</strong></li>' +
                        '<li>Overpayment or underpayment will not count towards your order. Instead the amount will be added to your wallet balance.</li>' +

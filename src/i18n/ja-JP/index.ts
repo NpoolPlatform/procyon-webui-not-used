@@ -10,93 +10,144 @@ export default {
   MSG_GET_LOGIN_HISTORIES_FAIL: 'ログイン履歴が取得できない',
   MSG_GET_GOOD_FAIL: '製品を入手できない',
 
-  MSG_SPACEMESH_MINING: 'Spacemesh Mining',
+  MSG_SPACEMESH_MINING: 'Spacemeshマイニング',
   MSG_PRODUCT_DETAILS: '製品詳細',
 
-  MSG_DAILY_MINING_REWARDS: 'Daily Mining Rewards',
-  MSG_SMH_PER_DAY: 'SMH / day',
-  MSG_SERVICE_PERIOD: 'Service Period',
-  MSG_DAYS: 'days',
-  MSG_TECHNICAL_SERVICE_FEE: 'Technical Service Fee',
-  MSG_MAINTENANCE_FEE: 'Maintenance Fee',
-  MSG_USDT_PER_DAY: 'USDT / day',
-  MSG_ORDER_EFFECTIVE: 'Order Effective',
+  MSG_DAILY_MINING_REWARDS: '日次マイニング報酬',
+  MSG_SMH_PER_DAY: 'SMH / 日',
+  MSG_SERVICE_PERIOD: 'マイニング期間',
+  MSG_DAYS: '日',
+  MSG_TECHNICAL_SERVICE_FEE: '技術サービス料',
+  MSG_MAINTENANCE_FEE: 'メンテナンス料',
+  MSG_USDT_PER_DAY: 'USDT / 日',
+  MSG_ORDER_EFFECTIVE: 'マイニング開始',
 
-  MSG_WHY_PROCYON_TITLE: 'Why Procyon?',
-  MSG_WHY_PROCYON_BODY: '<p>As our mission, Procyon aims to provide investors with a one-stop inclusive digital currency mining solution, ' +
-                        'with a R&amp;D, testing and an O&amp;M team composed of software engineers with 10 years of work experience from ' +
-                        'top chip companies, communication companies, and Internet companies.</p>' +
-                        '<p>The Procyon platform is based on the microservices system of a cloud-based trading platform and the elastic ' +
-                        'scaling capacity brought by kubernetes to ensure the transaction security and account security of the private ' +
-                        'trading network. Our perfect cloud-based operation and maintenance architecture ensures the smooth delivery of ' +
-                        'services and while mitigating the risk of the whole chain, ensuring the safety of your assets.</p>',
+  MSG_WHY_PROCYON_TITLE: 'なぜProcyonであるべきなのか？',
+  MSG_WHY_PROCYON_BODY: '<p>Procyonは、ICチップメーカー、通信会社、インターネット企業などで10年以上の経験を積んだオペレ' +
+                        'ーションチームとソフトウェアエンジニア、リサーチチームにより、ワンストップの包括的な暗号資産マイ' +
+                        'ニングソリューションを投資家に提供することを目指しています。</p>' +
+                        '<p>Procyonのプラットフォームは、クラウド型取引プラットフォームのマイクロサービスシステムとKubernetes' +
+                        'がもたらす弾性的なスケーリング能力に基づいており、プライベート取引ネットワークの取引とアカウントのセキュ' +
+                        'リティを確保することができます。完璧なクラウドベースの運用・保守構築により、サービスをスムーズに提供し、' +
+                        'チェーン全体のリスクを軽減しながら、お客様の資産の安全性を確保します。</p>',
 
-  MSG_SPACEMESH_DESCRIPTION_TITLE: 'Spacemesh is the Future',
-  MSG_SPAECEMSH_DESCRIPTION_BODY: '<p>Spacemesh aims to build a true peer-to-peer electronic cash network on a truly public blockchain. ' +
-                                  'Spacemesh is built on a block mesh operating system that will improve blockchain technology through the ' +
-                                  'use of innovative consensus protocols called ' +
+  MSG_SPACEMESH_DESCRIPTION_TITLE: '最先端なSpacemesh',
+  MSG_SPAECEMSH_DESCRIPTION_BODY: '<p>Spacemeshは、真のパブリックブロックチェーン上に真のピアツーピア（P2P）電子マネーネット' +
+                                  'ワークを構築することを目指しています。Spacemeshは、' +
                                   '<a target="_blank" ' +
                                   'href="https://procyon-vip.medium.com/spacemesh%E3%81%AEdag%E6%A7%8B%E9%80%A0%E3%81%AF%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E3%83%81%E3%82%A7%E3%83%BC%E3%83%B3%E3%82%92%E4%BB%A3%E6%9B%BF%E3%81%99%E3%82%8B%E3%81%AE%E3%81%8B-11a0b3a79ffb?p=11a0b3a79ffb">' +
                                   'Directed Acyclic Graphs (DAGs)' +
                                   '</a>.</p>' +
-                                  '<p>Based in Israel, the Spacemesh team closed an $18.5 million investment led by Polychain Capital back in September 2018, ' +
-                                  'bringing the total funding to over $22.5 million. In addition to the capital investments showing Spacemesh’s potential, ' +
-                                  'Procyon believes that Spacemesh has a winning formula as a new technology in the blockchain/crypto space. Thus, it is our ' +
-                                  'pleasure to introduce it as our flagship product.</p>',
+                                  '<p>イスラエルを拠点とするSpacemeshチームは、2018年9月にPolychain Capitalが主導する1850万ドル（21億円相当）の投資を完了し、' +
+                                  '資金調達総額は2250万ドル超（26億円相当）に達しました。Procyonは、Spacemeshの可能性を示す資本投資に加えて、' +
+                                  'Spacemeshがブロックチェーン・暗号資産の新しい技術として成功の方程式を持っていると考えています。したがって、' +
+                                  '当社の最重要製品として紹介できることを嬉しく思います。</p>',
 
-  MSG_SPECS_TITLE: 'Official Spacemesh Specs',
-  MSG_SPACEMESH_HOMEPAGE: 'Spacemesh Homepage',
-  MSG_MINING_PURCHASE: 'Mining Purchase',
-  MSG_PURCHASE_UNITS: 'Purchase Amount',
-  MSG_PAYMENT_METHOD: 'Payment Method',
-  MSG_COUPON_CODE: 'Coupon Code',
-  MSG_INCORRECT_COUPON_CODE: 'Incorrect Coupon Code',
-  MSG_PURCHASE: 'Purchase',
+  MSG_SPECS_TITLE: 'スペースメッシュの公式スペック',
+  MSG_SPACEMESH_HOMEPAGE: 'Spacemesh ホームページ >>',
+  MSG_MINING_PURCHASE: '購入済み製品',
+  MSG_PURCHASE_UNITS: '購入{UNIT}数',
+  MSG_PAYMENT_METHOD: '支払い方法',
+  MSG_COUPON_CODE: 'クーポンコード',
+  MSG_INCORRECT_COUPON_CODE: 'クーポンコードが正しくありません。再度ご確認ください。',
+  MSG_PURCHASE: '購入',
   MSG_GET_GOODS_FAIL: 'Cannot get goods',
   MSG_SUBMIT_ORDER_FAIL: 'Cannot submit order',
   MSG_CREATE_ORDER_PAYMENT_FAIL: 'Cannot create order payment',
   MSG_GET_ORDER_FAIL: 'Cannot get order',
-  MSG_ORDER_ID: 'Order ID',
-  MSG_AMOUNT_DUE: 'Amount Due',
-  MSG_TIME_REMAINING: 'Time Remaining',
-  MSG_RECEIVING_ADDRESS: 'Receiving Address',
-  MSG_IMPORTANT_INFORMATION: 'Important Information',
+  MSG_ORDER_ID: '注文ID',
+  MSG_AMOUNT_DUE: '未払い額',
+  MSG_TIME_REMAINING: '残り時間',
+  MSG_RECEIVING_ADDRESS: '受信アドレス',
+  MSG_IMPORTANT_INFORMATION: '重要なお知らせ',
   MSG_PAYMENT_HINT: '<ul>' +
-                       '<li>Make sure to use the correct blockchain. The above address is an <strong>ERC20</strong> address. ' +
-                       'If you do not use <strong>ERC20</strong>, your payment will be lost and <strong>CANNOT BE RECOVERED' +
+                       '<li>必ず正しいブロックチェーンを使用してください。上記は<strong>{COIN_TYPE}</strong>のアドレスです。<strong>{COIN_TYPE}</strong>, ' +
+                       'ではなく、間違ったブロックチェーンで送金した場合、資産は失われ、<strong>CANNOT BE RECOVERED' +
                        '</strong>.</li>' +
-                       '<li>You must send the exact, correct amount of USDT in a <strong>SINGLE PAYMENT</strong></li>' +
-                       '<li>Overpayment or underpayment will not count towards your order. Instead the amount will be added to your wallet balance.</li>' +
-                       '<li>The transaction can take up to 10 minutes to validate.</li>' +
+                       '<li>正確な金額のUSDTを一括で送る必要があります。</li>' +
+                       '<li>支払漏れは、注文にカウントされず、お客様のウォレット残高に反映されます。</li>' +
+                       '<li>取引完了まで最大10分かかることがあります。</li>' +
                      '</ul>',
-  MSG_SCAN_QR_CODE_TO_PAY: 'Scan QR Code to Pay',
-  MSG_PAYMENT_COMPLETE: 'Payment Complete',
-  MSG_PAY_LATER: 'Pay Later',
+  MSG_SCAN_QR_CODE_TO_PAY: 'QRコードを読み込み支払う',
+  MSG_PAYMENT_COMPLETE: '支払い完了',
+  MSG_PAY_LATER: '後で支払う',
   MSG_PAID: '有償',
   MSG_STATE: '状態',
   MSG_CANCELED_BY_TIMEOUT: 'タイムアウトでキャンセル',
   MSG_IN_SERVICE: 'サービス中',
   MSG_WALLET: 'Wallet',
-  MSG_CURRENT_BALANCE: 'Current Balance',
-  MSG_ACCOUNT_BALANCE: 'Account Balance',
-  MSG_ASSETS: 'Assets',
-  MSG_TRANSACTIONS: 'Transactions',
+  MSG_CURRENT_BALANCE: '残高照会',
+  MSG_ACCOUNT_BALANCE: '残高照会',
+  MSG_ASSETS: '資産',
+  MSG_TRANSACTIONS: '取引履歴',
   MSG_BENEFITS: 'Benefits',
   MSG_GET_BENEFITS_FAIL: 'Cannot get user benefits',
-  MSG_EXPORT_HISTORY: 'Export History (CSV)',
-  MSG_NAME: 'Name',
-  MSG_BALANCE: 'Balance',
-  MSG_24_HOUR_CHANGE: '24 Hour Change',
-  MSG_MARKET_VALUE_USDT: 'Market Value (USDT)',
-  MSG_MARKET_VALUE_JPY: 'Market Value (JPY)',
-  MSG_DATE: 'Date',
-  MSG_AMOUNT: 'Amount',
-  MSG_STATUS: 'Status',
-  MSG_TYPE: 'Type',
-  MSG_APPROVED_ADDRESSES: 'Approved Addresses',
-  MSG_BLOCKCHAIN: 'Blockchain',
-  MSG_ADDRESS: 'Address',
-  MSG_DATE_ADDED: 'Date Added',
+  MSG_EXPORT_HISTORY: 'CSVデータを出力',
+  MSG_NAME: '氏名',
+  MSG_BALANCE: '残高',
+  MSG_24_HOUR_CHANGE: '前日比',
+  MSG_MARKET_VALUE_USDT: '市場価格 (USDT)',
+  MSG_MARKET_VALUE_JPY: '市場価格 (JPY)',
+  MSG_DATE: '日付',
+  MSG_AMOUNT: '取引金額',
+  MSG_STATUS: 'ステータス',
+  MSG_TYPE: 'タイプ',
+  MSG_APPROVED_ADDRESSES: '認証済み送金先アドレス',
+  MSG_BLOCKCHAIN: 'ブロックチェーンネットワーク',
+  MSG_ADDRESS: '送金先アドレス',
+  MSG_DATE_ADDED: '登録日',
+  MSG_ADD_NEW_ADDRESS: '送金先アドレスを追加',
+  MSG_WALLET_REGISTRATION: 'Wallet Registration',
+  MSG_WALLET_ADDRESS: 'Wallet Address',
+  MSG_WALLET_LABEL: 'Wallet Label',
+  MSG_WALLET_LABEL_TIP: '(e.g. name, exchange, etc.)',
+  MSG_REGISTER_ADDRESS: 'Register Address',
+  MSG_CAUTION: 'Caution',
+  MSG_REGISTER_ADDRESS_CAUTION: '<ul>' +
+                                  '<li>Make sure you enter the correct address. ' +
+                                  '<strong>Using an incorrect address will result in the loss of assets.</strong></li>' +
+                                  '<li>Make sure that <strong>the address matches the selected blockchain</strong>. ' +
+                                  'If the address does not match, your assets will be permanently lost!</li>' +
+                                  '<li>After registering your address <strong>the approval process may take up to 24 hours</strong>. ' +
+                                  'This is a security measure in place to safeguard your assets!</li>' +
+                                '</ul>',
+  MSG_SET_WITHDRAW_ADDRESS_FAIL: 'Cannot set withdraw address',
+  MSG_GET_WITHDRAW_ADDRESSES_FAIL: 'Cannot get withdraw addresses',
+  MSG_GET_TRANSACTIONS_FAIL: 'Cannot get transactions',
+  MSG_GET_COINS_CURRENCIES_FAIL: 'Cannot get coins currencies',
+  MSG_WITHDRAW: 'Withdraw',
+  MSG_SUBMIT_WITHDRAW_FAIL: 'Cannot submit withdraw',
+  MSG_ASSET_WITHDRAWAL: 'Asset Withdrawal',
+  MSG_AVAILABLE_WITHDRAWAL: 'Available for Withdrawal',
+  MSG_AMOUNT_TO_WITHDRAW: 'Amount to Withdraw',
+  MSG_SELECT_WITHDRAW_ADDRESS: 'Select Recipient Address',
+  MSG_GUIDE_AND_FAQ: 'Guide & FAQ',
+  MSG_WITHDRAW_GUIDE_AND_FAQ_CONTENT: '<h4>How can I withdraw my assets?</h4>' +
+                                        '<ul>' +
+                                          '<li>Enter the amount you would like to transfer and select the address you would like to transfer to.</li>' +
+                                          '<li>To add another address, please see the <a href="">Dashboard page</a>.</li>' +
+                                          '<li><strong>Entering an invalid address will result in the permanent loss of your funds.</strong></li>' +
+                                        '</ul>' +
+                                        '<h4>How long does a transaction take?</h4>' +
+                                        '<ul>' +
+                                          '<li>For small amounts (as determined by the network) the transaction is approved automatically ' +
+                                          'and should take a few minutes but <strong>can take a much as 24 hours</strong>, depending on network ' +
+                                          'congestion and gas fees.</li>' +
+                                          '<li>Large amounts <strong>(as determined by the network) will require manual processing</strong>, ' +
+                                          'which takes up to 24 hours or more depending on the amount of transactions at the moment.</li>' +
+                                        '</ul>' +
+                                        '<h4>Where can I get a Spacemesh wallet?</h4>' +
+                                        '<ul>' +
+                                          '<li>Spacemesh will listed on big exchanges such as Coinbase and Binance.</li>' +
+                                          '<li>Be sure to <strong>use a Spacemesh wallet address</strong> to transfer your funds.</li>' +
+                                          '<li>Using an incorrect address will <strong>result in a loss of your SMH!</strong></li>' +
+                                        '</ul>',
+  MSG_INVALID_AMOUNT: 'Invalid amount',
+  MSG_GET_APPLICATIONS_FAIL: 'Cannot get goods',
+  MSG_GET_RECOMMENDS_FAIL: 'Cannot get recommend goods',
+  MSG_GET_PROMOTIONS_FAIL: 'Cannot get promotion goods',
+  MSG_GET_COMMISSION_FAIL: 'Cannot get commissions',
+  MSG_LABEL: '登録名',
 
   general: {
     KYCStatus: '身分証明の認証ステータス',

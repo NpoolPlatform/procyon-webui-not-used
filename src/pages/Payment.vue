@@ -36,7 +36,7 @@
           </div>
           <div class='hr'></div>
           <h4>{{ t('MSG_IMPORTANT_INFORMATION') }}</h4>
-          <p v-html='paymentHint' />
+          <p v-html='t("MSG_PAYMENT_HINT", {COIN_TYPE: order?.PayWithCoin?.Unit as string})' />
         </div>
         <div class='order-form'>
           <h3 class='form-title'>{{ t('MSG_SCAN_QR_CODE_TO_PAY') }}</h3>
@@ -92,8 +92,6 @@ const order = computed(() => store.getters.getOrderByID(query.value.orderId))
 const onBackClick = () => {
   router.back()
 }
-
-const paymentHint = computed(() => t('MSG_PAYMENT_HINT').replace(/--BEGIN COIN_TYPE END--/g, order.value?.PayWithCoin?.Unit as string))
 
 const qrCodeContainer = ref<HTMLDivElement>()
 
@@ -362,7 +360,7 @@ const onCopyAddressClick = () => {
 
 h3.form-title
   color: #e1eeef
-  font-size: 24px
+  font-size: 20px
   font-weight: 200
   position: relative
   margin: 0 0 24px 0
