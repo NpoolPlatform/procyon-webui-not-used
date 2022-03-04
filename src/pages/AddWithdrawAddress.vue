@@ -28,8 +28,11 @@
           </q-item>
         </q-list>
       </q-btn-dropdown>
-      <h4>{{ t('MSG_YOUR_WALLET_ADDRESS') }}:</h4>
+      <h4>{{ t('MSG_WALLET_ADDRESS') }}:</h4>
       <input type='text' class='common-input' v-model='walletAddress' />
+      <h4>{{ t('MSG_WALLET_LABEL') }}:</h4>
+      <span>{{ t('MSG_WALLET_LABEL_TIP') }}</span>
+      <input type='text' class='common-input' v-model='walletLabels' />
       <q-btn class='common-button submit-button' type='submit' @click='onAddressSubmit'>
         {{ $t('MSG_REGISTER_ADDRESS') }}
       </q-btn>
@@ -67,9 +70,10 @@ const { t, locale } = useI18n({ useScope: 'global' })
 const Box = defineAsyncComponent(() => import('src/components/box/Box.vue'))
 const CodeVerifier = defineAsyncComponent(() => import('src/components/dialog/popupverify/CodeVerifier.vue'))
 
-const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSale && !coin.ForPay))
+const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSale))
 const selectedCoin = ref(undefined as unknown as Coin)
 const walletAddress = ref('')
+const walletLabels = ref('')
 const userInfo = computed(() => store.getters.getUserInfo)
 
 const langID = computed(() => {
@@ -124,9 +128,11 @@ const onVerify = () => {
   } else {
     return
   }
+
   store.dispatch(AccountActionTypes.SetWithdrawAddress, {
     CoinTypeID: selectedCoin.value.ID as string,
     Address: walletAddress.value,
+    Labels: walletLabels.value.split(','),
     Account: account,
     AccountType: verifyBy.value,
     VerificationCode: verifyCode.value,
@@ -256,7 +262,7 @@ input[type="number"]:focus
 h4
   font-size: 18px
   font-weight: 400
-  margin: 12px 0
+  margin: 0
 
 .submit-button
   background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%)

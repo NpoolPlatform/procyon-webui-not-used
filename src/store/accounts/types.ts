@@ -7,6 +7,7 @@ interface Withdraw {
   Name: string
   Message: string
   CreateAt: number
+  Labels?: Array<string>
 }
 
 interface Account {
@@ -36,6 +37,7 @@ interface SetWithdrawAddressRequest {
   Address: string
   Name?: string
   Message?: string
+  Labels?: Array<string>
   Account: string
   AccountType: string
   VerificationCode: string

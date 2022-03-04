@@ -38,6 +38,9 @@ const getters: GetterTree<CoinsState, RootState> & CoinGetters = {
       coinCurrencyMap.set('filecoin', 'filecoin')
       coinCurrencyMap.set('bitcoin', 'bitcoin')
       coinCurrencyMap.set('ethereum', 'ethereum')
+      coinCurrencyMap.set('tfilecoin', 'filecoin')
+      coinCurrencyMap.set('tbitcoin', 'bitcoin')
+      coinCurrencyMap.set('tethereum', 'ethereum')
 
       const coinCurrency = state.CoinsCurrencies[coinCurrencyMap.get(coin.Name) as string]
       if (!coinCurrency) {

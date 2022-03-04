@@ -5,10 +5,10 @@
       :rows='accounts'
       class='table-box'
       :columns='accountTable'
-      row-key='ID'
       color='#e1eeef'
-      :no-data-label="$t('NoData')"
+      :no-data-label='$t("NoData")'
       :hide-bottom='true'
+      :rows-per-page-options='[accounts.length]'
     >
     </q-table>
     <q-btn class='common-button filled-button small-button' @click='onAddNewAddressClick'>
@@ -49,6 +49,12 @@ const accountTable = computed(() => [
     label: t('MSG_ADDRESS'),
     align: 'center',
     field: (row: WithdrawAccount) => row.Account.Address
+  },
+  {
+    name: 'Label',
+    label: t('MSG_LABEL'),
+    align: 'center',
+    field: (row: WithdrawAccount) => row.Address.Labels?.join(',')
   },
   {
     name: 'Date Added',

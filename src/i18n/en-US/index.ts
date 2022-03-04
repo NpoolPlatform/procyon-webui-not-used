@@ -103,7 +103,9 @@ export default {
   MSG_DATE_ADDED: 'Date Added',
   MSG_ADD_NEW_ADDRESS: 'Add New Address',
   MSG_WALLET_REGISTRATION: 'Wallet Registration',
-  MSG_YOUR_WALLET_ADDRESS: 'Your Wallet Address',
+  MSG_WALLET_ADDRESS: 'Wallet Address',
+  MSG_WALLET_LABEL: 'Wallet Label',
+  MSG_WALLET_LABEL_TIP: '(e.g. name, exchange, etc.)',
   MSG_REGISTER_ADDRESS: 'Register Address',
   MSG_CAUTION: 'Caution',
   MSG_REGISTER_ADDRESS_CAUTION: '<ul>' +
@@ -150,6 +152,7 @@ export default {
   MSG_GET_RECOMMENDS_FAIL: 'Cannot get recommend goods',
   MSG_GET_PROMOTIONS_FAIL: 'Cannot get promotion goods',
   MSG_GET_COMMISSION_FAIL: 'Cannot get commissions',
+  MSG_LABEL: 'Label',
 
   general: {
     KYCStatus: 'KYC Verification Status',
