@@ -138,7 +138,7 @@ interface myQuery {
 const query = computed(() => route.query as unknown as myQuery)
 const good = computed(() => store.getters.getGoodByID(query.value.goodId))
 const goodCoin = computed(() => store.getters.getCoinByID(good.value?.Main?.ID as string))
-const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSale && coin.ForPay && coin.ENV === goodCoin.value.ENV))
+const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSale && coin.ForPay && coin.ENV === goodCoin.value?.ENV))
 const selectedCoin = ref(undefined as unknown as Coin)
 
 const selectedCoinName = computed(() => {
