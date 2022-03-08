@@ -40,7 +40,7 @@ const totalAmount = (summarys: Map<string, InvitationSummary>) => {
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n()
 
-const directReferralsListColumns = [
+const directReferralsListColumns = computed(() => [
   {
     name: 'Name',
     label: t('affiliate.Direct.Name'),
@@ -71,7 +71,7 @@ const directReferralsListColumns = [
     align: 'center',
     field: (row: Invitation) => totalAmount(row.Summarys).toString() + ' USDT'
   }
-]
+])
 </script>
 
 <style scoped>
