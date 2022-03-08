@@ -1,3 +1,4 @@
+import { Coin } from '../coins/types'
 import { ReqMessage } from '../notifications/types'
 
 interface DeviceInfo {
@@ -64,14 +65,6 @@ export interface GoodExtend {
   Fees: Array<Fee>
   PriceCurrency: PriceCurrency
   Extra: GoodExtra
-}
-
-interface Coin {
-  ID: string
-  Name: string
-  PreSale: boolean
-  Unit: string
-  Logo: string
 }
 
 export interface Good {

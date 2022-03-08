@@ -83,7 +83,12 @@
                   @click="() => onCoinSelected(coin)"
                 >
                   <q-item-section>
-                    <q-item-label>{{ coin.Unit }}</q-item-label>
+                    <q-item-label>
+                      {{ coin.Unit }}
+                      <span class='payment-coinname'>
+                        {{ coin.Name }}
+                      </span>
+                    </q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -132,7 +137,8 @@ interface myQuery {
 }
 const query = computed(() => route.query as unknown as myQuery)
 const good = computed(() => store.getters.getGoodByID(query.value.goodId))
-const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSale && coin.ForPay))
+const goodCoin = computed(() => store.getters.getCoinByID(good.value?.Main?.ID as string))
+const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSale && coin.ForPay && coin.ENV === goodCoin.value.ENV))
 const selectedCoin = ref(undefined as unknown as Coin)
 
 const selectedCoinName = computed(() => {
@@ -529,4 +535,7 @@ input.error
 .payment-select:hover
   border: solid 2px #1ec498
   border-radius: 12px
+
+.payment-coinname
+  font-weight: bold
 </style>

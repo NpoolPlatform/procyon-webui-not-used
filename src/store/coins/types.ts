@@ -7,6 +7,7 @@ interface Coin {
   ForPay: boolean
   Unit: string
   Logo: string
+  ENV: string
 }
 
 interface GetCoinsResponse {

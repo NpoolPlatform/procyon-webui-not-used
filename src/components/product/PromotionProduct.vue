@@ -2,7 +2,7 @@
   <div class='product-card' v-for='(good, index) in myGoods' :key='index'>
     <div class='card-header'>
       <q-img :src='spacemeshImg' class='header-img'></q-img>
-      <h3 class='header-title'>{{ good.Main?.Name }}</h3>
+      <h3 class='header-title'>{{ good.Good.Good.Title.length > 0 ? good.Good.Good.Title : good.Main?.Name }}</h3>
     </div>
 
     <div class='product-price'>
