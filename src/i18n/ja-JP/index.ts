@@ -61,7 +61,7 @@ export default {
   MSG_RECEIVING_ADDRESS: '受信アドレス',
   MSG_IMPORTANT_INFORMATION: '重要なお知らせ',
   MSG_PAYMENT_HINT: '<ul>' +
-                       '<li>必ず正しいブロックチェーンを使用してください。上記は<strong>{COIN_TYPE}</strong>のアドレスです。<strong>{COIN_TYPE}</strong>, ' +
+                       '<li>必ず正しいブロックチェーンを使用してください。上記は<strong>{COIN_TYPE}</strong>のアドレスです。<strong>{COIN_TYPE}</strong>' +
                        'ではなく、間違ったブロックチェーンで送金した場合、資産は失われ、<strong>取り戻せないのでご注意ください' +
                        '</strong>。</li>' +
                        '<li>正確な金額のUSDTを一括で送る必要があります。</li>' +
