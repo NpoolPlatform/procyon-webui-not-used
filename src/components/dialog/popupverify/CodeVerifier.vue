@@ -87,9 +87,7 @@ const updateVerifyMethod = () => {
   }
   if (phoneNO.value && phoneNO.value.length > 0) {
     verifyMethod.value = VerifyMethod.VerifyByMobile
-    return
   }
-  return VerifyMethod.VerifyNone
 }
 
 watch(emailAddress, () => updateVerifyMethod())
