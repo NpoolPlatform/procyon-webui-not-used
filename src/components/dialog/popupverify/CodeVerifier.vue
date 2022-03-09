@@ -21,7 +21,7 @@
     </q-card-section>
 
     <q-form @submit="$emit('verify', myVerifyCode)">
-      <q-card-section v-if='verifyMethod === VerifyMethod.VerifyByEmail'>
+      <div v-if='verifyMethod === VerifyMethod.VerifyByEmail'>
         <q-input
           disable
           bg-color='blue-grey-2'
@@ -30,8 +30,8 @@
           :label='$t("input.EmailAddress")'
           v-model='emailAddress'>
         </q-input>
-      </q-card-section>
-      <q-card-section v-if='verifyMethod === VerifyMethod.VerifyByGoogle'>
+      </div>
+      <div v-if='verifyMethod === VerifyMethod.VerifyByGoogle'>
         <q-input
           :rules='verifyCodeRules'
           lazy-rules
@@ -41,8 +41,10 @@
           v-model='myVerifyCode'
           :label="$t('input.VerifyCode')"
         ></q-input>
-      </q-card-section>
-      <q-btn class='common-button verify-button' type='submit' :label='$t("button.Verify")'></q-btn>
+      </div>
+      <div>
+        <q-btn class='common-button verify-button' type='submit' :label='$t("button.Verify")'></q-btn>
+      </div>
     </q-form>
   </q-card>
 </template>
