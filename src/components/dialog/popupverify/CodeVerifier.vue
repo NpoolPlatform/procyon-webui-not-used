@@ -1,6 +1,6 @@
 <template>
   <q-card class='common-card-container' style='background: #23292b !important;'>
-    <q-card-section>
+    <q-card-section class='card-content'>
       <span class='common-card-title' v-if='verifyMethod === VerifyMethod.VerifyByEmail'>
         {{ t('dialog.EmailVerify.Title') }}
       </span>
@@ -10,28 +10,18 @@
     </q-card-section>
 
     <slot name='content'></slot>
-    <q-card-section v-if='verifyMethod === VerifyMethod.VerifyByEmail'>
+    <q-card-section class='card-content' v-if='verifyMethod === VerifyMethod.VerifyByEmail'>
       {{ $t('dialog.EmailVerify.Content1')
       }}<span style='font-weight: bolder'>{{ emailAddress
       }}</span>, {{ $t('dialog.EmailVerify.Content3')
       }}
     </q-card-section>
-    <q-card-section v-else-if='verifyMethod === VerifyMethod.VerifyByGoogle'>
+    <q-card-section class='card-content' v-else-if='verifyMethod === VerifyMethod.VerifyByGoogle'>
       {{ $t('login.GoogleVerifyContent') }}
     </q-card-section>
 
     <q-form @submit="$emit('verify', myVerifyCode)">
-      <div v-if='verifyMethod === VerifyMethod.VerifyByEmail'>
-        <q-input
-          disable
-          bg-color='blue-grey-2'
-          class='common-input'
-          outlined
-          :label='$t("input.EmailAddress")'
-          v-model='emailAddress'>
-        </q-input>
-      </div>
-      <div v-if='verifyMethod === VerifyMethod.VerifyByGoogle'>
+      <q-card-section class='card-content'>
         <q-input
           :rules='verifyCodeRules'
           lazy-rules
@@ -41,10 +31,10 @@
           v-model='myVerifyCode'
           :label="$t('input.VerifyCode')"
         ></q-input>
-      </div>
-      <div>
+      </q-card-section>
+      <q-card-section class='card-content'>
         <q-btn class='common-button verify-button' type='submit' :label='$t("button.Verify")'></q-btn>
-      </div>
+      </q-card-section>
     </q-form>
   </q-card>
 </template>
@@ -125,8 +115,8 @@ onMounted(() => {
 
 <style scoped>
 .card-content {
-  margin: 10px 10px 0 10px;
-  padding: 0 0 0 0;
+  margin: 0 0 20px 0;
+  padding: 0;
   color: #e1eeef;
   font-size: 18px;
 }
@@ -134,7 +124,7 @@ onMounted(() => {
 .verify-button {
   background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
   border: 1px solid #ff964a;
-  margin: 0 0 10px 0;
+  margin: 0;
   width: 100%;
   text-align: center;
 }

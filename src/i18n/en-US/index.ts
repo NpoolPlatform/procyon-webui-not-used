@@ -524,7 +524,7 @@ export default {
     },
     GoogleVerify: {
       Title: 'Google Verification Code',
-      Content: 'You have choose to verify login by google authenticate. Please enter your verification code in your google authenticator.'
+      Content: 'You have choose to verify by google authenticate. Please enter your verification code in your google authenticator.'
     }
   },
 
@@ -538,7 +538,7 @@ export default {
     Forget: 'Forgot password?',
     NoAccount: 'No account? ',
     Register: 'Register now.',
-    GoogleVerifyContent: 'You have choose to verify login by google authenticate. Please enter your verification code in your google authenticator.'
+    GoogleVerifyContent: 'You have choose to verify by google authenticate. Please enter your verification code in your google authenticator.'
   },
 
   forget: {
