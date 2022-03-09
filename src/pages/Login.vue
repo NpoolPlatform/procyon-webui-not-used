@@ -3,7 +3,7 @@
     <LoginForm />
   </LoginBox>
 
-  <q-dialog v-model='showVerify'>
+  <q-dialog v-model='showVerify' @hide='onVerifyHide'>
     <CodeVerifier v-model:verify-by='verifyBy' v-model:verify-code='verifyCode' @verify='onVerify' />
   </q-dialog>
 </template>
@@ -46,6 +46,10 @@ const showVerify = ref(false)
 watch(verifyBy, () => {
   showVerify.value = verifyBy.value !== VerifyMethod.VerifyNone
 })
+
+const onVerifyHide = () => {
+  verifyBy.value = VerifyMethod.VerifyNone
+}
 
 const logined = computed({
   get: () => store.getters.getUserLogined,
