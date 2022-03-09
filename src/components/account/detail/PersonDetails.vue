@@ -180,27 +180,20 @@ import { useI18n } from 'vue-i18n'
 import { isValidUsername } from 'src/utils/utils'
 import { QInput } from 'quasar'
 
-interface option {
-  label: string
-  value: string
-}
-
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
-const genderOptions: Array<option> = [
+const genderOptions = computed(() => [
   {
     label: t('select.Gender.Male'),
     value: 'male'
-  },
-  {
+  }, {
     label: t('select.Gender.Female'),
     value: 'female'
-  },
-  {
+  }, {
     label: t('select.Gender.Other'),
     value: 'other'
   }
-]
+])
 
 const store = useStore()
 
