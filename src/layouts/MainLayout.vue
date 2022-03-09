@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang='ts'>
-import { computed, defineAsyncComponent, onBeforeMount, onMounted, onUpdated, watch, ref, onUnmounted } from 'vue'
+import { computed, defineAsyncComponent, onBeforeMount, onMounted, onUpdated, watch } from 'vue'
 import { useStore } from 'src/store'
 import { useQuasar } from 'quasar'
 import { MutationTypes } from 'src/store/notify/mutation-types'
@@ -42,7 +42,6 @@ import { ActionTypes } from 'src/store/users/action-types'
 import { GetUserInvitationCodeRequest } from 'src/store/users/types'
 import { useI18n } from 'vue-i18n'
 import { MutationTypes as userMutation } from 'src/store/users/mutation-types'
-import { loginVeiryConfirm } from 'src/utils/utils'
 import { ActionTypes as ApplicationActionTypes } from 'src/store/application/action-types'
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
 import { AppID } from 'src/const/const'
@@ -137,46 +136,17 @@ const getUserInvitationCode = () => {
   store.dispatch(ActionTypes.GetUserInvitationCode, request)
 }
 
-type MyFunction = () => void
-
-const unsubscribe = ref<MyFunction>()
-
 const logined = computed({
   get: () => store.getters.getUserLogined,
   set: (val) => {
     store.commit(userMutation.SetUserLogined, val)
   }
 })
-const loginVerify = computed({
-  get: () => store.getters.getLoginVerify,
-  set: (val) => {
-    store.commit(userMutation.SetLoginVerify, val)
-  }
-})
 
 onMounted(() => {
-  unsubscribe.value = store.subscribe((mutation) => {
-    if (mutation.type === userMutation.SetUserLogined) {
-      if (mutation.payload) {
-        getUserInvitationCode()
-      }
-    }
-  })
-
-  if (q.cookies.has('X-App-ID') && q.cookies.has('X-App-ID') && q.cookies.has('X-App-Login-Token')) {
-    if (q.cookies.has(loginVeiryConfirm)) {
-      getUserInvitationCode()
-      logined.value = true
-      loginVerify.value = true
-    } else {
-      logined.value = false
-      loginVerify.value = false
-    }
+  if (logined.value) {
+    getUserInvitationCode()
   }
-})
-
-onUnmounted(() => {
-  unsubscribe.value?.()
 })
 
 onUpdated(() => {
