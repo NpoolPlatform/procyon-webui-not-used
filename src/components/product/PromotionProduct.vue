@@ -75,7 +75,7 @@ const getPromotionProduct = () => {
     Message: {
       ModuleKey: ModuleKey.ModuleApplications,
       Error: {
-        Title: t('MSG_GET_APPLICATIONS_FAIL'),
+        Title: t('MSG_GET_GOODSS_FAIL'),
         Popup: true,
         Type: NotificationType.Error
       }
@@ -98,6 +98,17 @@ const getPromotionProduct = () => {
       ModuleKey: ModuleKey.ModuleApplications,
       Error: {
         Title: t('MSG_GET_PROMOTIONS_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
+
+  store.dispatch(GoodActionTypes.GetAppGoods, {
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_GET_GOODSS_FAIL'),
         Popup: true,
         Type: NotificationType.Error
       }

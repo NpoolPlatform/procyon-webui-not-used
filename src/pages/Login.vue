@@ -88,8 +88,8 @@ watch(logined, () => {
 
   if (logined.value) {
     if (userInfo.value.Ctrl &&
-      userInfo.value.Ctrl.SigninVerifyByGoogleAuthentication &&
-      userInfo.value.Ctrl.GoogleAuthenticationVerified) {
+      userInfo.value.Ctrl?.SigninVerifyByGoogleAuthentication &&
+      userInfo.value.Ctrl?.GoogleAuthenticationVerified) {
       verifyBy.value = VerifyMethod.VerifyByGoogle
     } else if (userInfo.value.User.EmailAddress &&
       userInfo.value.User.EmailAddress?.length > 0) {

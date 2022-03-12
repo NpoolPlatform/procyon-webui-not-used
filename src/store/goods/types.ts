@@ -152,5 +152,5 @@ export enum GoodURLPath {
   GET_RECOMMEND_GOODS = '/cloud-hashing-apis-v2/v1/get/recommend/goods/by/app',
   GET_PROMOTIONS = '/cloud-hashing-goods/v1/get/app/good/promotions/by/app',
   GET_GOOD = '/cloud-hashing-apis-v2/v1/get/good',
-  GET_APP_GOODS = '/cloud-hashing-goods/v1/get/app/goods/by/app'
+  GET_APP_GOODS = '/cloud-hashing-goods/v1/get/app/goods'
 }
