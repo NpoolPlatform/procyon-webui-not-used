@@ -13,7 +13,7 @@
             <div class='full-section'>
               <h4>{{ t('MSG_AVAILABLE_WITHDRAWAL') }}:</h4>
               <span class='number'>{{ query.totalAmount }}</span>
-              <span class='unit'>{{ coin?.Unit }}</span>
+              <span class='unit'>{{ coin?.Name }}</span>
             </div>
             <div class='full-section'>
               <h4>{{ t('MSG_AMOUNT_TO_WITHDRAW', {UNIT: coin?.Unit}) }}:</h4>
