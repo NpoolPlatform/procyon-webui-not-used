@@ -1,9 +1,10 @@
-import { Good, Promotion, RecommendGood } from './types'
+import { AppGood, Good, Promotion, RecommendGood } from './types'
 
 interface GoodState {
   goods: Array<Good>
   recommends: Array<RecommendGood>
   promotions: Array<Promotion>
+  appGoods: Array<AppGood>
   loading: boolean
   error: string
 }
@@ -13,6 +14,7 @@ function state (): GoodState {
     goods: [],
     recommends: [],
     promotions: [],
+    appGoods: [],
     loading: false,
     error: ''
   }

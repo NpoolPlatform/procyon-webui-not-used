@@ -1,13 +1,14 @@
 import { MutationTree } from 'vuex'
 import { MutationTypes } from './mutation-types'
 import { GoodState } from './state'
-import { Good, Promotion, RecommendGood } from './types'
+import { AppGood, Good, Promotion, RecommendGood } from './types'
 
 type GoodMutations<S = GoodState> = {
   [MutationTypes.SetGoods] (state: S, payload: Array<Good>): void
   [MutationTypes.SetRecommendGoods] (state: S, payload: Array<RecommendGood>): void
   [MutationTypes.SetPromotions] (state: S, payload: Array<Promotion>): void
   [MutationTypes.SetGood] (state: S, payload: Good): void
+  [MutationTypes.SetAppGoods] (state: S, payload: Array<AppGood>): void
 }
 
 const mutations: MutationTree<GoodState> & GoodMutations = {
@@ -30,6 +31,9 @@ const mutations: MutationTree<GoodState> & GoodMutations = {
     if (!found) {
       state.goods.push(payload)
     }
+  },
+  [MutationTypes.SetAppGoods] (state: GoodState, payload: Array<AppGood>): void {
+    state.appGoods = payload
   }
 }
 

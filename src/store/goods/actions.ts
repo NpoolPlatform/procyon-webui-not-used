@@ -4,6 +4,8 @@ import { ActionTypes } from './action-types'
 import { GoodMutations } from './mutations'
 import { GoodState } from './state'
 import {
+  GetAppGoodsRequest,
+  GetAppGoodsResponse,
   GetGoodRequest,
   GetGoodResponse,
   GetGoodsRequest,
@@ -42,6 +44,12 @@ interface GoodActions {
   }: AugmentedActionContext<GoodState,
     RootState,
     GoodMutations<GoodState>>, payload: GetGoodRequest): void
+
+  [ActionTypes.GetAppGoods] ({
+    commit
+  }: AugmentedActionContext<GoodState,
+    RootState,
+    GoodMutations<GoodState>>, payload: GetAppGoodsRequest): void
 }
 
 const actions: ActionTree<GoodState, RootState> = {
@@ -86,6 +94,17 @@ const actions: ActionTree<GoodState, RootState> = {
       req.Message,
       (resp: GetGoodResponse): void => {
         commit(MutationTypes.SetGood, resp.Info)
+      })
+  },
+
+  [ActionTypes.GetAppGoods] ({ commit }, req: GetAppGoodsRequest) {
+    doAction<GetAppGoodsRequest, GetAppGoodsResponse>(
+      commit,
+      GoodURLPath.GET_APP_GOODS,
+      req,
+      req.Message,
+      (resp: GetAppGoodsResponse): void => {
+        commit(MutationTypes.SetAppGoods, resp.Infos)
       })
   }
 }
