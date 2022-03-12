@@ -13,7 +13,7 @@ type GoodGetters = {
 const getters: GetterTree<GoodState, RootState> & GoodGetters = {
   getGoods: (state: GoodState): Array<Good> => state.goods.filter((good) => {
     for (const appGood of state.appGoods) {
-      if (good.Good.Good.ID === appGood.GoodID && appGood.Online) {
+      if (good.Good.Good.ID === appGood.GoodID && appGood.Online && appGood.Price > 0) {
         return true
       }
     }
@@ -21,7 +21,7 @@ const getters: GetterTree<GoodState, RootState> & GoodGetters = {
   }),
   getRecommends: (state: GoodState): Array<RecommendGood> => state.recommends.filter((good) => {
     for (const appGood of state.appGoods) {
-      if (good.Good.Good.Good.ID === appGood.GoodID && appGood.Online) {
+      if (good.Good.Good.Good.ID === appGood.GoodID && appGood.Online && appGood.Price > 0) {
         return true
       }
     }
@@ -29,7 +29,7 @@ const getters: GetterTree<GoodState, RootState> & GoodGetters = {
   }),
   getPromotions: (state: GoodState): Array<Promotion> => state.promotions.filter((good) => {
     for (const appGood of state.appGoods) {
-      if (good.GoodID === appGood.GoodID && appGood.Online) {
+      if (good.GoodID === appGood.GoodID && appGood.Online && appGood.Price > 0) {
         return true
       }
     }
