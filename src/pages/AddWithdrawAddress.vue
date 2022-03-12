@@ -70,7 +70,7 @@ const { t, locale } = useI18n({ useScope: 'global' })
 const Box = defineAsyncComponent(() => import('src/components/box/Box.vue'))
 const CodeVerifier = defineAsyncComponent(() => import('src/components/dialog/popupverify/CodeVerifier.vue'))
 
-const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSale && coin.ENV === 'main'))
+const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSale))
 const selectedCoin = ref(undefined as unknown as Coin)
 const walletAddress = ref('')
 const walletLabels = ref('')
