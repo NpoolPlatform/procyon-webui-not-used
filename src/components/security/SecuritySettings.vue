@@ -154,7 +154,7 @@ const userInfo = computed(() => store.getters.getUserInfo)
 
 const emailAddress = computed(() => userInfo.value.User.EmailAddress)
 const phoneNumber = computed(() => userInfo.value.User.PhoneNO)
-const googleVerify = computed(() => userInfo.value.Ctrl && userInfo.value.Ctrl.GoogleAuthenticationVerified)
+const googleVerify = computed(() => userInfo.value.Ctrl && userInfo.value.Ctrl?.GoogleAuthenticationVerified)
 const kycVerify = computed(() => false)
 
 const verifyMethodEmail = 'email-verification'
@@ -162,7 +162,7 @@ const verifyMethodGoogle = 'google-verification'
 const verifyMethodUnknown = 'unknown-verification'
 
 const userGALogin = computed({
-  get: () => userInfo.value.Ctrl.SigninVerifyByGoogleAuthentication,
+  get: () => userInfo.value.Ctrl?.SigninVerifyByGoogleAuthentication,
   set: (val) => {
     store.commit(MutationTypes.SetGoogleLoginVerify, val)
   }
@@ -274,11 +274,11 @@ const showEnableGoogle = ref(false)
 const setLoginVerify = () => {
   const request: SetGALoginVerifyRequest = {
     Info: {
-      ID: userInfo.value.Ctrl.ID,
-      AppID: userInfo.value.Ctrl.AppID,
-      UserID: userInfo.value.Ctrl.UserID,
+      ID: userInfo.value.Ctrl?.ID,
+      AppID: userInfo.value.Ctrl?.AppID,
+      UserID: userInfo.value.Ctrl?.UserID,
       SigninVerifyByGoogleAuthentication: verifyMethod.value === verifyMethodGoogle,
-      GoogleAuthenticationVerified: userInfo.value.Ctrl.GoogleAuthenticationVerified
+      GoogleAuthenticationVerified: userInfo.value.Ctrl?.GoogleAuthenticationVerified
     } as AppUserControl
   }
   store.dispatch(ActionTypes.SetGALoginVerify, request)

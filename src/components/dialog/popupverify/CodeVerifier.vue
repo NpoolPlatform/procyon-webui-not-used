@@ -68,7 +68,7 @@ const { t } = useI18n({ useScope: 'global' })
 const store = useStore()
 
 const emailAddress = computed(() => store.getters.getUserInfo.User.EmailAddress)
-const googleAuthenticated = computed(() => store.getters.getUserInfo.Ctrl.GoogleAuthenticationVerified)
+const googleAuthenticated = computed(() => store.getters.getUserInfo.Ctrl?.GoogleAuthenticationVerified)
 const phoneNO = computed(() => store.getters.getUserInfo.User.PhoneNO)
 
 const verifyMethod = ref(VerifyMethod.VerifyNone)
