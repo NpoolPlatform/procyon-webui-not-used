@@ -10,14 +10,14 @@ export const orderToUserOrder = (order: Order): UserOrder => {
     ID: order.Order.Order.ID,
     Date: TimeStampToDate(order.Order.Order.CreateAt, 'YYYY-MM-DD HH:mm:ss'),
     Product: order.Good.Main?.Name as string,
-    Amount: order.Order.Order.Units.toString() + order.Good.Good.Good.Unit,
-    Price: order.Good.Good.Good.Price.toString() + order.Good.Good.PriceCurrency.Unit + '/' + order.Good.Good.Good.Unit,
+    Amount: order.Order.Order.Units.toString() + ' ' + order.Good.Good.Good.Unit,
+    Price: order.Good.Good.Good.Price.toString() + ' ' + order.Good.Good.PriceCurrency.Unit + '/' + order.Good.Good.Good.Unit,
     Discount: ((reductionAmount * 100 / order.Order.Order.Units / order.Good.Good.Good.Price).toFixed(3)).toString() + '%',
     TechFee: '20%',
-    Period: order.Good.Good.Good.DurationDays.toString(),
+    Period: order.Good.Good.Good.DurationDays.toString() + ' ',
     Total: order.Order.Payment ? order.Order.Payment.Amount.toString() : '0',
     Paid: order.Order.Payment ? order.Order.Payment.State === 'done' : false,
-    PayCoinUnit: order.PayWithCoin ? order.PayWithCoin.Unit : 'NaN',
+    PayCoinUnit: order.PayWithCoin ? order.PayWithCoin.Unit : '',
     CreateAt: order.Order.Payment ? order.Order.Payment.CreateAt : 0,
     StartAt: order.Order.Order.Start
   }

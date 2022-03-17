@@ -67,17 +67,17 @@ export default {
                        '<li>Make sure to use the correct blockchain. The above address is an <strong>{COIN_TYPE}</strong> address. ' +
                        'If you do not use <strong>{COIN_TYPE}</strong>, your payment will be lost and <strong>CANNOT BE RECOVERED' +
                        '</strong>.</li>' +
-                       '<li>You must send the exact, correct amount of USDT in a <strong>SINGLE PAYMENT</strong></li>' +
+                       '<li>You must send the exact, correct amount of <strong>{COIN_TYPE}</strong> in a <strong>SINGLE PAYMENT</strong></li>' +
                        '<li>Overpayment or underpayment will not count towards your order. Instead the amount will be added to your wallet balance.</li>' +
                        '<li>The transaction can take up to 10 minutes to validate.</li>' +
                      '</ul>',
   MSG_SCAN_QR_CODE_TO_PAY: 'Scan QR Code to Pay',
-  MSG_PAYMENT_COMPLETE: 'Payment Complete',
-  MSG_PAY_LATER: 'Pay Later',
+  MSG_PAYMENT_COMPLETE: 'Payment completed',
+  MSG_PAY_LATER: 'Pay Later(Timer)',
   MSG_PAID: 'Paid',
   MSG_STATE: 'State',
-  MSG_CANCELED_BY_TIMEOUT: 'Canceled by Timeout',
-  MSG_IN_SERVICE: 'In Service',
+  MSG_CANCELED_BY_TIMEOUT: 'Canceled',
+  MSG_IN_SERVICE: 'Mining Service Active',
   MSG_WALLET: 'Wallet',
   MSG_CURRENT_BALANCE: 'Current Balance',
   MSG_ACCOUNT_BALANCE: 'Account Balance',
@@ -478,7 +478,7 @@ export default {
     Confirm: 'Confirm',
     Cancel: 'Cancel',
     Export: 'Export History (CSV)',
-    Purchase: 'Purchase Capacity',
+    Purchase: 'Purchase Capacitytest',
     Save: 'Save Changes',
     SendMessage: 'Send Message'
   },
@@ -645,7 +645,7 @@ export default {
       Discount: 'Discount',
       Techfee: 'Tech Fee',
       Period: 'Mining Period',
-      Total: 'Total'
+      Total: 'Cost'
     }
   },
 
