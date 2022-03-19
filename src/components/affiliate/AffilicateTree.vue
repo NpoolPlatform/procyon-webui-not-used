@@ -4,7 +4,9 @@
       <div class='invitation-box'>
         <div class='invitation-header'>
           <div class='header-content row'>
-            <span style='font-size: 20px; font-weight: 600;'>{{ prop.node.Referral.User?.EmailAddress }}</span>
+            <span style='font-size: 20px; font-weight: 600;'>
+              {{ prop.node.Referral.Extra ? prop.node.Referral.Extra.Username : prop.node.Referral.User?.EmailAddress }}
+            </span>
             <q-space />
             <span
               style='font-size: 14px; font-weight: 300; margin-right: 5px; margin-top: 6px;'>{{ $t('affiliate.OnBoarded')
@@ -14,7 +16,7 @@
         </div>
 
         <div class='invitation-content'>
-          <span>{{ prop.node.EmailAddress }}</span>
+          <span>{{ prop.node.Referral.User?.EmailAddress }}</span>
         </div>
 
         <div class='invitation-content'>
