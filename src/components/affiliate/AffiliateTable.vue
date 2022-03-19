@@ -22,13 +22,13 @@ const directReferralsListColumns = computed(() => [
     name: 'Name',
     label: t('affiliate.Direct.Name'),
     align: 'center',
-    field: 'Username'
+    field: (row: Referral) => row.User.EmailAddress
   },
   {
     name: 'JoinDate',
     label: t('affiliate.Direct.Date'),
     align: 'center',
-    field: (row: Referral) => TimeStampToDate(row.User.CreateAt as number, 'YYYY-MM-DD HH:mm:ss')
+    field: (row: Referral) => TimeStampToDate(row.Invitation ? row.Invitation.CreateAt : row.User.CreateAt as number, 'YYYY-MM-DD HH:mm:ss')
   },
   {
     name: 'TBsPurchased',

@@ -4,7 +4,7 @@
       <div class='invitation-box'>
         <div class='invitation-header'>
           <div class='header-content row'>
-            <span style='font-size: 20px; font-weight: 600;'>{{ prop.node.Username }}</span>
+            <span style='font-size: 20px; font-weight: 600;'>{{ prop.node.Referral.User.EmailAddress }}</span>
             <q-space />
             <span
               style='font-size: 14px; font-weight: 300; margin-right: 5px; margin-top: 6px;'>{{ $t('affiliate.OnBoarded')
@@ -19,9 +19,9 @@
 
         <div class='invitation-content'>
           <span>SMH: </span>
-          <span class='sales-number'>{{ prop.node.USDAmount + prop.node.SubUSDAmount }}</span>
+          <span class='sales-number'>{{ Math.floor(prop.node.Referral.USDAmount + prop.node.Referral.SubUSDAmount) }}</span>
           <span> TiB / </span>
-          <span class='sales-number'>{{ prop.node.USDAmount + prop.node.SubUSDAmount }}</span>
+          <span class='sales-number'>{{ Math.floor(prop.node.Referral.USDAmount + prop.node.Referral.SubUSDAmount) }}</span>
           <span> USDT</span>
         </div>
       </div>
