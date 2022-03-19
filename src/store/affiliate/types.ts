@@ -6,6 +6,14 @@ export interface Invitation {
   CreateAt: number
 }
 
+export interface CoinSummary {
+  CoinTypeID: string
+  Units: number
+  Amount: number
+  Unit: string
+  CoinName: string
+}
+
 export interface Referral {
   User: AppUser
   Extra: AppUserExtra
@@ -13,6 +21,7 @@ export interface Referral {
   USDAmount: number
   SubUSDAmount: number
   Kol: boolean
+  Summaries: Array<CoinSummary>
 }
 
 export interface GetReferralsRequest {

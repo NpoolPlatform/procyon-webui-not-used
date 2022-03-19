@@ -18,11 +18,13 @@
         </div>
 
         <div class='invitation-content'>
-          <span>SMH: </span>
-          <span class='sales-number'>{{ Math.floor(prop.node.Referral.USDAmount + prop.node.Referral.SubUSDAmount) }}</span>
-          <span> TiB / </span>
-          <span class='sales-number'>{{ Math.floor(prop.node.Referral.USDAmount + prop.node.Referral.SubUSDAmount) }}</span>
-          <span> USDT</span>
+          <div v-for='summary in prop.node.Referral.Summaries' :key='summary.CoinTypeID'>
+            <span>{{ summary.CoinName }}: </span>
+            <span class='sales-number'>{{ summary.Units }}</span>
+            <span> {{ summary.Unit }} / </span>
+            <span class='sales-number'>{{ Math.floor(summary.Amount) }}</span>
+            <span> USDT</span>
+          </div>
         </div>
       </div>
       <q-inner-loading dark :showing='innerLoading' v-if='userInfo.User.ID === prop.node.UserID'>
