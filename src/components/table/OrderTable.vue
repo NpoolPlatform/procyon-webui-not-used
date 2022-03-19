@@ -15,9 +15,6 @@
     <q-btn disabled class='common-button export-button'>
       {{ $t('dashboard.Column2.Export') }}
     </q-btn>
-    <q-btn disabled class='common-button purchase-button'>
-      {{ $t('button.Purchase') }}
-    </q-btn>
   </div>
 </template>
 

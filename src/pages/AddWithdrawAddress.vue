@@ -36,7 +36,7 @@
       <q-btn class='common-button submit-button' type='submit' @click='onAddressSubmit'>
         {{ $t('MSG_REGISTER_ADDRESS') }}
       </q-btn>
-      <h3>Caution</h3>
+      <h3>{{ t('MSG_CAUTION') }}</h3>
       <p v-html='t("MSG_REGISTER_ADDRESS_CAUTION")' />
     </Box>
   </div>

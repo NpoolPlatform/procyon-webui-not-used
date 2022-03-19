@@ -36,16 +36,16 @@ export default {
                                   'ワークを構築することを目指しています。Spacemeshは、' +
                                   '<a target="_blank" ' +
                                   'href="https://procyon-vip.medium.com/spacemesh%E3%81%AEdag%E6%A7%8B%E9%80%A0%E3%81%AF%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E3%83%81%E3%82%A7%E3%83%BC%E3%83%B3%E3%82%92%E4%BB%A3%E6%9B%BF%E3%81%99%E3%82%8B%E3%81%AE%E3%81%8B-11a0b3a79ffb?p=11a0b3a79ffb">' +
-                                  'Directed Acyclic Graphs (DAGs)' +
-                                  '</a>.</p>' +
+                                  'Directed Acyclic Graphs (DAGs) ' +
+                                  '</a>と呼ばれる革新的なコンセンサスプロトコルの使用によりブロックチェーン技術を向上させるブロックメッシュ・オペレーティングシステムを基礎に構築されています。</p>' +
                                   '<p>イスラエルを拠点とするSpacemeshチームは、2018年9月にPolychain Capitalが主導する1850万ドル（21億円相当）の投資を完了し、' +
                                   '資金調達総額は2250万ドル超（26億円相当）に達しました。Procyonは、Spacemeshの可能性を示す資本投資に加えて、' +
                                   'Spacemeshがブロックチェーン・暗号資産の新しい技術として成功の方程式を持っていると考えています。したがって、' +
                                   '当社の最重要製品として紹介できることを嬉しく思います。</p>',
 
-  MSG_SPECS_TITLE: 'スペースメッシュの公式スペック',
+  MSG_SPECS_TITLE: 'Spacemeshの公式スペック',
   MSG_SPACEMESH_HOMEPAGE: 'Spacemesh ホームページ >>',
-  MSG_MINING_PURCHASE: '購入済み製品',
+  MSG_MINING_PURCHASE: '製品を購入',
   MSG_PURCHASE_UNITS: '購入{UNIT}数',
   MSG_PAYMENT_METHOD: '支払い方法',
   MSG_COUPON_CODE: 'クーポンコード',
@@ -56,9 +56,9 @@ export default {
   MSG_CREATE_ORDER_PAYMENT_FAIL: 'Cannot create order payment',
   MSG_GET_ORDER_FAIL: 'Cannot get order',
   MSG_ORDER_ID: '注文ID',
-  MSG_AMOUNT_DUE: '未払い額',
+  MSG_AMOUNT_DUE: '支払い額',
   MSG_TIME_REMAINING: '残り時間',
-  MSG_RECEIVING_ADDRESS: '受信アドレス',
+  MSG_RECEIVING_ADDRESS: '送金先アドレス',
   MSG_IMPORTANT_INFORMATION: '重要なお知らせ',
   MSG_PAYMENT_HINT: '<ul>' +
                        '<li>必ず正しいブロックチェーンを使用してください。上記は<strong>{COIN_TYPE}</strong>のアドレスです。<strong>{COIN_TYPE}</strong>' +
@@ -74,7 +74,7 @@ export default {
   MSG_PAID: '有償',
   MSG_STATE: '状態',
   MSG_CANCELED_BY_TIMEOUT: 'タイムアウトでキャンセル',
-  MSG_IN_SERVICE: 'サービス中',
+  MSG_IN_SERVICE: 'マイニング中',
   MSG_WALLET: 'Wallet',
   MSG_CURRENT_BALANCE: '残高照会',
   MSG_ACCOUNT_BALANCE: '残高照会',
@@ -83,7 +83,7 @@ export default {
   MSG_BENEFITS: 'Benefits',
   MSG_GET_BENEFITS_FAIL: 'Cannot get user benefits',
   MSG_EXPORT_HISTORY: 'CSVデータを出力',
-  MSG_NAME: '氏名',
+  MSG_NAME: 'マイニング製品',
   MSG_BALANCE: '残高',
   MSG_24_HOUR_CHANGE: '前日比',
   MSG_MARKET_VALUE_USDT: '市場価格 (USDT)',
@@ -106,9 +106,9 @@ export default {
   MSG_REGISTER_ADDRESS_CAUTION: '<ul>' +
                                   '<li>登録する送金先アドレスは必ず正しく入力してください。' +
                                   '<strong>誤った送金先アドレスを取引で使用した場合、資産を失うことになります。</strong></li>' +
-                                  '<li><strong>送金先アドレスとブロックチェーンネットワークが、一致していることをご確認ください。</strong>. ' +
+                                  '<li><strong>送金先アドレスとブロックチェーンネットワークが、一致していることをご確認ください。</strong>' +
                                   '一致しない場合、取引の際で資産を失うことになりますので、ご注意ください。</li>' +
-                                  '<li>新規送金先アドレスを登録後、承認プロセスに<strong>最大24時間かかる場合があります。</strong>. ' +
+                                  '<li>新規送金先アドレスを登録後、承認プロセスに<strong>最大24時間かかる場合があります。</strong>' +
                                   '承認プロセスは、ユーザーの資産を保護するためのセキュリティ対策の一環です。ご理解のほどお願いします。</li>' +
                                 '</ul>',
   MSG_SET_WITHDRAW_ADDRESS_FAIL: 'Cannot set withdraw address',
