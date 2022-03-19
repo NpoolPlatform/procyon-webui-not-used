@@ -237,6 +237,7 @@ enum UserURLPath {
 }
 
 export {
+  AppUser,
   UserInfo,
   AppUserControl,
   AppUserExtra,

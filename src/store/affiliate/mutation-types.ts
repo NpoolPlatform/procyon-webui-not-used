@@ -1,3 +1,3 @@
 export enum MutationTypes {
-  SetInvitationList = 'AFFILIATE_SET_INVITATION_LIST'
+  SetReferrals = 'AFFILIATE_SET_REFERRALS'
 }

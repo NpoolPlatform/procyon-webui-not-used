@@ -19,9 +19,9 @@
 
         <div class='invitation-content'>
           <span>SMH: </span>
-          <span class='sales-number'>{{ totalUnits(prop.node.Summarys) + totalUnits(prop.node.MySummarys) }}</span>
+          <span class='sales-number'>{{ prop.node.USDAmount + prop.node.SubUSDAmount }}</span>
           <span> TiB / </span>
-          <span class='sales-number'>{{ totalAmount(prop.node.Summarys) + totalAmount(prop.node.MySummarys) }}</span>
+          <span class='sales-number'>{{ prop.node.USDAmount + prop.node.SubUSDAmount }}</span>
           <span> USDT</span>
         </div>
       </div>
@@ -35,12 +35,13 @@
 <script setup lang='ts'>
 import { computed, onBeforeMount, ref, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'src/store'
-import { GetDirectInvitationsRequest, InvitationSummary, Invitation } from 'src/store/affiliate/types'
 import { useQuasar } from 'quasar'
 import { ActionTypes } from 'src/store/affiliate/action-types'
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
 import { useI18n } from 'vue-i18n'
 import { MutationTypes } from 'src/store/affiliate/mutation-types'
+import { GetReferralsRequest } from 'src/store/affiliate/types'
+import { referralTree } from 'src/store/affiliate/utils'
 
 const q = useQuasar()
 // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -58,7 +59,7 @@ onBeforeMount(() => {
 
 onMounted(() => {
   unsubscribe.value = store.subscribe((mutation) => {
-    if (mutation.type === MutationTypes.SetInvitationList) {
+    if (mutation.type === MutationTypes.SetReferrals) {
       innerLoading.value = false
     }
   })
@@ -69,53 +70,14 @@ onUnmounted(() => {
 })
 
 const store = useStore()
-const invitationList = computed(() => store.getters.getInvitationList)
+const referrals = computed(() => store.getters.getReferrals)
 const userInfo = computed(() => store.getters.getUserInfo)
-
-const totalUnits = (summarys: Map<string, InvitationSummary>) => {
-  let total = 0
-  for (const [, summary] of summarys) {
-    total += summary.Units
-  }
-  return total
-}
-
-const totalAmount = (summarys: Map<string, InvitationSummary>) => {
-  let total = 0
-  for (const [, summary] of summarys) {
-    total += summary.Amount
-  }
-  return Math.floor(total)
-}
-
-const kolList = computed(() => {
-  if (invitationList.value.length === 0) {
-    return invitationList.value
-  }
-  const lists: Array<Invitation> = []
-  const list: Invitation = {
-    Username: invitationList.value[0].Username,
-    UserID: invitationList.value[0].UserID,
-    EmailAddress: invitationList.value[0].EmailAddress,
-    Label: invitationList.value[0].Label,
-    children: [],
-    Kol: invitationList.value[0].Kol,
-    Summarys: invitationList.value[0].Summarys,
-    InvitedCount: invitationList.value[0].InvitedCount,
-    MySummarys: invitationList.value[0].MySummarys,
-    JoinDate: invitationList.value[0].JoinDate
-  }
-  list.children = invitationList.value[0].children.filter((invitee: Invitation) => {
-    return invitee.Kol
-  })
-  lists.push(list)
-  return lists
-})
+const kolList = computed(() => referralTree(referrals.value))
 
 const getInvitationList = () => {
   innerLoading.value = true
 
-  const request: GetDirectInvitationsRequest = {
+  const request: GetReferralsRequest = {
     Message: {
       ModuleKey: ModuleKey.ModuleApplications,
       Error: {
@@ -125,7 +87,7 @@ const getInvitationList = () => {
       }
     }
   }
-  store.dispatch(ActionTypes.GetDirectInvitationList, request)
+  store.dispatch(ActionTypes.GetReferrals, request)
 }
 </script>
 

@@ -1,14 +1,14 @@
 import { GetterTree } from 'vuex'
 import { RootState } from '../index'
 import { AffiliateState } from './state'
-import { Invitation } from './types'
+import { Referral } from './types'
 
 type AffiliateGetters = {
-  getInvitationList (state: AffiliateState): Array<Invitation>
+  getReferrals (state: AffiliateState): Array<Referral>
 }
 
 const getters: GetterTree<AffiliateState, RootState> & AffiliateGetters = {
-  getInvitationList: (state: AffiliateState): Array<Invitation> => state.invitations
+  getReferrals: (state: AffiliateState): Array<Referral> => state.referrals
 }
 
 export { AffiliateGetters, getters }

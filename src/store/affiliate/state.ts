@@ -1,12 +1,12 @@
-import { Invitation } from './types'
+import { Referral } from './types'
 
 interface AffiliateState {
-  invitations: Array<Invitation>
+  referrals: Array<Referral>
 }
 
 function state (): AffiliateState {
   return {
-    invitations: []
+    referrals: []
   }
 }
 

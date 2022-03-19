@@ -4,70 +4,31 @@ import { ActionTypes } from './action-types'
 import { MutationTypes } from './mutation-types'
 import { AffiliateMutations } from './mutations'
 import { AffiliateState } from './state'
-import { post } from 'src/boot/axios'
 import {
-  GetDirectInvitationsRequest,
-  GetDirectInvitationsResponse,
   AffiliateURLPath,
-  Invitation, Invitees, InvitationSummary
+  GetReferralsRequest,
+  GetReferralsResponse
 } from './types'
-import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
-import { RequestMessageToNotifyMessage } from 'src/utils/utils'
-import { useI18n } from 'boot/i18n'
+import { doAction } from '../action'
 
 // use public api
 interface AffiliateActions {
-  [ActionTypes.GetDirectInvitationList] ({
+  [ActionTypes.GetReferrals] ({
     commit, rootState
   }: AugmentedActionContext<AffiliateState,
     RootState,
-    AffiliateMutations<AffiliateState>>, payload: GetDirectInvitationsRequest): void
+    AffiliateMutations<AffiliateState>>, req: GetReferralsRequest): void
 }
 
 const actions: ActionTree<AffiliateState, RootState> = {
-  [ActionTypes.GetDirectInvitationList] ({ commit, rootState }, payload: GetDirectInvitationsRequest) {
-    const { t } = useI18n()
-    const userInfo = rootState.user.info
-
-    post<GetDirectInvitationsRequest, GetDirectInvitationsResponse>(AffiliateURLPath.GET_DIRECT_INVITATIONS, payload)
-      .then((resp: GetDirectInvitationsResponse) => {
-        const father: Invitation = {
-          UserID: userInfo.User.ID as string,
-          Username: resp.MySelf.Username,
-          EmailAddress: userInfo.User.EmailAddress as string,
-          Label: '',
-          children: [],
-          Kol: resp.MySelf.Kol,
-          Summarys: new Map<string, InvitationSummary>(Object.entries(resp.MySelf.Summarys)),
-          InvitedCount: resp.MySelf.InvitedCount,
-          MySummarys: new Map<string, InvitationSummary>(Object.entries(resp.MySelf.MySummarys)),
-          JoinDate: resp.MySelf.JoinDate
-        }
-        const infos = new Map<string, Invitees>(Object.entries(resp.Infos))
-        const lists = infos?.get(userInfo.User.ID as string)?.Invitees
-        father.Label = lists ? '01(' + resp.MySelf.InvitedCount.toString() + ')' : '01(0)'
-        lists?.forEach(list => {
-          const childrenInvitation: Invitation = {
-            EmailAddress: list.EmailAddress,
-            Username: list.Username,
-            UserID: list.UserID,
-            Label: '02(' + list.InvitedCount.toString() + ')',
-            children: [],
-            Kol: list.Kol,
-            Summarys: new Map<string, InvitationSummary>(Object.entries(list.Summarys)),
-            MySummarys: new Map<string, InvitationSummary>(Object.entries(list.MySummarys)),
-            InvitedCount: list.InvitedCount,
-            JoinDate: list.JoinDate
-          }
-          father.children.push(childrenInvitation)
-        })
-        const invitationList: Array<Invitation> = []
-        invitationList.push(father)
-        commit(MutationTypes.SetInvitationList, invitationList)
-      })
-      .catch((err: Error) => {
-        commit(MutationTypes.SetInvitationList, [])
-        commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('notify.GetDirectAffiliate.Fail'), err.message, 'negative'))
+  [ActionTypes.GetReferrals] ({ commit }, req: GetReferralsRequest) {
+    doAction<GetReferralsRequest, GetReferralsResponse>(
+      commit,
+      AffiliateURLPath.GET_REFERRALS,
+      req,
+      req.Message,
+      (resp: GetReferralsResponse): void => {
+        commit(MutationTypes.SetReferrals, resp.Infos)
       })
   }
 }

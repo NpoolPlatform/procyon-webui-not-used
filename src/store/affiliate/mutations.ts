@@ -1,15 +1,15 @@
 import { MutationTree } from 'vuex'
 import { MutationTypes } from './mutation-types'
 import { AffiliateState } from './state'
-import { Invitation } from './types'
+import { Referral } from './types'
 
 type AffiliateMutations<S = AffiliateState> = {
-  [MutationTypes.SetInvitationList] (state: S, payload: Array<Invitation>): void
+  [MutationTypes.SetReferrals] (state: S, payload: Array<Referral>): void
 }
 
 const mutations: MutationTree<AffiliateState> & AffiliateMutations = {
-  [MutationTypes.SetInvitationList] (state: AffiliateState, payload: Array<Invitation>) {
-    state.invitations = payload
+  [MutationTypes.SetReferrals] (state: AffiliateState, payload: Array<Referral>) {
+    state.referrals = payload
   }
 }
 

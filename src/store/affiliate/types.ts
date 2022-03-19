@@ -1,48 +1,28 @@
 import { ReqMessage } from '../notifications/types'
+import { AppUser, AppUserExtra } from '../users/types'
 
-export interface GetDirectInvitationsRequest {
+export interface Invitation {
+  ID: string
+  CreateAt: number
+}
+
+export interface Referral {
+  User: AppUser
+  Extra: AppUserExtra
+  Invitation: Invitation
+  USDAmount: number
+  SubUSDAmount: number
+  Kol: boolean
+}
+
+export interface GetReferralsRequest {
   Message: ReqMessage
 }
 
-export interface InvitationSummary {
-  Units: number
-  Amount: number
-}
-
-export interface Invitee {
-  UserID: string
-  Username: string
-  Avatar: string
-  EmailAddress: string
-  Kol: boolean
-  Summarys: Map<string, InvitationSummary>
-  InvitedCount: number
-  MySummarys: Map<string, InvitationSummary>
-  JoinDate: number
-}
-
-export interface Invitees {
-  Invitees: Array<Invitee>
-}
-
-export interface GetDirectInvitationsResponse {
-  Infos: Map<string, Invitees>
-  MySelf: Invitee
-}
-
-export interface Invitation {
-  Username: string
-  UserID: string
-  EmailAddress: string
-  Label: string,
-  children: Array<Invitation>
-  Kol: boolean
-  Summarys: Map<string, InvitationSummary>
-  InvitedCount: number,
-  MySummarys: Map<string, InvitationSummary>
-  JoinDate: number
+export interface GetReferralsResponse {
+  Infos: Array<Referral>
 }
 
 export enum AffiliateURLPath {
-  GET_DIRECT_INVITATIONS = '/cloud-hashing-apis-v2/v1/get/my/direct/invitations'
+  GET_REFERRALS = '/cloud-hashing-apis-v2/v1/get/referrals'
 }
