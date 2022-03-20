@@ -66,7 +66,7 @@
       <q-btn disabled class='common-button export-button'>
         {{ $t('dashboard.Column2.Export') }}
       </q-btn>
-      <q-btn disabled class='common-button purchase-button'>
+      <q-btn class='common-button purchase-button' @click='onPurchaseClick'>
         {{ $t('button.Purchase') }}
       </q-btn>
     </div>
@@ -77,11 +77,19 @@
 import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import { computed } from 'vue'
 import { useStore } from 'src/store'
+import { useRouter } from 'vue-router'
 
 const store = useStore()
 
 const totalCapacity = computed(() => store.getters.getTotalCapacity)
 const durationDays = computed(() => store.getters.getDurationDays)
+
+const router = useRouter()
+
+const onPurchaseClick = () => {
+  void router.push({ path: '/' })
+}
+
 </script>
 
 <style scoped>
