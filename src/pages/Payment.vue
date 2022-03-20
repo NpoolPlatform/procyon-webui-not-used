@@ -74,6 +74,7 @@ import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import iconCopy from 'src/assets/icon-copy.svg'
 import copy from 'copy-to-clipboard'
 import { orderToUserOrder, RemainMax, remainPayTime, RemainZero } from 'src/store/orders/utils'
+import { Payment } from 'src/store/orders/types'
 
 const QrcodeVue = defineAsyncComponent(() => import('qrcode.vue'))
 
@@ -134,6 +135,23 @@ const timeRemaining = () => {
 }
 
 const onPaymentCompleteClick = () => {
+  const payment = order.value?.Order.Payment
+  if (payment) {
+    payment.UserSetPaid = true
+  }
+
+  store.dispatch(ActionTypes.UpdatePayment, {
+    Info: payment as Payment,
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_UPDATE_PAYMENT_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
+
   void router.push({
     path: '/dashboard'
   })

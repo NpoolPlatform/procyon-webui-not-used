@@ -1,12 +1,13 @@
 import { MutationTree } from 'vuex'
 import { MutationTypes } from './mutation-types'
 import { OrderState } from './state'
-import { Order } from './types'
+import { Order, Payment } from './types'
 
 type OrderMutations<S = OrderState> = {
   [MutationTypes.SetOrder] (state: S, payload: Order): void
   [MutationTypes.SetOrders] (state: S, payload: Array<Order>): void
   [MutationTypes.SetOrderPayment] (state: S, payload: Order): void
+  [MutationTypes.SetPayment] (state: S, payload: Payment): void
 }
 
 const setOrder = (state: OrderState, payload: Order) => {
@@ -33,6 +34,13 @@ const mutations: MutationTree<OrderState> & OrderMutations = {
   },
   [MutationTypes.SetOrders] (state: OrderState, payload: Array<Order>) {
     state.orders = payload
+  },
+  [MutationTypes.SetPayment] (state: OrderState, payload: Payment) {
+    state.orders.forEach((order, index) => {
+      if (order.Order.Payment.ID === payload.ID) {
+        state.orders[index].Order.Payment = payload
+      }
+    })
   }
 }
 

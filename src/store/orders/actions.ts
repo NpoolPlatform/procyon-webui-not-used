@@ -14,7 +14,9 @@ import {
   GetOrdersByAppUserResponse,
   OrderURLPath,
   SubmitOrderRequest,
-  SubmitOrderResponse
+  SubmitOrderResponse,
+  UpdatePaymentRequest,
+  UpdatePaymentResponse
 } from './types'
 import { MutationTypes as notifyMutation } from 'src/store/notify/mutation-types'
 import { RequestMessageToNotifyMessage } from 'src/utils/utils'
@@ -40,6 +42,12 @@ interface OrderActions {
   }: AugmentedActionContext<OrderState,
     RootState,
     OrderMutations<OrderState>>, payload: CreateOrderPaymentRequest): void
+
+  [ActionTypes.UpdatePayment] ({
+    commit
+  }: AugmentedActionContext<OrderState,
+    RootState,
+    OrderMutations<OrderState>>, payload: UpdatePaymentRequest): void
 
   [ActionTypes.GetOrder] ({
     commit
@@ -87,6 +95,21 @@ const actions: ActionTree<OrderState, RootState> = {
       req.Message,
       (resp: CreateOrderPaymentResponse): void => {
         commit(MutationTypes.SetOrderPayment, resp.Info)
+      })
+  },
+
+  [ActionTypes.UpdatePayment] ({
+    commit
+  }: AugmentedActionContext<OrderState,
+    RootState,
+    OrderMutations<OrderState>>, req: UpdatePaymentRequest): void {
+    doAction<UpdatePaymentRequest, UpdatePaymentResponse>(
+      commit,
+      OrderURLPath.UPDATE_PAYMENT,
+      req,
+      req.Message,
+      (resp: UpdatePaymentResponse): void => {
+        commit(MutationTypes.SetPayment, resp.Info)
       })
   },
 

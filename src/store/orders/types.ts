@@ -8,7 +8,7 @@ export interface GetOrdersByAppUserRequest {
   UserID?: string
 }
 
-interface Payment {
+export interface Payment {
   ID: string,
   OrderID: string,
   AccountID: string
@@ -130,9 +130,19 @@ export interface GetOrderResponse {
   Info: Order
 }
 
+export interface UpdatePaymentRequest {
+  Info: Payment
+  Message: ReqMessage
+}
+
+export interface UpdatePaymentResponse {
+  Info: Payment
+}
+
 export enum OrderURLPath {
   GET_ORDERS_BY_APP_USER = '/cloud-hashing-apis-v2/v1/get/orders/by/app/user',
   SUBMIT_ORDER = '/cloud-hashing-apis-v2/v1/submit/order',
   CREATE_ORDER_PAYMENT = '/cloud-hashing-apis-v2/v1/create/order/payment',
+  UPDATE_PAYMENT = '/cloud-hashing-order/v1/update/payment/by/user',
   GET_ORDER = '/cloud-hashing-apis-v2/v1/get/order'
 }
