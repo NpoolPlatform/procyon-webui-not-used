@@ -478,7 +478,7 @@ export default {
     Confirm: 'Confirm',
     Cancel: 'Cancel',
     Export: 'Export History (CSV)',
-    Purchase: 'Purchase Capacitytest',
+    Purchase: 'Purchase Capacity',
     Save: 'Save Changes',
     SendMessage: 'Send Message'
   },
