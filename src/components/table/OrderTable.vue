@@ -7,6 +7,7 @@
     row-key='ID'
     color='#e1eeef'
     :no-data-label="$t('NoData')"
+    :rows-per-page-options='[10, 15, 20, 25]'
     @row-click='(evt, row, index) => onRowClick(row as UserOrder)'
   >
   </q-table>
