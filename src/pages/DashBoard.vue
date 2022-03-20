@@ -47,7 +47,7 @@ const userOrders = computed(() => {
 })
 
 onMounted(() => {
-  if (!orders.value || orders.value.length === 0) {
+  if (!orders.value || orders.value.length < 2) {
     store.dispatch(OrderActionTypes.GetOrders, {})
   }
   if (!goods.value || goods.value.length === 0) {
