@@ -75,7 +75,7 @@ export default {
   MSG_PAYMENT_COMPLETE: 'Payment completed',
   MSG_PAY_LATER: 'Pay Later (Timer)',
   MSG_PAID: 'Payment completed',
-  MSG_STATE: 'State',
+  MSG_STATE: 'Status',
   MSG_CANCELED_BY_TIMEOUT: 'Canceled',
   MSG_IN_SERVICE: 'Mining Service Active',
   MSG_WALLET: 'Wallet',

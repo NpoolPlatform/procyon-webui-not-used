@@ -105,12 +105,6 @@ const orderTableColumns = computed(() => [
     field: 'Price'
   },
   {
-    name: 'Discount',
-    label: t('dashboard.Column3.Discount'),
-    align: 'center',
-    field: 'Discount'
-  },
-  {
     name: 'TechFee',
     label: t('dashboard.Column3.Techfee'),
     align: 'center',
