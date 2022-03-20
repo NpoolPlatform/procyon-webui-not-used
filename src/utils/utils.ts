@@ -125,7 +125,7 @@ export const GenerateSendEmailRequest = (locale: string, userBasicInfo: UserInfo
   return requestInput
 }
 
-export const ThrottleDelay = 1000
+export const ThrottleDelay = 10000
 
 export const setLoginVerify = () => {
   Cookies.set(loginVeiryConfirm, 'true')

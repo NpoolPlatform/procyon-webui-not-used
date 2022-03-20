@@ -96,7 +96,13 @@
             <h4 v-if='false'>{{ t('MSG_COUPON_CODE') }}</h4>
             <input v-if='false' type='text'>
             <!-- div class='coupon-error'>{{ t('MSG_INCORRECT_COUPON_CODE') }}</div -->
-            <q-btn no-caps :label='t("MSG_PURCHASE")' class='submit-btn' @click='onSubmit' />
+            <q-btn
+              no-caps
+              :label='t("MSG_PURCHASE")'
+              class='submit-btn'
+              :loading='submitting'
+              @click='onSubmit'
+            />
           </div>
         </div>
       </div>
@@ -169,10 +175,17 @@ const onBackClick = () => {
   router.back()
 }
 
+const submitting = ref(false)
+
 const onSubmit = throttle(() => {
   if (!selectedCoin.value) {
     return
   }
+
+  submitting.value = true
+  window.setTimeout(() => {
+    submitting.value = false
+  }, ThrottleDelay)
 
   store.dispatch(ActionTypes.SubmitOrder, {
     GoodID: good.value?.Good.Good.ID as string,
