@@ -64,9 +64,13 @@ const timeRemaining = () => {
 }
 
 const orderState = (order: UserOrder) => {
+  const now = new Date().getTime() / 1000
   if (order.Paid) {
-    if (new Date().getTime() / 1000 > order.StartAt) {
+    if (now >= order.StartAt && now < order.EndAt) {
       return t('MSG_IN_SERVICE')
+    }
+    if (now >= order.EndAt) {
+      return t('MSG_SERVICE_EXPIRED')
     }
     return t('MSG_PAID')
   }
@@ -74,6 +78,9 @@ const orderState = (order: UserOrder) => {
     return t('MSG_CANCELED_BY_TIMEOUT')
   }
   if (!order.Paid) {
+    if (order.UserSetPaid) {
+      return t('MSG_PAYMENT_PENDING')
+    }
     return remainTime.value?.get(order.ID)
   }
   return t('MSG_IN_SERVICE')

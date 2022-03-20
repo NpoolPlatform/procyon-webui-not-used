@@ -23,7 +23,9 @@ export const orderToUserOrder = (order: Order): UserOrder => {
     Paid: order.Order.Payment ? order.Order.Payment.State === 'done' : false,
     PayCoinUnit: order.PayWithCoin ? order.PayWithCoin.Unit : '',
     CreateAt: order.Order.Payment ? order.Order.Payment.CreateAt : 0,
-    StartAt: order.Order.Order.Start
+    StartAt: order.Order.Order.Start,
+    EndAt: order.Order.Order.Start + order.Good.Good.Good.DurationDays * 24 * 60 * 60,
+    UserSetPaid: order.Order.Payment ? order.Order.Payment.UserSetPaid : false
   }
 }
 

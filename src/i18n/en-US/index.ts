@@ -153,6 +153,8 @@ export default {
   MSG_GET_PROMOTIONS_FAIL: 'Cannot get promotion goods',
   MSG_GET_COMMISSION_FAIL: 'Cannot get commissions',
   MSG_LABEL: 'Label',
+  MSG_SERVICE_EXPIRED: 'Mining Service Expired',
+  MSG_PAYMENT_PENDING: 'Payment pending',
 
   general: {
     KYCStatus: 'KYC Verification Status',

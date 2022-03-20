@@ -18,6 +18,7 @@ interface Payment {
   ChainTransactionID: string,
   PlatformTransactionID: string
   CreateAt: number
+  UserSetPaid: boolean
 }
 
 export interface OrderBase {
@@ -100,6 +101,8 @@ export interface UserOrder {
   PayCoinUnit: string
   CreateAt: number
   StartAt: number
+  EndAt: number
+  UserSetPaid: boolean
 }
 
 export interface Fee {
