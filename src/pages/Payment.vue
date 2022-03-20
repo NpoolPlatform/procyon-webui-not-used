@@ -1,5 +1,5 @@
 <template>
-  <q-page class='container'>
+  <q-page :class='[ showStatus ? "container blur" : "container" ]'>
     <q-btn class='back-button' @click='onBackClick'>⭠</q-btn>
     <div class='content'>
       <div class='product-container'>
@@ -57,6 +57,15 @@
       <div class='hr'></div>
     </div>
   </q-page>
+  <q-dialog content-class='blur' v-model='showStatus' @hide='onPaymentProceed'>
+    <PaymentState
+      :order-id='query.orderId'
+      :title='popupTitle'
+      :tip-message='tipMessage'
+      :state='orderStatus'
+      @proceed='onPaymentProceed'
+    />
+  </q-dialog>
 </template>
 
 <script setup lang='ts'>
@@ -74,9 +83,9 @@ import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import iconCopy from 'src/assets/icon-copy.svg'
 import copy from 'copy-to-clipboard'
 import { orderToUserOrder, RemainMax, remainPayTime, RemainZero } from 'src/store/orders/utils'
-import { Payment } from 'src/store/orders/types'
 
 const QrcodeVue = defineAsyncComponent(() => import('qrcode.vue'))
+const PaymentState = defineAsyncComponent(() => import('src/components/dialog/payment/Payment.vue'))
 
 const router = useRouter()
 const route = useRoute()
@@ -93,6 +102,11 @@ const order = computed(() => store.getters.getOrderByID(query.value.orderId))
 const onBackClick = () => {
   router.back()
 }
+
+const showStatus = ref(false)
+const popupTitle = ref('')
+const tipMessage = ref('')
+const orderStatus = ref('')
 
 const qrCodeContainer = ref<HTMLDivElement>()
 
@@ -112,9 +126,10 @@ const timeRemaining = () => {
 
   const myOrder = orderToUserOrder(order.value)
   if (myOrder.Paid) {
-    void router.push({
-      path: '/dashboard'
-    })
+    showStatus.value = true
+    popupTitle.value = 'MSG_ORDER_COMPLETE'
+    tipMessage.value = 'MSG_REVIEW_ORDER'
+    orderStatus.value = 'MSG_COMPLETE'
     if (remainInterval >= 0) {
       clearInterval(remainInterval)
       remainInterval = -1
@@ -124,9 +139,10 @@ const timeRemaining = () => {
 
   remainTime.value = remainPayTime(order.value.Order.Payment ? order.value.Order.Payment.CreateAt : 0)
   if (remainTime.value === RemainZero) {
-    void router.push({
-      path: '/dashboard'
-    })
+    showStatus.value = true
+    popupTitle.value = 'MSG_ORDER_TIMEOUT'
+    tipMessage.value = 'MSG_ORDER_TIMEOUT'
+    orderStatus.value = 'MSG_TIMEOUT'
     if (remainInterval >= 0) {
       clearInterval(remainInterval)
       remainInterval = -1
@@ -136,12 +152,23 @@ const timeRemaining = () => {
 
 const onPaymentCompleteClick = () => {
   const payment = order.value?.Order.Payment
-  if (payment) {
-    payment.UserSetPaid = true
+  if (!payment) {
+    return
   }
 
   store.dispatch(ActionTypes.UpdatePayment, {
-    Info: payment as Payment,
+    Info: {
+      ID: payment.ID,
+      OrderID: payment.OrderID,
+      AccountID: payment.AccountID,
+      Amount: payment.Amount,
+      CoinInfoID: payment.CoinInfoID,
+      State: payment.State,
+      ChainTransactionID: payment.ChainTransactionID,
+      PlatformTransactionID: payment.PlatformTransactionID,
+      CreateAt: payment.CreateAt,
+      UserSetPaid: true
+    },
     Message: {
       ModuleKey: ModuleKey.ModuleApplications,
       Error: {
@@ -152,12 +179,20 @@ const onPaymentCompleteClick = () => {
     }
   })
 
-  void router.push({
-    path: '/dashboard'
-  })
+  showStatus.value = true
+  popupTitle.value = 'MSG_ORDER_PENDING'
+  tipMessage.value = 'MSG_ORDER_PAYMENT_AWAITING'
+  orderStatus.value = 'MSG_PENDING'
 }
 
 const onPayLaterClick = () => {
+  showStatus.value = true
+  popupTitle.value = 'MSG_PAY_LATER'
+  tipMessage.value = 'MSG_ORDER_PAY_LATER'
+  orderStatus.value = 'MSG_NOT_PAID'
+}
+
+const onPaymentProceed = () => {
   void router.push({
     path: '/dashboard'
   })
@@ -528,4 +563,10 @@ img.copy-button
 
 img.copy-button:hover
   filter: contrast(1.5)
+
+.blur
+  filter: blur(12px)
+
+.blur > .q-dialog__backdrop
+  backdrop-filter: blur(12px)
 </style>
