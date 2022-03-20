@@ -19,10 +19,14 @@
         <h4>{{ $t('MSG_STATUS') }}:</h4>
         <span class="number">{{ state }}</span>
       </div>
-      <div class="full-section">
+      <div v-if='showType === "date"' class="full-section">
         <h4>{{ $t('MSG_DATE') }}:</h4>
         <span class="number">{{ date.formatDate(order?.Order.Order.CreateAt as number * 1000, 'YYYY-MM-DD') }}</span>
         <span class="unit">{{ date.formatDate(order?.Order.Order.CreateAt as number * 1000, 'HH:mm:ss') }}</span>
+      </div>
+      <div v-if='showType === "remain"' class="full-section">
+        <h4>{{ $t('MSG_TIME_REMAINING') }}:</h4>
+        <span class="number">{{ remainTime }}</span>
       </div>
       <div class="hr"></div>
       <div class="warning">
@@ -46,6 +50,8 @@ interface Props {
   title: string
   tipMessage: string
   state: string
+  showType: string
+  remainTime: string
 }
 
 const props = defineProps<Props>()

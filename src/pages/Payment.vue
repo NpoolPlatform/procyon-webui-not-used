@@ -63,6 +63,8 @@
       :title='popupTitle'
       :tip-message='tipMessage'
       :state='orderStatus'
+      :show-type='showType'
+      :remain-time='remainTime'
       @proceed='onPaymentProceed'
     />
   </q-dialog>
@@ -107,6 +109,7 @@ const showStatus = ref(false)
 const popupTitle = ref('')
 const tipMessage = ref('')
 const orderStatus = ref('')
+const showType = ref('')
 
 const qrCodeContainer = ref<HTMLDivElement>()
 
@@ -130,6 +133,7 @@ const timeRemaining = () => {
     popupTitle.value = 'MSG_ORDER_COMPLETE'
     tipMessage.value = 'MSG_REVIEW_ORDER'
     orderStatus.value = 'MSG_COMPLETE'
+    showType.value = 'date'
     if (remainInterval >= 0) {
       clearInterval(remainInterval)
       remainInterval = -1
@@ -190,6 +194,7 @@ const onPayLaterClick = () => {
   popupTitle.value = 'MSG_PAY_LATER'
   tipMessage.value = 'MSG_ORDER_PAY_LATER'
   orderStatus.value = 'MSG_NOT_PAID'
+  showType.value = 'remain'
 }
 
 const onPaymentProceed = () => {
