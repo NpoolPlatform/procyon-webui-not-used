@@ -57,7 +57,7 @@
       <div class='hr'></div>
     </div>
   </q-page>
-  <q-dialog content-class='blur' v-model='showStatus' @hide='onPaymentProceed'>
+  <q-dialog content-class='blur' v-model='showStatus'>
     <PaymentState
       :order-id='query.orderId'
       :title='popupTitle'
