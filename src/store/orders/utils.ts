@@ -6,13 +6,17 @@ export const orderToUserOrder = (order: Order): UserOrder => {
   if (order.UserSpecialReduction) {
     reductionAmount = order.UserSpecialReduction.Amount
   }
+
+  const unitReduction = reductionAmount * 100 / order.Order.Order.Units
+  const price = order.Good.Good.Good.Price - unitReduction
+
   return {
     ID: order.Order.Order.ID,
     Date: TimeStampToDate(order.Order.Order.CreateAt, 'YYYY-MM-DD HH:mm:ss'),
     Product: order.Good.Main?.Name as string,
     Amount: order.Order.Order.Units.toString() + ' ' + order.Good.Good.Good.Unit,
-    Price: order.Good.Good.Good.Price.toString() + ' ' + order.Good.Good.PriceCurrency.Unit + '/' + order.Good.Good.Good.Unit,
-    Discount: ((reductionAmount * 100 / order.Order.Order.Units / order.Good.Good.Good.Price).toFixed(3)).toString() + '%',
+    Price: price.toString() + ' ' + order.Good.Good.PriceCurrency.Unit + '/' + order.Good.Good.Good.Unit,
+    Discount: ((unitReduction / order.Good.Good.Good.Price).toFixed(3)).toString() + '%',
     TechFee: '20%',
     Period: order.Good.Good.Good.DurationDays.toString() + ' ',
     Total: order.Order.Payment ? order.Order.Payment.Amount.toString() : '0',
