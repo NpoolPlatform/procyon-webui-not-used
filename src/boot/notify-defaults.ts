@@ -4,7 +4,7 @@ import { Notify } from 'quasar'
 export default boot((/* { app, router, ... } */) => {
   Notify.setDefaults({
     color: 'white',
-    timeout: 5000,
+    timeout: 10000,
     position: 'bottom-right'
   })
 })
