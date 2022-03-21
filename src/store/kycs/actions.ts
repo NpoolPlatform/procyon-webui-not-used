@@ -50,17 +50,12 @@ interface KYCActions {
 
 const actions: ActionTree<KYCState, RootState> = {
   [ActionTypes.GetKYCInfo] ({ commit }) {
-    const { t } = useI18n()
     post<unknown, GetKYCResponse>(API.GET_KYC_INFO, {})
       .then((resp: GetKYCResponse) => {
         commit(KYCMutationTypes.SetKYCInfo, resp.Info)
       })
       .catch((err: Error) => {
-        commit(notifyMutation.PushMessage, RequestMessageToNotifyMessage(t('general.GetKYCFail'), err.message, 'negative'))
-        commit(notifyMutation.SetInnerLoading, {
-          key: '',
-          value: false
-        })
+        console.log(err)
       })
   },
 

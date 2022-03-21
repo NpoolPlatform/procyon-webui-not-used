@@ -13,7 +13,7 @@ import { computed, defineAsyncComponent, ref, watch, onMounted } from 'vue'
 import { useStore } from 'src/store'
 import { MutationTypes } from 'src/store/users/mutation-types'
 import { useRouter } from 'vue-router'
-import { ActionTypes, ActionTypes as verifyAction } from 'src/store/verify/action-types'
+import { ActionTypes as verifyAction } from 'src/store/verify/action-types'
 import {
   SendEmailCodeRequest,
   VerifyEmailCodeRequest,
@@ -26,6 +26,7 @@ import { ActionTypes as ApplicationActionTypes } from 'src/store/application/act
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
 import { AppID } from 'src/const/const'
 import { VerifyMethod } from 'src/store/users/const'
+import { ActionTypes as KYCActionTypes } from 'src/store/kycs/action-types'
 
 const store = useStore()
 const router = useRouter()
@@ -115,14 +116,14 @@ const verifyEmailCode = throttle((verifyCode: string): void => {
     UsedFor: 'SIGNIN',
     Code: verifyCode
   }
-  store.dispatch(ActionTypes.VerifyEmailCode, request)
+  store.dispatch(verifyAction.VerifyEmailCode, request)
 }, ThrottleDelay)
 
 const verifyGoogleCode = throttle((verifyCode: string): void => {
   const request: VerifyGoogleAuthenticationCodeRequest = {
     Code: verifyCode
   }
-  store.dispatch(ActionTypes.VerifyGoogleAuthentication, request)
+  store.dispatch(verifyAction.VerifyGoogleAuthentication, request)
 }, ThrottleDelay)
 
 const onVerify = throttle((verifyCode: string): void => {
@@ -135,7 +136,7 @@ const onVerify = throttle((verifyCode: string): void => {
 
 watch(loginVerify, () => {
   verifyBy.value = VerifyMethod.VerifyNone
-  void router.push({ path: '/dashboard' })
+  void router.push({ path: '/remainder' })
 })
 
 onMounted(() => {
@@ -150,6 +151,8 @@ onMounted(() => {
       }
     }
   })
+
+  store.dispatch(KYCActionTypes.GetKYCInfo)
 })
 
 </script>

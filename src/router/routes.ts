@@ -119,6 +119,13 @@ const routes: RouteRecordRaw[] = [
         meta: {
           needLogined: true
         }
+      },
+      {
+        path: 'remainder',
+        component: () => import('pages/Remainder.vue'),
+        meta: {
+          needLogined: true
+        }
       }
     ]
   },

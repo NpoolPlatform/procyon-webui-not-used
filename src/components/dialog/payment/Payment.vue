@@ -82,18 +82,6 @@ const onProceedClick = () => {
   max-width: 640px
   line-height: 100%
 
-.popup
-  border-radius: 12px
-  display: flex
-  align-items: center
-  justify-content: center
-  height: 100%
-  width: 100%
-  position: absolute
-  top: 0
-  left: 0
-  z-index: 10
-
 .form-container button
   margin: 18px 0 0 0
 
