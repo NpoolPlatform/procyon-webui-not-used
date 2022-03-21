@@ -17,7 +17,7 @@
       </div>
       <div class="full-section">
         <h4>{{ $t('MSG_STATUS') }}:</h4>
-        <span class="number">{{ state }}</span>
+        <span class="number">{{ $t(state) }}</span>
       </div>
       <div v-if='showType === "date"' class="full-section">
         <h4>{{ $t('MSG_DATE') }}:</h4>
