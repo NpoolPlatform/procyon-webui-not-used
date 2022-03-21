@@ -53,7 +53,7 @@ onMounted(() => {
     title.value = 'MSG_SETUP_KYC'
     caption.value = 'MSG_SETUP_KYC_TIPS'
     confirmText.value = 'MSG_PROCEED_TO_KYC_SETUP'
-    target.value = '/update/kyc'
+    target.value = '/kyc'
   } else if (!userInfo.value.Ctrl || !userInfo.value.Ctrl.GoogleAuthenticationVerified) {
     title.value = 'MSG_SETUP_GOOGLE_AUTHENTICATOR'
     caption.value = 'MSG_SETUP_GOOGLE_AUTHENTICATOR_TIPS'
