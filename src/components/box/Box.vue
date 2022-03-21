@@ -1,5 +1,5 @@
 <template>
-  <q-card class='common-card-container'>
+  <q-card :class='[ dense ? "common-card-container dense" : "common-card-container" ]'>
     <q-card-section class='common-card-title section-part-title'>
       <div class='title'>{{ cardTitle }}</div>
 
@@ -33,12 +33,14 @@ const store = useStore()
 interface Props {
   title: string,
   showLink?: boolean,
-  alwaysSelectable: boolean
+  alwaysSelectable: boolean,
+  dense?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
   title: '',
   showLink: true,
-  alwaysSelectable: true
+  alwaysSelectable: true,
+  dense: false
 })
 const cardTitle = toRef(props, 'title')
 const showLink = toRef(props, 'showLink')
@@ -124,5 +126,12 @@ onMounted(() => {
 
 .form-container.q-card__section--vert {
   padding: 16px 0 !important;
+}
+
+.dense {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
 }
 </style>
