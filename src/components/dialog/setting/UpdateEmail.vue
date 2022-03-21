@@ -1,80 +1,63 @@
 <template>
-  <q-dialog v-model='show' persistent @hide='whenHide'>
-    <q-card class='dialog-box'>
-      <q-card-section class='dialog-header'>
-        <span>{{
+  <q-card class='dialog-box'>
+    <q-card-section>
+      <q-form @submit='update'>
+        <div class='row send-hint'>
+          <span>
+            {{ $t('verificationCode.Hint.Words1') }}
+            <span class='send-number'>{{ oldAccount }}</span>
+            {{ $t('verificationCode.Hint.Words2') }}
+          </span>
+        </div>
+
+        <send-code-input
+          :verifyParam='oldAccount'
+          :verifyType='oldAccountType'
+          :item-target='ItemStateTarget.UpdateEmailSendCodeOldButton'
+          v-model:verify-code='oldVerifyCode'
+          used-for='UPDATE'
+        ></send-code-input>
+
+        <q-input
+          outlined
+          bg-color='blue-grey-2'
+          class='common-input'
+          :label="$t('input.EmailAddress')"
+          v-model='email'
+          lazy-rules
+          :rules='emailRules' />
+
+        <send-code-input
+          :verifyParam='email'
+          verifyType='email'
+          :item-target='ItemStateTarget.UpdateEmailSendCodeButton'
+          v-model:verify-code='verifyCode'
+          used-for='UPDATE'
+        ></send-code-input>
+
+        <q-btn class='common-button dialog-button' type='submit'>{{
             $t('account.Setting.Email.UpdateButton')
-          }}</span>
-        <q-btn icon='close' flat round dense @click='emit("update:showUpdateEmail", false)' />
-      </q-card-section>
-      <q-card-section>
-        <q-form @submit='update'>
-          <div class='row send-hint'>
-            <span>
-              {{ $t('verificationCode.Hint.Words1') }}
-              <span class='send-number'>{{ oldAccount }}</span>
-              {{ $t('verificationCode.Hint.Words2') }}
-            </span>
-          </div>
-
-          <send-code-input
-            :verifyParam='oldAccount'
-            :verifyType='oldAccountType'
-            :item-target='ItemStateTarget.UpdateEmailSendCodeOldButton'
-            v-model:verify-code='oldVerifyCode'
-            used-for='UPDATE'
-          ></send-code-input>
-
-          <q-input
-            outlined
-            bg-color='blue-grey-2'
-            class='common-input'
-            :label="$t('input.EmailAddress')"
-            v-model='email'
-            lazy-rules
-            :rules='emailRules' />
-
-          <send-code-input
-            :verifyParam='email'
-            verifyType='email'
-            :item-target='ItemStateTarget.UpdateEmailSendCodeButton'
-            v-model:verify-code='verifyCode'
-            used-for='UPDATE'
-          ></send-code-input>
-
-          <q-btn class='common-button dialog-button' type='submit'>{{
-              $t('account.Setting.Email.UpdateButton')
-            }}
-          </q-btn>
-        </q-form>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+          }}
+        </q-btn>
+      </q-form>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script setup lang='ts'>
-import { defineEmits, ref, defineProps, withDefaults, toRef, computed, watch, defineAsyncComponent } from 'vue'
+import { ref, computed, defineAsyncComponent } from 'vue'
 import { useStore } from 'src/store'
 import { isValidEmail } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
 import { UpdateEmailRequest } from 'src/store/users/types'
 import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
+import { useRouter } from 'src/router'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
-
-interface Props {
-  showUpdateEmail: boolean
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  showUpdateEmail: false
-})
-const show = toRef(props, 'showUpdateEmail')
-const emit = defineEmits<{(e: 'update:showUpdateEmail', value: boolean): void }>()
 
 const store = useStore()
 
@@ -100,12 +83,7 @@ const emailRules = ref([
   (val: string) => (val && val !== oldAccount.value) || t('input.OldEmailWarning')
 ])
 
-const userDialogShow = computed(() => store.getters.getUserDialogShow)
-watch(userDialogShow, (n, o) => {
-  if (!n && o) {
-    emit('update:showUpdateEmail', false)
-  }
-})
+const router = useRouter()
 
 const update = () => {
   const request: UpdateEmailRequest = {
@@ -116,26 +94,18 @@ const update = () => {
     NewEmailVerificationCode: verifyCode.value
   }
   store.dispatch(ActionTypes.UpdateEmail, request)
-}
 
-const whenHide = () => {
-  verifyCode.value = ''
-  email.value = ''
-  oldVerifyCode.value = ''
+  void router.push({ path: '/dashboard' })
 }
 </script>
 
 <style scoped>
 .dialog-box {
-  background-color: white;
-  box-shadow: 16px 16px 20px 0 #23292b;
+  background-color: transparent;
+  box-shadow: none;
   border-radius: 12px;
-  color: #e1eeef;
-  padding: 24px;
-  margin: 24px;
   position: relative;
   overflow-x: hidden;
-  min-width: 420px;
 }
 
 .dialog-header {
@@ -156,11 +126,11 @@ const whenHide = () => {
 }
 
 .send-hint {
-  color: #888888;
+  color: #bbbbbb;
 }
 
 .send-number {
-  color: #555555;
+  color: #cccccc;
   font-weight: bold;
 }
 </style>

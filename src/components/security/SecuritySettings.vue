@@ -22,7 +22,7 @@
           <template v-slot:button>
             <div>
               <q-btn class='common-button card-button'
-                    :label="$t('account.Setting.Email.UpdateButton')" @click='showUpdateEmail = true' />
+                    :label="$t('account.Setting.Email.UpdateButton')" @click='onUpdateEmailClick' />
             </div>
           </template>
         </SettingBox>
@@ -41,7 +41,7 @@
           <template v-slot:button>
             <div>
               <q-btn class='common-button card-button'
-                    :label="$t('account.Setting.Phone.UpdateButton')" @click='showUpdatePhone = true' />
+                    :label="$t('account.Setting.Phone.UpdateButton')" @click='onUpdateMobileClick' />
             </div>
           </template>
         </SettingBox>
@@ -67,7 +67,7 @@
                 >{{ $t('account.Setting.Google.HasDone') }}
                 </q-tooltip>
                 <q-btn class='common-button card-button' :disable='googleVerify'
-                      :label="$t('account.Setting.Google.Button')" @click='showEnableGoogle = true' />
+                      :label="$t('account.Setting.Google.Button')" @click='onUpdateGoogleClick' />
               </div>
             </div>
           </template>
@@ -120,8 +120,6 @@
       <LoginHistoryTable />
     </div>
   </div>
-  <UpdateEmailDialog v-model:show-update-email='showUpdateEmail' :email-address='emailAddress' />
-  <UpdatePhoneDialog v-model:show-update-phone='showUpdatePhone' :phone='phoneNumber' />
   <EnableGoogleDialog v-model:show-google='showEnableGoogle' />
 </template>
 
@@ -141,10 +139,9 @@ import { ActionTypes } from 'src/store/users/action-types'
 import { MutationTypes } from 'src/store/users/mutation-types'
 import { MutationTypes as verifyMutationTypes } from 'src/store/verify/mutation-types'
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
+import { useRouter } from 'src/router'
 
 const SettingBox = defineAsyncComponent(() => import('components/box/SettingBox.vue'))
-const UpdateEmailDialog = defineAsyncComponent(() => import('components/dialog/setting/UpdateEmail.vue'))
-const UpdatePhoneDialog = defineAsyncComponent(() => import('components/dialog/setting/UpdatePhone.vue'))
 const EnableGoogleDialog = defineAsyncComponent(() => import('components/dialog/setting/EnableGoogle.vue'))
 const LoginHistoryTable = defineAsyncComponent(() => import('src/components/table/LoginHistory.vue'))
 
@@ -267,9 +264,21 @@ const loginOptions = ref([
   }
 ])
 
-const showUpdateEmail = ref(false)
-const showUpdatePhone = ref(false)
 const showEnableGoogle = ref(false)
+
+const router = useRouter()
+
+const onUpdateEmailClick = () => {
+  void router.push({ path: '/update/email' })
+}
+
+const onUpdateMobileClick = () => {
+  void router.push({ path: '/update/mobile' })
+}
+
+const onUpdateGoogleClick = () => {
+  void router.push({ path: '/update/google' })
+}
 
 const setLoginVerify = () => {
   const request: SetGALoginVerifyRequest = {

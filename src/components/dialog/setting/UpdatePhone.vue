@@ -1,53 +1,45 @@
 <template>
-  <q-dialog v-model='show' persistent @hide='whenHide'>
-    <q-card class='dialog-box'>
-      <q-card-section class='dialog-header'>
-        <span>{{
+  <q-card class='dialog-box'>
+    <q-card-section>
+      <q-form @submit='update'>
+        <div class='row send-hint'>
+          <span>
+            {{ $t('verificationCode.Hint.Words1') }}
+            <span class='send-number'>{{ oldAccount }}</span>
+            {{ $t('verificationCode.Hint.Words2') }}
+          </span>
+        </div>
+
+        <send-code-input
+          :verifyParam='oldAccount'
+          :verifyType='oldAccountType'
+          :item-target='ItemStateTarget.UpdatePhoneSendCodeOldButton'
+          v-model:verify-code='oldVerifyCode'
+          used-for='UPDATE'
+        ></send-code-input>
+
+        <Vue3QTelInput v-model:tel='newPhone' bg-color='blue-grey-2' outlined lazy-rules :rules='phoneRules'
+                        :label="$t('input.PhoneNumber')" :required='false' :error='false' />
+
+        <send-code-input
+          :verifyParam='newPhone'
+          verifyType='mobile'
+          :item-target='ItemStateTarget.UpdatePhoneSendCodeButton'
+          v-model:verify-code='verifyCode'
+          used-for='UPDATE'
+        ></send-code-input>
+
+        <q-btn class='common-button dialog-button' type='submit'>{{
             $t('account.Setting.Phone.UpdateButton')
-          }}</span>
-        <q-btn icon='close' flat round dense @click='emit("update:showUpdatePhone", false)' />
-      </q-card-section>
-      <q-card-section>
-        <q-form @submit='update'>
-          <div class='row send-hint'>
-            <span>
-              {{ $t('verificationCode.Hint.Words1') }}
-              <span class='send-number'>{{ oldAccount }}</span>
-              {{ $t('verificationCode.Hint.Words2') }}
-            </span>
-          </div>
-
-          <send-code-input
-            :verifyParam='oldAccount'
-            :verifyType='oldAccountType'
-            :item-target='ItemStateTarget.UpdatePhoneSendCodeOldButton'
-            v-model:verify-code='oldVerifyCode'
-            used-for='UPDATE'
-          ></send-code-input>
-
-          <Vue3QTelInput v-model:tel='newPhone' bg-color='blue-grey-2' outlined lazy-rules :rules='phoneRules'
-                         :label="$t('input.PhoneNumber')" :required='false' :error='false' />
-
-          <send-code-input
-            :verifyParam='newPhone'
-            verifyType='mobile'
-            :item-target='ItemStateTarget.UpdatePhoneSendCodeButton'
-            v-model:verify-code='verifyCode'
-            used-for='UPDATE'
-          ></send-code-input>
-
-          <q-btn class='common-button dialog-button' type='submit'>{{
-              $t('account.Setting.Phone.UpdateButton')
-            }}
-          </q-btn>
-        </q-form>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+          }}
+        </q-btn>
+      </q-form>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script setup lang='ts'>
-import { defineEmits, ref, defineProps, withDefaults, toRef, computed, watch, defineAsyncComponent } from 'vue'
+import { ref, computed, defineAsyncComponent } from 'vue'
 import { useStore } from 'src/store'
 import { useI18n } from 'vue-i18n'
 import { UpdatePhoneRequest } from 'src/store/users/types'
@@ -60,16 +52,6 @@ const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
-
-interface Props {
-  showUpdatePhone: boolean
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  showUpdatePhone: false
-})
-const show = toRef(props, 'showUpdatePhone')
-const emit = defineEmits<{(e: 'update:showUpdatePhone', value: boolean): void }>()
 
 const userInfo = computed(() => store.getters.getUserInfo)
 const oldAccount = computed(() => {
@@ -95,13 +77,6 @@ const phoneRules = ref([
 
 const store = useStore()
 
-const userDialogShow = computed(() => store.getters.getUserDialogShow)
-watch(userDialogShow, (n, o) => {
-  if (!n && o) {
-    emit('update:showUpdatePhone', false)
-  }
-})
-
 const update = () => {
   const request: UpdatePhoneRequest = {
     OldAccount: formatPhoneNumber(oldAccount.value as string),
@@ -113,26 +88,17 @@ const update = () => {
   store.dispatch(ActionTypes.UpdatePhone, request)
 }
 
-const whenHide = () => {
-  verifyCode.value = ''
-  newPhone.value = ''
-  oldVerifyCode.value = ''
-}
 </script>
 
 <style scoped>
 @import "~vue3-q-tel-input/dist/vue3-q-tel-input.esm.css";
 
 .dialog-box {
-  background-color: white;
-  box-shadow: 16px 16px 20px 0 #23292b;
-  border-radius: 12px;
+  background-color: transparent;
+  box-shadow: none;
   color: #e1eeef;
-  padding: 24px;
-  margin: 24px;
   position: relative;
   overflow-x: hidden;
-  min-width: 420px;
 }
 
 .dialog-header {
@@ -154,11 +120,11 @@ const whenHide = () => {
 }
 
 .send-hint {
-  color: #888888;
+  color: #bbbbbb;
 }
 
 .send-number {
-  color: #555555;
+  color: #cccccc;
   font-weight: bold;
 }
 </style>

@@ -43,6 +43,34 @@ const routes: RouteRecordRaw[] = [
         }
       },
       {
+        path: 'update/email',
+        component: () => import('pages/UpdateEmail.vue'),
+        meta: {
+          needLogined: true
+        }
+      },
+      {
+        path: 'update/mobile',
+        component: () => import('pages/UpdateMobile.vue'),
+        meta: {
+          needLogined: true
+        }
+      },
+      {
+        path: 'update/google',
+        component: () => import('pages/UpdateGoogle.vue'),
+        meta: {
+          needLogined: true
+        }
+      },
+      {
+        path: 'verify/google',
+        component: () => import('pages/VerifyGoogle.vue'),
+        meta: {
+          needLogined: true
+        }
+      },
+      {
         path: 'dashboard',
         component: () => import('pages/DashBoard.vue'),
         meta: {
