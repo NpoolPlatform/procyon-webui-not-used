@@ -133,5 +133,6 @@ onMounted(() => {
   padding: 0;
   background: transparent;
   box-shadow: none;
+  border-radius: 0;
 }
 </style>
