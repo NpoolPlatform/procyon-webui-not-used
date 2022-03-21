@@ -4,8 +4,8 @@
     <div class='content'>
       <div class='form-container'>
         <div class='confirmation'>
-          <h3>{{ title }}</h3>
-          <p>{{ caption }}</p>
+          <h3>{{ $t(title) }}</h3>
+          <p>{{ $t(caption) }}</p>
           <div class='hr'></div>
           <button @click='onSetupClick'>{{ $t(confirmText) }}</button>
           <button @click='onCancelClick' class='alt'>{{ $t('MSG_SETUP_LATER') }}</button>
