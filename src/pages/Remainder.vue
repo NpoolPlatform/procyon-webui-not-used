@@ -1,35 +1,26 @@
 <template>
-  <q-page class='container'>
-    <q-btn class='back-button' @click='onBackClick'>⭠</q-btn>
-    <div class='content'>
-      <div class='form-container'>
-        <div class='confirmation'>
-          <h3>{{ $t(title) }}</h3>
-          <p>{{ $t(caption) }}</p>
-          <div class='hr'></div>
-          <button @click='onSetupClick'>{{ $t(confirmText) }}</button>
-          <button @click='onCancelClick' class='alt'>{{ $t('MSG_SETUP_LATER') }}</button>
-        </div>
-      </div>
-    </div>
-  </q-page>
+  <BackConfirm>
+    <h3>{{ $t(title) }}</h3>
+    <p>{{ $t(caption) }}</p>
+    <div class='hr'></div>
+    <button @click='onSetupClick'>{{ $t(confirmText) }}</button>
+    <button @click='onCancelClick' class='alt'>{{ $t('MSG_SETUP_LATER') }}</button>
+  </BackConfirm>
 </template>
 
 <script setup lang='ts'>
 import { useStore } from 'src/store'
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, defineAsyncComponent } from 'vue'
 import { ModuleKey } from 'src/store/notifications/const'
 import { MutationTypes as NotificationMutationTypes } from 'src/store/notifications/mutation-types'
 import { notificationPop, notify } from 'src/store/notifications/helper'
 
 import { useRouter } from 'src/router'
 
+const BackConfirm = defineAsyncComponent(() => import('src/components/page/BackConfirm.vue'))
+
 const router = useRouter()
 const store = useStore()
-
-const onBackClick = () => {
-  router.back()
-}
 
 type MyFunction = () => void
 const unsubscribe = ref<MyFunction>()
@@ -40,6 +31,7 @@ const kyc = computed(() => store.getters.getKYCInfo)
 const title = ref('')
 const caption = ref('')
 const confirmText = ref('')
+const target = ref('')
 
 onMounted(() => {
   unsubscribe.value = store.subscribe((mutation) => {
@@ -56,14 +48,17 @@ onMounted(() => {
     title.value = 'MSG_ADD_MOBILE_NUMBER'
     caption.value = 'MSG_ADD_MOBILE_NUMBER_TIPS'
     confirmText.value = 'MSG_SETUP_MOBILE_NUMBER'
+    target.value = '/update/mobile'
   } else if (!kyc.value.Kyc) {
     title.value = 'MSG_SETUP_KYC'
     caption.value = 'MSG_SETUP_KYC_TIPS'
     confirmText.value = 'MSG_PROCEED_TO_KYC_SETUP'
+    target.value = '/update/kyc'
   } else if (!userInfo.value.Ctrl || !userInfo.value.Ctrl.GoogleAuthenticationVerified) {
     title.value = 'MSG_SETUP_GOOGLE_AUTHENTICATOR'
     caption.value = 'MSG_SETUP_GOOGLE_AUTHENTICATOR_TIPS'
     confirmText.value = 'MSG_SETUP_TWO_FACTOR_AUTH'
+    target.value = '/update/google'
   } else {
     void router.push({ path: '/dashboard' })
   }
@@ -74,7 +69,7 @@ onUnmounted(() => {
 })
 
 const onSetupClick = () => {
-  // TODO
+  void router.push({ path: target.value })
 }
 
 const onCancelClick = () => {
