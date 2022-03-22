@@ -161,6 +161,7 @@ export default {
   MSG_SETUP_GOOGLE_AUTHENTICATOR_TIPS: 'アカウント保護のため、Google認証 (もしくはお好きなワンタイムパスワード) で2段階認証のセキュリティ設定を行いましょう。',
   MSG_SETUP_TWO_FACTOR_AUTH: '2段階認証の設定へ進む',
 
+  MSG_UPDATE_PAYMENT_FAIL: 'Cannot update payments',
   MSG_PAYMENT: 'ご請求額',
   MSG_PROCEED_TO_DASHBOARD: 'ダッシュボードへ進む',
   MSG_NOT_PAID: '未払い',
