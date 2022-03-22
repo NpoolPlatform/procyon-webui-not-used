@@ -88,6 +88,8 @@ watch(logined, () => {
   }
 
   if (logined.value) {
+    store.dispatch(KYCActionTypes.GetKYCInfo)
+
     if (userInfo.value.Ctrl &&
       userInfo.value.Ctrl?.SigninVerifyByGoogleAuthentication &&
       userInfo.value.Ctrl?.GoogleAuthenticationVerified) {
@@ -151,8 +153,6 @@ onMounted(() => {
       }
     }
   })
-
-  store.dispatch(KYCActionTypes.GetKYCInfo)
 })
 
 </script>
