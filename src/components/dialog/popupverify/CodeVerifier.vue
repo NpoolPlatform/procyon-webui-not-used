@@ -4,6 +4,9 @@
       <span class='common-card-title' v-if='verifyMethod === VerifyMethod.VerifyByEmail'>
         {{ t('dialog.EmailVerify.Title') }}
       </span>
+      <span class='common-card-title' v-if='verifyMethod === VerifyMethod.VerifyByMobile'>
+        {{ t('MSG_MOBILE_VERIFICATION') }}
+      </span>
       <span class='common-card-title' v-else-if='verifyMethod === VerifyMethod.VerifyByGoogle'>
         {{ t('dialog.GoogleVerify.Title') }}
       </span>
@@ -15,6 +18,9 @@
       }}<span style='font-weight: bolder'>{{ emailAddress
       }}</span>, {{ $t('dialog.EmailVerify.Content3')
       }}
+    </q-card-section>
+    <q-card-section class='card-content' v-else-if='verifyMethod === VerifyMethod.VerifyByMobile'>
+      {{ $t('MSG_MOBILE_VERIFICATION_CONTENT', { PHONE_NO: phoneNO }) }}
     </q-card-section>
     <q-card-section class='card-content' v-else-if='verifyMethod === VerifyMethod.VerifyByGoogle'>
       {{ $t('login.GoogleVerifyContent') }}
