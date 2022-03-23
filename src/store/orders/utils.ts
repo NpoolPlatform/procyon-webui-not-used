@@ -1,5 +1,6 @@
 import { TimeStampToDate } from 'src/utils/utils'
 import { Order, UserOrder } from './types'
+import { goodPrice } from '../goods/utils'
 
 export const orderToUserOrder = (order: Order): UserOrder => {
   let reductionAmount = 0
@@ -8,7 +9,7 @@ export const orderToUserOrder = (order: Order): UserOrder => {
   }
 
   const unitReduction = reductionAmount * 100 / order.Order.Order.Units
-  const price = order.Good.Good.Good.Price - unitReduction
+  const price = goodPrice(order.Good) - unitReduction
 
   return {
     ID: order.Order.Order.ID,
