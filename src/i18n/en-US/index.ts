@@ -166,6 +166,7 @@ export default {
   MSG_SETUP_GOOGLE_AUTHENTICATOR_TIPS: 'Setup Two-Factor authentication with Google Authenticator (or your favorite TOTP app) to ensure the security of your account.',
   MSG_SETUP_TWO_FACTOR_AUTH: 'Setup Two-Factor Auth',
 
+  MSG_UPDATE_PAYMENT_FAIL: 'Cannot update payments',
   MSG_PAYMENT: 'Payment',
   MSG_PROCEED_TO_DASHBOARD: 'Proceed to Dashboard',
   MSG_NOT_PAID: 'Not Paid',
