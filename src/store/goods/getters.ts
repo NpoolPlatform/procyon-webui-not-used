@@ -1,12 +1,13 @@
 import { GetterTree } from 'vuex'
 import { RootState } from '../index'
 import { GoodState } from './state'
-import { Good, Promotion, RecommendGood } from './types'
+import { AppGood, Good, Promotion, RecommendGood } from './types'
 
 type GoodGetters = {
   getGoods (state: GoodState): Array<Good>
   getRecommends (state: GoodState): Array<RecommendGood>
   getPromotions (state: GoodState): Array<Promotion>
+  getAppGoods (state: GoodState): Array<AppGood>
   getGoodByID (state: GoodState): (goodID: string) => Good | undefined
 }
 
@@ -19,6 +20,7 @@ const getters: GetterTree<GoodState, RootState> & GoodGetters = {
     }
     return false
   }),
+  getAppGoods: (state: GoodState): Array<AppGood> => state.appGoods.filter((good) => good.Price > 0 && good.Online),
   getRecommends: (state: GoodState): Array<RecommendGood> => state.recommends.filter((good) => {
     for (const appGood of state.appGoods) {
       if (good.Good.Good.Good.ID === appGood.GoodID && appGood.Online && appGood.Price > 0) {

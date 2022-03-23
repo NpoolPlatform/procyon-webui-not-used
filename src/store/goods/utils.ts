@@ -11,6 +11,11 @@ const goodPrice = (good: Good): number => {
       }
     }
   }
+  for (const appGood of store.getters.getAppGoods) {
+    if (appGood.GoodID === good.Good.Good.ID) {
+      return appGood.Price
+    }
+  }
   return good.Good?.Good.Price
 }
 
