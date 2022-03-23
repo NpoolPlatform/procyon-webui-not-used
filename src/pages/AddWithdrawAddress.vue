@@ -55,9 +55,9 @@ import { Coin } from 'src/store/coins/types'
 import { VerifyMethod } from 'src/store/users/const'
 import { ActionTypes as CoinActionTypes } from 'src/store/coins/action-types'
 import { useRouter } from 'src/router'
-import { GenerateSendEmailRequest } from 'src/utils/utils'
+import { formatPhoneNumber, GenerateSendEmailRequest } from 'src/utils/utils'
 import { ActionTypes as VerifyActionTypes } from 'src/store/verify/action-types'
-import { SendEmailCodeRequest } from 'src/store/verify/types'
+import { SendEmailCodeRequest, SendSmsCodeRequest } from 'src/store/verify/types'
 import { ActionTypes as AccountActionTypes } from 'src/store/accounts/action-types'
 import { MutationTypes as NotificationMutationTypes } from 'src/store/notifications/mutation-types'
 import { notificationPop, notify } from 'src/store/notifications/helper'
@@ -97,15 +97,25 @@ const onAddressSubmit = () => {
 }
 
 watch(verifyBy, () => {
-  let request: SendEmailCodeRequest = {
+  let emailReq: SendEmailCodeRequest = {
     EmailAddress: userInfo.value.User.EmailAddress as string,
     LangID: langID.value,
     UsedFor: 'SETWITHDRAWADDRESS'
   }
+
+  const smsReq: SendSmsCodeRequest = {
+    PhoneNO: formatPhoneNumber(userInfo.value.User.PhoneNO as string),
+    LangID: langID.value,
+    UsedFor: 'SETWITHDRAWADDRESS'
+  }
+
   switch (verifyBy.value) {
     case VerifyMethod.VerifyByEmail:
-      request = GenerateSendEmailRequest(locale.value, userInfo.value, request)
-      store.dispatch(VerifyActionTypes.SendEmail, request)
+      emailReq = GenerateSendEmailRequest(locale.value, userInfo.value, emailReq)
+      store.dispatch(VerifyActionTypes.SendEmail, emailReq)
+      break
+    case VerifyMethod.VerifyByMobile:
+      store.dispatch(VerifyActionTypes.SendSMS, smsReq)
       break
     case VerifyMethod.VerifyByGoogle:
       break

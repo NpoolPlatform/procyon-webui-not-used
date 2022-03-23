@@ -66,8 +66,8 @@ import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import iconCheckmark from 'src/assets/icon-checkmark.svg'
 
 import { WithdrawAccount } from 'src/store/accounts/types'
-import { SendEmailCodeRequest } from 'src/store/verify/types'
-import { GenerateSendEmailRequest } from 'src/utils/utils'
+import { SendEmailCodeRequest, SendSmsCodeRequest } from 'src/store/verify/types'
+import { formatPhoneNumber, GenerateSendEmailRequest } from 'src/utils/utils'
 import { State } from 'src/store/kycs/const'
 import { WithdrawType } from 'src/store/transactions/const'
 
@@ -128,15 +128,25 @@ const onSubmit = () => {
 }
 
 watch(verifyBy, () => {
-  let request: SendEmailCodeRequest = {
+  let emailReq: SendEmailCodeRequest = {
     EmailAddress: userInfo.value.User.EmailAddress as string,
     LangID: langID.value,
     UsedFor: 'WITHDRAW'
   }
+
+  const smsReq: SendSmsCodeRequest = {
+    PhoneNO: formatPhoneNumber(userInfo.value.User.PhoneNO as string),
+    LangID: langID.value,
+    UsedFor: 'WITHDRAW'
+  }
+
   switch (verifyBy.value) {
     case VerifyMethod.VerifyByEmail:
-      request = GenerateSendEmailRequest(locale.value, userInfo.value, request)
-      store.dispatch(VerifyActionTypes.SendEmail, request)
+      emailReq = GenerateSendEmailRequest(locale.value, userInfo.value, emailReq)
+      store.dispatch(VerifyActionTypes.SendEmail, emailReq)
+      break
+    case VerifyMethod.VerifyByMobile:
+      store.dispatch(VerifyActionTypes.SendSMS, smsReq)
       break
     case VerifyMethod.VerifyByGoogle:
       break
