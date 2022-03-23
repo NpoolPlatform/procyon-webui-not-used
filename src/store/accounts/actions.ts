@@ -6,7 +6,14 @@ import { AugmentedActionContext, RootState } from '../index'
 import { AccountMutations } from './mutations'
 import { API } from './const'
 import { doAction } from '../action'
-import { GetWithdrawAccountsRequest, GetWithdrawAccountsResponse, SetWithdrawAddressRequest, SetWithdrawAddressResponse } from './types'
+import {
+  DeleteWithdrawAddressRequest,
+  DeleteWithdrawAddressResponse,
+  GetWithdrawAccountsRequest,
+  GetWithdrawAccountsResponse,
+  SetWithdrawAddressRequest,
+  SetWithdrawAddressResponse
+} from './types'
 
 interface AccountActions {
   [ActionTypes.GetUserWithdrawAccountsByAppUser]({
@@ -24,6 +31,14 @@ interface AccountActions {
     RootState,
     AccountMutations<AccountsState>>,
     req: SetWithdrawAddressRequest): void
+
+  [ActionTypes.DeleteWithdrawAddress]({
+    commit
+  }: AugmentedActionContext<
+    AccountsState,
+    RootState,
+    AccountMutations<AccountsState>>,
+    req: DeleteWithdrawAddressRequest): void
 }
 
 const actions: ActionTree<AccountsState, RootState> = {
@@ -46,6 +61,17 @@ const actions: ActionTree<AccountsState, RootState> = {
       req.NotifyMessage,
       (resp: SetWithdrawAddressResponse): void => {
         commit(MutationTypes.SetWithdrawAccount, resp.Info)
+      })
+  },
+
+  [ActionTypes.DeleteWithdrawAddress] ({ commit }, req: DeleteWithdrawAddressRequest) {
+    doAction<DeleteWithdrawAddressRequest, DeleteWithdrawAddressResponse>(
+      commit,
+      API.SET_WITHDRAW_ADDRESS,
+      req,
+      req.Message,
+      (resp: DeleteWithdrawAddressResponse): void => {
+        commit(MutationTypes.DeleteWithdrawAddress, resp.Info)
       })
   }
 }

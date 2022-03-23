@@ -1,11 +1,12 @@
 import { MutationTree } from 'vuex'
 import { MutationTypes } from './mutation-types'
 import { AccountsState } from './state'
-import { WithdrawAccount } from './types'
+import { Withdraw, WithdrawAccount } from './types'
 
 type AccountMutations<S = AccountsState> = {
   [MutationTypes.SetWithdrawAccounts] (state: S, payload: Array<WithdrawAccount>): void
   [MutationTypes.SetWithdrawAccount] (state: S, payload: WithdrawAccount): void
+  [MutationTypes.DeleteWithdrawAddress] (state: S, payload: Withdraw): void
 }
 
 const mutations: MutationTree<AccountsState> & AccountMutations = {
@@ -20,6 +21,14 @@ const mutations: MutationTree<AccountsState> & AccountMutations = {
       }
     }
     state.WithdrawAccounts.push(payload)
+  },
+  [MutationTypes.DeleteWithdrawAddress] (state: AccountsState, payload: Withdraw) {
+    for (let i = 0; i < state.WithdrawAccounts.length; i++) {
+      if (payload.ID === state.WithdrawAccounts[i].Address.ID) {
+        state.WithdrawAccounts.splice(i, 1)
+        return
+      }
+    }
   }
 }
 

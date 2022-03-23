@@ -39,13 +39,15 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, computed, defineAsyncComponent } from 'vue'
+import { ref, computed, defineAsyncComponent, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'src/store'
 import { useI18n } from 'vue-i18n'
 import { UpdatePhoneRequest } from 'src/store/users/types'
 import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { formatPhoneNumber } from 'src/utils/utils'
+import { MutationTypes } from 'src/store/users/mutation-types'
+import { useRouter } from 'src/router'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
 const Vue3QTelInput = defineAsyncComponent(() => import('vue3-q-tel-input'))
@@ -87,6 +89,22 @@ const update = () => {
   }
   store.dispatch(ActionTypes.UpdatePhone, request)
 }
+
+type FunctionVoid = () => void
+const unsubscribe = ref<FunctionVoid>()
+const router = useRouter()
+
+onMounted(() => {
+  unsubscribe.value = store.subscribe((mutation) => {
+    if (mutation.type === MutationTypes.SetPhoneNumber) {
+      void router.push({ path: '/dashboard' })
+    }
+  })
+})
+
+onUnmounted(() => {
+  unsubscribe.value?.()
+})
 
 </script>
 

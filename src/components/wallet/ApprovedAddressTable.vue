@@ -10,6 +10,29 @@
       :hide-bottom='true'
       :rows-per-page-options='[accounts.length]'
     >
+      <template #body='props'>
+        <q-tr :props='props'>
+          <q-td key='Blockchain' :props='props'>
+            {{ store.getters.getCoinByID(props.row.Account.CoinTypeID).Name }}
+          </q-td>
+          <q-td key='Address' :props='props'>
+            {{ props.row.Account.Address }}
+          </q-td>
+          <q-td key='Label' :props='props'>
+            {{ props.row.Address.Labels?.join(',') }}
+          </q-td>
+          <q-td key='DateAdded' :props='props'>
+            {{ TimeStampToDate(props.row.Address?.CreateAt, 'YYYY-MM-DD HH:mm', locale) }}
+          </q-td>
+          <q-td>
+            <q-btn
+              :label='$t("MSG_DELETE")'
+              class='filled-button small-button'
+              @click='onDeleteClick(props.row)'
+            />
+          </q-td>
+        </q-tr>
+      </template>
     </q-table>
     <q-btn class='common-button filled-button small-button' @click='onAddNewAddressClick'>
       {{ t('MSG_ADD_NEW_ADDRESS') }}
@@ -57,10 +80,16 @@ const accountTable = computed(() => [
     field: (row: WithdrawAccount) => row.Address.Labels?.join(',')
   },
   {
-    name: 'Date Added',
+    name: 'DateAdded',
     label: t('MSG_DATE_ADDED'),
     align: 'center',
     field: (row: WithdrawAccount) => TimeStampToDate(row.Address?.CreateAt, 'YYYY-MM-DD HH:mm', locale.value)
+  },
+  {
+    name: '',
+    label: '',
+    align: 'center',
+    field: ''
   }
 ])
 
@@ -110,6 +139,20 @@ onMounted(() => {
 onUnmounted(() => {
   unsubscribe.value?.()
 })
+
+const onDeleteClick = (account: WithdrawAccount) => {
+  store.dispatch(AccountActionTypes.DeleteWithdrawAddress, {
+    ID: account.Address.ID,
+    Message: {
+      ModuleKey: ModuleKey.ModuleApplications,
+      Error: {
+        Title: t('MSG_DELETE_WITHDRAW_ADDRESS_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
+}
 
 </script>
 

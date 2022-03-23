@@ -15,12 +15,13 @@
 </template>
 
 <script setup lang='ts'>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'src/store'
 import { ActionTypes } from 'src/store/verify/action-types'
 import { useI18n } from 'vue-i18n'
 import { VerifyGoogleAuthenticationCodeRequest } from 'src/store/verify/types'
 import { useRouter } from 'src/router'
+import { MutationTypes } from 'src/store/users/mutation-types'
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
@@ -40,8 +41,22 @@ const bindGoogleAuthenticator = () => {
     Code: googleVerifyCode.value
   }
   store.dispatch(ActionTypes.VerifyGoogleAuthentication, request)
-  void router.push({ path: '/dashboard' })
 }
+
+type FunctionVoid = () => void
+const unsubscribe = ref<FunctionVoid>()
+
+onMounted(() => {
+  unsubscribe.value = store.subscribe((mutation) => {
+    if (mutation.type === MutationTypes.SetGoogleAuthenticationVerified) {
+      void router.push({ path: '/dashboard' })
+    }
+  })
+})
+
+onUnmounted(() => {
+  unsubscribe.value?.()
+})
 
 </script>
 

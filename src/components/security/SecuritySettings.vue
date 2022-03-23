@@ -120,7 +120,6 @@
       <LoginHistoryTable />
     </div>
   </div>
-  <EnableGoogleDialog v-model:show-google='showEnableGoogle' />
 </template>
 
 <script setup lang='ts'>
@@ -142,7 +141,6 @@ import { ModuleKey, Type as NotificationType } from 'src/store/notifications/con
 import { useRouter } from 'src/router'
 
 const SettingBox = defineAsyncComponent(() => import('components/box/SettingBox.vue'))
-const EnableGoogleDialog = defineAsyncComponent(() => import('components/dialog/setting/EnableGoogle.vue'))
 const LoginHistoryTable = defineAsyncComponent(() => import('src/components/table/LoginHistory.vue'))
 
 const store = useStore()
@@ -263,8 +261,6 @@ const loginOptions = ref([
     value: 'email-verification'
   }
 ])
-
-const showEnableGoogle = ref(false)
 
 const router = useRouter()
 

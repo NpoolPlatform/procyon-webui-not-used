@@ -48,11 +48,23 @@ interface SetWithdrawAddressResponse {
   Info: WithdrawAccount
 }
 
+interface DeleteWithdrawAddressRequest {
+  ID: string
+  Message: ReqMessage
+}
+
+interface DeleteWithdrawAddressResponse {
+  Info: Withdraw
+}
+
 export {
+  Withdraw,
   Account,
   WithdrawAccount,
   GetWithdrawAccountsRequest,
   GetWithdrawAccountsResponse,
   SetWithdrawAddressRequest,
-  SetWithdrawAddressResponse
+  SetWithdrawAddressResponse,
+  DeleteWithdrawAddressRequest,
+  DeleteWithdrawAddressResponse
 }

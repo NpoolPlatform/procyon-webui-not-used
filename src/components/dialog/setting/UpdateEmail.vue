@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, computed, defineAsyncComponent } from 'vue'
+import { ref, computed, defineAsyncComponent, onMounted, onUnmounted } from 'vue'
 import { useStore } from 'src/store'
 import { isValidEmail } from 'src/utils/utils'
 import { useI18n } from 'vue-i18n'
@@ -53,6 +53,7 @@ import { UpdateEmailRequest } from 'src/store/users/types'
 import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { useRouter } from 'src/router'
+import { MutationTypes } from 'src/store/users/mutation-types'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
 
@@ -94,9 +95,23 @@ const update = () => {
     NewEmailVerificationCode: verifyCode.value
   }
   store.dispatch(ActionTypes.UpdateEmail, request)
-
-  void router.push({ path: '/dashboard' })
 }
+
+type FunctionVoid = () => void
+const unsubscribe = ref<FunctionVoid>()
+
+onMounted(() => {
+  unsubscribe.value = store.subscribe((mutation) => {
+    if (mutation.type === MutationTypes.SetEmailAddress) {
+      void router.push({ path: '/dashboard' })
+    }
+  })
+})
+
+onUnmounted(() => {
+  unsubscribe.value?.()
+})
+
 </script>
 
 <style scoped>
