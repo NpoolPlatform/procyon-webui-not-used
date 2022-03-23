@@ -172,6 +172,8 @@ export default {
   MSG_ORDER_COMPLETE: '注文完了',
   MSG_COMPLETE: '支払い済み',
   MSG_REVIEW_ORDER: '注文は、ダッシュボードの「注文履歴」からご確認いただけます。',
+  MSG_MOBILE_VERIFICATION: 'SMS認証',
+  MSG_MOBILE_VERIFICATION_CONTENT: '{PHONE_NO} に送信されたばかりのテキストメッセージ。お使いの携帯電話に送信した確認コードを入力してください。',
 
   general: {
     KYCStatus: '身分証明の認証ステータス',

@@ -177,6 +177,8 @@ export default {
   MSG_ORDER_COMPLETE: 'Order Complete',
   MSG_COMPLETE: 'COMPLETED',
   MSG_REVIEW_ORDER: 'You can review this order on your dashboard.',
+  MSG_MOBILE_VERIFICATION: 'SMS Verification',
+  MSG_MOBILE_VERIFICATION_CONTENT: 'A text message just sent to {PHONE_NO}, Please enter the verification code we sent to your phone.',
 
   general: {
     KYCStatus: 'KYC Verification Status',
