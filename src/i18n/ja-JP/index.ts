@@ -174,6 +174,8 @@ export default {
   MSG_REVIEW_ORDER: '注文は、ダッシュボードの「注文履歴」からご確認いただけます。',
   MSG_MOBILE_VERIFICATION: 'SMS認証',
   MSG_MOBILE_VERIFICATION_CONTENT: '{PHONE_NO} に送信されたばかりのテキストメッセージ。お使いの携帯電話に送信した確認コードを入力してください。',
+  MSG_DELETE: '消去',
+  MSG_DELETE_WITHDRAW_ADDRESS_FAIL: '引き出しアドレスは削除できません',
 
   general: {
     KYCStatus: '身分証明の認証ステータス',

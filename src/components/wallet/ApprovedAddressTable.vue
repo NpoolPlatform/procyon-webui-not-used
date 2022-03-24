@@ -26,6 +26,7 @@
           </q-td>
           <q-td>
             <q-btn
+              no-caps
               :label='$t("MSG_DELETE")'
               class='filled-button small-button'
               @click='onDeleteClick(props.row)'
