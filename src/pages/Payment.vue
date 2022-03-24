@@ -80,11 +80,12 @@ import { MutationTypes as NotificationMutationTypes } from 'src/store/notificati
 import { notificationPop, notify } from 'src/store/notifications/helper'
 import { useRouter } from 'src/router'
 import { ActionTypes } from 'src/store/orders/action-types'
+import { Order } from 'src/store/orders/types'
+import { orderToUserOrder, RemainMax, remainPayTime, RemainZero } from 'src/store/orders/utils'
 
 import spacemeshImg from 'src/assets/product-spacemesh.svg'
 import iconCopy from 'src/assets/icon-copy.svg'
 import copy from 'copy-to-clipboard'
-import { orderToUserOrder, RemainMax, remainPayTime, RemainZero } from 'src/store/orders/utils'
 
 const QrcodeVue = defineAsyncComponent(() => import('qrcode.vue'))
 const PaymentState = defineAsyncComponent(() => import('src/components/dialog/payment/Payment.vue'))
@@ -117,6 +118,10 @@ const remainTime = ref(RemainMax)
 let remainInterval = -1
 let paymentChecker = -1
 
+const promotions = computed(() => store.getters.getPromotions)
+const appGoods = computed(() => store.getters.getAppGoods)
+const myOrder = computed(() => orderToUserOrder(order.value as Order, promotions.value, appGoods.value))
+
 const timeRemaining = () => {
   if (!order.value) {
     remainTime.value = RemainZero
@@ -127,8 +132,7 @@ const timeRemaining = () => {
     return
   }
 
-  const myOrder = orderToUserOrder(order.value)
-  if (myOrder.Paid) {
+  if (myOrder.value.Paid) {
     showStatus.value = true
     popupTitle.value = 'MSG_ORDER_COMPLETE'
     tipMessage.value = 'MSG_REVIEW_ORDER'
@@ -141,7 +145,7 @@ const timeRemaining = () => {
     return
   }
 
-  remainTime.value = remainPayTime(order.value.Order.Payment ? order.value.Order.Payment.CreateAt : 0)
+  remainTime.value = remainPayTime(order.value?.Order.Payment ? order.value?.Order.Payment.CreateAt : 0)
   if (remainTime.value === RemainZero) {
     showStatus.value = true
     popupTitle.value = 'MSG_ORDER_TIMEOUT'

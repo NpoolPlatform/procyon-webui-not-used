@@ -6,7 +6,7 @@
     </div>
 
     <div class='product-price'>
-      <span>{{ goodPrice(good) }}</span
+      <span>{{ goodPrice(good, store.getters.getPromotions, store.getters.getAppGoods) }}</span
       >USDT / TB
     </div>
 
