@@ -35,7 +35,7 @@
           </div>
           <q-btn no-caps :label='t("MSG_WITHDRAW")' class='submit-btn submit' @click='onSubmit' />
           <h3>{{ t('MSG_GUIDE_AND_FAQ') }}</h3>
-          <p v-html='t("MSG_WITHDRAW_GUIDE_AND_FAQ_CONTENT", {UNIT: coin?.Unit, COIN_NAME: coin.Name})' />
+          <p v-html='t("MSG_WITHDRAW_GUIDE_AND_FAQ_CONTENT", {UNIT: coin?.Unit, COIN_NAME: coin?.Name})' />
         </div>
       </div>
     </div>
