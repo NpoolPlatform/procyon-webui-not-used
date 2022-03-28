@@ -1,7 +1,7 @@
 enum API {
   GET_USER_WITHDRAW_ACCOUNTS_BY_APP_USER = '/cloud-hashing-apis-v2/v1/get/withdraw/addresses/by/app/user',
   SET_WITHDRAW_ADDRESS = '/cloud-hashing-apis-v2/v1/set/withdraw/address',
-  DELETE_WITHDRAW_ADDRESS = '/cloud-hashing-billing/v1/delete/user/withdraw'
+  DELETE_WITHDRAW_ADDRESS = '/cloud-hashing-apis-v2/v1/delete/withdraw/address'
 }
 
 export {

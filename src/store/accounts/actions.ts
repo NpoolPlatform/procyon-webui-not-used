@@ -67,7 +67,7 @@ const actions: ActionTree<AccountsState, RootState> = {
   [ActionTypes.DeleteWithdrawAddress] ({ commit }, req: DeleteWithdrawAddressRequest) {
     doAction<DeleteWithdrawAddressRequest, DeleteWithdrawAddressResponse>(
       commit,
-      API.SET_WITHDRAW_ADDRESS,
+      API.DELETE_WITHDRAW_ADDRESS,
       req,
       req.Message,
       (resp: DeleteWithdrawAddressResponse): void => {
