@@ -38,10 +38,13 @@ const { t } = useI18n({ useScope: 'global' })
 
 const orders = computed(() => store.getters.getOrders)
 const goods = computed(() => store.getters.getGoods)
+const promotions = computed(() => store.getters.getPromotions)
+const appGoods = computed(() => store.getters.getAppGoods)
+
 const userOrders = computed(() => {
   const myOrders = [] as Array<UserOrder>
   orders.value.forEach((order) => {
-    myOrders.push(orderToUserOrder(order))
+    myOrders.push(orderToUserOrder(order, promotions.value, appGoods.value))
   })
   return myOrders
 })
