@@ -69,7 +69,6 @@ import { useStore } from 'src/store'
 import { ItemStateTarget } from 'src/store/types'
 import { ActionTypes } from 'src/store/users/action-types'
 import { UserUpdatePasswordByAppUserRequest } from 'src/store/users/types'
-import { useRouter } from 'src/router'
 
 const SendCodeInput = defineAsyncComponent(() => import('src/components/input/SendCodeInput.vue'))
 // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -112,8 +111,6 @@ const oldPasswordRules = ref([
   (val: string) => (val && val.length > 0) || t('input.OldPasswordWarning')
 ])
 
-const router = useRouter()
-
 const changePassword = throttle(() => {
   let type = ''
   let verifyParam = ''
@@ -133,8 +130,6 @@ const changePassword = throttle(() => {
     VerificationCode: verifyCode.value
   }
   store.dispatch(ActionTypes.UserChangePassword, request)
-
-  void router.push({ path: '/dashboard' })
 }, ThrottleDelay)
 </script>
 
