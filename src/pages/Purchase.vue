@@ -84,7 +84,7 @@
                 >
                   <q-item-section>
                     <q-item-label>
-                      {{ coin.Unit }}
+                      {{ coin.Unit }}({{ coin.Name }})
                       <span class='payment-coinname'>
                         {{ (coin.ENV !== 'main' ? coin.ENV : '') }}
                       </span>
@@ -148,7 +148,7 @@ const coins = computed(() => store.getters.getCoins.filter((coin) => !coin.PreSa
 const selectedCoin = ref(undefined as unknown as Coin)
 
 const selectedCoinName = computed(() => {
-  return selectedCoin.value ? selectedCoin.value.Unit + ' ' + (selectedCoin.value.ENV !== 'main' ? selectedCoin.value.ENV : '') : t('MSG_PAYMENT_METHOD')
+  return selectedCoin.value ? selectedCoin.value.Unit + '(' + selectedCoin.value.Name + ') ' + (selectedCoin.value.ENV !== 'main' ? selectedCoin.value.ENV : '') : t('MSG_PAYMENT_METHOD')
 })
 
 const onCoinSelected = (coin: Coin) => {
