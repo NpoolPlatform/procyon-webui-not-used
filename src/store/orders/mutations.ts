@@ -19,7 +19,7 @@ const setOrder = (state: OrderState, payload: Order) => {
     }
   }
   if (pos < 0) {
-    state.orders.push(payload)
+    state.orders.splice(0, 0, payload)
   } else {
     state.orders.splice(pos, 1, payload)
   }
