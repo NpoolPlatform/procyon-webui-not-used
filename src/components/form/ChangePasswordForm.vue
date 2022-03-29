@@ -1,63 +1,67 @@
 <template>
-  <q-form @submit='changePassword'>
-    <div class='row send-hint'>
-      <span>
-        {{ $t('verificationCode.Hint.Words1') }}
-        <span class='send-number'>{{ accountNumber }}</span>
-        {{ $t('verificationCode.Hint.Words2') }}
-      </span>
-    </div>
+  <q-card class='dialog-box'>
+    <q-card-section>
+      <q-form @submit='changePassword'>
+        <div class='row send-hint'>
+          <span>
+            {{ $t('verificationCode.Hint.Words1') }}
+            <span class='send-number'>{{ accountNumber }}</span>
+            {{ $t('verificationCode.Hint.Words2') }}
+          </span>
+        </div>
 
-    <SendCodeInput v-if='showEmail' verify-type='email' v-model:verify-code='verifyCode'
-                   :verify-param='accountNumber' used-for='UPDATE'
-                   :item-target='ItemStateTarget.ChangePasswordEmailSendCodeButton' />
-    <SendCodeInput v-if='showPhone' verify-type='mobile' v-model:verify-code='verifyCode'
-                   :verify-param='accountNumber' used-for='UPDATE'
-                   :item-target='ItemStateTarget.ChangePasswordPhoneSendCodeButton' />
-    <q-input v-model='changePasswordInput.oldPassword' :label="$t('input.OldPassword')" bg-color='blue-grey-2'
-             class='common-input'
-             outlined lazy-rules
-             :rules='oldPasswordRules'
-             :type="isOPwd ? 'password' : 'text'"
-    >
-      <template v-slot:append>
-        <q-icon
-          :name="isOPwd ? 'visibility_off' : 'visibility'"
-          class='cursor-pointer'
-          @click='isOPwd = !isOPwd'
-        />
-      </template>
-    </q-input>
-    <q-input v-model='changePasswordInput.password' :label="$t('input.Password')" bg-color='blue-grey-2'
-             class='common-input'
-             outlined lazy-rules
-             :rules='passwordRules'
-             :type="isPwd ? 'password' : 'text'"
-    >
-      <template v-slot:append>
-        <q-icon
-          :name="isPwd ? 'visibility_off' : 'visibility'"
-          class='cursor-pointer'
-          @click='isPwd = !isPwd'
-        />
-      </template>
-    </q-input>
-    <q-input v-model='changePasswordInput.confirmPassword' :label="$t('input.ConfirmPassword')" bg-color='blue-grey-2'
-             class='common-input'
-             outlined lazy-rules
-             :rules='confirmPasswordRules'
-             :type="isCPwd ? 'password' : 'text'"
-    >
-      <template v-slot:append>
-        <q-icon
-          :name="isCPwd ? 'visibility_off' : 'visibility'"
-          class='cursor-pointer'
-          @click='isCPwd = !isCPwd'
-        />
-      </template>
-    </q-input>
-    <q-btn type='submit' class='common-button change-password-button' :label="$t('button.Confirm')"></q-btn>
-  </q-form>
+        <SendCodeInput v-if='showEmail' verify-type='email' v-model:verify-code='verifyCode'
+                        :verify-param='accountNumber' used-for='UPDATE'
+                        :item-target='ItemStateTarget.ChangePasswordEmailSendCodeButton' />
+        <SendCodeInput v-if='showPhone' verify-type='mobile' v-model:verify-code='verifyCode'
+                        :verify-param='accountNumber' used-for='UPDATE'
+                        :item-target='ItemStateTarget.ChangePasswordPhoneSendCodeButton' />
+        <q-input v-model='changePasswordInput.oldPassword' :label="$t('input.OldPassword')" bg-color='blue-grey-2'
+                  class='common-input'
+                  outlined lazy-rules
+                  :rules='oldPasswordRules'
+                  :type="isOPwd ? 'password' : 'text'"
+        >
+          <template v-slot:append>
+            <q-icon
+              :name="isOPwd ? 'visibility_off' : 'visibility'"
+              class='cursor-pointer'
+              @click='isOPwd = !isOPwd'
+            />
+          </template>
+        </q-input>
+        <q-input v-model='changePasswordInput.password' :label="$t('input.Password')" bg-color='blue-grey-2'
+                  class='common-input'
+                  outlined lazy-rules
+                  :rules='passwordRules'
+                  :type="isPwd ? 'password' : 'text'"
+        >
+          <template v-slot:append>
+            <q-icon
+              :name="isPwd ? 'visibility_off' : 'visibility'"
+              class='cursor-pointer'
+              @click='isPwd = !isPwd'
+            />
+          </template>
+        </q-input>
+        <q-input v-model='changePasswordInput.confirmPassword' :label="$t('input.ConfirmPassword')" bg-color='blue-grey-2'
+                  class='common-input'
+                  outlined lazy-rules
+                  :rules='confirmPasswordRules'
+                  :type="isCPwd ? 'password' : 'text'"
+        >
+          <template v-slot:append>
+            <q-icon
+              :name="isCPwd ? 'visibility_off' : 'visibility'"
+              class='cursor-pointer'
+              @click='isCPwd = !isCPwd'
+            />
+          </template>
+        </q-input>
+        <q-btn type='submit' class='common-button change-password-button' :label="$t('button.Confirm')"></q-btn>
+      </q-form>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script setup lang='ts'>
@@ -135,6 +139,14 @@ const changePassword = throttle(() => {
 
 <style scoped>
 @import "~vue3-q-tel-input/dist/vue3-q-tel-input.esm.css";
+
+.dialog-box {
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 12px;
+  position: relative;
+  overflow-x: hidden;
+}
 
 .change-password-button {
   background: linear-gradient(to bottom right, #ff964a 0, #ce5417 100%);
