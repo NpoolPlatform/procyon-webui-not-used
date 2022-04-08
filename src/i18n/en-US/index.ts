@@ -654,7 +654,7 @@ export default {
       Earning: 'Earnings: ',
       Capacity: 'Capacity: ',
       Last: 'Last 24 hours: ',
-      DailyOutput: 'Daily Output (30 day avg.)',
+      DailyOutput: 'Daily Output (30 day avg.):',
       TechnicalServiceFee: 'Technical Service Fee:',
       NetDailyOutput: 'Net Daily Output (30 day avg.):',
       TotalDaysMining: 'Total Days Mining:',
