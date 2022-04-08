@@ -469,7 +469,7 @@ export default {
 
   footer: {
     First: {
-      Title: 'Shoot for the stars with Procyon!',
+      Title: 'SHOOT FOR THE STARS',
       Content: '暗号資産のグローバルマーケットプレイス'
     },
     Second: {
@@ -496,7 +496,7 @@ export default {
     Login: 'ログイン',
     StartMining: '購入',
     SendCode: '送信コード',
-    Verify: 'ベリファイ',
+    Verify: '認証',
     Confirm: '確認',
     Cancel: '取消',
     Export: '履歴のエクスポート (CSV)',

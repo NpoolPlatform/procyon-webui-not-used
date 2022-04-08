@@ -475,7 +475,7 @@ export default {
 
   footer: {
     First: {
-      Title: 'Shoot for the stars with Procyon!',
+      Title: 'SHOOT FOR THE STARS',
       Content: 'YOUR GLOBAL CONSTELLATION OF CRYPTOCURRENCIES'
     },
     Second: {
